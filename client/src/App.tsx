@@ -18,6 +18,9 @@ import CertificationsPage from './pages/CertificationsPage';
 import CommunityPage from './pages/CommunityPage';
 import BlogPage from './pages/BlogPage';
 import BlogPostPage from './pages/BlogPostPage';
+import AdminPage from './pages/AdminPage';
+import CreatorPage from './pages/CreatorPage';
+import GitHubToolsPage from './pages/GitHubToolsPage';
 import { motion, AnimatePresence } from 'framer-motion';
 
 function AppContent() {

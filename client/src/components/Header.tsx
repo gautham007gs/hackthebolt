@@ -4,6 +4,7 @@ import { Menu, X, Shield, BookOpen, Newspaper, Users, Target, Sun, Moon, Github,
 import { useTheme } from '../contexts/ThemeContext';
 import { useAuth } from '../contexts/AuthContext';
 import SearchBar from './SearchBar';
+import TerminalLogo from './TerminalLogo';
 import { motion, AnimatePresence } from 'framer-motion';
 
 const Header = () => {
