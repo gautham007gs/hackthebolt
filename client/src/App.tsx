@@ -21,6 +21,7 @@ import BlogPostPage from './pages/BlogPostPage';
 import AdminPage from './pages/AdminPage';
 import CreatorPage from './pages/CreatorPage';
 import LoginPage from './pages/LoginPage';
+import DashboardPage from './pages/DashboardPage';
 import GitHubToolsPage from './pages/GitHubToolsPage';
 import { motion, AnimatePresence } from 'framer-motion';
 
@@ -44,6 +45,8 @@ function AppContent() {
           <Route path="/blog/:slug" component={BlogPostPage} />
           <Route path="/admin" component={AdminPage} />
           <Route path="/creator" component={CreatorPage} />
+          <Route path="/login" component={LoginPage} />
+          <Route path="/dashboard" component={DashboardPage} />
           <Route path="/github-tools" component={GitHubToolsPage} />
         </Switch>
       </AnimatePresence>

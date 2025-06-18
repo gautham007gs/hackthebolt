@@ -32,8 +32,7 @@ const LoginPage = () => {
         login({
           id: '1',
           name: formData.email.split('@')[0],
-          email: formData.email,
-          role: 'user'
+          email: formData.email
         });
         setLocation('/dashboard');
       } else {
@@ -46,8 +45,7 @@ const LoginPage = () => {
         login({
           id: '1',
           name: formData.name,
-          email: formData.email,
-          role: 'user'
+          email: formData.email
         });
         setLocation('/dashboard');
       }
@@ -62,10 +60,9 @@ const LoginPage = () => {
     login({
       id: '1',
       name: `Demo ${role.charAt(0).toUpperCase() + role.slice(1)}`,
-      email: `demo-${role}@hacktheshell.com`,
-      role
+      email: `demo-${role}@hacktheshell.com`
     });
-    setLocation('/dashboard');
+    setLocation(role === 'admin' ? '/admin' : role === 'creator' ? '/creator' : '/dashboard');
   };
 
   return (
