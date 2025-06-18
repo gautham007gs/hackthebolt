@@ -87,8 +87,10 @@ const Header = () => {
             <div className="relative">
               <button
                 onClick={() => setIsSearchOpen(!isSearchOpen)}
-                className={`p-2 rounded-lg ${isDark ? 'bg-gray-800 hover:bg-gray-700 text-gray-400 hover:text-emerald-400' : 'bg-gray-100 hover:bg-gray-200 text-gray-600 hover:text-emerald-600'} transition-all duration-200 hover:scale-110`}
-                aria-label="Search"
+                onKeyDown={(e) => e.key === 'Enter' && setIsSearchOpen(!isSearchOpen)}
+                className={`p-2 rounded-lg ${isDark ? 'bg-gray-800 hover:bg-gray-700 text-gray-400 hover:text-emerald-400' : 'bg-gray-100 hover:bg-gray-200 text-gray-600 hover:text-emerald-600'} transition-all duration-200 hover:scale-110 focus:outline-none focus:ring-2 focus:ring-emerald-500/50`}
+                aria-label="Open search"
+                aria-expanded={isSearchOpen}
               >
                 <Search className="h-5 w-5" />
               </button>
@@ -110,8 +112,9 @@ const Header = () => {
             {/* Theme Toggle */}
             <button
               onClick={toggleTheme}
-              className={`p-2 rounded-lg ${isDark ? 'bg-gray-800 hover:bg-gray-700 text-yellow-400' : 'bg-gray-100 hover:bg-gray-200 text-gray-700'} transition-all duration-200 hover:scale-110`}
-              aria-label="Toggle theme"
+              onKeyDown={(e) => e.key === 'Enter' && toggleTheme()}
+              className={`p-2 rounded-lg ${isDark ? 'bg-gray-800 hover:bg-gray-700 text-yellow-400' : 'bg-gray-100 hover:bg-gray-200 text-gray-700'} transition-all duration-200 hover:scale-110 focus:outline-none focus:ring-2 focus:ring-emerald-500/50`}
+              aria-label={`Switch to ${isDark ? 'light' : 'dark'} mode`}
             >
               {isDark ? <Sun className="h-5 w-5" /> : <Moon className="h-5 w-5" />}
             </button>
