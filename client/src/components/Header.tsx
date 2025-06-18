@@ -43,7 +43,7 @@ const Header = () => {
   return (
     <header className={`fixed w-full z-50 transition-all duration-300 ${
       isScrolled 
-        ? `${isDark ? 'bg-gray-900/95' : 'bg-white/95'} backdrop-blur-md shadow-lg ${isDark ? 'border-emerald-500/20' : 'border-emerald-500/30'} border-b`
+        ? `${isDark ? 'bg-gray-900/98' : 'bg-white/98'} backdrop-blur-xl shadow-2xl ${isDark ? 'border-emerald-400/30 shadow-emerald-500/10' : 'border-emerald-500/40 shadow-emerald-500/20'} border-b`
         : 'bg-transparent'
     }`}>
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -188,26 +188,31 @@ const Header = () => {
           </div>
 
           {/* Mobile menu button */}
-          <div className="lg:hidden flex items-center space-x-3">
+          <div className="lg:hidden flex items-center space-x-2">
             <button
               onClick={() => setIsSearchOpen(!isSearchOpen)}
-              className={`p-2 rounded-lg ${isDark ? 'bg-gray-800 hover:bg-gray-700 text-gray-400' : 'bg-gray-100 hover:bg-gray-200 text-gray-600'} transition-all duration-200`}
+              className={`p-2.5 rounded-xl ${isDark ? 'bg-gray-800/80 hover:bg-gray-700/80 text-gray-300 hover:text-emerald-400 border border-gray-700/50' : 'bg-white/80 hover:bg-emerald-50/80 text-gray-600 hover:text-emerald-600 border border-gray-200/50'} transition-all duration-300 hover:scale-105 backdrop-blur-sm`}
               aria-label="Search"
             >
-              <Search className="h-5 w-5" />
+              <Search className="h-4 w-4" />
             </button>
             <button
               onClick={toggleTheme}
-              className={`p-2 rounded-lg ${isDark ? 'bg-gray-800 hover:bg-gray-700 text-yellow-400' : 'bg-gray-100 hover:bg-gray-200 text-gray-700'} transition-all duration-200`}
+              className={`p-2.5 rounded-xl relative overflow-hidden ${isDark ? 'bg-gradient-to-r from-yellow-500/20 to-orange-500/20 hover:from-yellow-500/30 hover:to-orange-500/30 text-yellow-400 border border-yellow-500/20' : 'bg-gradient-to-r from-purple-500/20 to-blue-500/20 hover:from-purple-500/30 hover:to-blue-500/30 text-purple-600 border border-purple-500/20'} transition-all duration-300 hover:scale-105 backdrop-blur-sm`}
               aria-label="Toggle theme"
             >
-              {isDark ? <Sun className="h-5 w-5" /> : <Moon className="h-5 w-5" />}
+              <div className="relative z-10">
+                {isDark ? <Sun className="h-4 w-4" /> : <Moon className="h-4 w-4" />}
+              </div>
             </button>
             <button
               onClick={toggleMenu}
-              className={`${isDark ? 'text-gray-300 hover:text-emerald-400' : 'text-gray-700 hover:text-emerald-600'} transition-colors duration-200 p-2`}
+              className={`p-2.5 rounded-xl relative overflow-hidden ${isDark ? 'bg-gradient-to-r from-emerald-500/20 to-teal-500/20 hover:from-emerald-500/30 hover:to-teal-500/30 text-emerald-400 border border-emerald-500/20' : 'bg-gradient-to-r from-emerald-500/20 to-teal-500/20 hover:from-emerald-500/30 hover:to-teal-500/30 text-emerald-600 border border-emerald-500/20'} transition-all duration-300 hover:scale-105 backdrop-blur-sm`}
             >
-              {isMenuOpen ? <X className="h-6 w-6" /> : <Menu className="h-6 w-6" />}
+              <div className="relative z-10">
+                {isMenuOpen ? <X className="h-5 w-5" /> : <Menu className="h-5 w-5" />}
+              </div>
+              <div className="absolute inset-0 bg-gradient-to-r from-emerald-500/10 to-teal-500/10 opacity-0 hover:opacity-100 transition-opacity duration-300"></div>
             </button>
           </div>
         </div>
@@ -235,7 +240,7 @@ const Header = () => {
               exit={{ opacity: 0, height: 0 }}
               className="lg:hidden"
             >
-              <div className={`${isDark ? 'bg-gray-900/95' : 'bg-white/95'} backdrop-blur-md rounded-2xl mt-4 mb-4 border ${isDark ? 'border-gray-800' : 'border-gray-200'} shadow-xl overflow-hidden`}>
+              <div className={`${isDark ? 'bg-gray-900/98' : 'bg-white/98'} backdrop-blur-xl rounded-3xl mt-4 mb-4 border ${isDark ? 'border-gray-700/50 shadow-2xl shadow-emerald-500/5' : 'border-gray-200/50 shadow-2xl shadow-emerald-500/10'} overflow-hidden`}>
                 <div className="px-4 py-6 space-y-2">
                   {navigation.map(({ name, href, icon: Icon }) => (
                     <Link

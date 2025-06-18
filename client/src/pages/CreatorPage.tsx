@@ -469,9 +469,43 @@ def check_vulnerability(url):
                 <h3 className={`text-xl font-bold ${isDark ? 'text-white' : 'text-gray-900'} mb-4`}>
                   Creator Settings
                 </h3>
-                <p className={`${isDark ? 'text-gray-400' : 'text-gray-600'}`}>
-                  Creator preferences and settings coming soon...
-                </p>
+                <div className="space-y-6">
+                  <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                    <div>
+                      <label className={`block text-sm font-medium ${isDark ? 'text-gray-300' : 'text-gray-700'} mb-2`}>
+                        Display Name
+                      </label>
+                      <input
+                        type="text"
+                        value={user?.name || ''}
+                        className={`w-full px-4 py-3 rounded-lg border ${isDark ? 'bg-gray-700 border-gray-600 text-white' : 'bg-white border-gray-300 text-gray-900'} focus:outline-none focus:ring-2 focus:ring-emerald-500/50`}
+                      />
+                    </div>
+                    <div>
+                      <label className={`block text-sm font-medium ${isDark ? 'text-gray-300' : 'text-gray-700'} mb-2`}>
+                        Email Notifications
+                      </label>
+                      <select className={`w-full px-4 py-3 rounded-lg border ${isDark ? 'bg-gray-700 border-gray-600 text-white' : 'bg-white border-gray-300 text-gray-900'} focus:outline-none focus:ring-2 focus:ring-emerald-500/50`}>
+                        <option>All notifications</option>
+                        <option>Important only</option>
+                        <option>None</option>
+                      </select>
+                    </div>
+                  </div>
+                  <div>
+                    <label className={`block text-sm font-medium ${isDark ? 'text-gray-300' : 'text-gray-700'} mb-2`}>
+                      Bio
+                    </label>
+                    <textarea
+                      rows={4}
+                      placeholder="Tell us about your expertise and background..."
+                      className={`w-full px-4 py-3 rounded-lg border ${isDark ? 'bg-gray-700 border-gray-600 text-white placeholder-gray-400' : 'bg-white border-gray-300 text-gray-900 placeholder-gray-500'} focus:outline-none focus:ring-2 focus:ring-emerald-500/50 resize-none`}
+                    />
+                  </div>
+                  <button className="bg-gradient-to-r from-emerald-500 to-teal-500 text-white px-6 py-3 rounded-lg font-semibold hover:from-emerald-600 hover:to-teal-600 transition-all duration-200">
+                    Save Settings
+                  </button>
+                </div>
               </div>
             )}
           </div>

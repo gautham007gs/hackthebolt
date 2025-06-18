@@ -111,11 +111,14 @@ const Blog = () => {
 
       <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="text-center mb-16">
-          <h2 className={`text-4xl lg:text-5xl font-bold ${isDark ? 'text-white' : 'text-gray-900'} mb-6`}>
-            Latest <span className="bg-gradient-to-r from-emerald-500 to-teal-500 bg-clip-text text-transparent">Blog & News</span>
+          <h2 className={`text-4xl lg:text-5xl font-bold mb-6`}>
+            <span className={`${isDark ? 'text-white' : 'text-gray-900'}`}>Latest </span>
+            <span className="bg-gradient-to-r from-purple-400 via-pink-400 to-red-400 bg-clip-text text-transparent">Intelligence</span>
+            <span className={`${isDark ? 'text-white' : 'text-gray-900'}`}> & </span>
+            <span className="bg-gradient-to-r from-emerald-400 to-cyan-400 bg-clip-text text-transparent">Insights</span>
           </h2>
           <p className={`text-xl ${isDark ? 'text-gray-300' : 'text-gray-600'} max-w-3xl mx-auto mb-8`}>
-            Stay updated with the latest cybersecurity trends, threats, and insights from our expert community.
+            Cutting-edge cybersecurity intelligence, threat analysis, and expert insights delivered by elite security professionals.
           </p>
         </div>
 
