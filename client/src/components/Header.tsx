@@ -282,12 +282,20 @@ const Header = () => {
                     </>
                   ) : (
                     <div className="pt-4 border-t border-gray-700/50 space-y-2">
-                      <button className={`w-full ${isDark ? 'text-gray-300 hover:text-emerald-400 hover:bg-gray-800/50' : 'text-gray-700 hover:text-emerald-600 hover:bg-emerald-50'} px-4 py-3 rounded-xl font-medium transition-all duration-200`}>
+                      <Link
+                        to="/login"
+                        onClick={() => setIsMenuOpen(false)}
+                        className={`w-full block text-center ${isDark ? 'text-gray-300 hover:text-emerald-400 hover:bg-gray-800/50' : 'text-gray-700 hover:text-emerald-600 hover:bg-emerald-50'} px-4 py-3 rounded-xl font-medium transition-all duration-200`}
+                      >
                         Sign In
-                      </button>
-                      <button className={`w-full ${isDark ? 'bg-gradient-to-r from-emerald-500 to-teal-500 hover:from-emerald-600 hover:to-teal-600' : 'bg-gradient-to-r from-emerald-600 to-teal-600 hover:from-emerald-700 hover:to-teal-700'} text-white px-6 py-3 rounded-xl font-semibold transition-all duration-200 transform hover:scale-105`}>
+                      </Link>
+                      <Link
+                        to="/login"
+                        onClick={() => setIsMenuOpen(false)}
+                        className={`w-full block text-center ${isDark ? 'bg-gradient-to-r from-emerald-500 to-teal-500 hover:from-emerald-600 hover:to-teal-600' : 'bg-gradient-to-r from-emerald-600 to-teal-600 hover:from-emerald-700 hover:to-teal-700'} text-white px-6 py-3 rounded-xl font-semibold transition-all duration-200 transform hover:scale-105`}
+                      >
                         Start Learning
-                      </button>
+                      </Link>
                     </div>
                   )}
                 </div>

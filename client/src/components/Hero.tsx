@@ -31,17 +31,17 @@ const Hero = () => {
                 <span className={`${isDark ? 'text-emerald-400' : 'text-emerald-700'} font-semibold`}>Ethical Hacking Academy</span>
               </div>
               
-              <h1 className={`text-5xl lg:text-7xl font-bold ${isDark ? 'text-white' : 'text-gray-900'} leading-tight`}>
-                Master
-                <span className="bg-gradient-to-r from-emerald-500 to-teal-500 bg-clip-text text-transparent"> Cyber</span>
+              <h1 className={`text-5xl lg:text-7xl font-bold leading-tight`}>
+                <span className="bg-gradient-to-r from-emerald-400 via-cyan-400 to-blue-400 bg-clip-text text-transparent">Unleash</span>
+                <span className={`${isDark ? 'text-white' : 'text-gray-900'}`}> Your</span>
                 <br />
-                Security
+                <span className="bg-gradient-to-r from-purple-400 via-pink-400 to-red-400 bg-clip-text text-transparent">Cyber Genius</span>
               </h1>
               
               <p className={`text-xl ${isDark ? 'text-gray-300' : 'text-gray-600'} leading-relaxed max-w-2xl`}>
-                Learn ethical hacking, penetration testing, and cybersecurity with hands-on tutorials, 
-                expert insights, and real-world scenarios. Join thousands of security professionals 
-                building a safer digital world.
+                From zero to cybersecurity hero in record time. Master elite hacking techniques, 
+                build bulletproof defenses, and dominate the digital battlefield with cutting-edge skills 
+                that make you unstoppable.
               </p>
             </div>
 

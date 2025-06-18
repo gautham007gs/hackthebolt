@@ -20,6 +20,7 @@ import BlogPage from './pages/BlogPage';
 import BlogPostPage from './pages/BlogPostPage';
 import AdminPage from './pages/AdminPage';
 import CreatorPage from './pages/CreatorPage';
+import LoginPage from './pages/LoginPage';
 import GitHubToolsPage from './pages/GitHubToolsPage';
 import { motion, AnimatePresence } from 'framer-motion';
 
