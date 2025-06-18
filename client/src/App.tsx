@@ -6,6 +6,7 @@ import { ProgressProvider } from './contexts/ProgressContext';
 import Header from './components/Header';
 import Footer from './components/Footer';
 import ScrollToTop from './components/ScrollToTop';
+import ErrorBoundary from './components/ErrorBoundary';
 import useScrollToTop from './components/useScrollToTop';
 import HomePage from './pages/HomePage';
 import TutorialsPage from './pages/TutorialsPage';
@@ -47,15 +48,17 @@ function AppContent() {
 
 function App() {
   return (
-    <ThemeProvider>
-      <AuthProvider>
-        <ProgressProvider>
-          <Router>
-            <AppContent />
-          </Router>
-        </ProgressProvider>
-      </AuthProvider>
-    </ThemeProvider>
+    <ErrorBoundary>
+      <ThemeProvider>
+        <AuthProvider>
+          <ProgressProvider>
+            <Router>
+              <AppContent />
+            </Router>
+          </ProgressProvider>
+        </AuthProvider>
+      </ThemeProvider>
+    </ErrorBoundary>
   );
 }
 
