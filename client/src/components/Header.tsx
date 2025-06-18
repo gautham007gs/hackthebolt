@@ -30,6 +30,7 @@ const Header = () => {
     { name: 'Home', href: '/', icon: Target },
     { name: 'Tutorials', href: '/tutorials', icon: BookOpen },
     { name: 'Labs', href: '/labs', icon: Target },
+    { name: 'GitHub Tools', href: '/github-tools', icon: Github },
     { name: 'Blog', href: '/blog', icon: Newspaper },
     { name: 'Community', href: '/community', icon: Users }
   ];

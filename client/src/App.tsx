@@ -41,6 +41,9 @@ function AppContent() {
           <Route path="/community" component={CommunityPage} />
           <Route path="/blog" component={BlogPage} />
           <Route path="/blog/:slug" component={BlogPostPage} />
+          <Route path="/admin" component={AdminPage} />
+          <Route path="/creator" component={CreatorPage} />
+          <Route path="/github-tools" component={GitHubToolsPage} />
         </Switch>
       </AnimatePresence>
       <Footer />
