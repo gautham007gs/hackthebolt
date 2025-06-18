@@ -14,6 +14,7 @@ import CTFPage from './pages/CTFPage';
 import CertificationsPage from './pages/CertificationsPage';
 import CommunityPage from './pages/CommunityPage';
 import BlogPage from './pages/BlogPage';
+import BlogPostPage from './pages/BlogPostPage';
 import { motion, AnimatePresence } from 'framer-motion';
 
 function App() {
@@ -22,7 +23,7 @@ function App() {
       <AuthProvider>
         <ProgressProvider>
           <Router>
-            <div className="min-h-screen transition-colors duration-300 dark:bg-black bg-white">
+            <div className="min-h-screen transition-colors duration-300 dark:bg-gray-900 bg-white">
               <Header />
               <AnimatePresence mode="wait">
                 <Routes>
@@ -35,6 +36,7 @@ function App() {
                   <Route path="/certifications" element={<CertificationsPage />} />
                   <Route path="/community" element={<CommunityPage />} />
                   <Route path="/blog" element={<BlogPage />} />
+                  <Route path="/blog/:slug" element={<BlogPostPage />} />
                 </Routes>
               </AnimatePresence>
               <Footer />

@@ -13,12 +13,12 @@ const Hero = () => {
   };
 
   return (
-    <section id="home" className={`min-h-screen ${isDark ? 'bg-gradient-to-br from-gray-900 via-gray-800 to-black' : 'bg-gradient-to-br from-gray-50 via-white to-emerald-50'} relative overflow-hidden pt-20`}>
-      {/* Enhanced Background Effects */}
+    <section id="home" className={`min-h-screen ${isDark ? 'bg-gray-900' : 'bg-white'} relative overflow-hidden pt-20`}>
+      {/* Subtle Background Pattern */}
       <div className="absolute inset-0">
-        <div className={`absolute top-1/4 left-1/4 w-96 h-96 ${isDark ? 'bg-emerald-500/10' : 'bg-emerald-500/20'} rounded-full blur-3xl animate-pulse`}></div>
-        <div className={`absolute bottom-1/4 right-1/4 w-96 h-96 ${isDark ? 'bg-teal-500/10' : 'bg-teal-500/20'} rounded-full blur-3xl animate-pulse delay-1000`}></div>
-        <div className={`absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-72 h-72 ${isDark ? 'bg-cyan-500/5' : 'bg-cyan-500/15'} rounded-full blur-3xl animate-pulse delay-500`}></div>
+        <div className={`absolute top-1/4 left-1/4 w-72 h-72 ${isDark ? 'bg-emerald-500/5' : 'bg-emerald-500/8'} rounded-full blur-3xl`}></div>
+        <div className={`absolute bottom-1/4 right-1/4 w-72 h-72 ${isDark ? 'bg-teal-500/5' : 'bg-teal-500/8'} rounded-full blur-3xl`}></div>
+        <div className={`absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-96 h-96 ${isDark ? 'bg-cyan-500/3' : 'bg-cyan-500/5'} rounded-full blur-3xl`}></div>
       </div>
 
       <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-20">
@@ -26,7 +26,7 @@ const Hero = () => {
           {/* Enhanced Content */}
           <div className="space-y-8">
             <div className="space-y-6">
-              <div className={`inline-flex items-center space-x-3 ${isDark ? 'bg-emerald-500/10 border-emerald-500/20' : 'bg-emerald-100 border-emerald-300'} border rounded-full px-6 py-3 backdrop-blur-sm`}>
+              <div className={`inline-flex items-center space-x-3 ${isDark ? 'bg-emerald-500/10 border-emerald-500/20' : 'bg-emerald-50 border-emerald-200'} border rounded-full px-6 py-3`}>
                 <Shield className={`h-5 w-5 ${isDark ? 'text-emerald-400' : 'text-emerald-600'}`} />
                 <span className={`${isDark ? 'text-emerald-400' : 'text-emerald-700'} font-semibold`}>Ethical Hacking Academy</span>
               </div>
@@ -48,7 +48,7 @@ const Hero = () => {
             <div className="flex flex-col sm:flex-row gap-4">
               <button 
                 onClick={() => scrollToSection('tutorials')}
-                className="group bg-gradient-to-r from-emerald-500 to-teal-500 hover:from-emerald-600 hover:to-teal-600 text-white px-8 py-4 rounded-xl font-semibold transition-all duration-300 transform hover:scale-105 shadow-xl hover:shadow-emerald-500/25 flex items-center justify-center space-x-3"
+                className="group bg-gradient-to-r from-emerald-500 to-teal-500 hover:from-emerald-600 hover:to-teal-600 text-white px-8 py-4 rounded-xl font-semibold transition-all duration-300 transform hover:scale-105 shadow-lg hover:shadow-emerald-500/25 flex items-center justify-center space-x-3"
               >
                 <span>Start Free Course</span>
                 <ArrowRight className="h-5 w-5 group-hover:translate-x-1 transition-transform duration-200" />
@@ -81,7 +81,7 @@ const Hero = () => {
 
           {/* Enhanced Terminal Visual */}
           <div className="relative">
-            <div className={`relative ${isDark ? 'bg-gradient-to-br from-gray-800 to-gray-900 border-emerald-500/20' : 'bg-gradient-to-br from-white to-gray-50 border-emerald-300'} rounded-2xl p-8 border shadow-2xl backdrop-blur-sm`}>
+            <div className={`relative ${isDark ? 'bg-gray-800 border-gray-700' : 'bg-white border-gray-200'} rounded-2xl p-8 border shadow-2xl`}>
               <div className="space-y-4">
                 <div className="flex items-center justify-between">
                   <div className="flex items-center space-x-3">

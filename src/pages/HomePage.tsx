@@ -6,7 +6,6 @@ import Tutorials from '../components/Tutorials';
 import GitHubTools from '../components/GitHubTools';
 import Blog from '../components/Blog';
 import Community from '../components/Community';
-import ParallaxSection from '../components/ParallaxSection';
 
 const HomePage = () => {
   return (
@@ -17,26 +16,11 @@ const HomePage = () => {
       transition={{ duration: 0.5 }}
     >
       <Hero />
-      
-      <ParallaxSection speed={0.3}>
-        <Features />
-      </ParallaxSection>
-      
-      <ParallaxSection speed={0.4} direction="down">
-        <Tutorials />
-      </ParallaxSection>
-      
-      <ParallaxSection speed={0.2}>
-        <GitHubTools />
-      </ParallaxSection>
-      
-      <ParallaxSection speed={0.5} direction="down">
-        <Blog />
-      </ParallaxSection>
-      
-      <ParallaxSection speed={0.3}>
-        <Community />
-      </ParallaxSection>
+      <Features />
+      <Tutorials />
+      <GitHubTools />
+      <Blog />
+      <Community />
     </motion.div>
   );
 };

@@ -49,11 +49,11 @@ const Features = () => {
   ];
 
   return (
-    <section className={`py-20 ${isDark ? 'bg-gray-900' : 'bg-gray-50'} relative overflow-hidden`}>
-      {/* Background Effects */}
+    <section className={`py-20 ${isDark ? 'bg-gray-800' : 'bg-gray-50'} relative overflow-hidden`}>
+      {/* Subtle Background Effects */}
       <div className="absolute inset-0">
-        <div className={`absolute top-0 left-1/3 w-72 h-72 ${isDark ? 'bg-emerald-500/5' : 'bg-emerald-500/10'} rounded-full blur-3xl`}></div>
-        <div className={`absolute bottom-0 right-1/3 w-72 h-72 ${isDark ? 'bg-teal-500/5' : 'bg-teal-500/10'} rounded-full blur-3xl`}></div>
+        <div className={`absolute top-0 left-1/3 w-64 h-64 ${isDark ? 'bg-emerald-500/3' : 'bg-emerald-500/5'} rounded-full blur-3xl`}></div>
+        <div className={`absolute bottom-0 right-1/3 w-64 h-64 ${isDark ? 'bg-teal-500/3' : 'bg-teal-500/5'} rounded-full blur-3xl`}></div>
       </div>
 
       <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -73,10 +73,10 @@ const Features = () => {
             return (
               <div
                 key={index}
-                className={`group ${isDark ? 'bg-gray-800/50 border-gray-700/50 hover:bg-gray-800/80 hover:border-emerald-500/30' : 'bg-white border-gray-200 hover:bg-gray-50 hover:border-emerald-300'} border rounded-xl p-6 transition-all duration-300 transform hover:-translate-y-2 hover:shadow-xl ${isDark ? 'hover:shadow-emerald-500/10' : 'hover:shadow-emerald-500/20'}`}
+                className={`group ${isDark ? 'bg-gray-900 border-gray-700 hover:bg-gray-800 hover:border-emerald-500/30' : 'bg-white border-gray-200 hover:bg-gray-50 hover:border-emerald-300'} border rounded-xl p-6 transition-all duration-300 transform hover:-translate-y-2 hover:shadow-xl ${isDark ? 'hover:shadow-emerald-500/10' : 'hover:shadow-emerald-500/20'}`}
               >
                 <div className="mb-4">
-                  <div className={`inline-flex items-center justify-center w-12 h-12 ${isDark ? 'bg-gradient-to-br from-emerald-500/20 to-teal-500/20 group-hover:from-emerald-500/30 group-hover:to-teal-500/30' : 'bg-gradient-to-br from-emerald-100 to-teal-100 group-hover:from-emerald-200 group-hover:to-teal-200'} rounded-lg transition-all duration-300`}>
+                  <div className={`inline-flex items-center justify-center w-12 h-12 ${isDark ? 'bg-emerald-500/20 group-hover:bg-emerald-500/30' : 'bg-emerald-100 group-hover:bg-emerald-200'} rounded-lg transition-all duration-300`}>
                     <Icon className={`h-6 w-6 ${isDark ? 'text-emerald-400 group-hover:text-emerald-300' : 'text-emerald-600 group-hover:text-emerald-700'} transition-colors duration-300`} />
                   </div>
                 </div>
