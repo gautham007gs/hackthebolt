@@ -7,7 +7,7 @@ import { Link, useLocation } from 'wouter';
 
 const LoginPage = () => {
   const { isDark } = useTheme();
-  const { login } = useAuth();
+  const { login, register } = useAuth();
   const [, setLocation] = useLocation();
   const [isLogin, setIsLogin] = useState(true);
   const [showPassword, setShowPassword] = useState(false);
@@ -28,26 +28,25 @@ const LoginPage = () => {
     try {
       if (isLogin) {
         // Simulate login
-        await new Promise(resolve => setTimeout(resolve, 1000));
-        login({
-          id: '1',
-          name: formData.email.split('@')[0],
-          email: formData.email
-        });
-        setLocation('/dashboard');
+        const success = await login(formData.email, formData.password);
+        if (success) {
+          setLocation('/dashboard');
+        } else {
+          setError('Login failed. Please check your credentials.');
+        }
       } else {
         if (formData.password !== formData.confirmPassword) {
           setError('Passwords do not match');
           return;
         }
-        // Simulate registration
-        await new Promise(resolve => setTimeout(resolve, 1000));
-        login({
-          id: '1',
-          name: formData.name,
-          email: formData.email
-        });
-        setLocation('/dashboard');
+        // Use register function for new users
+        const { register } = useAuth();
+        const success = await register(formData.name, formData.email, formData.password);
+        if (success) {
+          setLocation('/dashboard');
+        } else {
+          setError('Registration failed. Please try again.');
+        }
       }
     } catch (err) {
       setError('Authentication failed. Please try again.');
@@ -56,13 +55,11 @@ const LoginPage = () => {
     }
   };
 
-  const handleDemoLogin = (role: 'user' | 'creator' | 'admin') => {
-    login({
-      id: '1',
-      name: `Demo ${role.charAt(0).toUpperCase() + role.slice(1)}`,
-      email: `demo-${role}@hacktheshell.com`
-    });
-    setLocation(role === 'admin' ? '/admin' : role === 'creator' ? '/creator' : '/dashboard');
+  const handleDemoLogin = async (role: 'user' | 'creator' | 'admin') => {
+    const success = await login(`demo-${role}@hacktheshell.com`, 'demo');
+    if (success) {
+      setLocation(role === 'admin' ? '/admin' : role === 'creator' ? '/creator' : '/dashboard');
+    }
   };
 
   return (

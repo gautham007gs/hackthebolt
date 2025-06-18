@@ -9,6 +9,7 @@ interface User {
   points: number;
   achievements: string[];
   joinedDate: string;
+  role: string;
 }
 
 interface AuthContextType {
@@ -47,7 +48,8 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
       level: 5,
       points: 2450,
       achievements: ['First Steps', 'Web Security Expert', 'Network Ninja'],
-      joinedDate: '2024-01-15'
+      joinedDate: '2024-01-15',
+      role: 'user'
     };
 
     setUser(userData);
@@ -67,7 +69,8 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
       level: 1,
       points: 0,
       achievements: [],
-      joinedDate: new Date().toISOString().split('T')[0]
+      joinedDate: new Date().toISOString().split('T')[0],
+      role: 'user'
     };
 
     setUser(userData);
