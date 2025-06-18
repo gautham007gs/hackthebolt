@@ -16,7 +16,8 @@ import {
   Users,
   Download,
   Eye,
-  ThumbsUp
+  ThumbsUp,
+  Shield
 } from 'lucide-react';
 import { useTheme } from '../contexts/ThemeContext';
 import AdvancedSEO from '../components/AdvancedSEO';
@@ -309,17 +310,71 @@ const GitHubToolsPage = () => {
           </div>
         </section>
 
-        {/* Stats Section */}
-        <section className={`py-16 ${isDark ? 'bg-gray-900' : 'bg-gray-50'}`}>
+        {/* Quick Commands Section */}
+        <section className={`py-12 ${isDark ? 'bg-gray-900' : 'bg-gray-50'}`}>
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div className="grid grid-cols-2 lg:grid-cols-4 gap-8">
+            <div className="text-center mb-8">
+              <h2 className={`text-3xl font-bold ${isDark ? 'text-white' : 'text-gray-900'} mb-4`}>
+                Essential GitHub Commands
+              </h2>
+              <p className={`text-lg ${isDark ? 'text-gray-300' : 'text-gray-600'} max-w-2xl mx-auto`}>
+                Master these fundamental commands that every cybersecurity professional should know
+              </p>
+            </div>
+
+            <div className="grid lg:grid-cols-2 gap-8">
+              <div className={`${isDark ? 'bg-gray-800 border-gray-700' : 'bg-white border-gray-200'} border rounded-xl p-6`}>
+                <h3 className={`text-xl font-bold ${isDark ? 'text-white' : 'text-gray-900'} mb-4 flex items-center`}>
+                  <Terminal className="h-6 w-6 mr-2 text-blue-500" />
+                  Security Scanning Setup
+                </h3>
+                <div className="space-y-4">
+                  <div className={`${isDark ? 'bg-gray-900' : 'bg-gray-50'} rounded-lg p-4 font-mono text-sm`}>
+                    <div className={`${isDark ? 'text-green-400' : 'text-green-600'} mb-2`}># Enable CodeQL Security Scanning</div>
+                    <div className={`${isDark ? 'text-gray-300' : 'text-gray-700'}`}>gh repo create my-secure-app --clone</div>
+                    <div className={`${isDark ? 'text-gray-300' : 'text-gray-700'}`}>gh workflow enable codeql.yml</div>
+                    <div className={`${isDark ? 'text-gray-300' : 'text-gray-700'}`}>gh secret set SECURITY_TOKEN</div>
+                  </div>
+                  <p className={`text-sm ${isDark ? 'text-gray-400' : 'text-gray-600'}`}>
+                    Automatically scan your code for 150+ security vulnerabilities
+                  </p>
+                </div>
+              </div>
+
+              <div className={`${isDark ? 'bg-gray-800 border-gray-700' : 'bg-white border-gray-200'} border rounded-xl p-6`}>
+                <h3 className={`text-xl font-bold ${isDark ? 'text-white' : 'text-gray-900'} mb-4 flex items-center`}>
+                  <Shield className="h-6 w-6 mr-2 text-emerald-500" />
+                  Dependency Protection
+                </h3>
+                <div className="space-y-4">
+                  <div className={`${isDark ? 'bg-gray-900' : 'bg-gray-50'} rounded-lg p-4 font-mono text-sm`}>
+                    <div className={`${isDark ? 'text-green-400' : 'text-green-600'} mb-2`}># Enable Dependabot Security</div>
+                    <div className={`${isDark ? 'text-gray-300' : 'text-gray-700'}`}>gh repo edit --enable-dependabot</div>
+                    <div className={`${isDark ? 'text-gray-300' : 'text-gray-700'}`}>gh security-advisory list</div>
+                    <div className={`${isDark ? 'text-gray-300' : 'text-gray-700'}`}>gh dependabot auto-merge enable</div>
+                  </div>
+                  <p className={`text-sm ${isDark ? 'text-gray-400' : 'text-gray-600'}`}>
+                    Protect against vulnerable dependencies with automatic updates
+                  </p>
+                </div>
+              </div>
+            </div>
+
+            {/* Stats Grid */}
+            <div className="grid grid-cols-2 lg:grid-cols-4 gap-6 mt-12">
               {[
-                { label: 'Tools Covered', value: '15+', icon: Github },
-                { label: 'Use Cases', value: '50+', icon: Zap },
-                { label: 'Common Errors', value: '100+', icon: AlertTriangle },
-                { label: 'Best Practices', value: '200+', icon: CheckCircle }
+                { label: 'Security Tools', value: '25+', icon: Shield, color: 'blue' },
+                { label: 'Code Examples', value: '100+', icon: Code, color: 'emerald' },
+                { label: 'Error Solutions', value: '200+', icon: AlertTriangle, color: 'orange' },
+                { label: 'Best Practices', value: '300+', icon: CheckCircle, color: 'green' }
               ].map((stat, index) => {
                 const Icon = stat.icon;
+                const colorClasses: Record<string, string> = {
+                  blue: isDark ? 'bg-blue-500/10 text-blue-400' : 'bg-blue-100 text-blue-700',
+                  emerald: isDark ? 'bg-emerald-500/10 text-emerald-400' : 'bg-emerald-100 text-emerald-700',
+                  orange: isDark ? 'bg-orange-500/10 text-orange-400' : 'bg-orange-100 text-orange-700',
+                  green: isDark ? 'bg-green-500/10 text-green-400' : 'bg-green-100 text-green-700'
+                };
                 return (
                   <motion.div
                     key={index}
@@ -328,11 +383,11 @@ const GitHubToolsPage = () => {
                     transition={{ duration: 0.5, delay: index * 0.1 }}
                     className="text-center"
                   >
-                    <div className={`inline-flex items-center justify-center w-16 h-16 ${isDark ? 'bg-gradient-to-br from-purple-500/20 to-emerald-500/20' : 'bg-gradient-to-br from-purple-100 to-emerald-100'} rounded-full mb-4`}>
-                      <Icon className={`h-8 w-8 ${isDark ? 'text-purple-400' : 'text-purple-600'}`} />
+                    <div className={`inline-flex items-center justify-center w-14 h-14 ${colorClasses[stat.color]} rounded-full mb-3`}>
+                      <Icon className="h-7 w-7" />
                     </div>
-                    <div className={`text-3xl font-bold ${isDark ? 'text-white' : 'text-gray-900'} mb-2`}>{stat.value}</div>
-                    <div className={`${isDark ? 'text-gray-400' : 'text-gray-600'}`}>{stat.label}</div>
+                    <div className={`text-2xl font-bold ${isDark ? 'text-white' : 'text-gray-900'} mb-1`}>{stat.value}</div>
+                    <div className={`text-sm ${isDark ? 'text-gray-400' : 'text-gray-600'}`}>{stat.label}</div>
                   </motion.div>
                 );
               })}
