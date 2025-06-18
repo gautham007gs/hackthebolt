@@ -30,8 +30,8 @@ const PsychologicalCTA: React.FC<PsychologicalCTAProps> = ({
   const variantStyles = {
     primary: {
       bg: isDark 
-        ? 'bg-gradient-to-r from-blue-600 to-indigo-600 hover:from-blue-700 hover:to-indigo-700' 
-        : 'bg-gradient-to-r from-blue-600 to-indigo-600 hover:from-blue-700 hover:to-indigo-700',
+        ? 'bg-blue-600 hover:bg-blue-700' 
+        : 'bg-blue-600 hover:bg-blue-700',
       text: 'text-white',
       shadow: 'shadow-lg hover:shadow-xl',
       border: 'border-0'
@@ -46,16 +46,16 @@ const PsychologicalCTA: React.FC<PsychologicalCTAProps> = ({
     },
     urgency: {
       bg: isDark 
-        ? 'bg-gradient-to-r from-orange-600 to-red-600 hover:from-orange-700 hover:to-red-700' 
-        : 'bg-gradient-to-r from-orange-500 to-red-500 hover:from-orange-600 hover:to-red-600',
+        ? 'bg-orange-600 hover:bg-orange-700' 
+        : 'bg-orange-500 hover:bg-orange-600',
       text: 'text-white',
       shadow: 'shadow-lg hover:shadow-xl',
       border: 'border-0'
     },
     'social-proof': {
       bg: isDark 
-        ? 'bg-gradient-to-r from-emerald-600 to-teal-600 hover:from-emerald-700 hover:to-teal-700' 
-        : 'bg-gradient-to-r from-emerald-500 to-teal-500 hover:from-emerald-600 hover:to-teal-600',
+        ? 'bg-emerald-600 hover:bg-emerald-700' 
+        : 'bg-emerald-500 hover:bg-emerald-600',
       text: 'text-white',
       shadow: 'shadow-lg hover:shadow-xl',
       border: 'border-0'

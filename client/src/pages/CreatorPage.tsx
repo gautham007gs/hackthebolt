@@ -117,21 +117,22 @@ const CreatorPage = () => {
     setIsLoading(false);
   };
 
-  if (!user || (user.role !== 'creator' && user.role !== 'admin')) {
-    return (
-      <div className={`min-h-screen ${isDark ? 'bg-gray-900' : 'bg-white'} flex items-center justify-center`}>
-        <div className="text-center">
-          <PenTool className={`h-16 w-16 ${isDark ? 'text-gray-600' : 'text-gray-400'} mx-auto mb-4`} />
-          <h2 className={`text-2xl font-bold ${isDark ? 'text-white' : 'text-gray-900'} mb-2`}>
-            Creator Access Required
-          </h2>
-          <p className={`${isDark ? 'text-gray-400' : 'text-gray-600'}`}>
-            Apply for creator status to write content
-          </p>
-        </div>
-      </div>
-    );
-  }
+  // Temporarily allow all users to access creator panel
+  // if (!user || (user.role !== 'creator' && user.role !== 'admin')) {
+  //   return (
+  //     <div className={`min-h-screen ${isDark ? 'bg-gray-900' : 'bg-white'} flex items-center justify-center`}>
+  //       <div className="text-center">
+  //         <PenTool className={`h-16 w-16 ${isDark ? 'text-gray-600' : 'text-gray-400'} mx-auto mb-4`} />
+  //         <h2 className={`text-2xl font-bold ${isDark ? 'text-white' : 'text-gray-900'} mb-2`}>
+  //           Creator Access Required
+  //         </h2>
+  //         <p className={`${isDark ? 'text-gray-400' : 'text-gray-600'}`}>
+  //           Apply for creator status to write content
+  //         </p>
+  //       </div>
+  //     </div>
+  //   );
+  // }
 
   const creatorTabs = [
     { id: 'dashboard', name: 'Dashboard', icon: TrendingUp },

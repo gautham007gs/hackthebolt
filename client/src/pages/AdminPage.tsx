@@ -36,28 +36,28 @@ const AdminPage = () => {
     systemHealth: 'healthy'
   });
 
-  // Redirect if not admin
-  useEffect(() => {
-    if (user && user.role !== 'admin') {
-      window.location.href = '/';
-    }
-  }, [user]);
+  // Temporarily allow all users access to admin panel
+  // useEffect(() => {
+  //   if (user && user.role !== 'admin') {
+  //     window.location.href = '/';
+  //   }
+  // }, [user]);
 
-  if (!user || user.role !== 'admin') {
-    return (
-      <div className={`min-h-screen ${isDark ? 'bg-gray-900' : 'bg-white'} flex items-center justify-center`}>
-        <div className="text-center">
-          <Shield className={`h-16 w-16 ${isDark ? 'text-gray-600' : 'text-gray-400'} mx-auto mb-4`} />
-          <h2 className={`text-2xl font-bold ${isDark ? 'text-white' : 'text-gray-900'} mb-2`}>
-            Access Denied
-          </h2>
-          <p className={`${isDark ? 'text-gray-400' : 'text-gray-600'}`}>
-            Administrator privileges required
-          </p>
-        </div>
-      </div>
-    );
-  }
+  // if (!user || user.role !== 'admin') {
+  //   return (
+  //     <div className={`min-h-screen ${isDark ? 'bg-gray-900' : 'bg-white'} flex items-center justify-center`}>
+  //       <div className="text-center">
+  //         <Shield className={`h-16 w-16 ${isDark ? 'text-gray-600' : 'text-gray-400'} mx-auto mb-4`} />
+  //         <h2 className={`text-2xl font-bold ${isDark ? 'text-white' : 'text-gray-900'} mb-2`}>
+  //           Access Denied
+  //         </h2>
+  //         <p className={`${isDark ? 'text-gray-400' : 'text-gray-600'}`}>
+  //           Administrator privileges required
+  //         </p>
+  //       </div>
+  //     </div>
+  //   );
+  // }
 
   const adminTabs = [
     { id: 'overview', name: 'Overview', icon: BarChart3 },
