@@ -40,7 +40,6 @@ const LoginPage = () => {
           return;
         }
         // Use register function for new users
-        const { register } = useAuth();
         const success = await register(formData.name, formData.email, formData.password);
         if (success) {
           setLocation('/dashboard');

@@ -22,12 +22,32 @@ import AdvancedSEO from '../components/AdvancedSEO';
 import LoadingSpinner from '../components/LoadingSpinner';
 import CodeTerminal from '../components/CodeTerminal';
 
+interface BlogPost {
+  id: number;
+  title: string;
+  slug: string;
+  excerpt: string;
+  content: string;
+  category: string;
+  tags: string[];
+  status: string;
+  views: number;
+  likes: number;
+  seoTitle: string;
+  seoDescription: string;
+  seoKeywords: string;
+  featuredImage: string;
+  publishedAt?: string;
+  createdAt: string;
+  updatedAt: string;
+}
+
 const CreatorPage = () => {
   const { isDark } = useTheme();
   const { user } = useAuth();
   const [activeTab, setActiveTab] = useState('dashboard');
   const [isLoading, setIsLoading] = useState(false);
-  const [posts, setPosts] = useState([]);
+  const [posts, setPosts] = useState<BlogPost[]>([]);
   const [newPost, setNewPost] = useState({
     title: '',
     slug: '',
@@ -59,14 +79,14 @@ const CreatorPage = () => {
     }
   };
 
-  const generateSlug = (title) => {
+  const generateSlug = (title: string) => {
     return title
       .toLowerCase()
       .replace(/[^a-z0-9]+/g, '-')
       .replace(/(^-|-$)/g, '');
   };
 
-  const handleTitleChange = (title) => {
+  const handleTitleChange = (title: string) => {
     setNewPost(prev => ({
       ...prev,
       title,
