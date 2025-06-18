@@ -338,25 +338,52 @@ Remember: cybersecurity is not a destination but a journey. The threat landscape
       </div>
 
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
-        <div className="grid lg:grid-cols-4 gap-8">
-          {/* Table of Contents - Sidebar */}
-          <div className="lg:col-span-1 order-2 lg:order-1">
+        <div className="flex flex-col lg:grid lg:grid-cols-4 gap-8">
+          {/* Table of Contents - Mobile */}
+          <div className="lg:hidden order-1">
+            <div className={`${isDark ? 'bg-gray-800 border-gray-700' : 'bg-gray-50 border-gray-200'} border rounded-xl p-4 mb-6`}>
+              <h3 className={`text-lg font-semibold ${isDark ? 'text-white' : 'text-gray-900'} mb-3 flex items-center space-x-2`}>
+                <BookOpen className="h-5 w-5" />
+                <span>Table of Contents</span>
+              </h3>
+              <nav className="grid grid-cols-1 sm:grid-cols-2 gap-2 max-h-48 overflow-y-auto">
+                {blogPost.tableOfContents.map((item, index) => (
+                  <button
+                    key={index}
+                    onClick={() => scrollToSection(item.id)}
+                    className={`text-left text-sm transition-colors duration-200 p-2 rounded-lg ${
+                      item.level === 1 ? 'font-medium' : 'pl-4'
+                    } ${
+                      activeSection === item.id
+                        ? isDark ? 'text-emerald-400 bg-emerald-500/10' : 'text-emerald-600 bg-emerald-50'
+                        : isDark ? 'text-gray-400 hover:text-gray-300 hover:bg-gray-700/50' : 'text-gray-600 hover:text-gray-700 hover:bg-gray-100'
+                    }`}
+                  >
+                    {item.title}
+                  </button>
+                ))}
+              </nav>
+            </div>
+          </div>
+
+          {/* Table of Contents - Desktop Sidebar */}
+          <div className="hidden lg:block lg:col-span-1 order-2 lg:order-1">
             <div className={`sticky top-24 ${isDark ? 'bg-gray-800 border-gray-700' : 'bg-gray-50 border-gray-200'} border rounded-xl p-6`}>
               <h3 className={`text-lg font-semibold ${isDark ? 'text-white' : 'text-gray-900'} mb-4 flex items-center space-x-2`}>
                 <BookOpen className="h-5 w-5" />
                 <span>Table of Contents</span>
               </h3>
-              <nav className="space-y-2">
+              <nav className="space-y-2 max-h-96 overflow-y-auto">
                 {blogPost.tableOfContents.map((item, index) => (
                   <button
                     key={index}
                     onClick={() => scrollToSection(item.id)}
-                    className={`block w-full text-left text-sm transition-colors duration-200 ${
+                    className={`block w-full text-left text-sm transition-colors duration-200 p-2 rounded-lg ${
                       item.level === 1 ? 'font-medium' : 'ml-4'
                     } ${
                       activeSection === item.id
-                        ? isDark ? 'text-emerald-400' : 'text-emerald-600'
-                        : isDark ? 'text-gray-400 hover:text-gray-300' : 'text-gray-600 hover:text-gray-700'
+                        ? isDark ? 'text-emerald-400 bg-emerald-500/10' : 'text-emerald-600 bg-emerald-50'
+                        : isDark ? 'text-gray-400 hover:text-gray-300 hover:bg-gray-700/50' : 'text-gray-600 hover:text-gray-700 hover:bg-gray-100'
                     }`}
                   >
                     {item.title}
@@ -367,7 +394,7 @@ Remember: cybersecurity is not a destination but a journey. The threat landscape
           </div>
 
           {/* Main Content */}
-          <div className="lg:col-span-3 order-1 lg:order-2">
+          <div className="lg:col-span-3 order-2 lg:order-2">
             {/* Article Header */}
             <article className={`${isDark ? 'bg-gray-800 border-gray-700' : 'bg-white border-gray-200'} border rounded-xl overflow-hidden mb-8`}>
               <div className="relative">
