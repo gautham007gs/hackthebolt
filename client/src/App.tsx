@@ -1,5 +1,5 @@
 import React from 'react';
-import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
+import { Router, Route, Switch } from 'wouter';
 import { ThemeProvider } from './contexts/ThemeContext';
 import { AuthProvider } from './contexts/AuthContext';
 import { ProgressProvider } from './contexts/ProgressContext';
@@ -26,18 +26,18 @@ function App() {
             <div className="min-h-screen transition-colors duration-300 dark:bg-gray-900 bg-white">
               <Header />
               <AnimatePresence mode="wait">
-                <Routes>
-                  <Route path="/" element={<HomePage />} />
-                  <Route path="/tutorials" element={<TutorialsPage />} />
-                  <Route path="/tutorials/:id" element={<TutorialDetailPage />} />
-                  <Route path="/labs" element={<LabsPage />} />
-                  <Route path="/dashboard" element={<DashboardPage />} />
-                  <Route path="/ctf" element={<CTFPage />} />
-                  <Route path="/certifications" element={<CertificationsPage />} />
-                  <Route path="/community" element={<CommunityPage />} />
-                  <Route path="/blog" element={<BlogPage />} />
-                  <Route path="/blog/:slug" element={<BlogPostPage />} />
-                </Routes>
+                <Switch>
+                  <Route path="/" component={HomePage} />
+                  <Route path="/tutorials" component={TutorialsPage} />
+                  <Route path="/tutorials/:id" component={TutorialDetailPage} />
+                  <Route path="/labs" component={LabsPage} />
+                  <Route path="/dashboard" component={DashboardPage} />
+                  <Route path="/ctf" component={CTFPage} />
+                  <Route path="/certifications" component={CertificationsPage} />
+                  <Route path="/community" component={CommunityPage} />
+                  <Route path="/blog" component={BlogPage} />
+                  <Route path="/blog/:slug" component={BlogPostPage} />
+                </Switch>
               </AnimatePresence>
               <Footer />
             </div>

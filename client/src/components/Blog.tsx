@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { Calendar, User, ArrowRight, TrendingUp, Shield, AlertTriangle, Clock, Eye, MessageSquare, Share2 } from 'lucide-react';
 import { useTheme } from '../contexts/ThemeContext';
-import { Link } from 'react-router-dom';
+import { Link } from 'wouter';
 
 const Blog = () => {
   const { isDark } = useTheme();

@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { useParams, Link } from 'react-router-dom';
+import { useParams, Link } from 'wouter';
 import { motion } from 'framer-motion';
 import { ArrowLeft, Play, Clock, Users, Star, BookOpen, CheckCircle, Lock, Download, Share2 } from 'lucide-react';
 import { useTheme } from '../contexts/ThemeContext';

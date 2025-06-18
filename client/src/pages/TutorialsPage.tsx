@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { motion } from 'framer-motion';
 import { BookOpen, Clock, Users, Star, Filter, Search, Play, ArrowRight } from 'lucide-react';
 import { useTheme } from '../contexts/ThemeContext';
-import { Link } from 'react-router-dom';
+import { Link } from 'wouter';
 
 const TutorialsPage = () => {
   const { isDark } = useTheme();
