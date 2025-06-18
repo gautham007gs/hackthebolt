@@ -20,6 +20,7 @@ import { useTheme } from '../contexts/ThemeContext';
 import { useAuth } from '../contexts/AuthContext';
 import AdvancedSEO from '../components/AdvancedSEO';
 import LoadingSpinner from '../components/LoadingSpinner';
+import CodeTerminal from '../components/CodeTerminal';
 
 const CreatorPage = () => {
   const { isDark } = useTheme();
@@ -264,15 +265,46 @@ const CreatorPage = () => {
         {/* Content */}
         <div>
           <label className={`block text-sm font-medium ${isDark ? 'text-gray-300' : 'text-gray-700'} mb-2`}>
-            Content * (Markdown supported)
+            Content * (Markdown & Code Blocks supported)
           </label>
-          <textarea
-            value={newPost.content}
-            onChange={(e) => setNewPost(prev => ({ ...prev, content: e.target.value }))}
-            placeholder="Write your comprehensive cybersecurity content here using Markdown..."
-            rows={15}
-            className={`w-full px-4 py-3 rounded-lg border ${isDark ? 'bg-gray-900 border-gray-600 text-white' : 'bg-white border-gray-300 text-gray-900'} focus:outline-none focus:ring-2 focus:ring-emerald-500/50 font-mono text-sm`}
-          />
+          <div className="space-y-4">
+            <textarea
+              value={newPost.content}
+              onChange={(e) => setNewPost(prev => ({ ...prev, content: e.target.value }))}
+              placeholder="Write your comprehensive cybersecurity content here using Markdown..."
+              rows={12}
+              className={`w-full px-4 py-3 rounded-lg border ${isDark ? 'bg-gray-900 border-gray-600 text-white' : 'bg-white border-gray-300 text-gray-900'} focus:outline-none focus:ring-2 focus:ring-emerald-500/50 font-mono text-sm`}
+            />
+            
+            {/* Code Terminal Preview */}
+            <div className="mt-4">
+              <h4 className={`text-sm font-medium ${isDark ? 'text-gray-300' : 'text-gray-700'} mb-2`}>
+                Code Terminal Preview
+              </h4>
+              <CodeTerminal
+                code={`# Example: SQL Injection Detection
+$ sqlmap -u "http://target.com/page?id=1" --dbs
+$ nmap -sV -sC target.com
+$ hydra -l admin -P passwords.txt ssh://target.com
+
+# Python Security Script
+import requests
+import hashlib
+
+def check_vulnerability(url):
+    payload = "' OR '1'='1"
+    response = requests.get(f"{url}?id={payload}")
+    return "error" in response.text.lower()`}
+                language="bash"
+                title="Cybersecurity Commands"
+                showLineNumbers={true}
+                className="mb-4"
+              />
+              <p className={`text-xs ${isDark ? 'text-gray-400' : 'text-gray-600'}`}>
+                Use this format in your content to create interactive code blocks for readers.
+              </p>
+            </div>
+          </div>
         </div>
 
         {/* SEO Section */}

@@ -73,7 +73,7 @@ const TerminalLogo: React.FC<TerminalLogoProps> = ({
           rx="6"
           ry="6"
           fill={isDark ? '#1f2937' : '#f9fafb'}
-          stroke={isDark ? '#10b981' : '#059669'}
+          stroke={isDark ? '#3b82f6' : '#2563eb'}
           strokeWidth="2"
         />
         
@@ -127,10 +127,11 @@ const TerminalLogo: React.FC<TerminalLogoProps> = ({
           x="18"
           y="32"
           fontSize={fontSize}
-          fill={isDark ? '#d1d5db' : '#374151'}
+          fill={isDark ? '#3b82f6' : '#2563eb'}
           fontFamily="monospace"
+          fontWeight="bold"
         >
-          hack
+          HTS
         </text>
         
         {/* Blinking Cursor */}

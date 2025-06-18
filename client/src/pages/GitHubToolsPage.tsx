@@ -271,10 +271,10 @@ const GitHubToolsPage = () => {
         className={`min-h-screen ${isDark ? 'bg-black' : 'bg-white'} pt-20`}
       >
         {/* Hero Section */}
-        <section className={`py-20 ${isDark ? 'bg-gradient-to-br from-gray-900 via-gray-800 to-black' : 'bg-gradient-to-br from-gray-50 via-white to-emerald-50'} relative overflow-hidden`}>
+        <section className={`py-16 ${isDark ? 'bg-gray-900' : 'bg-blue-50'} relative overflow-hidden`}>
           <div className="absolute inset-0">
-            <div className={`absolute top-1/4 left-1/4 w-96 h-96 ${isDark ? 'bg-emerald-500/10' : 'bg-emerald-500/20'} rounded-full blur-3xl animate-pulse`}></div>
-            <div className={`absolute bottom-1/4 right-1/4 w-96 h-96 ${isDark ? 'bg-purple-500/10' : 'bg-purple-500/20'} rounded-full blur-3xl animate-pulse delay-1000`}></div>
+            <div className={`absolute top-1/4 left-1/4 w-72 h-72 ${isDark ? 'bg-blue-500/5' : 'bg-blue-400/10'} rounded-full blur-2xl`}></div>
+            <div className={`absolute bottom-1/4 right-1/4 w-72 h-72 ${isDark ? 'bg-indigo-500/5' : 'bg-indigo-400/10'} rounded-full blur-2xl`}></div>
           </div>
 
           <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
@@ -283,24 +283,24 @@ const GitHubToolsPage = () => {
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.8 }}
             >
-              <div className={`inline-flex items-center space-x-3 ${isDark ? 'bg-purple-500/10 border-purple-500/20' : 'bg-purple-100 border-purple-300'} border rounded-full px-6 py-3 mb-6`}>
-                <Github className={`h-5 w-5 ${isDark ? 'text-purple-400' : 'text-purple-600'}`} />
-                <span className={`${isDark ? 'text-purple-400' : 'text-purple-700'} font-semibold`}>GitHub Tools Mastery</span>
+              <div className={`inline-flex items-center space-x-3 ${isDark ? 'bg-blue-500/10 border-blue-500/20' : 'bg-blue-100 border-blue-300'} border rounded-full px-6 py-3 mb-6`}>
+                <Github className={`h-5 w-5 ${isDark ? 'text-blue-400' : 'text-blue-600'}`} />
+                <span className={`${isDark ? 'text-blue-400' : 'text-blue-700'} font-semibold`}>GitHub Tools Mastery</span>
               </div>
               
-              <h1 className={`text-5xl lg:text-6xl font-bold ${isDark ? 'text-white' : 'text-gray-900'} mb-6`}>
-                Master <span className="bg-gradient-to-r from-purple-500 to-emerald-500 bg-clip-text text-transparent">GitHub</span> Tools
+              <h1 className={`text-4xl lg:text-5xl font-bold ${isDark ? 'text-white' : 'text-gray-900'} mb-4`}>
+                Master <span className={`${isDark ? 'text-blue-400' : 'text-blue-600'}`}>GitHub</span> Tools
               </h1>
-              <p className={`text-xl ${isDark ? 'text-gray-300' : 'text-gray-600'} max-w-3xl mx-auto mb-8`}>
+              <p className={`text-lg ${isDark ? 'text-gray-300' : 'text-gray-600'} max-w-2xl mx-auto mb-8`}>
                 Complete guide to GitHub tools, security practices, and DevSecOps workflows. 
                 Learn from common errors to expert-level implementations.
               </p>
               <div className="flex flex-col sm:flex-row gap-4 justify-center">
-                <button className="bg-gradient-to-r from-purple-500 to-emerald-500 hover:from-purple-600 hover:to-emerald-600 text-white px-8 py-4 rounded-xl font-semibold transition-all duration-200 transform hover:scale-105 shadow-xl hover:shadow-purple-500/25 flex items-center justify-center space-x-2">
+                <button className={`${isDark ? 'bg-blue-600 hover:bg-blue-700' : 'bg-blue-600 hover:bg-blue-700'} text-white px-8 py-3 rounded-lg font-semibold transition-all duration-200 transform hover:scale-105 shadow-lg flex items-center justify-center space-x-2`}>
                   <Terminal className="h-5 w-5" />
-                  <span>Explore Tools</span>
+                  <span>Start Learning</span>
                 </button>
-                <button className={`border-2 ${isDark ? 'border-purple-500/30 text-purple-400 hover:bg-purple-500/10' : 'border-purple-600/30 text-purple-600 hover:bg-purple-50'} px-8 py-4 rounded-xl font-semibold transition-all duration-200 flex items-center justify-center space-x-2`}>
+                <button className={`border-2 ${isDark ? 'border-blue-500/30 text-blue-400 hover:bg-blue-500/10' : 'border-blue-600/30 text-blue-600 hover:bg-blue-50'} px-8 py-3 rounded-lg font-semibold transition-all duration-200 flex items-center justify-center space-x-2`}>
                   <BookOpen className="h-5 w-5" />
                   <span>Best Practices</span>
                 </button>
