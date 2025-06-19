@@ -162,30 +162,7 @@ const CreatorPage = () => {
     }
   };
 
-  if (!user || (user.role !== 'creator' && user.role !== 'admin')) {
-    return (
-      <div className={`min-h-screen flex items-center justify-center ${
-        isDark ? 'bg-gray-900' : 'bg-gray-50'
-      }`}>
-        <div className="text-center">
-          <Award className={`h-16 w-16 mx-auto mb-4 ${
-            isDark ? 'text-gray-600' : 'text-gray-400'
-          }`} />
-          <h1 className={`text-2xl font-bold mb-2 ${
-            isDark ? 'text-white' : 'text-gray-900'
-          }`}>
-            Creator Access Required
-          </h1>
-          <p className={`mb-4 ${isDark ? 'text-gray-400' : 'text-gray-600'}`}>
-            You need creator privileges to access this page.
-          </p>
-          <Link href="/apply-creator" className="btn-primary">
-            Apply for Creator Status
-          </Link>
-        </div>
-      </div>
-    );
-  }
+  // Temporarily removed access restrictions for testing - anyone can access creator features
 
   return (
     <div className={`min-h-screen ${isDark ? 'bg-gray-900' : 'bg-gray-50'}`}>

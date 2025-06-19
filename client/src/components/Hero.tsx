@@ -14,16 +14,16 @@ const Hero = () => {
   };
 
   return (
-    <section id="home" className={`min-h-screen ${isDark ? 'bg-gray-900' : 'bg-white'} relative overflow-hidden pt-20`}>
+    <section id="home" className={`min-h-screen ${isDark ? 'bg-gray-900' : 'bg-white'} relative overflow-x-hidden pt-20`}>
       {/* Subtle Background Pattern */}
-      <div className="absolute inset-0">
-        <div className={`absolute top-1/4 left-1/4 w-72 h-72 ${isDark ? 'bg-emerald-500/5' : 'bg-emerald-500/8'} rounded-full blur-3xl`}></div>
-        <div className={`absolute bottom-1/4 right-1/4 w-72 h-72 ${isDark ? 'bg-teal-500/5' : 'bg-teal-500/8'} rounded-full blur-3xl`}></div>
-        <div className={`absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-96 h-96 ${isDark ? 'bg-cyan-500/3' : 'bg-cyan-500/5'} rounded-full blur-3xl`}></div>
+      <div className="absolute inset-0 overflow-hidden">
+        <div className={`absolute top-1/4 left-1/4 w-48 h-48 md:w-72 md:h-72 ${isDark ? 'bg-emerald-500/5' : 'bg-emerald-500/8'} rounded-full blur-3xl`}></div>
+        <div className={`absolute bottom-1/4 right-1/4 w-48 h-48 md:w-72 md:h-72 ${isDark ? 'bg-teal-500/5' : 'bg-teal-500/8'} rounded-full blur-3xl`}></div>
+        <div className={`absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-64 h-64 md:w-96 md:h-96 ${isDark ? 'bg-cyan-500/3' : 'bg-cyan-500/5'} rounded-full blur-3xl`}></div>
       </div>
 
-      <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-20">
-        <div className="grid lg:grid-cols-2 gap-12 items-center">
+      <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12 md:py-20">
+        <div className="grid lg:grid-cols-2 gap-8 lg:gap-12 items-center">
           {/* Enhanced Content */}
           <div className="space-y-8">
             <div className="space-y-6">
@@ -32,30 +32,30 @@ const Hero = () => {
                 <span className={`${isDark ? 'text-emerald-400' : 'text-emerald-700'} font-semibold`}>Ethical Hacking Academy</span>
               </div>
               
-              <h1 className={`text-5xl lg:text-7xl font-bold leading-tight`}>
-                <span className="bg-gradient-to-r from-emerald-400 via-cyan-400 to-blue-400 bg-clip-text text-transparent">Unleash</span>
+              <h1 className={`text-6xl lg:text-8xl font-bold leading-tight`}>
+                <span className={`${isDark ? 'text-emerald-400' : 'text-emerald-600'} drop-shadow-lg`}>Unleash</span>
                 <span className={`${isDark ? 'text-white' : 'text-gray-900'}`}> Your</span>
                 <br />
-                <span className="bg-gradient-to-r from-purple-400 via-pink-400 to-red-400 bg-clip-text text-transparent">Cyber Genius</span>
+                <span className={`${isDark ? 'text-cyan-400' : 'text-cyan-600'} drop-shadow-lg`}>Cyber Genius</span>
               </h1>
               
-              <p className={`text-xl ${isDark ? 'text-gray-300' : 'text-gray-600'} leading-relaxed max-w-2xl`}>
+              <p className={`text-lg sm:text-xl ${isDark ? 'text-gray-300' : 'text-gray-600'} leading-relaxed max-w-2xl`}>
                 From zero to cybersecurity hero in record time. Master elite hacking techniques, 
                 build bulletproof defenses, and dominate the digital battlefield with cutting-edge skills 
                 that make you unstoppable.
               </p>
             </div>
 
-            <div className="flex flex-col sm:flex-row gap-4">
+            <div className="flex flex-col sm:flex-row gap-4 w-full">
               <button 
                 onClick={() => scrollToSection('tutorials')}
-                className="group relative px-8 py-4 bg-gradient-to-r from-emerald-500 to-cyan-500 text-white font-semibold rounded-2xl shadow-xl hover:shadow-2xl hover:shadow-emerald-500/25 transition-all duration-300 transform hover:scale-105 hover:-translate-y-1 flex items-center justify-center space-x-3"
+                className="group relative px-6 sm:px-8 py-3 sm:py-4 bg-gradient-to-r from-emerald-500 to-cyan-500 text-white font-semibold rounded-2xl shadow-xl hover:shadow-2xl hover:shadow-emerald-500/25 transition-all duration-300 transform hover:scale-105 hover:-translate-y-1 flex items-center justify-center space-x-3 w-full sm:w-auto"
               >
                 <span>Start Free Course</span>
                 <ArrowRight className="h-5 w-5 group-hover:translate-x-1 transition-transform duration-200" />
               </button>
               
-              <button className={`group border-2 ${isDark ? 'border-emerald-500/30 text-emerald-400 hover:bg-emerald-500/10' : 'border-emerald-600/30 text-emerald-600 hover:bg-emerald-50'} px-8 py-4 rounded-2xl font-semibold transition-all duration-300 flex items-center justify-center space-x-3 hover:scale-105 hover:-translate-y-1 transform`}>
+              <button className={`group border-2 ${isDark ? 'border-emerald-500/30 text-emerald-400 hover:bg-emerald-500/10' : 'border-emerald-600/30 text-emerald-600 hover:bg-emerald-50'} px-6 sm:px-8 py-3 sm:py-4 rounded-2xl font-semibold transition-all duration-300 flex items-center justify-center space-x-3 hover:scale-105 hover:-translate-y-1 transform w-full sm:w-auto`}>
                 <Play className="h-5 w-5" />
                 <span>Watch Demo</span>
               </button>

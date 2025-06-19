@@ -54,7 +54,7 @@ const EnhancedCommentSystemV2: React.FC<EnhancedCommentSystemV2Props> = ({
 
   // Mock data for demonstration
   useEffect(() => {
-    if (initialComments.length === 0) {
+    if (initialComments.length === 0 && comments.length === 0) {
       const mockComments: Comment[] = [
         {
           id: 1,
