@@ -33,15 +33,15 @@ const Hero = () => {
               </div>
               
               <h1 className={`heading-primary ${isDark ? 'text-white' : 'text-gray-900'}`}>
-                <span className={`${isDark ? 'text-emerald-400' : 'text-emerald-700'}`}>Master</span>
+                <span className={`${isDark ? 'text-emerald-400' : 'text-slate-700'}`}>Master</span>
                 <span> Elite</span>
                 <br />
-                <span className={`${isDark ? 'text-blue-400' : 'text-blue-700'}`}>Cybersecurity</span>
+                <span className={`${isDark ? 'text-blue-400' : 'text-blue-600'}`}>Cybersecurity</span>
               </h1>
               
               <p className={`text-body-medium ${isDark ? 'text-gray-300' : 'text-gray-700'} max-w-2xl`}>
                 Transform from beginner to cybersecurity expert through hands-on learning. 
-                <span className={`${isDark ? 'text-emerald-300' : 'text-emerald-700'} font-semibold`}> Master advanced techniques</span>, 
+                <span className={`${isDark ? 'text-emerald-300' : 'text-slate-600'} font-semibold`}> Master advanced techniques</span>, 
                 build robust defenses, and gain the expertise that sets professionals apart in today's digital landscape.
               </p>
             </div>

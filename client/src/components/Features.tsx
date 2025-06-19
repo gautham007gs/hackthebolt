@@ -59,7 +59,7 @@ const Features = () => {
       <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="text-center mb-16">
           <h2 className={`text-4xl lg:text-5xl font-bold ${isDark ? 'text-white' : 'text-gray-900'} mb-6`}>
-            Why Choose <span className="bg-gradient-to-r from-emerald-500 to-teal-500 bg-clip-text text-transparent">HackTheShell</span>?
+            Why Choose <span className={`${isDark ? 'bg-gradient-to-r from-emerald-500 to-teal-500' : 'bg-gradient-to-r from-slate-600 to-blue-600'} bg-clip-text text-transparent`}>HackTheShell</span>?
           </h2>
           <p className={`text-xl ${isDark ? 'text-gray-300' : 'text-gray-600'} max-w-3xl mx-auto`}>
             We provide comprehensive cybersecurity education with practical, hands-on experience 

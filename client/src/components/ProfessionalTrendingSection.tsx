@@ -137,7 +137,7 @@ const ProfessionalTrendingSection = () => {
             }`}
           >
             What's Hot in 
-            <span className="bg-gradient-to-r from-orange-500 to-red-500 bg-clip-text text-transparent">
+            <span className={`${isDark ? 'bg-gradient-to-r from-orange-500 to-red-500' : 'bg-gradient-to-r from-slate-600 to-blue-600'} bg-clip-text text-transparent`}>
               {' '}Cybersecurity
             </span>
           </motion.h2>
