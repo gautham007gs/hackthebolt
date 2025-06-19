@@ -34,7 +34,7 @@ const Header = () => {
       ]
     },
     { name: 'Blog', href: '/blog' },
-    { name: 'Tools', href: '/github-tools' },
+    { name: 'Tools', href: '/tools' },
     { name: 'Community', href: '/community' },
     { name: 'About', href: '/about' },
     { name: 'Contact', href: '/contact' }
@@ -48,23 +48,38 @@ const Header = () => {
   return (
     <header className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${
       isScrolled 
-        ? `${isDark ? 'bg-gray-900/95 border-gray-800' : 'bg-white/95 border-gray-200'} backdrop-blur-xl border-b shadow-lg` 
-        : `${isDark ? 'bg-gray-900/80' : 'bg-white/80'} backdrop-blur-sm`
+        ? `${isDark ? 'bg-gray-900/95 border-gray-800' : 'bg-white/95 border-gray-200'} backdrop-blur-xl border-b shadow-xl` 
+        : `${isDark ? 'bg-gray-900/90' : 'bg-white/90'} backdrop-blur-md`
     }`}>
       <nav className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex items-center justify-between h-16">
-          {/* Terminal Box Logo */}
+          {/* Enhanced Logo with Terminal */}
           <Link href="/" className="flex items-center space-x-3 group">
             <div className={`w-10 h-10 ${
-              isDark ? 'bg-gray-800 border-emerald-400' : 'bg-gray-100 border-emerald-600'
-            } border-2 rounded-lg flex items-center justify-center font-mono font-bold text-sm ${
-              isDark ? 'text-emerald-400' : 'text-emerald-600'
-            } group-hover:scale-105 transition-transform duration-200 shadow-lg`}>
-              _$
+              isDark 
+                ? 'bg-gradient-to-br from-gray-800 to-gray-900 border-emerald-400 text-emerald-400' 
+                : 'bg-gradient-to-br from-gray-100 to-gray-200 border-emerald-600 text-emerald-600'
+            } border-2 rounded-lg flex items-center justify-center font-mono font-bold text-sm shadow-lg relative overflow-hidden group-hover:scale-105 transition-transform duration-200`}>
+              <div className={`absolute inset-0 ${
+                isDark ? 'bg-gradient-to-br from-gray-700/30 to-transparent' : 'bg-gradient-to-br from-white/50 to-transparent'
+              } rounded-lg`} />
+              <span className="relative z-10 select-none">_$</span>
+              <div className={`absolute inset-0 ${
+                isDark ? 'bg-emerald-400/10' : 'bg-emerald-600/10'
+              } rounded-lg opacity-0 group-hover:opacity-100 transition-opacity duration-300`} />
             </div>
-            <span className={`text-xl font-bold ${isDark ? 'text-white' : 'text-gray-900'}`}>
-              HackTheShell
-            </span>
+            <div className="flex flex-col">
+              <span className={`text-xl font-bold leading-tight bg-gradient-to-r ${
+                isDark ? 'from-white to-gray-300' : 'from-gray-900 to-gray-700'
+              } bg-clip-text text-transparent`}>
+                HackTheShell
+              </span>
+              <span className={`text-xs font-medium ${
+                isDark ? 'text-emerald-400' : 'text-emerald-600'
+              } tracking-wider`}>
+                CYBER ACADEMY
+              </span>
+            </div>
           </Link>
 
           {/* Desktop Navigation - Better Spaced */}
@@ -121,26 +136,28 @@ const Header = () => {
 
           {/* Right side actions - Properly Spaced */}
           <div className="flex items-center space-x-2">
-            {/* Search - Better Positioning */}
+            {/* Enhanced Search */}
             <div className="relative">
               {isSearchOpen ? (
-                <div className={`absolute right-0 top-0 flex items-center space-x-2 ${
-                  isDark ? 'bg-gray-800 border-gray-700' : 'bg-white border-gray-200'
-                } rounded-xl border p-2 shadow-xl min-w-[300px] z-10`}>
-                  <Search className="h-4 w-4 text-gray-400 ml-1" />
+                <div className={`absolute right-0 top-0 flex items-center space-x-3 ${
+                  isDark ? 'bg-gray-800/95 border-gray-700' : 'bg-white/95 border-gray-200'
+                } rounded-2xl border p-3 shadow-2xl backdrop-blur-xl min-w-[350px] z-10`}>
+                  <div className={`p-2 rounded-lg ${isDark ? 'bg-emerald-500/20' : 'bg-emerald-100'}`}>
+                    <Search className={`h-4 w-4 ${isDark ? 'text-emerald-400' : 'text-emerald-600'}`} />
+                  </div>
                   <input
                     type="text"
                     value={searchQuery}
                     onChange={(e) => setSearchQuery(e.target.value)}
                     placeholder="Search tutorials, blogs, tools..."
-                    className={`flex-1 px-2 py-1 text-sm bg-transparent outline-none ${
+                    className={`flex-1 px-0 py-2 text-sm bg-transparent outline-none font-medium ${
                       isDark ? 'text-white placeholder-gray-400' : 'text-gray-900 placeholder-gray-500'
                     }`}
                     autoFocus
                   />
                   <button
                     onClick={() => setIsSearchOpen(false)}
-                    className={`p-1 rounded-lg transition-colors duration-200 ${
+                    className={`p-2 rounded-lg transition-colors duration-200 ${
                       isDark ? 'text-gray-400 hover:text-white hover:bg-gray-700' : 'text-gray-600 hover:text-gray-900 hover:bg-gray-100'
                     }`}
                   >
@@ -150,8 +167,8 @@ const Header = () => {
               ) : (
                 <button
                   onClick={() => setIsSearchOpen(true)}
-                  className={`p-2.5 rounded-xl transition-colors duration-200 ${
-                    isDark ? 'text-gray-400 hover:text-white hover:bg-gray-800/50' : 'text-gray-600 hover:text-gray-900 hover:bg-gray-100/50'
+                  className={`p-3 rounded-xl transition-all duration-200 border ${
+                    isDark ? 'text-gray-400 hover:text-white hover:bg-gray-800/50 border-transparent hover:border-gray-700' : 'text-gray-600 hover:text-gray-900 hover:bg-gray-100/50 border-transparent hover:border-gray-200'
                   }`}
                   title="Search"
                 >

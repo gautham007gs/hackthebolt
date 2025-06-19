@@ -48,6 +48,7 @@ function AppContent() {
           <Route path="/creator" component={CreatorPage} />
           <Route path="/login" component={LoginPage} />
           <Route path="/github-tools" component={GitHubToolsPage} />
+          <Route path="/tools" component={GitHubToolsPage} />
           <Route path="/about" component={AboutPage} />
           <Route path="/contact" component={ContactPage} />
         </Switch>

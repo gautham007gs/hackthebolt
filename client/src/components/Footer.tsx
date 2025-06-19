@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { Link } from 'wouter';
 import { useTheme } from '../contexts/ThemeContext';
-import { Github, Twitter, Linkedin, Youtube, Send, ChevronRight } from 'lucide-react';
+import { Github, Twitter, Linkedin, Youtube, Send, ChevronRight, Shield } from 'lucide-react';
 
 const Footer = () => {
   const { isDark } = useTheme();
@@ -49,46 +49,72 @@ const Footer = () => {
         <div className="grid lg:grid-cols-4 gap-8">
           {/* Brand & Newsletter */}
           <div className="lg:col-span-1">
-            <div className="flex items-center space-x-2 mb-6">
-              <div className={`w-8 h-8 ${isDark ? 'bg-gray-800 border-emerald-400' : 'bg-gray-100 border-emerald-600'} border-2 rounded-lg flex items-center justify-center font-mono font-bold text-sm ${isDark ? 'text-emerald-400' : 'text-emerald-600'}`}>
-                _$
+            <div className="flex items-center space-x-3 mb-6">
+              <div className={`w-8 h-8 ${
+                isDark 
+                  ? 'bg-gradient-to-br from-gray-800 to-gray-900 border-emerald-400 text-emerald-400' 
+                  : 'bg-gradient-to-br from-gray-100 to-gray-200 border-emerald-600 text-emerald-600'
+              } border-2 rounded-lg flex items-center justify-center font-mono font-bold text-sm shadow-lg relative overflow-hidden`}>
+                <div className={`absolute inset-0 ${
+                  isDark ? 'bg-gradient-to-br from-gray-700/30 to-transparent' : 'bg-gradient-to-br from-white/50 to-transparent'
+                } rounded-lg`} />
+                <span className="relative z-10 select-none">_$</span>
               </div>
-              <span className={`text-xl font-bold ${isDark ? 'text-white' : 'text-gray-900'}`}>
-                HackTheShell
-              </span>
+              <div className="flex flex-col">
+                <span className={`text-lg font-bold ${isDark ? 'text-white' : 'text-gray-900'}`}>
+                  HackTheShell
+                </span>
+                <span className={`text-xs font-medium ${isDark ? 'text-emerald-400' : 'text-emerald-600'} tracking-wider`}>
+                  CYBER ACADEMY
+                </span>
+              </div>
             </div>
             <p className={`${isDark ? 'text-gray-400' : 'text-gray-600'} mb-6 leading-relaxed`}>
               Empowering the next generation of cybersecurity professionals through hands-on learning and real-world scenarios.
             </p>
             
-            {/* Newsletter Signup */}
-            <div>
-              <h4 className={`font-semibold ${isDark ? 'text-white' : 'text-gray-900'} mb-3`}>
-                Stay Updated
-              </h4>
+            {/* Enhanced Newsletter CTA */}
+            <div className={`p-6 rounded-2xl border-2 border-dashed ${
+              isDark ? 'border-emerald-500/30 bg-emerald-500/5' : 'border-emerald-500/50 bg-emerald-50/50'
+            }`}>
+              <div className="flex items-center space-x-2 mb-3">
+                <div className={`w-8 h-8 rounded-lg ${
+                  isDark ? 'bg-emerald-500/20' : 'bg-emerald-100'
+                } flex items-center justify-center`}>
+                  <Shield className={`h-4 w-4 ${isDark ? 'text-emerald-400' : 'text-emerald-600'}`} />
+                </div>
+                <h4 className={`font-bold ${isDark ? 'text-white' : 'text-gray-900'}`}>
+                  Security Alerts & Updates
+                </h4>
+              </div>
+              <p className={`text-sm mb-4 ${isDark ? 'text-gray-300' : 'text-gray-600'}`}>
+                Get instant notifications about critical vulnerabilities, new tutorials, and exclusive cybersecurity insights.
+              </p>
               {subscribed ? (
-                <div className="text-emerald-500 text-sm font-medium">
-                  ✓ Successfully subscribed!
+                <div className="flex items-center space-x-2 text-emerald-500 text-sm font-medium">
+                  <div className="w-2 h-2 bg-emerald-500 rounded-full animate-pulse"></div>
+                  <span>Successfully subscribed!</span>
                 </div>
               ) : (
-                <form onSubmit={handleSubscribe} className="flex">
+                <form onSubmit={handleSubscribe} className="space-y-3">
                   <input
                     type="email"
                     value={email}
                     onChange={(e) => setEmail(e.target.value)}
-                    placeholder="Enter your email"
-                    className={`flex-1 px-3 py-2 rounded-l-lg border ${
+                    placeholder="your@email.com"
+                    className={`w-full px-4 py-3 rounded-xl border ${
                       isDark 
                         ? 'bg-gray-800 border-gray-700 text-white placeholder-gray-400' 
-                        : 'bg-gray-50 border-gray-300 text-gray-900 placeholder-gray-500'
+                        : 'bg-white border-gray-300 text-gray-900 placeholder-gray-500'
                     } focus:outline-none focus:ring-2 focus:ring-emerald-500/20 focus:border-emerald-500 text-sm`}
                     required
                   />
                   <button
                     type="submit"
-                    className="bg-emerald-500 hover:bg-emerald-600 text-white px-3 py-2 rounded-r-lg transition-colors"
+                    className="w-full bg-gradient-to-r from-emerald-500 to-cyan-500 hover:from-emerald-600 hover:to-cyan-600 text-white px-4 py-3 rounded-xl font-semibold transition-all duration-200 flex items-center justify-center space-x-2 shadow-lg hover:shadow-emerald-500/25"
                   >
                     <Send className="h-4 w-4" />
+                    <span>Subscribe for Free</span>
                   </button>
                 </form>
               )}

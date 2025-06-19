@@ -468,9 +468,20 @@ Success against APTs requires a combination of technology, processes, and people
                 initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.6, delay: 0.4 }}
-                className={`blog-content ${isDark ? 'prose-invert' : ''} max-w-none`}
-                dangerouslySetInnerHTML={{ __html: blogPost.content.replace(/\n/g, '<br/>') }}
-              />
+                className={`blog-content max-w-none mb-12`}
+              >
+                <div className={`leading-relaxed prose prose-lg max-w-none ${
+                  isDark ? 'prose-invert' : 'prose-gray'
+                }`}>
+                  {blogPost.content.split('\n').map((paragraph, index) => (
+                    <p key={index} className={`mb-6 text-lg leading-8`} style={{ 
+                      color: isDark ? '#e5e7eb' : '#111827' 
+                    }}>
+                      {paragraph}
+                    </p>
+                  ))}
+                </div>
+              </motion.article>
 
               {/* Tags */}
               <motion.div

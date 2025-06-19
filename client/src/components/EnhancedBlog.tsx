@@ -159,21 +159,21 @@ const EnhancedBlog = () => {
   };
 
   return (
-    <section className={`py-24 ${isDark ? 'bg-gray-900' : 'bg-gray-50'} transition-colors duration-300`}>
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        {/* Header */}
-        <div className="text-center mb-16">
+    <section className={`py-16 ${isDark ? 'bg-gray-900' : 'bg-gray-50'} transition-colors duration-300`}>
+      <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+        {/* Compact Header */}
+        <div className="text-center mb-12">
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.6 }}
-            className="space-y-6"
+            className="space-y-4"
           >
-            <h2 className={`text-3xl lg:text-5xl font-bold mb-6 leading-tight tracking-tight ${isDark ? 'text-white' : 'text-gray-900'}`}>
+            <h2 className={`text-2xl lg:text-4xl font-bold leading-tight tracking-tight ${isDark ? 'text-white' : 'text-gray-900'}`}>
               Latest Security Intelligence 📚
             </h2>
-            <p className={`text-xl ${isDark ? 'text-gray-300' : 'text-gray-600'} max-w-3xl mx-auto leading-relaxed`}>
-              Stay ahead of emerging threats with expert analysis, real-world case studies, and actionable security insights from industry professionals.
+            <p className={`text-lg ${isDark ? 'text-gray-300' : 'text-gray-600'} max-w-2xl mx-auto leading-relaxed`}>
+              Stay ahead of emerging threats with expert analysis and actionable insights.
             </p>
           </motion.div>
         </div>
@@ -203,9 +203,9 @@ const EnhancedBlog = () => {
           ))}
         </motion.div>
 
-        <div className="grid lg:grid-cols-4 gap-8">
+        <div className="grid lg:grid-cols-5 gap-8">
           {/* Main Content */}
-          <div className="lg:col-span-3">
+          <div className="lg:col-span-4">
             {/* Featured Post */}
             {featuredPost && selectedCategory === 'All' && (
               <motion.div
@@ -278,8 +278,8 @@ const EnhancedBlog = () => {
               </motion.div>
             )}
 
-            {/* Blog Grid */}
-            <div className="grid md:grid-cols-2 gap-8">
+            {/* Compact Blog Grid */}
+            <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
               {filteredPosts.filter(post => !post.featured || selectedCategory !== 'All').map((post, index) => (
                 <motion.article
                   key={post.id}
@@ -293,7 +293,7 @@ const EnhancedBlog = () => {
                       <img
                         src={post.image}
                         alt={post.title}
-                        className="w-full h-48 object-cover group-hover:scale-105 transition-transform duration-500"
+                        className="w-full h-40 object-cover group-hover:scale-105 transition-transform duration-500"
                       />
                       <div className="absolute top-4 left-4 flex items-center space-x-2">
                         <span className={`px-2 py-1 rounded-lg text-xs font-medium flex items-center space-x-1 ${getCategoryColor(post.category)}`}>
@@ -308,26 +308,25 @@ const EnhancedBlog = () => {
                       </div>
                     </div>
                     
-                    <div className="p-6">
-                      <h3 className={`text-xl font-bold mb-3 group-hover:text-emerald-500 transition-colors duration-300 line-clamp-2 ${isDark ? 'text-white' : 'text-gray-900'}`}>
+                    <div className="p-5">
+                      <h3 className={`text-lg font-bold mb-2 group-hover:text-emerald-500 transition-colors duration-300 line-clamp-2 ${isDark ? 'text-white' : 'text-gray-900'}`}>
                         {post.title}
                       </h3>
                       
-                      <p className={`${isDark ? 'text-gray-300' : 'text-gray-600'} mb-4 leading-relaxed line-clamp-3`}>
+                      <p className={`${isDark ? 'text-gray-300' : 'text-gray-600'} mb-3 leading-relaxed line-clamp-2 text-sm`}>
                         {post.excerpt}
                       </p>
 
-                      {/* Tags */}
-                      <div className="flex flex-wrap gap-2 mb-4">
-                        {post.tags.slice(0, 3).map((tag, tagIndex) => (
+                      {/* Compact Tags */}
+                      <div className="flex flex-wrap gap-1 mb-3">
+                        {post.tags.slice(0, 2).map((tag, tagIndex) => (
                           <span
                             key={tagIndex}
-                            className={`px-2 py-1 rounded-lg text-xs flex items-center space-x-1 ${
+                            className={`px-2 py-1 rounded-md text-xs ${
                               isDark ? 'bg-gray-700 text-gray-300' : 'bg-gray-100 text-gray-600'
                             }`}
                           >
-                            <Tag className="h-3 w-3" />
-                            <span>#{tag}</span>
+                            #{tag}
                           </span>
                         ))}
                       </div>
@@ -363,7 +362,7 @@ const EnhancedBlog = () => {
             </div>
           </div>
 
-          {/* Sidebar */}
+          {/* Compact Sidebar */}
           <div className="lg:col-span-1">
             <div className="sticky top-24 space-y-8">
               {/* Trending Posts */}

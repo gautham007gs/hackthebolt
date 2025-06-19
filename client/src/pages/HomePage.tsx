@@ -3,10 +3,9 @@ import { motion } from 'framer-motion';
 import SEOHead from '../components/SEOHead';
 import Hero from '../components/Hero';
 import Features from '../components/Features';
-import Tutorials from '../components/Tutorials';
-import GitHubTools from '../components/GitHubTools';
-import Blog from '../components/Blog';
+import EnhancedBlog from '../components/EnhancedBlog';
 import Community from '../components/Community';
+import Footer from '../components/Footer';
 
 const HomePage = () => {
   return (
@@ -24,10 +23,9 @@ const HomePage = () => {
       >
         <Hero />
         <Features />
-        <Tutorials />
-        <GitHubTools />
-        <Blog />
+        <EnhancedBlog />
         <Community />
+        <Footer />
       </motion.div>
     </>
   );
