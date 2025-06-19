@@ -148,21 +148,29 @@
   --primary-emerald-dark: #059669;
   --accent-cyan: #06b6d4;
   --accent-purple: #8b5cf6;
-  --text-primary: #111827;
-  --text-secondary: #6b7280;
+  --text-primary: #1f2937;
+  --text-secondary: #64748b;
+  --text-muted: #94a3b8;
   --bg-primary: #ffffff;
-  --bg-secondary: #f9fafb;
-  --border-color: #e5e7eb;
-  --shadow-primary: rgba(16, 185, 129, 0.1);
+  --bg-secondary: #f8fafc;
+  --bg-tertiary: #f1f5f9;
+  --border-color: #e2e8f0;
+  --border-light: #f1f5f9;
+  --shadow-primary: rgba(59, 130, 246, 0.08);
+  --shadow-secondary: rgba(16, 185, 129, 0.05);
 }
 
 .dark {
   --text-primary: #f9fafb;
   --text-secondary: #d1d5db;
+  --text-muted: #9ca3af;
   --bg-primary: #111827;
   --bg-secondary: #1f2937;
+  --bg-tertiary: #374151;
   --border-color: #374151;
+  --border-light: #4b5563;
   --shadow-primary: rgba(16, 185, 129, 0.2);
+  --shadow-secondary: rgba(59, 130, 246, 0.1);
 }
 
 /* Enhanced Button Styles */

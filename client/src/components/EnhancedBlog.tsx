@@ -159,7 +159,7 @@ const EnhancedBlog = () => {
   };
 
   return (
-    <section className={`py-16 ${isDark ? 'bg-gray-900' : 'bg-gray-50'} transition-colors duration-300`}>
+    <section className={`py-16 ${isDark ? 'bg-gray-900' : 'bg-gradient-to-br from-slate-50 via-blue-50 to-indigo-50'} transition-colors duration-300`}>
       <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
         {/* Compact Header */}
         <div className="text-center mb-12">
@@ -194,7 +194,7 @@ const EnhancedBlog = () => {
                   ? 'bg-emerald-500 text-white shadow-lg'
                   : isDark
                     ? 'bg-gray-800 text-gray-300 hover:bg-gray-700 hover:text-white'
-                    : 'bg-white text-gray-700 hover:bg-gray-100 hover:text-gray-900 border border-gray-200'
+                    : 'bg-white text-slate-700 hover:bg-blue-50 hover:text-blue-700 border border-blue-100 shadow-sm'
               }`}
             >
               {getCategoryIcon(category)}

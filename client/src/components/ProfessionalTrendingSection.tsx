@@ -108,7 +108,7 @@ const ProfessionalTrendingSection = () => {
   };
 
   return (
-    <section className={`py-20 ${isDark ? 'bg-gray-900' : 'bg-white'} transition-all duration-500`}>
+    <section className={`py-20 ${isDark ? 'bg-gray-900' : 'bg-gradient-to-br from-gray-50 to-blue-50'} transition-all duration-500`}>
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         {/* Header */}
         <motion.div
@@ -171,7 +171,7 @@ const ProfessionalTrendingSection = () => {
                 exit={{ opacity: 0, x: -50 }}
                 transition={{ duration: 0.5, ease: [0.25, 0.46, 0.45, 0.94] }}
                 className={`relative overflow-hidden rounded-2xl ${
-                  isDark ? 'bg-gray-800 border-gray-700' : 'bg-white border-gray-200'
+                  isDark ? 'bg-gray-800 border-gray-700' : 'bg-white border-blue-100 shadow-blue-100/50'
                 } border shadow-2xl group hover:shadow-3xl transition-all duration-500`}
               >
                 <div className="relative overflow-hidden">
@@ -221,33 +221,33 @@ const ProfessionalTrendingSection = () => {
                   </p>
 
                   {/* Author & Stats */}
-                  <div className="flex items-center justify-between">
+                  <div className="flex flex-col space-y-4 lg:flex-row lg:items-center lg:justify-between lg:space-y-0">
                     <div className="flex items-center space-x-4">
                       <img
                         src={trendingPosts[activeIndex].authorAvatar}
                         alt={trendingPosts[activeIndex].author}
-                        className="w-12 h-12 rounded-full border-2 border-orange-500/50"
+                        className="w-12 h-12 rounded-full border-2 border-orange-500/50 flex-shrink-0"
                       />
-                      <div>
-                        <p className={`font-semibold ${isDark ? 'text-white' : 'text-gray-900'}`}>
+                      <div className="min-w-0">
+                        <p className={`font-semibold whitespace-nowrap ${isDark ? 'text-white' : 'text-gray-900'}`}>
                           {trendingPosts[activeIndex].author}
                         </p>
-                        <p className={`text-sm ${isDark ? 'text-gray-400' : 'text-gray-500'}`}>
+                        <p className={`text-sm whitespace-nowrap ${isDark ? 'text-gray-400' : 'text-gray-500'}`}>
                           {trendingPosts[activeIndex].authorRole}
                         </p>
                       </div>
                     </div>
 
-                    <div className="flex items-center space-x-6 text-sm">
-                      <div className={`flex items-center space-x-1 ${isDark ? 'text-gray-400' : 'text-gray-500'}`}>
+                    <div className="flex items-center space-x-6 text-sm flex-shrink-0">
+                      <div className={`flex items-center space-x-1 whitespace-nowrap ${isDark ? 'text-gray-400' : 'text-gray-500'}`}>
                         <Eye className="h-4 w-4" />
                         <span>{(trendingPosts[activeIndex].views / 1000).toFixed(1)}K</span>
                       </div>
-                      <div className={`flex items-center space-x-1 ${isDark ? 'text-gray-400' : 'text-gray-500'}`}>
+                      <div className={`flex items-center space-x-1 whitespace-nowrap ${isDark ? 'text-gray-400' : 'text-gray-500'}`}>
                         <Heart className="h-4 w-4" />
                         <span>{trendingPosts[activeIndex].likes}</span>
                       </div>
-                      <div className={`flex items-center space-x-1 ${isDark ? 'text-gray-400' : 'text-gray-500'}`}>
+                      <div className={`flex items-center space-x-1 whitespace-nowrap ${isDark ? 'text-gray-400' : 'text-gray-500'}`}>
                         <MessageCircle className="h-4 w-4" />
                         <span>{trendingPosts[activeIndex].comments}</span>
                       </div>
@@ -275,7 +275,7 @@ const ProfessionalTrendingSection = () => {
 
           {/* Trending List */}
           <motion.div variants={itemVariants} className="space-y-4">
-            <div className={`p-6 rounded-xl ${isDark ? 'bg-gray-800 border-gray-700' : 'bg-gray-50 border-gray-200'} border`}>
+            <div className={`p-6 rounded-xl ${isDark ? 'bg-gray-800 border-gray-700' : 'bg-white border-blue-100 shadow-blue-50/50'} border shadow-lg`}>
               <div className="flex items-center space-x-2 mb-6">
                 <Zap className="h-5 w-5 text-yellow-500" />
                 <h3 className={`text-lg font-semibold ${isDark ? 'text-white' : 'text-gray-900'}`}>
@@ -291,9 +291,9 @@ const ProfessionalTrendingSection = () => {
                     transition={{ duration: 0.2, ease: "easeOut" }}
                     className={`p-4 rounded-lg transition-all duration-300 cursor-pointer ${
                       index === activeIndex
-                        ? isDark ? 'bg-gray-700 border-orange-500/50' : 'bg-white border-orange-300'
-                        : isDark ? 'hover:bg-gray-700' : 'hover:bg-white'
-                    } border ${isDark ? 'border-gray-600' : 'border-gray-200'}`}
+                        ? isDark ? 'bg-gray-700 border-orange-500/50' : 'bg-blue-50 border-blue-200'
+                        : isDark ? 'hover:bg-gray-700' : 'hover:bg-blue-50/50'
+                    } border ${isDark ? 'border-gray-600' : 'border-blue-100'}`}
                     onClick={() => setActiveIndex(index)}
                   >
                     <div className="flex items-start space-x-3">
