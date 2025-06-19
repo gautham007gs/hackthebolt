@@ -36,6 +36,7 @@ const Header = () => {
     { name: 'Blog', href: '/blog' },
     { name: 'Tools', href: '/github-tools' },
     { name: 'Community', href: '/community' },
+    { name: 'About', href: '/about' },
     { name: 'Contact', href: '/contact' }
   ];
 
@@ -48,19 +49,20 @@ const Header = () => {
     <header className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${
       isScrolled 
         ? `${isDark ? 'bg-gray-900/95 border-gray-800' : 'bg-white/95 border-gray-200'} backdrop-blur-xl border-b shadow-lg` 
-        : 'bg-transparent'
+        : `${isDark ? 'bg-gray-900/80' : 'bg-white/80'} backdrop-blur-sm`
     }`}>
       <nav className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex items-center justify-between h-16">
-          {/* Simple Terminal Logo */}
-          <Link href="/" className="flex items-center space-x-2 group">
-            <div className={`flex items-center space-x-1 text-xl font-mono font-bold ${
+          {/* Terminal Box Logo */}
+          <Link href="/" className="flex items-center space-x-3 group">
+            <div className={`w-10 h-10 ${
+              isDark ? 'bg-gray-800 border-emerald-400' : 'bg-gray-100 border-emerald-600'
+            } border-2 rounded-lg flex items-center justify-center font-mono font-bold text-sm ${
               isDark ? 'text-emerald-400' : 'text-emerald-600'
-            } group-hover:scale-105 transition-transform duration-200`}>
-              <span className="text-2xl">_</span>
-              <span className="text-2xl">$</span>
+            } group-hover:scale-105 transition-transform duration-200 shadow-lg`}>
+              _$
             </div>
-            <span className={`text-xl font-bold bg-gradient-to-r from-emerald-400 to-cyan-400 bg-clip-text text-transparent`}>
+            <span className={`text-xl font-bold ${isDark ? 'text-white' : 'text-gray-900'}`}>
               HackTheShell
             </span>
           </Link>
@@ -119,23 +121,26 @@ const Header = () => {
 
           {/* Right side actions - Properly Spaced */}
           <div className="flex items-center space-x-2">
-            {/* Search - Fixed Positioning */}
+            {/* Search - Better Positioning */}
             <div className="relative">
               {isSearchOpen ? (
-                <div className="absolute right-0 top-0 flex items-center space-x-2 bg-white dark:bg-gray-800 rounded-xl border border-gray-200 dark:border-gray-700 p-1 shadow-lg min-w-[280px]">
+                <div className={`absolute right-0 top-0 flex items-center space-x-2 ${
+                  isDark ? 'bg-gray-800 border-gray-700' : 'bg-white border-gray-200'
+                } rounded-xl border p-2 shadow-xl min-w-[300px] z-10`}>
+                  <Search className="h-4 w-4 text-gray-400 ml-1" />
                   <input
                     type="text"
                     value={searchQuery}
                     onChange={(e) => setSearchQuery(e.target.value)}
                     placeholder="Search tutorials, blogs, tools..."
-                    className={`flex-1 px-3 py-2 rounded-lg text-sm bg-transparent outline-none ${
+                    className={`flex-1 px-2 py-1 text-sm bg-transparent outline-none ${
                       isDark ? 'text-white placeholder-gray-400' : 'text-gray-900 placeholder-gray-500'
                     }`}
                     autoFocus
                   />
                   <button
                     onClick={() => setIsSearchOpen(false)}
-                    className={`p-2 rounded-lg transition-colors duration-200 ${
+                    className={`p-1 rounded-lg transition-colors duration-200 ${
                       isDark ? 'text-gray-400 hover:text-white hover:bg-gray-700' : 'text-gray-600 hover:text-gray-900 hover:bg-gray-100'
                     }`}
                   >
@@ -225,27 +230,24 @@ const Header = () => {
             <div className="pt-4 space-y-2">
               {navigation.map((item) => (
                 <div key={item.name}>
-                  {item.subItems ? (
+                  {item.name === 'Learn' ? (
                     <div className="space-y-1">
                       <div className={`px-3 py-2 text-sm font-medium ${
                         isDark ? 'text-gray-400' : 'text-gray-600'
                       }`}>
                         {item.name}
                       </div>
-                      {item.subItems.map((subItem) => (
-                        <Link
-                          key={subItem.name}
-                          href={subItem.href}
-                          className={`block px-6 py-2 text-sm transition-colors duration-200 ${
-                            isActivePath(subItem.href)
-                              ? `${isDark ? 'text-emerald-400 bg-emerald-500/15' : 'text-emerald-600 bg-emerald-50'}`
-                              : `${isDark ? 'text-gray-300 hover:text-white hover:bg-gray-800/50' : 'text-gray-700 hover:text-gray-900 hover:bg-gray-100/50'}`
-                          } rounded-xl mx-3`}
-                          onClick={() => setIsMenuOpen(false)}
-                        >
-                          {subItem.name}
-                        </Link>
-                      ))}
+                      <Link
+                        href="/tutorials"
+                        className={`block px-6 py-2 text-sm transition-colors duration-200 ${
+                          isActivePath('/tutorials')
+                            ? `${isDark ? 'text-emerald-400 bg-emerald-500/15' : 'text-emerald-600 bg-emerald-50'}`
+                            : `${isDark ? 'text-gray-300 hover:text-white hover:bg-gray-800/50' : 'text-gray-700 hover:text-gray-900 hover:bg-gray-100/50'}`
+                        } rounded-xl mx-3`}
+                        onClick={() => setIsMenuOpen(false)}
+                      >
+                        Browse Tutorials
+                      </Link>
                     </div>
                   ) : (
                     <Link
