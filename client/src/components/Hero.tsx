@@ -32,11 +32,12 @@ const Hero = () => {
                 <span className={`${isDark ? 'text-emerald-400' : 'text-emerald-700'} font-semibold`}>Ethical Hacking Academy</span>
               </div>
               
-              <h1 className={`text-6xl lg:text-8xl font-bold leading-tight`}>
-                <span className={`${isDark ? 'text-emerald-400' : 'text-emerald-600'} drop-shadow-lg`}>Unleash</span>
-                <span className={`${isDark ? 'text-white' : 'text-gray-900'}`}> Your</span>
+              <h1 className={`text-5xl md:text-7xl lg:text-8xl font-black leading-none tracking-tight`} 
+                  style={{ fontFamily: 'system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif' }}>
+                <span className={`${isDark ? 'text-emerald-400' : 'text-emerald-600'} font-black`}>Unleash</span>
+                <span className={`${isDark ? 'text-white' : 'text-gray-900'} font-black`}> Your</span>
                 <br />
-                <span className={`${isDark ? 'text-cyan-400' : 'text-cyan-600'} drop-shadow-lg`}>Cyber Genius</span>
+                <span className={`${isDark ? 'text-cyan-400' : 'text-cyan-600'} font-black`}>Cyber Genius</span>
               </h1>
               
               <p className={`text-lg sm:text-xl ${isDark ? 'text-gray-300' : 'text-gray-600'} leading-relaxed max-w-2xl`}>

@@ -2,6 +2,16 @@
 @tailwind components;
 @tailwind utilities;
 
+@layer components {
+  .btn-primary {
+    @apply px-4 py-2 bg-emerald-600 text-white font-medium rounded-lg hover:bg-emerald-700 transition-colors duration-200 flex items-center justify-center;
+  }
+  
+  .btn-secondary {
+    @apply px-4 py-2 border border-gray-300 dark:border-gray-600 text-gray-700 dark:text-gray-300 font-medium rounded-lg hover:bg-gray-50 dark:hover:bg-gray-700 transition-colors duration-200;
+  }
+}
+
 /* Custom CSS Variables for Enhanced Theme Support */
 :root {
   --primary-emerald: #10b981;

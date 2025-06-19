@@ -53,12 +53,12 @@ const Header = () => {
     }`}>
       <nav className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex items-center justify-between h-16">
-          {/* Simple Terminal Logo */}
+          {/* Enhanced Terminal Shell Logo */}
           <Link href="/" className="flex items-center space-x-3 group">
-            <div className={`w-8 h-6 ${
+            <div className={`w-10 h-7 ${
               isDark ? 'bg-gray-900 border-emerald-400' : 'bg-gray-50 border-emerald-600'
-            } border border-l-2 border-b-2 rounded-bl-md flex items-center justify-start pl-1 font-mono text-xs group-hover:border-emerald-500 transition-all duration-200 group-hover:shadow-lg`}>
-              <span className={`select-none ${isDark ? 'text-emerald-400' : 'text-emerald-600'}`}>$</span>
+            } border-4 rounded-2xl flex items-center justify-start pl-2 font-mono text-xs group-hover:border-emerald-500 transition-all duration-200 group-hover:shadow-xl shadow-emerald-500/20`}>
+              <span className={`select-none ${isDark ? 'text-emerald-400' : 'text-emerald-600'} font-bold`}>$</span>
             </div>
             <div className="flex flex-col">
               <span className={`text-xl font-bold ${
