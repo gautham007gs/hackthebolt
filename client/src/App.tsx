@@ -24,6 +24,7 @@ import LoginPage from './pages/LoginPage';
 import GitHubToolsPage from './pages/GitHubToolsPage';
 import AboutPage from './pages/AboutPage';
 import ContactPage from './pages/ContactPage';
+import CreatorApplicationPage from './pages/CreatorApplicationPage';
 import { motion, AnimatePresence } from 'framer-motion';
 
 function AppContent() {
@@ -51,6 +52,7 @@ function AppContent() {
           <Route path="/tools" component={GitHubToolsPage} />
           <Route path="/about" component={AboutPage} />
           <Route path="/contact" component={ContactPage} />
+          <Route path="/apply-creator" component={CreatorApplicationPage} />
         </Switch>
       </AnimatePresence>
       <Footer />

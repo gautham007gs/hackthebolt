@@ -49,25 +49,15 @@ const Footer = () => {
         <div className="grid lg:grid-cols-4 gap-8">
           {/* Brand & Newsletter */}
           <div className="lg:col-span-1">
-            <div className="flex items-center space-x-3 mb-6">
-              <div className={`w-8 h-8 ${
-                isDark 
-                  ? 'bg-gradient-to-br from-gray-800 to-gray-900 border-emerald-400 text-emerald-400' 
-                  : 'bg-gradient-to-br from-gray-100 to-gray-200 border-emerald-600 text-emerald-600'
-              } border-2 rounded-lg flex items-center justify-center font-mono font-bold text-sm shadow-lg relative overflow-hidden`}>
-                <div className={`absolute inset-0 ${
-                  isDark ? 'bg-gradient-to-br from-gray-700/30 to-transparent' : 'bg-gradient-to-br from-white/50 to-transparent'
-                } rounded-lg`} />
-                <span className="relative z-10 select-none">_$</span>
+            <div className="flex items-center space-x-2 mb-6">
+              <div className={`w-6 h-4 ${
+                isDark ? 'bg-gray-800 border-emerald-400 text-emerald-400' : 'bg-gray-100 border-emerald-600 text-emerald-600'
+              } border border-l-2 border-b-2 rounded-bl-md flex items-center justify-start pl-1 font-mono text-xs`}>
+                <span className="select-none">$</span>
               </div>
-              <div className="flex flex-col">
-                <span className={`text-lg font-bold ${isDark ? 'text-white' : 'text-gray-900'}`}>
-                  HackTheShell
-                </span>
-                <span className={`text-xs font-medium ${isDark ? 'text-emerald-400' : 'text-emerald-600'} tracking-wider`}>
-                  CYBER ACADEMY
-                </span>
-              </div>
+              <span className={`text-lg font-bold ${isDark ? 'text-white' : 'text-gray-900'}`}>
+                HackTheShell
+              </span>
             </div>
             <p className={`${isDark ? 'text-gray-400' : 'text-gray-600'} mb-6 leading-relaxed`}>
               Empowering the next generation of cybersecurity professionals through hands-on learning and real-world scenarios.

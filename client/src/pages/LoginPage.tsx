@@ -1,281 +1,306 @@
 import React, { useState } from 'react';
-import { motion } from 'framer-motion';
-import { Shield, Eye, EyeOff, Lock, Mail, Github, Chrome, Zap } from 'lucide-react';
+import { Link } from 'wouter';
 import { useTheme } from '../contexts/ThemeContext';
 import { useAuth } from '../contexts/AuthContext';
-import { Link, useLocation } from 'wouter';
+import { Eye, EyeOff, Mail, Lock, User, ArrowRight, Shield } from 'lucide-react';
+import { motion } from 'framer-motion';
 
 const LoginPage = () => {
   const { isDark } = useTheme();
   const { login, register } = useAuth();
-  const [, setLocation] = useLocation();
+  
   const [isLogin, setIsLogin] = useState(true);
   const [showPassword, setShowPassword] = useState(false);
   const [formData, setFormData] = useState({
+    name: '',
     email: '',
     password: '',
-    confirmPassword: '',
-    name: ''
+    confirmPassword: ''
   });
-  const [isLoading, setIsLoading] = useState(false);
+  const [loading, setLoading] = useState(false);
   const [error, setError] = useState('');
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    setIsLoading(true);
+    setLoading(true);
     setError('');
 
     try {
       if (isLogin) {
-        // Simulate login
         const success = await login(formData.email, formData.password);
-        if (success) {
-          setLocation('/dashboard');
-        } else {
-          setError('Login failed. Please check your credentials.');
+        if (!success) {
+          setError('Invalid email or password');
         }
       } else {
         if (formData.password !== formData.confirmPassword) {
           setError('Passwords do not match');
+          setLoading(false);
           return;
         }
-        // Use register function for new users
         const success = await register(formData.name, formData.email, formData.password);
-        if (success) {
-          setLocation('/dashboard');
-        } else {
+        if (!success) {
           setError('Registration failed. Please try again.');
         }
       }
     } catch (err) {
-      setError('Authentication failed. Please try again.');
+      setError('An error occurred. Please try again.');
     } finally {
-      setIsLoading(false);
+      setLoading(false);
     }
   };
 
-  const handleDemoLogin = async (role: 'user' | 'creator' | 'admin') => {
-    const success = await login(`demo-${role}@hacktheshell.com`, 'demo');
-    if (success) {
-      setLocation(role === 'admin' ? '/admin' : role === 'creator' ? '/creator' : '/dashboard');
-    }
+  const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setFormData(prev => ({
+      ...prev,
+      [e.target.name]: e.target.value
+    }));
   };
 
   return (
-    <div className={`min-h-screen ${isDark ? 'bg-gradient-to-br from-gray-900 via-gray-900 to-gray-800' : 'bg-gradient-to-br from-gray-50 via-white to-gray-100'} flex items-center justify-center px-4 py-20 relative overflow-hidden`}>
-      {/* Background Effects */}
-      <div className="absolute inset-0">
-        <div className={`absolute top-1/4 left-1/4 w-96 h-96 ${isDark ? 'bg-emerald-500/5' : 'bg-emerald-500/10'} rounded-full blur-3xl`}></div>
-        <div className={`absolute bottom-1/4 right-1/4 w-96 h-96 ${isDark ? 'bg-purple-500/5' : 'bg-purple-500/10'} rounded-full blur-3xl`}></div>
-        <div className={`absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] ${isDark ? 'bg-cyan-500/3' : 'bg-cyan-500/5'} rounded-full blur-3xl`}></div>
-      </div>
-
-      <div className="relative w-full max-w-6xl mx-auto">
-        <div className="grid lg:grid-cols-2 gap-8 items-center">
-          {/* Left Side - Branding */}
-          <motion.div
-            initial={{ opacity: 0, x: -50 }}
-            animate={{ opacity: 1, x: 0 }}
-            transition={{ duration: 0.6 }}
-            className="text-center lg:text-left"
-          >
-            <div className="flex items-center justify-center lg:justify-start space-x-3 mb-8">
-              <div className="relative">
-                <Shield className={`h-12 w-12 ${isDark ? 'text-emerald-400' : 'text-emerald-600'}`} />
-                <div className={`absolute inset-0 ${isDark ? 'bg-emerald-400/20' : 'bg-emerald-600/20'} blur-xl rounded-full`}></div>
-              </div>
-              <span className={`text-3xl font-bold ${isDark ? 'text-white' : 'text-gray-900'}`}>
-                Hack<span className="bg-gradient-to-r from-emerald-400 to-teal-400 bg-clip-text text-transparent">The</span>Shell
-              </span>
+    <div className={`min-h-screen flex items-center justify-center py-12 px-4 sm:px-6 lg:px-8 ${
+      isDark ? 'bg-gray-900' : 'bg-gray-50'
+    }`}>
+      <div className="max-w-md w-full space-y-8">
+        {/* Header */}
+        <motion.div
+          initial={{ opacity: 0, y: -20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.6 }}
+          className="text-center"
+        >
+          <div className="flex items-center justify-center space-x-2 mb-6">
+            <div className={`w-8 h-6 ${
+              isDark ? 'bg-gray-800 border-emerald-400 text-emerald-400' : 'bg-gray-100 border-emerald-600 text-emerald-600'
+            } border border-l-2 border-b-2 rounded-bl-md flex items-center justify-start pl-1 font-mono text-xs`}>
+              <span className="select-none">$</span>
             </div>
-
-            <h1 className={`text-4xl lg:text-5xl font-bold mb-6 ${isDark ? 'text-white' : 'text-gray-900'}`}>
-              Join the Elite
-              <br />
-              <span className="bg-gradient-to-r from-emerald-400 via-cyan-400 to-purple-400 bg-clip-text text-transparent">
-                Cyber Force
-              </span>
+            <h1 className={`text-2xl font-bold ${isDark ? 'text-white' : 'text-gray-900'}`}>
+              HackTheShell
             </h1>
+          </div>
+          <h2 className={`text-3xl font-bold ${isDark ? 'text-white' : 'text-gray-900'}`}>
+            {isLogin ? 'Welcome Back' : 'Join the Community'}
+          </h2>
+          <p className={`mt-2 text-sm ${isDark ? 'text-gray-400' : 'text-gray-600'}`}>
+            {isLogin 
+              ? 'Sign in to access your cybersecurity learning journey' 
+              : 'Create your account to start learning cybersecurity'
+            }
+          </p>
+        </motion.div>
 
-            <p className={`text-xl ${isDark ? 'text-gray-300' : 'text-gray-600'} mb-8 max-w-lg`}>
-              Access exclusive cybersecurity content, advanced tutorials, and join a community of elite security professionals.
-            </p>
-
-            <div className="grid grid-cols-2 gap-4 max-w-md mx-auto lg:mx-0">
-              <div className={`${isDark ? 'bg-gray-800/50' : 'bg-white/50'} backdrop-blur-sm rounded-xl p-4 border ${isDark ? 'border-gray-700/50' : 'border-gray-200/50'}`}>
-                <Zap className={`h-8 w-8 ${isDark ? 'text-yellow-400' : 'text-yellow-500'} mb-2`} />
-                <h3 className={`font-semibold ${isDark ? 'text-white' : 'text-gray-900'}`}>Expert Content</h3>
-                <p className={`text-sm ${isDark ? 'text-gray-400' : 'text-gray-600'}`}>Premium tutorials</p>
+        {/* Form */}
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.6, delay: 0.1 }}
+          className={`${
+            isDark ? 'bg-gray-800 border-gray-700' : 'bg-white border-gray-200'
+          } rounded-2xl shadow-xl border p-8`}
+        >
+          <form className="space-y-6" onSubmit={handleSubmit}>
+            {!isLogin && (
+              <div>
+                <label htmlFor="name" className={`block text-sm font-medium ${
+                  isDark ? 'text-gray-300' : 'text-gray-700'
+                } mb-2`}>
+                  Full Name
+                </label>
+                <div className="relative">
+                  <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+                    <User className={`h-5 w-5 ${isDark ? 'text-gray-400' : 'text-gray-400'}`} />
+                  </div>
+                  <input
+                    id="name"
+                    name="name"
+                    type="text"
+                    required={!isLogin}
+                    value={formData.name}
+                    onChange={handleInputChange}
+                    className={`block w-full pl-10 pr-3 py-3 border ${
+                      isDark 
+                        ? 'border-gray-600 bg-gray-700 text-white placeholder-gray-400' 
+                        : 'border-gray-300 bg-white text-gray-900 placeholder-gray-500'
+                    } rounded-xl focus:outline-none focus:ring-2 focus:ring-emerald-500 focus:border-emerald-500`}
+                    placeholder="Enter your full name"
+                  />
+                </div>
               </div>
-              <div className={`${isDark ? 'bg-gray-800/50' : 'bg-white/50'} backdrop-blur-sm rounded-xl p-4 border ${isDark ? 'border-gray-700/50' : 'border-gray-200/50'}`}>
-                <Shield className={`h-8 w-8 ${isDark ? 'text-emerald-400' : 'text-emerald-500'} mb-2`} />
-                <h3 className={`font-semibold ${isDark ? 'text-white' : 'text-gray-900'}`}>Secure Learning</h3>
-                <p className={`text-sm ${isDark ? 'text-gray-400' : 'text-gray-600'}`}>Safe environment</p>
+            )}
+
+            <div>
+              <label htmlFor="email" className={`block text-sm font-medium ${
+                isDark ? 'text-gray-300' : 'text-gray-700'
+              } mb-2`}>
+                Email Address
+              </label>
+              <div className="relative">
+                <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+                  <Mail className={`h-5 w-5 ${isDark ? 'text-gray-400' : 'text-gray-400'}`} />
+                </div>
+                <input
+                  id="email"
+                  name="email"
+                  type="email"
+                  required
+                  value={formData.email}
+                  onChange={handleInputChange}
+                  className={`block w-full pl-10 pr-3 py-3 border ${
+                    isDark 
+                      ? 'border-gray-600 bg-gray-700 text-white placeholder-gray-400' 
+                      : 'border-gray-300 bg-white text-gray-900 placeholder-gray-500'
+                  } rounded-xl focus:outline-none focus:ring-2 focus:ring-emerald-500 focus:border-emerald-500`}
+                  placeholder="Enter your email"
+                />
               </div>
             </div>
-          </motion.div>
 
-          {/* Right Side - Login Form */}
-          <motion.div
-            initial={{ opacity: 0, x: 50 }}
-            animate={{ opacity: 1, x: 0 }}
-            transition={{ duration: 0.6, delay: 0.2 }}
-            className="w-full max-w-md mx-auto"
-          >
-            <div className={`${isDark ? 'bg-gray-800/50' : 'bg-white/80'} backdrop-blur-xl rounded-3xl border ${isDark ? 'border-gray-700/50' : 'border-gray-200/50'} p-8 shadow-2xl`}>
-              {/* Toggle Tabs */}
-              <div className={`flex rounded-2xl p-1 mb-8 ${isDark ? 'bg-gray-700/50' : 'bg-gray-100'}`}>
+            <div>
+              <label htmlFor="password" className={`block text-sm font-medium ${
+                isDark ? 'text-gray-300' : 'text-gray-700'
+              } mb-2`}>
+                Password
+              </label>
+              <div className="relative">
+                <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+                  <Lock className={`h-5 w-5 ${isDark ? 'text-gray-400' : 'text-gray-400'}`} />
+                </div>
+                <input
+                  id="password"
+                  name="password"
+                  type={showPassword ? 'text' : 'password'}
+                  required
+                  value={formData.password}
+                  onChange={handleInputChange}
+                  className={`block w-full pl-10 pr-10 py-3 border ${
+                    isDark 
+                      ? 'border-gray-600 bg-gray-700 text-white placeholder-gray-400' 
+                      : 'border-gray-300 bg-white text-gray-900 placeholder-gray-500'
+                  } rounded-xl focus:outline-none focus:ring-2 focus:ring-emerald-500 focus:border-emerald-500`}
+                  placeholder="Enter your password"
+                />
                 <button
-                  onClick={() => setIsLogin(true)}
-                  className={`flex-1 py-3 px-4 text-center font-semibold rounded-xl transition-all duration-300 ${
-                    isLogin
-                      ? 'bg-gradient-to-r from-emerald-500 to-teal-500 text-white shadow-lg'
-                      : isDark ? 'text-gray-400 hover:text-white' : 'text-gray-600 hover:text-gray-900'
-                  }`}
+                  type="button"
+                  onClick={() => setShowPassword(!showPassword)}
+                  className="absolute inset-y-0 right-0 pr-3 flex items-center"
                 >
-                  Sign In
+                  {showPassword ? (
+                    <EyeOff className={`h-5 w-5 ${isDark ? 'text-gray-400' : 'text-gray-400'}`} />
+                  ) : (
+                    <Eye className={`h-5 w-5 ${isDark ? 'text-gray-400' : 'text-gray-400'}`} />
+                  )}
                 </button>
-                <button
-                  onClick={() => setIsLogin(false)}
-                  className={`flex-1 py-3 px-4 text-center font-semibold rounded-xl transition-all duration-300 ${
-                    !isLogin
-                      ? 'bg-gradient-to-r from-emerald-500 to-teal-500 text-white shadow-lg'
-                      : isDark ? 'text-gray-400 hover:text-white' : 'text-gray-600 hover:text-gray-900'
-                  }`}
-                >
-                  Sign Up
-                </button>
-              </div>
-
-              <form onSubmit={handleSubmit} className="space-y-6">
-                {!isLogin && (
-                  <div>
-                    <label className={`block text-sm font-medium ${isDark ? 'text-gray-300' : 'text-gray-700'} mb-2`}>
-                      Full Name
-                    </label>
-                    <input
-                      type="text"
-                      value={formData.name}
-                      onChange={(e) => setFormData(prev => ({ ...prev, name: e.target.value }))}
-                      className={`w-full px-4 py-3 rounded-xl border ${isDark ? 'bg-gray-700/50 border-gray-600 text-white placeholder-gray-400' : 'bg-white border-gray-300 text-gray-900 placeholder-gray-500'} focus:outline-none focus:ring-2 focus:ring-emerald-500/50 transition-all duration-200`}
-                      placeholder="Enter your full name"
-                      required={!isLogin}
-                    />
-                  </div>
-                )}
-
-                <div>
-                  <label className={`block text-sm font-medium ${isDark ? 'text-gray-300' : 'text-gray-700'} mb-2`}>
-                    Email Address
-                  </label>
-                  <div className="relative">
-                    <Mail className={`absolute left-3 top-1/2 transform -translate-y-1/2 h-5 w-5 ${isDark ? 'text-gray-400' : 'text-gray-500'}`} />
-                    <input
-                      type="email"
-                      value={formData.email}
-                      onChange={(e) => setFormData(prev => ({ ...prev, email: e.target.value }))}
-                      className={`w-full pl-10 pr-4 py-3 rounded-xl border ${isDark ? 'bg-gray-700/50 border-gray-600 text-white placeholder-gray-400' : 'bg-white border-gray-300 text-gray-900 placeholder-gray-500'} focus:outline-none focus:ring-2 focus:ring-emerald-500/50 transition-all duration-200`}
-                      placeholder="Enter your email"
-                      required
-                    />
-                  </div>
-                </div>
-
-                <div>
-                  <label className={`block text-sm font-medium ${isDark ? 'text-gray-300' : 'text-gray-700'} mb-2`}>
-                    Password
-                  </label>
-                  <div className="relative">
-                    <Lock className={`absolute left-3 top-1/2 transform -translate-y-1/2 h-5 w-5 ${isDark ? 'text-gray-400' : 'text-gray-500'}`} />
-                    <input
-                      type={showPassword ? 'text' : 'password'}
-                      value={formData.password}
-                      onChange={(e) => setFormData(prev => ({ ...prev, password: e.target.value }))}
-                      className={`w-full pl-10 pr-12 py-3 rounded-xl border ${isDark ? 'bg-gray-700/50 border-gray-600 text-white placeholder-gray-400' : 'bg-white border-gray-300 text-gray-900 placeholder-gray-500'} focus:outline-none focus:ring-2 focus:ring-emerald-500/50 transition-all duration-200`}
-                      placeholder="Enter your password"
-                      required
-                    />
-                    <button
-                      type="button"
-                      onClick={() => setShowPassword(!showPassword)}
-                      className={`absolute right-3 top-1/2 transform -translate-y-1/2 ${isDark ? 'text-gray-400 hover:text-gray-300' : 'text-gray-500 hover:text-gray-700'}`}
-                    >
-                      {showPassword ? <EyeOff className="h-5 w-5" /> : <Eye className="h-5 w-5" />}
-                    </button>
-                  </div>
-                </div>
-
-                {!isLogin && (
-                  <div>
-                    <label className={`block text-sm font-medium ${isDark ? 'text-gray-300' : 'text-gray-700'} mb-2`}>
-                      Confirm Password
-                    </label>
-                    <input
-                      type="password"
-                      value={formData.confirmPassword}
-                      onChange={(e) => setFormData(prev => ({ ...prev, confirmPassword: e.target.value }))}
-                      className={`w-full px-4 py-3 rounded-xl border ${isDark ? 'bg-gray-700/50 border-gray-600 text-white placeholder-gray-400' : 'bg-white border-gray-300 text-gray-900 placeholder-gray-500'} focus:outline-none focus:ring-2 focus:ring-emerald-500/50 transition-all duration-200`}
-                      placeholder="Confirm your password"
-                      required={!isLogin}
-                    />
-                  </div>
-                )}
-
-                {error && (
-                  <div className={`p-3 rounded-lg ${isDark ? 'bg-red-500/20 text-red-400' : 'bg-red-50 text-red-600'} text-sm`}>
-                    {error}
-                  </div>
-                )}
-
-                <motion.button
-                  whileHover={{ scale: 1.02 }}
-                  whileTap={{ scale: 0.98 }}
-                  type="submit"
-                  disabled={isLoading}
-                  className="w-full bg-gradient-to-r from-emerald-500 to-teal-500 text-white py-3 px-6 rounded-xl font-semibold hover:from-emerald-600 hover:to-teal-600 transition-all duration-200 disabled:opacity-50 disabled:cursor-not-allowed shadow-lg hover:shadow-emerald-500/25"
-                >
-                  {isLoading ? 'Please wait...' : isLogin ? 'Sign In' : 'Create Account'}
-                </motion.button>
-              </form>
-
-              {/* Demo Login Options */}
-              <div className="mt-8 pt-6 border-t border-gray-200 dark:border-gray-700">
-                <p className={`text-sm ${isDark ? 'text-gray-400' : 'text-gray-600'} text-center mb-4`}>
-                  Quick Demo Access
-                </p>
-                <div className="grid grid-cols-3 gap-2">
-                  <button
-                    onClick={() => handleDemoLogin('user')}
-                    className={`py-2 px-3 text-xs font-medium rounded-lg transition-all duration-200 ${isDark ? 'bg-blue-500/20 text-blue-400 hover:bg-blue-500/30' : 'bg-blue-50 text-blue-600 hover:bg-blue-100'}`}
-                  >
-                    User
-                  </button>
-                  <button
-                    onClick={() => handleDemoLogin('creator')}
-                    className={`py-2 px-3 text-xs font-medium rounded-lg transition-all duration-200 ${isDark ? 'bg-purple-500/20 text-purple-400 hover:bg-purple-500/30' : 'bg-purple-50 text-purple-600 hover:bg-purple-100'}`}
-                  >
-                    Creator
-                  </button>
-                  <button
-                    onClick={() => handleDemoLogin('admin')}
-                    className={`py-2 px-3 text-xs font-medium rounded-lg transition-all duration-200 ${isDark ? 'bg-red-500/20 text-red-400 hover:bg-red-500/30' : 'bg-red-50 text-red-600 hover:bg-red-100'}`}
-                  >
-                    Admin
-                  </button>
-                </div>
-              </div>
-
-              <div className="mt-6 text-center">
-                <Link
-                  to="/"
-                  className={`text-sm ${isDark ? 'text-gray-400 hover:text-emerald-400' : 'text-gray-600 hover:text-emerald-600'} transition-colors duration-200`}
-                >
-                  Back to Home
-                </Link>
               </div>
             </div>
-          </motion.div>
-        </div>
+
+            {!isLogin && (
+              <div>
+                <label htmlFor="confirmPassword" className={`block text-sm font-medium ${
+                  isDark ? 'text-gray-300' : 'text-gray-700'
+                } mb-2`}>
+                  Confirm Password
+                </label>
+                <div className="relative">
+                  <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+                    <Lock className={`h-5 w-5 ${isDark ? 'text-gray-400' : 'text-gray-400'}`} />
+                  </div>
+                  <input
+                    id="confirmPassword"
+                    name="confirmPassword"
+                    type="password"
+                    required={!isLogin}
+                    value={formData.confirmPassword}
+                    onChange={handleInputChange}
+                    className={`block w-full pl-10 pr-3 py-3 border ${
+                      isDark 
+                        ? 'border-gray-600 bg-gray-700 text-white placeholder-gray-400' 
+                        : 'border-gray-300 bg-white text-gray-900 placeholder-gray-500'
+                    } rounded-xl focus:outline-none focus:ring-2 focus:ring-emerald-500 focus:border-emerald-500`}
+                    placeholder="Confirm your password"
+                  />
+                </div>
+              </div>
+            )}
+
+            {error && (
+              <div className="text-red-500 text-sm text-center bg-red-500/10 border border-red-500/20 rounded-lg p-3">
+                {error}
+              </div>
+            )}
+
+            <button
+              type="submit"
+              disabled={loading}
+              className="group relative w-full flex justify-center py-3 px-4 border border-transparent text-sm font-medium rounded-xl text-white bg-gradient-to-r from-emerald-500 to-cyan-500 hover:from-emerald-600 hover:to-cyan-600 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-emerald-500 transition-all duration-200 disabled:opacity-50 disabled:cursor-not-allowed"
+            >
+              {loading ? (
+                <div className="w-5 h-5 border-2 border-white border-t-transparent rounded-full animate-spin"></div>
+              ) : (
+                <>
+                  <span>{isLogin ? 'Sign In' : 'Create Account'}</span>
+                  <ArrowRight className="ml-2 h-4 w-4 group-hover:translate-x-1 transition-transform" />
+                </>
+              )}
+            </button>
+          </form>
+
+          {/* Role Application Notice */}
+          {!isLogin && (
+            <motion.div
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              transition={{ delay: 0.3 }}
+              className={`mt-6 p-4 rounded-xl border ${
+                isDark ? 'bg-emerald-500/10 border-emerald-500/20' : 'bg-emerald-50 border-emerald-200'
+              }`}
+            >
+              <div className="flex items-start space-x-3">
+                <Shield className={`h-5 w-5 mt-0.5 ${isDark ? 'text-emerald-400' : 'text-emerald-600'}`} />
+                <div>
+                  <h4 className={`font-medium ${isDark ? 'text-emerald-400' : 'text-emerald-800'}`}>
+                    Creator Application
+                  </h4>
+                  <p className={`text-sm mt-1 ${isDark ? 'text-emerald-300' : 'text-emerald-700'}`}>
+                    After registration, you can apply to become a creator to publish tutorials and content.
+                  </p>
+                </div>
+              </div>
+            </motion.div>
+          )}
+
+          {/* Toggle */}
+          <div className="text-center mt-6">
+            <button
+              type="button"
+              onClick={() => {
+                setIsLogin(!isLogin);
+                setError('');
+                setFormData({ name: '', email: '', password: '', confirmPassword: '' });
+              }}
+              className={`text-sm ${
+                isDark ? 'text-emerald-400 hover:text-emerald-300' : 'text-emerald-600 hover:text-emerald-500'
+              } transition-colors`}
+            >
+              {isLogin 
+                ? "Don't have an account? Sign up" 
+                : "Already have an account? Sign in"
+              }
+            </button>
+          </div>
+
+          {isLogin && (
+            <div className="text-center">
+              <Link 
+                href="/forgot-password"
+                className={`text-sm ${
+                  isDark ? 'text-gray-400 hover:text-gray-300' : 'text-gray-600 hover:text-gray-500'
+                } transition-colors`}
+              >
+                Forgot your password?
+              </Link>
+            </div>
+          )}
+        </motion.div>
       </div>
     </div>
   );

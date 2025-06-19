@@ -53,33 +53,16 @@ const Header = () => {
     }`}>
       <nav className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex items-center justify-between h-16">
-          {/* Enhanced Logo with Terminal */}
-          <Link href="/" className="flex items-center space-x-3 group">
-            <div className={`w-10 h-10 ${
-              isDark 
-                ? 'bg-gradient-to-br from-gray-800 to-gray-900 border-emerald-400 text-emerald-400' 
-                : 'bg-gradient-to-br from-gray-100 to-gray-200 border-emerald-600 text-emerald-600'
-            } border-2 rounded-lg flex items-center justify-center font-mono font-bold text-sm shadow-lg relative overflow-hidden group-hover:scale-105 transition-transform duration-200`}>
-              <div className={`absolute inset-0 ${
-                isDark ? 'bg-gradient-to-br from-gray-700/30 to-transparent' : 'bg-gradient-to-br from-white/50 to-transparent'
-              } rounded-lg`} />
-              <span className="relative z-10 select-none">_$</span>
-              <div className={`absolute inset-0 ${
-                isDark ? 'bg-emerald-400/10' : 'bg-emerald-600/10'
-              } rounded-lg opacity-0 group-hover:opacity-100 transition-opacity duration-300`} />
+          {/* Simple Terminal Logo */}
+          <Link href="/" className="flex items-center space-x-2 group">
+            <div className={`w-8 h-6 ${
+              isDark ? 'bg-gray-800 border-emerald-400 text-emerald-400' : 'bg-gray-100 border-emerald-600 text-emerald-600'
+            } border border-l-2 border-b-2 rounded-bl-md flex items-center justify-start pl-1 font-mono text-xs group-hover:border-emerald-500 transition-colors duration-200`}>
+              <span className="select-none">$</span>
             </div>
-            <div className="flex flex-col">
-              <span className={`text-xl font-bold leading-tight bg-gradient-to-r ${
-                isDark ? 'from-white to-gray-300' : 'from-gray-900 to-gray-700'
-              } bg-clip-text text-transparent`}>
-                HackTheShell
-              </span>
-              <span className={`text-xs font-medium ${
-                isDark ? 'text-emerald-400' : 'text-emerald-600'
-              } tracking-wider`}>
-                CYBER ACADEMY
-              </span>
-            </div>
+            <span className={`text-xl font-bold ${isDark ? 'text-white' : 'text-gray-900'}`}>
+              HackTheShell
+            </span>
           </Link>
 
           {/* Desktop Navigation - Better Spaced */}
