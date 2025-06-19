@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { Heart, MessageCircle, Reply, Flag, MoreVertical, Star, Award, ThumbsUp, Edit, Trash2, Pin, Shield } from 'lucide-react';
+import { Link } from 'wouter';
 import { motion, AnimatePresence } from 'framer-motion';
 import { useTheme } from '../contexts/ThemeContext';
 import { useAuth } from '../contexts/AuthContext';
@@ -558,7 +559,7 @@ const EnhancedCommentSystemV2: React.FC<EnhancedCommentSystemV2Props> = ({
         </div>
       </div>
 
-      {/* Comment Form */}
+      {/* Comment Form - Only for authenticated users */}
       {isAuthenticated ? (
         <div className={`${isDark ? 'bg-gray-800' : 'bg-white'} rounded-xl p-6 mb-8 border ${
           isDark ? 'border-gray-700' : 'border-gray-200'
@@ -579,7 +580,7 @@ const EnhancedCommentSystemV2: React.FC<EnhancedCommentSystemV2Props> = ({
                     : 'bg-white border-gray-300 text-gray-900 placeholder-gray-500'
                 } focus:ring-2 focus:ring-emerald-500 focus:border-transparent resize-none`}
                 rows={4}
-                placeholder="Share your thoughts..."
+                placeholder="Share your thoughts on this article..."
               />
               <div className="flex justify-between items-center">
                 <span className={`text-sm ${isDark ? 'text-gray-400' : 'text-gray-600'}`}>
@@ -597,15 +598,28 @@ const EnhancedCommentSystemV2: React.FC<EnhancedCommentSystemV2Props> = ({
           </div>
         </div>
       ) : (
-        <div className={`${isDark ? 'bg-gray-800' : 'bg-white'} rounded-xl p-6 mb-8 border ${
+        <div className={`${isDark ? 'bg-gray-800' : 'bg-white'} rounded-xl p-8 mb-8 border ${
           isDark ? 'border-gray-700' : 'border-gray-200'
         } text-center`}>
-          <p className={`${isDark ? 'text-gray-300' : 'text-gray-600'} mb-4`}>
-            Sign in to join the discussion
-          </p>
-          <button className="btn-primary px-6 py-2">
-            Sign In
-          </button>
+          <div className="max-w-md mx-auto">
+            <div className={`w-16 h-16 mx-auto mb-4 rounded-full flex items-center justify-center ${
+              isDark ? 'bg-emerald-500/20' : 'bg-emerald-100'
+            }`}>
+              <MessageCircle className="h-8 w-8 text-emerald-500" />
+            </div>
+            <h3 className={`text-lg font-semibold mb-2 ${isDark ? 'text-white' : 'text-gray-900'}`}>
+              Join the Discussion
+            </h3>
+            <p className={`${isDark ? 'text-gray-300' : 'text-gray-600'} mb-6`}>
+              Sign in to share your thoughts, ask questions, and engage with our cybersecurity community.
+            </p>
+            <Link
+              href="/login"
+              className="btn-primary px-6 py-3 inline-flex items-center space-x-2"
+            >
+              <span>Sign In to Comment</span>
+            </Link>
+          </div>
         </div>
       )}
 

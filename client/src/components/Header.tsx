@@ -1,38 +1,42 @@
 import React, { useState, useEffect } from 'react';
+import { Menu, X, Search, Moon, Sun, User, ChevronDown } from 'lucide-react';
 import { Link, useLocation } from 'wouter';
-import { Menu, X, Shield, BookOpen, Newspaper, Users, Target, Sun, Moon, Github, Search, User, LogOut, Settings } from 'lucide-react';
 import { useTheme } from '../contexts/ThemeContext';
 import { useAuth } from '../contexts/AuthContext';
-import SearchBar from './SearchBar';
-import TerminalLogo from './TerminalLogo';
-import { motion, AnimatePresence } from 'framer-motion';
 
 const Header = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [isScrolled, setIsScrolled] = useState(false);
   const [isSearchOpen, setIsSearchOpen] = useState(false);
-  const [isUserMenuOpen, setIsUserMenuOpen] = useState(false);
+  const [searchQuery, setSearchQuery] = useState('');
+  const [location] = useLocation();
   const { isDark, toggleTheme } = useTheme();
   const { user, isAuthenticated, logout } = useAuth();
-  const [location] = useLocation();
-
-  const toggleMenu = () => setIsMenuOpen(!isMenuOpen);
 
   useEffect(() => {
     const handleScroll = () => {
-      setIsScrolled(window.scrollY > 20);
+      setIsScrolled(window.scrollY > 10);
     };
     window.addEventListener('scroll', handleScroll);
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
 
   const navigation = [
-    { name: 'Home', href: '/', icon: Target },
-    { name: 'Tutorials', href: '/tutorials', icon: BookOpen },
-    { name: 'Labs', href: '/labs', icon: Target },
-    { name: 'GitHub Tools', href: '/github-tools', icon: Github },
-    { name: 'Blog', href: '/blog', icon: Newspaper },
-    { name: 'Community', href: '/community', icon: Users }
+    { name: 'Home', href: '/' },
+    { 
+      name: 'Learn', 
+      href: '/tutorials',
+      subItems: [
+        { name: 'Tutorials', href: '/tutorials' },
+        { name: 'Labs', href: '/labs' },
+        { name: 'CTF', href: '/ctf' },
+        { name: 'Certifications', href: '/certifications' }
+      ]
+    },
+    { name: 'Blog', href: '/blog' },
+    { name: 'Tools', href: '/github-tools' },
+    { name: 'Community', href: '/community' },
+    { name: 'Contact', href: '/contact' }
   ];
 
   const isActivePath = (path: string) => {
@@ -41,146 +45,173 @@ const Header = () => {
   };
 
   return (
-    <header className={`fixed w-full z-50 transition-all duration-300 ${
+    <header className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${
       isScrolled 
-        ? `${isDark ? 'bg-gray-900/98' : 'bg-white/98'} backdrop-blur-xl shadow-2xl ${isDark ? 'border-emerald-400/30 shadow-emerald-500/10' : 'border-emerald-500/40 shadow-emerald-500/20'} border-b`
+        ? `${isDark ? 'bg-gray-900/95 border-gray-800' : 'bg-white/95 border-gray-200'} backdrop-blur-xl border-b shadow-lg` 
         : 'bg-transparent'
     }`}>
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="flex justify-between items-center py-3 lg:py-4">
-          {/* Logo */}
-          <Link href="/" className="flex items-center space-x-3 group">
-            <TerminalLogo size="md" animated />
-            <span className={`font-bold text-xl ${isDark ? 'text-white' : 'text-gray-900'} group-hover:text-emerald-500 transition-colors`}>
+      <nav className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div className="flex items-center justify-between h-16">
+          {/* Simple Terminal Logo */}
+          <Link href="/" className="flex items-center space-x-2 group">
+            <div className={`flex items-center space-x-1 text-xl font-mono font-bold ${
+              isDark ? 'text-emerald-400' : 'text-emerald-600'
+            } group-hover:scale-105 transition-transform duration-200`}>
+              <span className="text-2xl">_</span>
+              <span className="text-2xl">$</span>
+            </div>
+            <span className={`text-xl font-bold bg-gradient-to-r from-emerald-400 to-cyan-400 bg-clip-text text-transparent`}>
               HackTheShell
             </span>
           </Link>
 
-          {/* Desktop Navigation - Improved spacing and design */}
-          <nav className="hidden lg:flex items-center space-x-1">
-            {navigation.map((item) => {
-              const Icon = item.icon;
-              const isActive = isActivePath(item.href);
-              return (
-                <Link
-                  key={item.name}
-                  href={item.href}
-                  className={`flex items-center space-x-2 px-4 py-2.5 rounded-xl transition-all duration-200 ${
-                    isActive
-                      ? `${isDark ? 'bg-emerald-500/20 text-emerald-400' : 'bg-emerald-100 text-emerald-700'} shadow-lg`
-                      : `${isDark ? 'text-gray-300 hover:text-emerald-400 hover:bg-gray-800/50' : 'text-gray-600 hover:text-emerald-600 hover:bg-emerald-50'}`
+          {/* Desktop Navigation - Better Spaced */}
+          <div className="hidden lg:flex items-center space-x-1">
+            {navigation.map((item) => (
+              <div key={item.name} className="relative group">
+                {item.subItems ? (
+                  <div className="relative">
+                    <button className={`flex items-center space-x-1 px-4 py-2 rounded-xl text-sm font-medium transition-all duration-200 ${
+                      isActivePath(item.href)
+                        ? `${isDark ? 'text-emerald-400 bg-emerald-500/15' : 'text-emerald-600 bg-emerald-50'}`
+                        : `${isDark ? 'text-gray-300 hover:text-white hover:bg-gray-800/50' : 'text-gray-700 hover:text-gray-900 hover:bg-gray-100/50'}`
+                    }`}>
+                      <span>{item.name}</span>
+                      <ChevronDown className="h-3 w-3 group-hover:rotate-180 transition-transform duration-200" />
+                    </button>
+                    
+                    {/* Dropdown */}
+                    <div className={`absolute top-full left-0 mt-2 w-48 opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-200 transform translate-y-2 group-hover:translate-y-0 ${
+                      isDark ? 'bg-gray-800/95 border-gray-700' : 'bg-white/95 border-gray-200'
+                    } border rounded-xl shadow-xl backdrop-blur-xl`}>
+                      <div className="py-2">
+                        {item.subItems.map((subItem) => (
+                          <Link
+                            key={subItem.name}
+                            href={subItem.href}
+                            className={`block px-4 py-2 text-sm transition-colors duration-200 ${
+                              isActivePath(subItem.href)
+                                ? `${isDark ? 'text-emerald-400 bg-emerald-500/15' : 'text-emerald-600 bg-emerald-50'}`
+                                : `${isDark ? 'text-gray-300 hover:text-white hover:bg-gray-700/50' : 'text-gray-700 hover:text-gray-900 hover:bg-gray-50'}`
+                            }`}
+                          >
+                            {subItem.name}
+                          </Link>
+                        ))}
+                      </div>
+                    </div>
+                  </div>
+                ) : (
+                  <Link
+                    href={item.href}
+                    className={`px-4 py-2 rounded-xl text-sm font-medium transition-all duration-200 ${
+                      isActivePath(item.href)
+                        ? `${isDark ? 'text-emerald-400 bg-emerald-500/15' : 'text-emerald-600 bg-emerald-50'}`
+                        : `${isDark ? 'text-gray-300 hover:text-white hover:bg-gray-800/50' : 'text-gray-700 hover:text-gray-900 hover:bg-gray-100/50'}`
+                    }`}
+                  >
+                    {item.name}
+                  </Link>
+                )}
+              </div>
+            ))}
+          </div>
+
+          {/* Right side actions - Properly Spaced */}
+          <div className="flex items-center space-x-2">
+            {/* Search - Fixed Positioning */}
+            <div className="relative">
+              {isSearchOpen ? (
+                <div className="absolute right-0 top-0 flex items-center space-x-2 bg-white dark:bg-gray-800 rounded-xl border border-gray-200 dark:border-gray-700 p-1 shadow-lg min-w-[280px]">
+                  <input
+                    type="text"
+                    value={searchQuery}
+                    onChange={(e) => setSearchQuery(e.target.value)}
+                    placeholder="Search tutorials, blogs, tools..."
+                    className={`flex-1 px-3 py-2 rounded-lg text-sm bg-transparent outline-none ${
+                      isDark ? 'text-white placeholder-gray-400' : 'text-gray-900 placeholder-gray-500'
+                    }`}
+                    autoFocus
+                  />
+                  <button
+                    onClick={() => setIsSearchOpen(false)}
+                    className={`p-2 rounded-lg transition-colors duration-200 ${
+                      isDark ? 'text-gray-400 hover:text-white hover:bg-gray-700' : 'text-gray-600 hover:text-gray-900 hover:bg-gray-100'
+                    }`}
+                  >
+                    <X className="h-4 w-4" />
+                  </button>
+                </div>
+              ) : (
+                <button
+                  onClick={() => setIsSearchOpen(true)}
+                  className={`p-2.5 rounded-xl transition-colors duration-200 ${
+                    isDark ? 'text-gray-400 hover:text-white hover:bg-gray-800/50' : 'text-gray-600 hover:text-gray-900 hover:bg-gray-100/50'
                   }`}
+                  title="Search"
                 >
-                  <Icon className="h-4 w-4" />
-                  <span className="font-medium">{item.name}</span>
-                </Link>
-              );
-            })}
-          </nav>
+                  <Search className="h-4 w-4" />
+                </button>
+              )}
+            </div>
 
-          {/* Right side actions */}
-          <div className="flex items-center space-x-3">
-            {/* Search Button */}
-            <button
-              onClick={() => setIsSearchOpen(true)}
-              className={`p-2.5 rounded-xl transition-all duration-200 ${
-                isDark 
-                  ? 'text-gray-300 hover:text-emerald-400 hover:bg-gray-800/50' 
-                  : 'text-gray-600 hover:text-emerald-600 hover:bg-emerald-50'
-              }`}
-            >
-              <Search className="h-5 w-5" />
-            </button>
-
-            {/* Theme Toggle */}
+            {/* Theme toggle */}
             <button
               onClick={toggleTheme}
-              className={`p-2.5 rounded-xl transition-all duration-200 ${
-                isDark 
-                  ? 'text-gray-300 hover:text-yellow-400 hover:bg-gray-800/50' 
-                  : 'text-gray-600 hover:text-orange-600 hover:bg-orange-50'
+              className={`p-2.5 rounded-xl transition-colors duration-200 ${
+                isDark ? 'text-gray-400 hover:text-white hover:bg-gray-800/50' : 'text-gray-600 hover:text-gray-900 hover:bg-gray-100/50'
               }`}
+              title={isDark ? 'Switch to light mode' : 'Switch to dark mode'}
             >
-              {isDark ? <Sun className="h-5 w-5" /> : <Moon className="h-5 w-5" />}
+              {isDark ? <Sun className="h-4 w-4" /> : <Moon className="h-4 w-4" />}
             </button>
 
-            {/* User Menu */}
+            {/* User menu */}
             {isAuthenticated ? (
-              <div className="relative">
-                <button
-                  onClick={() => setIsUserMenuOpen(!isUserMenuOpen)}
-                  className={`flex items-center space-x-2 p-2 rounded-xl transition-all duration-200 ${
-                    isDark 
-                      ? 'text-gray-300 hover:text-emerald-400 hover:bg-gray-800/50' 
-                      : 'text-gray-600 hover:text-emerald-600 hover:bg-emerald-50'
-                  }`}
-                >
-                  <div className={`w-8 h-8 rounded-lg flex items-center justify-center ${
-                    isDark ? 'bg-emerald-500/20 text-emerald-400' : 'bg-emerald-100 text-emerald-700'
-                  }`}>
-                    <User className="h-4 w-4" />
+              <div className="relative group">
+                <button className={`flex items-center space-x-2 px-3 py-2 rounded-xl transition-colors duration-200 ${
+                  isDark ? 'text-gray-300 hover:text-white hover:bg-gray-800/50' : 'text-gray-700 hover:text-gray-900 hover:bg-gray-100/50'
+                }`}>
+                  <div className="w-6 h-6 bg-gradient-to-r from-emerald-500 to-cyan-500 rounded-full flex items-center justify-center text-white text-xs font-semibold">
+                    {user?.name?.charAt(0).toUpperCase()}
                   </div>
-                  <span className="hidden sm:block font-medium">{user?.name}</span>
+                  <span className="text-sm font-medium hidden sm:block">{user?.name}</span>
                 </button>
-
-                <AnimatePresence>
-                  {isUserMenuOpen && (
-                    <motion.div
-                      initial={{ opacity: 0, scale: 0.95, y: -10 }}
-                      animate={{ opacity: 1, scale: 1, y: 0 }}
-                      exit={{ opacity: 0, scale: 0.95, y: -10 }}
-                      className={`absolute right-0 mt-2 w-56 ${
-                        isDark ? 'bg-gray-800 border-gray-700' : 'bg-white border-gray-200'
-                      } border rounded-xl shadow-xl z-50`}
+                
+                <div className={`absolute top-full right-0 mt-2 w-48 opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-200 transform translate-y-2 group-hover:translate-y-0 ${
+                  isDark ? 'bg-gray-800/95 border-gray-700' : 'bg-white/95 border-gray-200'
+                } border rounded-xl shadow-xl backdrop-blur-xl`}>
+                  <div className="py-2">
+                    <Link href="/dashboard" className={`block px-4 py-2 text-sm transition-colors duration-200 ${
+                      isDark ? 'text-gray-300 hover:text-white hover:bg-gray-700/50' : 'text-gray-700 hover:text-gray-900 hover:bg-gray-50'
+                    }`}>
+                      Dashboard
+                    </Link>
+                    <button
+                      onClick={logout}
+                      className={`block w-full text-left px-4 py-2 text-sm transition-colors duration-200 ${
+                        isDark ? 'text-gray-300 hover:text-white hover:bg-gray-700/50' : 'text-gray-700 hover:text-gray-900 hover:bg-gray-50'
+                      }`}
                     >
-                      <div className="p-2 space-y-1">
-                        <Link href="/dashboard" className={`flex items-center space-x-3 w-full p-3 rounded-lg transition-colors ${
-                          isDark ? 'hover:bg-gray-700 text-gray-300' : 'hover:bg-gray-50 text-gray-700'
-                        }`}>
-                          <User className="h-4 w-4" />
-                          <span>Dashboard</span>
-                        </Link>
-                        <Link href="/settings" className={`flex items-center space-x-3 w-full p-3 rounded-lg transition-colors ${
-                          isDark ? 'hover:bg-gray-700 text-gray-300' : 'hover:bg-gray-50 text-gray-700'
-                        }`}>
-                          <Settings className="h-4 w-4" />
-                          <span>Settings</span>
-                        </Link>
-                        <hr className={`${isDark ? 'border-gray-700' : 'border-gray-200'} my-2`} />
-                        <button
-                          onClick={logout}
-                          className={`flex items-center space-x-3 w-full p-3 rounded-lg transition-colors ${
-                            isDark ? 'hover:bg-red-500/10 text-red-400' : 'hover:bg-red-50 text-red-600'
-                          }`}
-                        >
-                          <LogOut className="h-4 w-4" />
-                          <span>Sign Out</span>
-                        </button>
-                      </div>
-                    </motion.div>
-                  )}
-                </AnimatePresence>
+                      Sign Out
+                    </button>
+                  </div>
+                </div>
               </div>
             ) : (
               <Link
                 href="/login"
-                className={`px-6 py-2.5 rounded-xl font-medium transition-all duration-200 ${
-                  isDark 
-                    ? 'bg-emerald-500/20 text-emerald-400 hover:bg-emerald-500/30 border border-emerald-500/30' 
-                    : 'bg-emerald-500 text-white hover:bg-emerald-600 shadow-lg hover:shadow-emerald-500/25'
-                }`}
+                className="bg-gradient-to-r from-emerald-500 to-cyan-500 hover:from-emerald-600 hover:to-cyan-600 text-white px-4 py-2 rounded-xl text-sm font-medium transition-all duration-200 transform hover:scale-105 shadow-lg hover:shadow-emerald-500/25"
               >
                 Sign In
               </Link>
             )}
 
-            {/* Mobile Menu Button */}
+            {/* Mobile menu button */}
             <button
-              onClick={toggleMenu}
-              className={`lg:hidden p-2.5 rounded-xl transition-all duration-200 ${
-                isDark 
-                  ? 'text-gray-300 hover:text-emerald-400 hover:bg-gray-800/50' 
-                  : 'text-gray-600 hover:text-emerald-600 hover:bg-emerald-50'
+              onClick={() => setIsMenuOpen(!isMenuOpen)}
+              className={`lg:hidden p-2.5 rounded-xl transition-colors duration-200 ${
+                isDark ? 'text-gray-400 hover:text-white hover:bg-gray-800/50' : 'text-gray-600 hover:text-gray-900 hover:bg-gray-100/50'
               }`}
             >
               {isMenuOpen ? <X className="h-5 w-5" /> : <Menu className="h-5 w-5" />}
@@ -189,58 +220,52 @@ const Header = () => {
         </div>
 
         {/* Mobile Navigation */}
-        <AnimatePresence>
-          {isMenuOpen && (
-            <motion.div
-              initial={{ opacity: 0, height: 0 }}
-              animate={{ opacity: 1, height: 'auto' }}
-              exit={{ opacity: 0, height: 0 }}
-              className={`lg:hidden overflow-hidden border-t ${
-                isDark ? 'border-gray-700 bg-gray-800/95' : 'border-gray-200 bg-white/95'
-              } backdrop-blur-xl`}
-            >
-              <div className="p-4 space-y-2">
-                {navigation.map((item) => {
-                  const Icon = item.icon;
-                  const isActive = isActivePath(item.href);
-                  return (
+        {isMenuOpen && (
+          <div className={`lg:hidden mt-4 pb-4 border-t ${isDark ? 'border-gray-800' : 'border-gray-200'}`}>
+            <div className="pt-4 space-y-2">
+              {navigation.map((item) => (
+                <div key={item.name}>
+                  {item.subItems ? (
+                    <div className="space-y-1">
+                      <div className={`px-3 py-2 text-sm font-medium ${
+                        isDark ? 'text-gray-400' : 'text-gray-600'
+                      }`}>
+                        {item.name}
+                      </div>
+                      {item.subItems.map((subItem) => (
+                        <Link
+                          key={subItem.name}
+                          href={subItem.href}
+                          className={`block px-6 py-2 text-sm transition-colors duration-200 ${
+                            isActivePath(subItem.href)
+                              ? `${isDark ? 'text-emerald-400 bg-emerald-500/15' : 'text-emerald-600 bg-emerald-50'}`
+                              : `${isDark ? 'text-gray-300 hover:text-white hover:bg-gray-800/50' : 'text-gray-700 hover:text-gray-900 hover:bg-gray-100/50'}`
+                          } rounded-xl mx-3`}
+                          onClick={() => setIsMenuOpen(false)}
+                        >
+                          {subItem.name}
+                        </Link>
+                      ))}
+                    </div>
+                  ) : (
                     <Link
-                      key={item.name}
                       href={item.href}
+                      className={`block px-3 py-2 text-sm font-medium transition-colors duration-200 ${
+                        isActivePath(item.href)
+                          ? `${isDark ? 'text-emerald-400 bg-emerald-500/15' : 'text-emerald-600 bg-emerald-50'}`
+                          : `${isDark ? 'text-gray-300 hover:text-white hover:bg-gray-800/50' : 'text-gray-700 hover:text-gray-900 hover:bg-gray-100/50'}`
+                      } rounded-xl`}
                       onClick={() => setIsMenuOpen(false)}
-                      className={`flex items-center space-x-3 w-full p-3 rounded-xl transition-all duration-200 ${
-                        isActive
-                          ? `${isDark ? 'bg-emerald-500/20 text-emerald-400' : 'bg-emerald-100 text-emerald-700'}`
-                          : `${isDark ? 'text-gray-300 hover:text-emerald-400 hover:bg-gray-700/50' : 'text-gray-600 hover:text-emerald-600 hover:bg-emerald-50'}`
-                      }`}
                     >
-                      <Icon className="h-5 w-5" />
-                      <span className="font-medium">{item.name}</span>
+                      {item.name}
                     </Link>
-                  );
-                })}
-                
-                {!isAuthenticated && (
-                  <Link
-                    href="/login"
-                    onClick={() => setIsMenuOpen(false)}
-                    className={`flex items-center justify-center w-full p-3 mt-4 rounded-xl font-medium transition-all duration-200 ${
-                      isDark 
-                        ? 'bg-emerald-500/20 text-emerald-400 hover:bg-emerald-500/30 border border-emerald-500/30' 
-                        : 'bg-emerald-500 text-white hover:bg-emerald-600'
-                    }`}
-                  >
-                    Sign In
-                  </Link>
-                )}
-              </div>
-            </motion.div>
-          )}
-        </AnimatePresence>
-      </div>
-
-      {/* Search Modal */}
-      <SearchBar isExpanded={isSearchOpen} onClose={() => setIsSearchOpen(false)} />
+                  )}
+                </div>
+              ))}
+            </div>
+          </div>
+        )}
+      </nav>
     </header>
   );
 };

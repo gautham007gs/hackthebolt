@@ -1,161 +1,273 @@
 import React from 'react';
-import { Shield, Github, Twitter, Linkedin, Mail, BookOpen, Users, Newspaper, Target } from 'lucide-react';
+import { Link } from 'wouter';
+import { Mail, MapPin, Phone, Github, Twitter, Linkedin, Shield, Terminal, Users, BookOpen } from 'lucide-react';
 import { useTheme } from '../contexts/ThemeContext';
 
 const Footer = () => {
   const { isDark } = useTheme();
-  const currentYear = new Date().getFullYear();
 
-  const footerLinks = {
-    'Learn': [
-      { name: 'Tutorials', href: '#tutorials', icon: BookOpen },
-      { name: 'GitHub Tools', href: '#tools', icon: Github },
-      { name: 'Beginner Guides', href: '#', icon: Target },
-      { name: 'Advanced Courses', href: '#', icon: Shield }
-    ],
-    'Community': [
-      { name: 'Discord Server', href: '#', icon: Users },
-      { name: 'Forums', href: '#', icon: Users },
-      { name: 'Contributors', href: '#', icon: Users },
-      { name: 'Events', href: '#', icon: Users }
-    ],
-    'Resources': [
-      { name: 'Blog & News', href: '#blog', icon: Newspaper },
-      { name: 'Tools & Scripts', href: '#', icon: Target },
-      { name: 'Vulnerability DB', href: '#', icon: Shield },
-      { name: 'CTF Challenges', href: '#', icon: Target }
-    ],
-    'Company': [
-      { name: 'About Us', href: '#', icon: Users },
-      { name: 'Careers', href: '#', icon: Users },
-      { name: 'Privacy Policy', href: '#', icon: Shield },
-      { name: 'Terms of Service', href: '#', icon: Shield }
-    ]
-  };
-
-  const socialLinks = [
-    { name: 'GitHub', icon: Github, href: '#' },
-    { name: 'Twitter', icon: Twitter, href: '#' },
-    { name: 'LinkedIn', icon: Linkedin, href: '#' },
-    { name: 'Email', icon: Mail, href: 'mailto:hello@hacktheshell.com' }
+  const quickLinks = [
+    { name: 'Home', href: '/' },
+    { name: 'Tutorials', href: '/tutorials' },
+    { name: 'Blog', href: '/blog' },
+    { name: 'Tools', href: '/github-tools' },
+    { name: 'Labs', href: '/labs' },
+    { name: 'CTF', href: '/ctf' }
   ];
 
-  const scrollToSection = (sectionId: string) => {
-    if (sectionId.startsWith('#')) {
-      const element = document.getElementById(sectionId.substring(1));
-      if (element) {
-        element.scrollIntoView({ behavior: 'smooth' });
-      }
-    }
-  };
+  const learningPaths = [
+    { name: 'Penetration Testing', href: '/tutorials/pentesting' },
+    { name: 'Web Security', href: '/tutorials/web-security' },
+    { name: 'Network Security', href: '/tutorials/network-security' },
+    { name: 'Malware Analysis', href: '/tutorials/malware-analysis' },
+    { name: 'Digital Forensics', href: '/tutorials/forensics' },
+    { name: 'Threat Hunting', href: '/tutorials/threat-hunting' }
+  ];
+
+  const resources = [
+    { name: 'Certification Guide', href: '/certifications' },
+    { name: 'Career Roadmap', href: '/career' },
+    { name: 'Community Forum', href: '/community' },
+    { name: 'Documentation', href: '/docs' },
+    { name: 'API Reference', href: '/api' },
+    { name: 'Security Tools', href: '/tools' }
+  ];
+
+  const company = [
+    { name: 'About Us', href: '/about' },
+    { name: 'Contact', href: '/contact' },
+    { name: 'Privacy Policy', href: '/privacy' },
+    { name: 'Terms of Service', href: '/terms' },
+    { name: 'Cookie Policy', href: '/cookies' },
+    { name: 'Security', href: '/security' }
+  ];
 
   return (
-    <footer className={`${isDark ? 'bg-gray-900 border-gray-800' : 'bg-gray-50 border-gray-200'} border-t relative overflow-hidden`}>
-      {/* Background Effects */}
-      <div className="absolute inset-0">
-        <div className={`absolute top-0 left-1/4 w-96 h-96 ${isDark ? 'bg-emerald-500/5' : 'bg-emerald-500/10'} rounded-full blur-3xl`}></div>
-        <div className={`absolute bottom-0 right-1/4 w-96 h-96 ${isDark ? 'bg-teal-500/5' : 'bg-teal-500/10'} rounded-full blur-3xl`}></div>
-      </div>
-
-      <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16">
-        <div className="grid lg:grid-cols-5 gap-8">
+    <footer className={`${isDark ? 'bg-gray-900 border-gray-800' : 'bg-gray-50 border-gray-200'} border-t transition-colors duration-300`}>
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16">
+        {/* Main Footer Content */}
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-8 mb-12">
           {/* Brand Section */}
           <div className="lg:col-span-2">
-            <div className="flex items-center space-x-3 mb-6">
-              <div className="relative">
-                <Shield className={`h-8 w-8 ${isDark ? 'text-emerald-400' : 'text-emerald-600'}`} />
-                <div className={`absolute inset-0 ${isDark ? 'bg-emerald-400/20' : 'bg-emerald-600/20'} blur-xl rounded-full`}></div>
+            <div className="flex items-center space-x-2 mb-6">
+              <div className={`flex items-center space-x-1 text-xl font-mono font-bold ${
+                isDark ? 'text-emerald-400' : 'text-emerald-600'
+              }`}>
+                <span className="text-2xl">_</span>
+                <span className="text-2xl">$</span>
               </div>
-              <span className={`text-2xl font-bold ${isDark ? 'text-white' : 'text-gray-900'}`}>
-                Hack<span className={isDark ? 'text-emerald-400' : 'text-emerald-600'}>The</span>Shell
+              <span className="text-xl font-bold bg-gradient-to-r from-emerald-400 to-cyan-400 bg-clip-text text-transparent">
+                HackTheShell
               </span>
             </div>
             
-            <p className={`${isDark ? 'text-gray-300' : 'text-gray-600'} mb-6 max-w-md`}>
-              Empowering the next generation of cybersecurity professionals with hands-on training, 
-              expert insights, and a supportive community focused on ethical hacking and defense.
+            <p className={`${isDark ? 'text-gray-300' : 'text-gray-600'} mb-6 leading-relaxed max-w-md`}>
+              Master the art of cybersecurity through hands-on tutorials, real-world scenarios, and expert guidance. 
+              Join our community of ethical hackers and security professionals.
             </p>
 
-            <div className="flex space-x-4">
-              {socialLinks.map((social, index) => {
-                const Icon = social.icon;
-                return (
-                  <a
-                    key={index}
-                    href={social.href}
-                    className={`${isDark ? 'bg-gray-800 hover:bg-gradient-to-r hover:from-emerald-500 hover:to-teal-500 text-gray-400 hover:text-white' : 'bg-gray-200 hover:bg-gradient-to-r hover:from-emerald-500 hover:to-teal-500 text-gray-600 hover:text-white'} p-3 rounded-lg transition-all duration-200 transform hover:scale-110`}
-                    aria-label={social.name}
-                  >
-                    <Icon className="h-5 w-5" />
-                  </a>
-                );
-              })}
+            {/* Stats */}
+            <div className="grid grid-cols-2 gap-4 mb-6">
+              <div className={`${isDark ? 'bg-gray-800 border-gray-700' : 'bg-white border-gray-200'} border rounded-xl p-4 text-center`}>
+                <div className="flex items-center justify-center mb-2">
+                  <Users className="h-5 w-5 text-emerald-500" />
+                </div>
+                <div className={`text-2xl font-bold ${isDark ? 'text-white' : 'text-gray-900'}`}>50K+</div>
+                <div className={`text-sm ${isDark ? 'text-gray-400' : 'text-gray-600'}`}>Active Learners</div>
+              </div>
+              <div className={`${isDark ? 'bg-gray-800 border-gray-700' : 'bg-white border-gray-200'} border rounded-xl p-4 text-center`}>
+                <div className="flex items-center justify-center mb-2">
+                  <BookOpen className="h-5 w-5 text-cyan-500" />
+                </div>
+                <div className={`text-2xl font-bold ${isDark ? 'text-white' : 'text-gray-900'}`}>500+</div>
+                <div className={`text-sm ${isDark ? 'text-gray-400' : 'text-gray-600'}`}>Tutorials</div>
+              </div>
+            </div>
+
+            {/* Social Links */}
+            <div className="flex items-center space-x-4">
+              <a
+                href="https://github.com/hacktheshell"
+                target="_blank"
+                rel="noopener noreferrer"
+                className={`p-2 rounded-lg transition-colors duration-200 ${
+                  isDark ? 'text-gray-400 hover:text-white hover:bg-gray-800' : 'text-gray-600 hover:text-gray-900 hover:bg-gray-200'
+                }`}
+              >
+                <Github className="h-5 w-5" />
+              </a>
+              <a
+                href="https://twitter.com/hacktheshell"
+                target="_blank"
+                rel="noopener noreferrer"
+                className={`p-2 rounded-lg transition-colors duration-200 ${
+                  isDark ? 'text-gray-400 hover:text-white hover:bg-gray-800' : 'text-gray-600 hover:text-gray-900 hover:bg-gray-200'
+                }`}
+              >
+                <Twitter className="h-5 w-5" />
+              </a>
+              <a
+                href="https://linkedin.com/company/hacktheshell"
+                target="_blank"
+                rel="noopener noreferrer"
+                className={`p-2 rounded-lg transition-colors duration-200 ${
+                  isDark ? 'text-gray-400 hover:text-white hover:bg-gray-800' : 'text-gray-600 hover:text-gray-900 hover:bg-gray-200'
+                }`}
+              >
+                <Linkedin className="h-5 w-5" />
+              </a>
             </div>
           </div>
 
-          {/* Links Sections */}
-          {Object.entries(footerLinks).map(([category, links]) => (
-            <div key={category}>
-              <h3 className={`${isDark ? 'text-white' : 'text-gray-900'} font-semibold mb-4`}>{category}</h3>
-              <ul className="space-y-3">
-                {links.map((link, index) => {
-                  const Icon = link.icon;
-                  return (
-                    <li key={index}>
-                      <button
-                        onClick={() => scrollToSection(link.href)}
-                        className={`group ${isDark ? 'text-gray-400 hover:text-emerald-400' : 'text-gray-600 hover:text-emerald-600'} transition-colors duration-200 flex items-center space-x-2`}
-                      >
-                        <Icon className={`h-4 w-4 ${isDark ? 'group-hover:text-emerald-400' : 'group-hover:text-emerald-600'} transition-colors duration-200`} />
-                        <span>{link.name}</span>
-                      </button>
-                    </li>
-                  );
-                })}
-              </ul>
-            </div>
-          ))}
+          {/* Quick Links */}
+          <div>
+            <h3 className={`text-lg font-semibold mb-4 ${isDark ? 'text-white' : 'text-gray-900'}`}>
+              Quick Links
+            </h3>
+            <ul className="space-y-3">
+              {quickLinks.map((link) => (
+                <li key={link.name}>
+                  <Link
+                    href={link.href}
+                    className={`transition-colors duration-200 ${
+                      isDark ? 'text-gray-400 hover:text-emerald-400' : 'text-gray-600 hover:text-emerald-600'
+                    }`}
+                  >
+                    {link.name}
+                  </Link>
+                </li>
+              ))}
+            </ul>
+          </div>
+
+          {/* Learning Paths */}
+          <div>
+            <h3 className={`text-lg font-semibold mb-4 ${isDark ? 'text-white' : 'text-gray-900'}`}>
+              Learning Paths
+            </h3>
+            <ul className="space-y-3">
+              {learningPaths.map((path) => (
+                <li key={path.name}>
+                  <Link
+                    href={path.href}
+                    className={`transition-colors duration-200 ${
+                      isDark ? 'text-gray-400 hover:text-emerald-400' : 'text-gray-600 hover:text-emerald-600'
+                    }`}
+                  >
+                    {path.name}
+                  </Link>
+                </li>
+              ))}
+            </ul>
+          </div>
+
+          {/* Resources */}
+          <div>
+            <h3 className={`text-lg font-semibold mb-4 ${isDark ? 'text-white' : 'text-gray-900'}`}>
+              Resources
+            </h3>
+            <ul className="space-y-3">
+              {resources.map((resource) => (
+                <li key={resource.name}>
+                  <Link
+                    href={resource.href}
+                    className={`transition-colors duration-200 ${
+                      isDark ? 'text-gray-400 hover:text-emerald-400' : 'text-gray-600 hover:text-emerald-600'
+                    }`}
+                  >
+                    {resource.name}
+                  </Link>
+                </li>
+              ))}
+            </ul>
+          </div>
         </div>
 
         {/* Newsletter Section */}
-        <div className="mt-12 pt-8 border-t border-gray-800">
-          <div className={`${isDark ? 'bg-gradient-to-r from-gray-800/50 to-gray-700/50 border-emerald-500/20' : 'bg-gradient-to-r from-emerald-50 to-teal-50 border-emerald-200'} border rounded-xl p-6`}>
-            <div className="flex flex-col md:flex-row items-center justify-between">
-              <div className="mb-4 md:mb-0">
-                <h3 className={`${isDark ? 'text-white' : 'text-gray-900'} font-semibold mb-2`}>Stay Updated</h3>
-                <p className={`${isDark ? 'text-gray-400' : 'text-gray-600'} text-sm`}>
-                  Get the latest cybersecurity news and tutorials delivered to your inbox.
-                </p>
-              </div>
-              <div className="flex flex-col sm:flex-row gap-3">
-                <input
-                  type="email"
-                  placeholder="Enter your email"
-                  className={`${isDark ? 'bg-gray-800 border-gray-700 text-white placeholder-gray-400 focus:border-emerald-500' : 'bg-white border-gray-300 text-gray-900 placeholder-gray-500 focus:border-emerald-500'} border rounded-lg px-4 py-2 focus:outline-none focus:ring-1 focus:ring-emerald-500`}
-                />
-                <button className="bg-gradient-to-r from-emerald-500 to-teal-500 text-white px-6 py-2 rounded-lg font-semibold hover:from-emerald-600 hover:to-teal-600 transition-all duration-200 transform hover:scale-105">
-                  Subscribe
-                </button>
-              </div>
+        <div className={`${isDark ? 'bg-gray-800 border-gray-700' : 'bg-white border-gray-200'} border rounded-2xl p-8 mb-12`}>
+          <div className="max-w-4xl mx-auto text-center">
+            <div className="flex items-center justify-center mb-4">
+              <Terminal className="h-8 w-8 text-emerald-500 mr-3" />
+              <h3 className={`text-2xl font-bold ${isDark ? 'text-white' : 'text-gray-900'}`}>
+                Stay Updated with Latest Security Trends
+              </h3>
+            </div>
+            <p className={`${isDark ? 'text-gray-300' : 'text-gray-600'} mb-6`}>
+              Get weekly cybersecurity insights, new tutorials, and exclusive content delivered to your inbox.
+            </p>
+            <div className="flex flex-col sm:flex-row gap-4 max-w-md mx-auto">
+              <input
+                type="email"
+                placeholder="Enter your email"
+                className={`flex-1 px-4 py-3 rounded-xl border text-sm ${
+                  isDark 
+                    ? 'bg-gray-700 border-gray-600 text-white placeholder-gray-400 focus:border-emerald-500' 
+                    : 'bg-gray-50 border-gray-300 text-gray-900 placeholder-gray-500 focus:border-emerald-500'
+                } focus:ring-2 focus:ring-emerald-500/20 focus:outline-none transition-all duration-200`}
+              />
+              <button className="bg-gradient-to-r from-emerald-500 to-cyan-500 hover:from-emerald-600 hover:to-cyan-600 text-white px-6 py-3 rounded-xl font-medium transition-all duration-200 transform hover:scale-105 shadow-lg hover:shadow-emerald-500/25">
+                Subscribe
+              </button>
             </div>
           </div>
         </div>
 
-        {/* Bottom Section */}
-        <div className={`mt-12 pt-8 border-t ${isDark ? 'border-gray-800' : 'border-gray-200'} flex flex-col md:flex-row justify-between items-center`}>
-          <div className={`${isDark ? 'text-gray-400' : 'text-gray-600'} text-sm mb-4 md:mb-0`}>
-            © {currentYear} HackTheShell. All rights reserved. Built with ❤️ for the cybersecurity community.
+        {/* Contact Info */}
+        <div className={`${isDark ? 'bg-gray-800/50' : 'bg-gray-100/50'} rounded-2xl p-8 mb-12`}>
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-8 text-center">
+            <div className="flex flex-col items-center">
+              <div className={`p-3 rounded-xl ${isDark ? 'bg-emerald-500/20' : 'bg-emerald-100'} mb-4`}>
+                <Mail className="h-6 w-6 text-emerald-500" />
+              </div>
+              <h4 className={`font-semibold mb-2 ${isDark ? 'text-white' : 'text-gray-900'}`}>Email Us</h4>
+              <p className={`${isDark ? 'text-gray-400' : 'text-gray-600'}`}>contact@hacktheshell.com</p>
+            </div>
+            <div className="flex flex-col items-center">
+              <div className={`p-3 rounded-xl ${isDark ? 'bg-cyan-500/20' : 'bg-cyan-100'} mb-4`}>
+                <Shield className="h-6 w-6 text-cyan-500" />
+              </div>
+              <h4 className={`font-semibold mb-2 ${isDark ? 'text-white' : 'text-gray-900'}`}>Security</h4>
+              <p className={`${isDark ? 'text-gray-400' : 'text-gray-600'}`}>security@hacktheshell.com</p>
+            </div>
+            <div className="flex flex-col items-center">
+              <div className={`p-3 rounded-xl ${isDark ? 'bg-purple-500/20' : 'bg-purple-100'} mb-4`}>
+                <Users className="h-6 w-6 text-purple-500" />
+              </div>
+              <h4 className={`font-semibold mb-2 ${isDark ? 'text-white' : 'text-gray-900'}`}>Community</h4>
+              <p className={`${isDark ? 'text-gray-400' : 'text-gray-600'}`}>Join Discord Server</p>
+            </div>
           </div>
-          <div className={`flex items-center space-x-6 text-sm ${isDark ? 'text-gray-400' : 'text-gray-600'}`}>
-            <a href="#" className={`${isDark ? 'hover:text-emerald-400' : 'hover:text-emerald-600'} transition-colors duration-200`}>
-              Privacy Policy
-            </a>
-            <a href="#" className={`${isDark ? 'hover:text-emerald-400' : 'hover:text-emerald-600'} transition-colors duration-200`}>
-              Terms of Service
-            </a>
-            <a href="#" className={`${isDark ? 'hover:text-emerald-400' : 'hover:text-emerald-600'} transition-colors duration-200`}>
-              Cookie Policy
-            </a>
+        </div>
+
+        {/* Company Links */}
+        <div className="flex flex-wrap justify-center gap-6 mb-8">
+          {company.map((link) => (
+            <Link
+              key={link.name}
+              href={link.href}
+              className={`text-sm transition-colors duration-200 ${
+                isDark ? 'text-gray-400 hover:text-white' : 'text-gray-600 hover:text-gray-900'
+              }`}
+            >
+              {link.name}
+            </Link>
+          ))}
+        </div>
+
+        {/* Bottom Bar */}
+        <div className={`pt-8 border-t ${isDark ? 'border-gray-800' : 'border-gray-200'} flex flex-col sm:flex-row justify-between items-center`}>
+          <div className={`text-sm ${isDark ? 'text-gray-400' : 'text-gray-600'} mb-4 sm:mb-0`}>
+            © 2024 HackTheShell. All rights reserved. Built with security in mind.
+          </div>
+          <div className="flex items-center space-x-4">
+            <div className={`flex items-center space-x-2 text-sm ${isDark ? 'text-gray-400' : 'text-gray-600'}`}>
+              <Shield className="h-4 w-4 text-green-500" />
+              <span>Secured by SSL</span>
+            </div>
+            <div className={`flex items-center space-x-2 text-sm ${isDark ? 'text-gray-400' : 'text-gray-600'}`}>
+              <Terminal className="h-4 w-4 text-emerald-500" />
+              <span>Open Source</span>
+            </div>
           </div>
         </div>
       </div>

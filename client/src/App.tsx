@@ -22,6 +22,8 @@ import AdminPage from './pages/AdminPage';
 import CreatorPage from './pages/CreatorPage';
 import LoginPage from './pages/LoginPage';
 import GitHubToolsPage from './pages/GitHubToolsPage';
+import AboutPage from './pages/AboutPage';
+import ContactPage from './pages/ContactPage';
 import { motion, AnimatePresence } from 'framer-motion';
 
 function AppContent() {

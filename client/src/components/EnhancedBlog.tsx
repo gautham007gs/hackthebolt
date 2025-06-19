@@ -106,7 +106,7 @@ const EnhancedBlog = () => {
             transition={{ duration: 0.6 }}
             className="space-y-6"
           >
-            <h2 className="seo-heading-h2">
+            <h2 className="text-3xl lg:text-5xl font-bold mb-6 leading-tight tracking-tight text-gray-900 dark:text-white">
               Latest Cybersecurity Insights
             </h2>
             <p className={`text-xl ${isDark ? 'text-gray-300' : 'text-gray-600'} max-w-3xl mx-auto leading-relaxed`}>
@@ -184,7 +184,7 @@ const EnhancedBlog = () => {
                       </span>
                     </div>
                     
-                    <h3 className="seo-heading-h3 mb-4 group-hover:text-emerald-500 transition-colors duration-300">
+                    <h3 className="text-2xl lg:text-3xl font-bold mb-4 group-hover:text-emerald-500 transition-colors duration-300 text-gray-900 dark:text-white">
                       {filteredPosts.find(post => post.featured)?.title}
                     </h3>
                     
