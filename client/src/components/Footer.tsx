@@ -51,9 +51,9 @@ const Footer = () => {
           <div className="lg:col-span-1">
             <div className="flex items-center space-x-2 mb-6">
               <div className={`w-6 h-4 ${
-                isDark ? 'bg-gray-800 border-emerald-400 text-emerald-400' : 'bg-gray-100 border-emerald-600 text-emerald-600'
+                isDark ? 'bg-gray-900 border-emerald-400' : 'bg-gray-50 border-emerald-600'
               } border border-l-2 border-b-2 rounded-bl-md flex items-center justify-start pl-1 font-mono text-xs`}>
-                <span className="select-none">$</span>
+                <span className={`select-none ${isDark ? 'text-emerald-400' : 'text-emerald-600'}`}>$</span>
               </div>
               <span className={`text-lg font-bold ${isDark ? 'text-white' : 'text-gray-900'}`}>
                 HackTheShell

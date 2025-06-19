@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Menu, X, Search, Moon, Sun, User, ChevronDown } from 'lucide-react';
+import { Menu, X, Search, Moon, Sun, User, ChevronDown, Shield, Zap, LogOut } from 'lucide-react';
 import { Link, useLocation } from 'wouter';
 import { useTheme } from '../contexts/ThemeContext';
 import { useAuth } from '../contexts/AuthContext';
@@ -54,15 +54,24 @@ const Header = () => {
       <nav className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex items-center justify-between h-16">
           {/* Simple Terminal Logo */}
-          <Link href="/" className="flex items-center space-x-2 group">
+          <Link href="/" className="flex items-center space-x-3 group">
             <div className={`w-8 h-6 ${
-              isDark ? 'bg-gray-800 border-emerald-400 text-emerald-400' : 'bg-gray-100 border-emerald-600 text-emerald-600'
-            } border border-l-2 border-b-2 rounded-bl-md flex items-center justify-start pl-1 font-mono text-xs group-hover:border-emerald-500 transition-colors duration-200`}>
-              <span className="select-none">$</span>
+              isDark ? 'bg-gray-900 border-emerald-400' : 'bg-gray-50 border-emerald-600'
+            } border border-l-2 border-b-2 rounded-bl-md flex items-center justify-start pl-1 font-mono text-xs group-hover:border-emerald-500 transition-all duration-200 group-hover:shadow-lg`}>
+              <span className={`select-none ${isDark ? 'text-emerald-400' : 'text-emerald-600'}`}>$</span>
             </div>
-            <span className={`text-xl font-bold ${isDark ? 'text-white' : 'text-gray-900'}`}>
-              HackTheShell
-            </span>
+            <div className="flex flex-col">
+              <span className={`text-xl font-bold bg-gradient-to-r ${
+                isDark 
+                  ? 'from-white via-gray-100 to-emerald-400' 
+                  : 'from-gray-900 via-gray-800 to-emerald-600'
+              } bg-clip-text text-transparent group-hover:from-emerald-500 group-hover:to-emerald-700 transition-all duration-300`}>
+                HackTheShell
+              </span>
+              <div className={`h-0.5 w-0 group-hover:w-full ${
+                isDark ? 'bg-emerald-400' : 'bg-emerald-600'
+              } transition-all duration-500 ease-out`} />
+            </div>
           </Link>
 
           {/* Desktop Navigation - Better Spaced */}

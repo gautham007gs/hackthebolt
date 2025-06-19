@@ -68,23 +68,29 @@ const LoginPage = () => {
           transition={{ duration: 0.6 }}
           className="text-center"
         >
-          <div className="flex items-center justify-center space-x-2 mb-6">
-            <div className={`w-8 h-6 ${
-              isDark ? 'bg-gray-800 border-emerald-400 text-emerald-400' : 'bg-gray-100 border-emerald-600 text-emerald-600'
-            } border border-l-2 border-b-2 rounded-bl-md flex items-center justify-start pl-1 font-mono text-xs`}>
-              <span className="select-none">$</span>
+          <div className="flex items-center justify-center space-x-3 mb-8">
+            <div className={`w-10 h-8 ${
+              isDark ? 'bg-gray-900 border-emerald-400' : 'bg-gray-50 border-emerald-600'
+            } border border-l-2 border-b-2 rounded-bl-lg flex items-center justify-start pl-2 font-mono text-sm shadow-lg`}>
+              <span className={`select-none ${isDark ? 'text-emerald-400' : 'text-emerald-600'}`}>$</span>
             </div>
-            <h1 className={`text-2xl font-bold ${isDark ? 'text-white' : 'text-gray-900'}`}>
-              HackTheShell
-            </h1>
+            <div className="text-left">
+              <h1 className={`text-2xl font-bold bg-gradient-to-r ${
+                isDark 
+                  ? 'from-white via-gray-100 to-emerald-400' 
+                  : 'from-gray-900 via-gray-800 to-emerald-600'
+              } bg-clip-text text-transparent`}>
+                HackTheShell
+              </h1>
+            </div>
           </div>
-          <h2 className={`text-3xl font-bold ${isDark ? 'text-white' : 'text-gray-900'}`}>
-            {isLogin ? 'Welcome Back' : 'Join the Community'}
+          <h2 className={`text-3xl font-bold mb-3 ${isDark ? 'text-white' : 'text-gray-900'}`}>
+            {isLogin ? 'Welcome back' : 'Create account'}
           </h2>
-          <p className={`mt-2 text-sm ${isDark ? 'text-gray-400' : 'text-gray-600'}`}>
+          <p className={`text-base ${isDark ? 'text-gray-400' : 'text-gray-600'}`}>
             {isLogin 
-              ? 'Sign in to access your cybersecurity learning journey' 
-              : 'Create your account to start learning cybersecurity'
+              ? 'Enter your credentials to access your account' 
+              : 'Join thousands learning cybersecurity'
             }
           </p>
         </motion.div>
@@ -95,8 +101,8 @@ const LoginPage = () => {
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.6, delay: 0.1 }}
           className={`${
-            isDark ? 'bg-gray-800 border-gray-700' : 'bg-white border-gray-200'
-          } rounded-2xl shadow-xl border p-8`}
+            isDark ? 'bg-gray-800/80 border-gray-700/50 backdrop-blur-lg' : 'bg-white/80 border-gray-200/50 backdrop-blur-lg'
+          } rounded-3xl shadow-2xl border p-8`}
         >
           <form className="space-y-6" onSubmit={handleSubmit}>
             {!isLogin && (
@@ -231,7 +237,7 @@ const LoginPage = () => {
             <button
               type="submit"
               disabled={loading}
-              className="group relative w-full flex justify-center py-3 px-4 border border-transparent text-sm font-medium rounded-xl text-white bg-gradient-to-r from-emerald-500 to-cyan-500 hover:from-emerald-600 hover:to-cyan-600 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-emerald-500 transition-all duration-200 disabled:opacity-50 disabled:cursor-not-allowed"
+              className="group relative w-full flex justify-center py-4 px-4 border border-transparent text-base font-semibold rounded-2xl text-white bg-gradient-to-r from-emerald-500 to-cyan-500 hover:from-emerald-600 hover:to-cyan-600 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-emerald-500 transition-all duration-300 transform hover:scale-105 hover:shadow-2xl disabled:opacity-50 disabled:cursor-not-allowed disabled:transform-none shadow-lg"
             >
               {loading ? (
                 <div className="w-5 h-5 border-2 border-white border-t-transparent rounded-full animate-spin"></div>
