@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Plus, X, Search, Moon, Sun, User, LogOut, Shield, Zap, ChevronDown, Menu } from 'lucide-react';
+import { Plus, X, Search, Moon, Sun, User, LogOut, Shield, Zap, ChevronDown, Menu, Home, BookOpen, MessageCircle, Code, Users, Info } from 'lucide-react';
 import { Link, useLocation } from 'wouter';
 import { useTheme } from '../contexts/ThemeContext';
 import { useAuth } from '../contexts/AuthContext';
@@ -28,10 +28,11 @@ const ProfessionalHeader = () => {
   }, [location]);
 
   const navigation = [
-    { name: 'Home', href: '/' },
+    { name: 'Home', href: '/', icon: Home },
     { 
       name: 'Learn', 
       href: '/tutorials',
+      icon: BookOpen,
       subItems: [
         { name: 'Interactive Tutorials', href: '/tutorials', desc: 'Step-by-step cybersecurity lessons' },
         { name: 'Hands-on Labs', href: '/labs', desc: 'Practice in safe environments' },
@@ -39,10 +40,10 @@ const ProfessionalHeader = () => {
         { name: 'Certifications', href: '/certifications', desc: 'Industry-recognized credentials' }
       ]
     },
-    { name: 'Blog', href: '/blog' },
-    { name: 'Tools', href: '/github-tools' },
-    { name: 'Community', href: '/community' },
-    { name: 'About', href: '/about' }
+    { name: 'Blog', href: '/blog', icon: MessageCircle },
+    { name: 'Tools', href: '/github-tools', icon: Code },
+    { name: 'Community', href: '/community', icon: Users },
+    { name: 'About', href: '/about', icon: Info }
   ];
 
   const isActivePath = (path: string) => {
@@ -250,7 +251,10 @@ const ProfessionalHeader = () => {
                               : `${isDark ? 'text-gray-300 hover:text-white hover:bg-gray-700/50' : 'text-gray-700 hover:text-gray-900 hover:bg-gray-100/50'}`
                           }`}
                         >
-                          <span>{item.name}</span>
+                          <div className="flex items-center space-x-3">
+                            {item.icon && <item.icon className="h-5 w-5" />}
+                            <span>{item.name}</span>
+                          </div>
                           <motion.div
                             animate={{ rotate: expandedSection === item.name ? 45 : 0 }}
                             transition={{ duration: 0.2 }}
@@ -293,13 +297,14 @@ const ProfessionalHeader = () => {
                       <Link
                         href={item.href}
                         onClick={closeMenu}
-                        className={`block px-4 py-3 rounded-lg font-medium transition-all duration-200 ${
+                        className={`flex items-center space-x-3 px-4 py-3 rounded-lg font-medium transition-all duration-200 ${
                           isActivePath(item.href)
                             ? `${isDark ? 'text-emerald-400 bg-emerald-500/10' : 'text-emerald-600 bg-emerald-50'}`
                             : `${isDark ? 'text-gray-300 hover:text-white hover:bg-gray-700/50' : 'text-gray-700 hover:text-gray-900 hover:bg-gray-100/50'}`
                         }`}
                       >
-                        {item.name}
+                        {item.icon && <item.icon className="h-5 w-5" />}
+                        <span>{item.name}</span>
                       </Link>
                     )}
                   </div>
@@ -353,14 +358,18 @@ const ProfessionalHeader = () => {
                       <Link
                         href="/login"
                         onClick={closeMenu}
-                        className="block px-4 py-3 text-center rounded-lg border border-gray-300 dark:border-gray-600 font-medium hover:bg-gray-50 dark:hover:bg-gray-700 transition-all duration-200"
+                        className={`block px-4 py-3 text-center rounded-lg border font-medium transition-all duration-200 ${
+                          isDark 
+                            ? 'border-gray-600 text-gray-300 hover:bg-gray-700 hover:text-white' 
+                            : 'border-gray-300 text-gray-700 hover:bg-gray-50 hover:text-gray-900'
+                        }`}
                       >
                         Login
                       </Link>
                       <Link
                         href="/login"
                         onClick={closeMenu}
-                        className="block px-4 py-3 text-center bg-emerald-600 text-white font-medium rounded-lg hover:bg-emerald-700 transition-all duration-200 shadow-lg"
+                        className="block px-4 py-3 text-center bg-gradient-to-r from-emerald-500 to-cyan-500 hover:from-emerald-600 hover:to-cyan-600 text-white font-medium rounded-lg transition-all duration-200 shadow-lg transform hover:scale-105"
                       >
                         Sign Up
                       </Link>
