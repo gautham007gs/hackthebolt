@@ -32,18 +32,17 @@ const Hero = () => {
                 <span className={`${isDark ? 'text-emerald-400' : 'text-emerald-700'} font-semibold`}>Ethical Hacking Academy</span>
               </div>
               
-              <h1 className={`text-5xl md:text-7xl lg:text-8xl font-black leading-none tracking-tight`} 
-                  style={{ fontFamily: 'system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif' }}>
-                <span className={`${isDark ? 'text-emerald-400' : 'text-emerald-600'} font-black`}>Unleash</span>
-                <span className={`${isDark ? 'text-white' : 'text-gray-900'} font-black`}> Your</span>
+              <h1 className={`heading-primary ${isDark ? 'text-white' : 'text-gray-900'}`}>
+                <span className={`${isDark ? 'text-emerald-400' : 'text-emerald-700'}`}>Master</span>
+                <span> Elite</span>
                 <br />
-                <span className={`${isDark ? 'text-cyan-400' : 'text-cyan-600'} font-black`}>Cyber Genius</span>
+                <span className={`${isDark ? 'text-blue-400' : 'text-blue-700'}`}>Cybersecurity</span>
               </h1>
               
-              <p className={`text-lg sm:text-xl ${isDark ? 'text-gray-300' : 'text-gray-600'} leading-relaxed max-w-2xl`}>
-                From zero to cybersecurity hero in record time. Master elite hacking techniques, 
-                build bulletproof defenses, and dominate the digital battlefield with cutting-edge skills 
-                that make you unstoppable.
+              <p className={`text-body-medium ${isDark ? 'text-gray-300' : 'text-gray-700'} max-w-2xl`}>
+                Transform from beginner to cybersecurity expert through hands-on learning. 
+                <span className={`${isDark ? 'text-emerald-300' : 'text-emerald-700'} font-semibold`}> Master advanced techniques</span>, 
+                build robust defenses, and gain the expertise that sets professionals apart in today's digital landscape.
               </p>
             </div>
 

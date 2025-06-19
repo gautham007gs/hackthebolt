@@ -53,17 +53,18 @@ const Header = () => {
     }`}>
       <nav className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex items-center justify-between h-16">
-          {/* Enhanced Terminal Shell Logo */}
-          <Link href="/" className="flex items-center space-x-3 group">
-            <div className={`w-10 h-7 ${
+          {/* Professional Terminal Shell Logo */}
+          <Link href="/" className="flex items-center space-x-2 group shrink-0">
+            <div className={`w-9 h-6 ${
               isDark ? 'bg-gray-900 border-emerald-400' : 'bg-gray-50 border-emerald-600'
-            } border-4 rounded-2xl flex items-center justify-start pl-2 font-mono text-xs group-hover:border-emerald-500 transition-all duration-200 group-hover:shadow-xl shadow-emerald-500/20`}>
-              <span className={`select-none ${isDark ? 'text-emerald-400' : 'text-emerald-600'} font-bold`}>$</span>
+            } border-2 border-l-[3px] border-b-[3px] rounded-bl-lg rounded-tr-sm flex items-center justify-start pl-1.5 font-mono text-xs group-hover:border-emerald-500 transition-all duration-200 group-hover:shadow-lg shadow-emerald-500/10`} 
+            style={{ clipPath: 'polygon(10% 0%, 100% 0%, 90% 100%, 0% 100%)' }}>
+              <span className={`select-none ${isDark ? 'text-emerald-400' : 'text-emerald-600'} font-semibold`}>$</span>
             </div>
             <div className="flex flex-col">
-              <span className={`text-xl font-bold ${
+              <span className={`text-lg sm:text-xl font-bold ${
                 isDark ? 'text-white' : 'text-gray-900'
-              } group-hover:text-emerald-500 transition-all duration-300 tracking-tight`}>
+              } group-hover:text-emerald-500 transition-all duration-300 tracking-tight font-sans`}>
                 HackTheShell
               </span>
               <div className={`h-0.5 w-0 group-hover:w-full ${
