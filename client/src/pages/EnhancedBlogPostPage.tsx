@@ -7,6 +7,7 @@ import TableOfContents from '../components/TableOfContents';
 import EnhancedCommentSystemV2 from '../components/EnhancedCommentSystemV2';
 import SEOStructuredData from '../components/SEOStructuredData';
 import AdvancedSEO from '../components/AdvancedSEO';
+import BlogContentRenderer from '../components/BlogContentRenderer';
 
 const EnhancedBlogPostPage = () => {
   const { slug } = useParams();
@@ -21,184 +22,127 @@ const EnhancedBlogPostPage = () => {
     slug: '2024-cybersecurity-threat-landscape',
     title: "Advanced Persistent Threats: The Silent Digital Assassins",
     excerpt: "APTs represent the most sophisticated category of cyber attacks, employing stealth, persistence, and advanced techniques to infiltrate high-value targets. Learn how to detect and defend against these evolving threats.",
-    content: `
-# Advanced Persistent Threats: The Silent Digital Assassins
-
-## Introduction
-
-Advanced Persistent Threats (APTs) represent the pinnacle of cybersecurity challenges in 2024. These sophisticated, multi-stage attacks are designed to maintain long-term access to target networks while remaining undetected. Unlike opportunistic attacks, APTs are typically state-sponsored or conducted by well-funded criminal organizations with specific strategic objectives.
-
-## Understanding APT Methodology
-
-### Initial Access Vectors
-
-APT groups employ various sophisticated techniques to gain initial access to target environments:
-
-**Spear Phishing Campaigns**
-- Highly targeted emails with malicious attachments or links
-- Social engineering based on extensive reconnaissance
-- Use of zero-day exploits in email clients or browsers
-
-**Supply Chain Compromises**
-- Infiltration of software vendors or service providers
-- Compromising update mechanisms and distribution channels
-- Targeting development environments and build systems
-
-**Watering Hole Attacks**
-- Compromising websites frequently visited by target organizations
-- Strategic placement of exploit kits on legitimate sites
-- Leveraging browser vulnerabilities for drive-by downloads
-
-### Persistence and Lateral Movement
-
-Once inside a network, APT actors focus on establishing persistence and expanding their foothold:
-
-**Living off the Land Techniques**
-- Abuse of legitimate system tools and processes
-- PowerShell and WMI exploitation
-- Registry manipulation for persistence
-
-**Credential Harvesting**
-- Mimikatz and similar tools for credential extraction
-- Kerberoasting and ASREPRoasting attacks
-- Golden ticket and silver ticket attacks
-
-**Network Reconnaissance**
-- Internal network mapping and enumeration
-- Identification of high-value targets and assets
-- Understanding of security controls and monitoring
-
-## Detection and Mitigation Strategies
-
-### Behavioral Analytics
-
-Modern APT detection relies heavily on behavioral analysis rather than signature-based detection:
-
-**User and Entity Behavior Analytics (UEBA)**
-- Baseline normal behavior patterns
-- Detect anomalous activities and access patterns
-- Machine learning algorithms for pattern recognition
-
-**Network Traffic Analysis**
-- Deep packet inspection for command and control traffic
-- Detection of encrypted communication channels
-- Identification of data exfiltration patterns
-
-### Threat Hunting Methodologies
-
-Proactive threat hunting is essential for APT detection:
-
-**Hypothesis-Driven Hunting**
-- Development of threat scenarios based on intelligence
-- Structured hunting methodologies and frameworks
-- Continuous improvement of detection capabilities
-
-**Indicators of Compromise (IoCs)**
-- Network indicators such as domains and IP addresses
-- Host-based indicators including file hashes and registry keys
-- Behavioral indicators and TTPs (Tactics, Techniques, and Procedures)
-
-## Real-World Case Studies
-
-### Case Study 1: The Shadow Broker Campaign
-
-In early 2024, security researchers identified a sophisticated APT campaign targeting financial institutions across North America. The attackers used a combination of supply chain compromise and social engineering to gain initial access.
-
-**Attack Timeline:**
-1. Initial compromise through a compromised software update
-2. Deployment of custom backdoors with encrypted communication
-3. Lateral movement using stolen credentials
-4. Data exfiltration over encrypted channels
-
-**Lessons Learned:**
-- Importance of supply chain security assessments
-- Need for comprehensive network segmentation
-- Value of behavioral monitoring and threat hunting
-
-### Case Study 2: Operation Digital Eclipse
-
-This campaign targeted government agencies and defense contractors, demonstrating advanced persistence techniques and sophisticated evasion methods.
-
-**Key Techniques:**
-- Use of legitimate cloud services for command and control
-- Living off the land techniques to avoid detection
-- Custom malware with anti-analysis capabilities
-
-**Detection Methods:**
-- Anomalous network traffic patterns
-- Unusual PowerShell execution patterns
-- Behavioral analysis of user activities
-
-## Advanced Defense Strategies
-
-### Zero Trust Architecture
-
-Implementing a zero trust security model is crucial for APT defense:
-
-**Core Principles:**
-- Never trust, always verify
-- Least privilege access controls
-- Continuous monitoring and validation
-
-**Implementation Components:**
-- Identity and access management (IAM)
-- Network segmentation and microsegmentation
-- Endpoint detection and response (EDR)
-
-### Threat Intelligence Integration
-
-Effective APT defense requires comprehensive threat intelligence:
-
-**Strategic Intelligence**
-- Understanding of threat actor motivations and capabilities
-- Geopolitical context and targeting patterns
-- Long-term trend analysis and predictions
-
-**Tactical Intelligence**
-- Specific TTPs and attack methodologies
-- Infrastructure and tooling information
-- Defensive countermeasures and best practices
-
-**Operational Intelligence**
-- Real-time threat feeds and indicators
-- Attribution and campaign tracking
-- Incident response support
-
-## Emerging Trends and Future Challenges
-
-### AI-Enhanced APTs
-
-The integration of artificial intelligence in APT operations presents new challenges:
-
-**Machine Learning Evasion**
-- Adversarial attacks against detection systems
-- Automated evasion technique generation
-- Dynamic malware adaptation
-
-**Social Engineering Enhancement**
-- AI-generated phishing content
-- Deepfake technology for impersonation
-- Automated social media reconnaissance
-
-### Cloud-Native APTs
-
-As organizations migrate to cloud environments, APT actors are adapting their techniques:
-
-**Cloud-Specific TTPs**
-- Container and serverless exploitation
-- Cloud API abuse and misconfiguration exploitation
-- Multi-cloud environment traversal
-
-**Detection Challenges**
-- Ephemeral infrastructure and dynamic environments
-- Shared responsibility model complexities
-- Log aggregation and analysis challenges
-
-## Conclusion
-
-Advanced Persistent Threats continue to evolve in sophistication and impact. Organizations must adopt a comprehensive, multi-layered defense strategy that includes advanced detection capabilities, threat hunting programs, and continuous security improvement processes. The key to successful APT defense lies in understanding that these are not just technical challenges but strategic business risks that require executive-level attention and resource allocation.
-
-Success against APTs requires a combination of technology, processes, and people working together in a coordinated defense strategy. As threat actors continue to evolve their techniques, so must our defensive capabilities and organizational security maturity.`,
+    content: {
+      title: "Advanced Persistent Threats: The Silent Digital Assassins",
+      sections: [
+        {
+          heading: "Introduction",
+          level: 2,
+          content: "Advanced Persistent Threats (APTs) represent the pinnacle of cybersecurity challenges in 2024. These sophisticated, multi-stage attacks are designed to maintain long-term access to target networks while remaining undetected. Unlike opportunistic attacks, APTs are typically state-sponsored or conducted by well-funded criminal organizations with specific strategic objectives."
+        },
+        {
+          heading: "Understanding APT Methodology",
+          level: 2,
+          content: "APT groups employ sophisticated techniques that evolve constantly to bypass traditional security measures. Their methodology follows a structured approach designed for maximum impact while maintaining stealth.",
+          subsections: [
+            {
+              heading: "Initial Access Vectors",
+              content: "APT groups employ various sophisticated techniques to gain initial access to target environments:",
+              points: [
+                "Spear Phishing Campaigns: Highly targeted emails with malicious attachments or links, social engineering based on extensive reconnaissance, and use of zero-day exploits in email clients or browsers",
+                "Supply Chain Compromises: Infiltration of software vendors or service providers, compromising update mechanisms and distribution channels, and targeting development environments and build systems",
+                "Watering Hole Attacks: Compromising websites frequently visited by target organizations, strategic placement of exploit kits on legitimate sites, and leveraging browser vulnerabilities for drive-by downloads"
+              ]
+            },
+            {
+              heading: "Persistence and Lateral Movement",
+              content: "Once inside a network, APT actors focus on establishing persistence and expanding their foothold:",
+              points: [
+                "Living off the Land Techniques: Abuse of legitimate system tools and processes, PowerShell and WMI exploitation, and registry manipulation for persistence",
+                "Credential Harvesting: Mimikatz and similar tools for credential extraction, Kerberoasting and ASREPRoasting attacks, and Golden ticket and silver ticket attacks",
+                "Network Reconnaissance: Internal network mapping and enumeration, identification of high-value targets and assets, and understanding of security controls and monitoring"
+              ]
+            }
+          ]
+        },
+        {
+          heading: "Detection and Mitigation Strategies",
+          level: 2,
+          content: "Modern APT detection requires a multi-layered approach that combines advanced analytics with proactive threat hunting methodologies.",
+          subsections: [
+            {
+              heading: "Behavioral Analytics",
+              content: "Modern APT detection relies heavily on behavioral analysis rather than signature-based detection:",
+              points: [
+                "User and Entity Behavior Analytics (UEBA): Baseline normal behavior patterns, detect anomalous activities and access patterns, and machine learning algorithms for pattern recognition",
+                "Network Traffic Analysis: Deep packet inspection for command and control traffic, detection of encrypted communication channels, and identification of data exfiltration patterns"
+              ]
+            },
+            {
+              heading: "Threat Hunting Methodologies",
+              content: "Proactive threat hunting is essential for APT detection:",
+              points: [
+                "Hypothesis-Driven Hunting: Development of threat scenarios based on intelligence, structured hunting methodologies and frameworks, and continuous improvement of detection capabilities",
+                "Indicators of Compromise (IoCs): Network indicators such as domains and IP addresses, host-based indicators including file hashes and registry keys, and behavioral indicators and TTPs"
+              ]
+            }
+          ]
+        },
+        {
+          heading: "Real-World Case Studies",
+          level: 2,
+          content: "Examining recent APT campaigns provides valuable insights into attack methodologies and effective defense strategies.",
+          subsections: [
+            {
+              heading: "Case Study: The Shadow Broker Campaign",
+              content: "In early 2024, security researchers identified a sophisticated APT campaign targeting financial institutions across North America. The attackers used a combination of supply chain compromise and social engineering to gain initial access. The attack timeline included initial compromise through a compromised software update, deployment of custom backdoors with encrypted communication, lateral movement using stolen credentials, and data exfiltration over encrypted channels. Key lessons learned include the importance of supply chain security assessments, need for comprehensive network segmentation, and value of behavioral monitoring and threat hunting."
+            },
+            {
+              heading: "Case Study: Operation Digital Eclipse",
+              content: "This campaign targeted government agencies and defense contractors, demonstrating advanced persistence techniques and sophisticated evasion methods. Key techniques included use of legitimate cloud services for command and control, living off the land techniques to avoid detection, and custom malware with anti-analysis capabilities. Detection methods involved monitoring anomalous network traffic patterns, unusual PowerShell execution patterns, and behavioral analysis of user activities."
+            }
+          ]
+        },
+        {
+          heading: "Advanced Defense Strategies",
+          level: 2,
+          content: "Effective APT defense requires implementing comprehensive security architectures and integrating threat intelligence throughout the organization.",
+          subsections: [
+            {
+              heading: "Zero Trust Architecture",
+              content: "Implementing a zero trust security model is crucial for APT defense. Core principles include never trust, always verify, least privilege access controls, and continuous monitoring and validation. Implementation components involve identity and access management (IAM), network segmentation and microsegmentation, and endpoint detection and response (EDR)."
+            },
+            {
+              heading: "Threat Intelligence Integration",
+              content: "Effective APT defense requires comprehensive threat intelligence across multiple levels:",
+              points: [
+                "Strategic Intelligence: Understanding of threat actor motivations and capabilities, geopolitical context and targeting patterns, and long-term trend analysis and predictions",
+                "Tactical Intelligence: Specific TTPs and attack methodologies, infrastructure and tooling information, and defensive countermeasures and best practices",
+                "Operational Intelligence: Real-time threat feeds and indicators, attribution and campaign tracking, and incident response support"
+              ]
+            }
+          ]
+        },
+        {
+          heading: "Emerging Trends and Future Challenges",
+          level: 2,
+          content: "The threat landscape continues to evolve with new technologies presenting both opportunities and challenges for cybersecurity professionals.",
+          subsections: [
+            {
+              heading: "AI-Enhanced APTs",
+              content: "The integration of artificial intelligence in APT operations presents new challenges:",
+              points: [
+                "Machine Learning Evasion: Adversarial attacks against detection systems, automated evasion technique generation, and dynamic malware adaptation",
+                "Social Engineering Enhancement: AI-generated phishing content, deepfake technology for impersonation, and automated social media reconnaissance"
+              ]
+            },
+            {
+              heading: "Cloud-Native APTs",
+              content: "As organizations migrate to cloud environments, APT actors are adapting their techniques:",
+              points: [
+                "Cloud-Specific TTPs: Container and serverless exploitation, cloud API abuse and misconfiguration exploitation, and multi-cloud environment traversal",
+                "Detection Challenges: Ephemeral infrastructure and dynamic environments, shared responsibility model complexities, and log aggregation and analysis challenges"
+              ]
+            }
+          ]
+        },
+        {
+          heading: "Conclusion",
+          level: 2,
+          content: "Advanced Persistent Threats continue to evolve in sophistication and impact. Organizations must adopt a comprehensive, multi-layered defense strategy that includes advanced detection capabilities, threat hunting programs, and continuous security improvement processes. The key to successful APT defense lies in understanding that these are not just technical challenges but strategic business risks that require executive-level attention and resource allocation. Success against APTs requires a combination of technology, processes, and people working together in a coordinated defense strategy. As threat actors continue to evolve their techniques, so must our defensive capabilities and organizational security maturity."
+        }
+      ]
+    },
     author: "Sarah Chen",
     authorRole: "Senior Threat Intelligence Analyst",
     authorBio: "Sarah Chen is a cybersecurity expert with over 15 years of experience in threat intelligence and incident response. She has led security teams at Fortune 500 companies and government agencies.",
@@ -235,8 +179,21 @@ Success against APTs requires a combination of technology, processes, and people
   useEffect(() => {
     // Calculate reading time based on content length
     const wordsPerMinute = 200;
-    const words = blogPost.content.split(/\s+/).length;
-    setEstimatedReadTime(Math.ceil(words / wordsPerMinute));
+    const totalWords = blogPost.content.sections.reduce((total, section) => {
+      let sectionWords = section.content ? section.content.split(/\s+/).length : 0;
+      if (section.subsections) {
+        sectionWords += section.subsections.reduce((subTotal, subsection) => {
+          let subWords = subsection.content ? subsection.content.split(/\s+/).length : 0;
+          if (subsection.points) {
+            subWords += subsection.points.join(' ').split(/\s+/).length;
+          }
+          return subTotal + subWords;
+        }, 0);
+      }
+      // Skip points calculation for now to avoid TypeScript errors
+      return total + sectionWords;
+    }, 0);
+    setEstimatedReadTime(Math.ceil(totalWords / wordsPerMinute));
 
     // Track reading progress
     const handleScroll = () => {
@@ -257,7 +214,7 @@ Success against APTs requires a combination of technology, processes, and people
 
     window.addEventListener('scroll', handleScroll);
     return () => window.removeEventListener('scroll', handleScroll);
-  }, [blogPost.content]);
+  }, []);
 
   const structuredData = {
     headline: blogPost.title,
@@ -276,7 +233,7 @@ Success against APTs requires a combination of technology, processes, and people
     url: `https://hacktheshell.com/blog/${blogPost.slug}`,
     mainEntityOfPage: `https://hacktheshell.com/blog/${blogPost.slug}`,
     articleSection: blogPost.category,
-    wordCount: blogPost.content.split(/\s+/).length,
+    wordCount: estimatedReadTime * 200,
     keywords: blogPost.tags
   };
 
@@ -321,11 +278,11 @@ Success against APTs requires a combination of technology, processes, and people
         />
       </div>
 
-      <div className={`min-h-screen ${isDark ? 'bg-gray-900' : 'bg-gray-50'} pt-20`}>
+      <div className={`min-h-screen ${isDark ? 'bg-gray-900' : 'bg-gray-50'} pt-20 overflow-x-hidden`}>
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
-          <div className="grid lg:grid-cols-4 gap-12">
+          <div className="grid lg:grid-cols-4 gap-8 lg:gap-12">
             {/* Main Content */}
-            <div className="lg:col-span-3">
+            <div className="lg:col-span-3 min-w-0 overflow-hidden">
               {/* Header */}
               <motion.div
                 initial={{ opacity: 0, y: 20 }}
@@ -462,19 +419,9 @@ Success against APTs requires a combination of technology, processes, and people
                 initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.6, delay: 0.4 }}
-                className={`blog-content max-w-none mb-12`}
+                className={`blog-content max-w-none mb-12 overflow-hidden`}
               >
-                <div className={`leading-relaxed prose prose-lg max-w-none ${
-                  isDark ? 'prose-invert' : 'prose-gray'
-                }`}>
-                  {blogPost.content.split('\n').map((paragraph, index) => (
-                    <p key={index} className={`mb-6 text-lg leading-8`} style={{ 
-                      color: isDark ? '#e5e7eb' : '#111827' 
-                    }}>
-                      {paragraph}
-                    </p>
-                  ))}
-                </div>
+                <BlogContentRenderer content={blogPost.content} />
               </motion.article>
 
               {/* Tags */}
@@ -575,10 +522,46 @@ Success against APTs requires a combination of technology, processes, and people
             <div className="lg:col-span-1">
               <div className="sticky top-24 space-y-8">
                 {/* Table of Contents */}
-                <TableOfContents
-                  content={blogPost.content}
-                  showOnMobile={true}
-                />
+                <div className={`${isDark ? 'bg-gray-800' : 'bg-white'} rounded-2xl p-6 border ${
+                  isDark ? 'border-gray-700' : 'border-gray-200'
+                }`}>
+                  <h3 className={`text-lg font-semibold mb-4 ${isDark ? 'text-white' : 'text-gray-900'}`}>
+                    Table of Contents
+                  </h3>
+                  <nav className="space-y-2">
+                    {blogPost.content.sections.map((section, index) => (
+                      <div key={index}>
+                        <a
+                          href={`#${section.heading.toLowerCase().replace(/\s+/g, '-')}`}
+                          className={`block py-2 px-3 rounded-lg transition-colors ${
+                            isDark 
+                              ? 'text-gray-300 hover:text-white hover:bg-gray-700' 
+                              : 'text-gray-600 hover:text-gray-900 hover:bg-gray-100'
+                          }`}
+                        >
+                          {section.heading}
+                        </a>
+                        {section.subsections && (
+                          <div className="ml-4 mt-1 space-y-1">
+                            {section.subsections.map((subsection, subIndex) => (
+                              <a
+                                key={subIndex}
+                                href={`#${subsection.heading.toLowerCase().replace(/\s+/g, '-')}`}
+                                className={`block py-1 px-3 text-sm rounded transition-colors ${
+                                  isDark 
+                                    ? 'text-gray-400 hover:text-gray-300 hover:bg-gray-700' 
+                                    : 'text-gray-500 hover:text-gray-700 hover:bg-gray-100'
+                                }`}
+                              >
+                                {subsection.heading}
+                              </a>
+                            ))}
+                          </div>
+                        )}
+                      </div>
+                    ))}
+                  </nav>
+                </div>
 
                 {/* Quick Actions - Mini */}
                 <div className="flex flex-wrap gap-2 mb-6">
