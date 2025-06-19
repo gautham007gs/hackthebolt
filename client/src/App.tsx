@@ -3,7 +3,7 @@ import { Router, Route, Switch } from 'wouter';
 import { ThemeProvider } from './contexts/ThemeContext';
 import { AuthProvider } from './contexts/AuthContext';
 import { ProgressProvider } from './contexts/ProgressContext';
-import ImprovedHeader from './components/ImprovedHeader';
+import ProfessionalHeader from './components/ProfessionalHeader';
 import Footer from './components/Footer';
 import ScrollToTop from './components/ScrollToTop';
 import ErrorBoundary from './components/ErrorBoundary';
@@ -34,7 +34,7 @@ function AppContent() {
   
   return (
     <div className="min-h-screen transition-colors duration-300 dark:bg-gray-900 bg-white">
-      <ImprovedHeader />
+      <ProfessionalHeader />
       <AnimatePresence mode="wait">
         <Switch>
           <Route path="/" component={HomePage} />

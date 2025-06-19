@@ -216,9 +216,9 @@ const ProfessionalHeader = () => {
                 transition={{ duration: 0.2 }}
               >
                 {isMenuOpen ? (
-                  <X className="h-6 w-6" />
+                  <X className={`h-6 w-6 ${isDark ? 'text-white' : 'text-gray-900'}`} />
                 ) : (
-                  <Menu className="h-6 w-6" />
+                  <Menu className={`h-6 w-6 ${isDark ? 'text-white' : 'text-gray-900'}`} />
                 )}
               </motion.div>
             </button>
