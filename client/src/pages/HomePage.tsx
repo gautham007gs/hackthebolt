@@ -3,6 +3,7 @@ import { motion } from 'framer-motion';
 import SEOHead from '../components/SEOHead';
 import Hero from '../components/Hero';
 import Features from '../components/Features';
+import ProfessionalTrendingSection from '../components/ProfessionalTrendingSection';
 import EnhancedBlog from '../components/EnhancedBlog';
 import Community from '../components/Community';
 
@@ -22,6 +23,7 @@ const HomePage = () => {
       >
         <Hero />
         <Features />
+        <ProfessionalTrendingSection />
         <EnhancedBlog />
         <Community />
       </motion.div>
