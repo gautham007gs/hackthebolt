@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Plus, X, Search, Moon, Sun, User, LogOut, Shield, Zap, ChevronDown } from 'lucide-react';
+import { Plus, X, Search, Moon, Sun, User, LogOut, Shield, Zap, ChevronDown, Menu } from 'lucide-react';
 import { Link, useLocation } from 'wouter';
 import { useTheme } from '../contexts/ThemeContext';
 import { useAuth } from '../contexts/AuthContext';
@@ -207,18 +207,18 @@ const ProfessionalHeader = () => {
             <button
               onClick={() => setIsMenuOpen(!isMenuOpen)}
               className={`lg:hidden p-2 rounded-lg transition-all duration-200 ${
-                isDark ? 'hover:bg-gray-800/60' : 'hover:bg-gray-100/60'
+                isDark ? 'hover:bg-gray-800/60 bg-gray-800/30' : 'hover:bg-gray-100/60 bg-gray-100/30'
               }`}
               aria-label="Toggle mobile menu"
             >
               <motion.div
-                animate={{ rotate: isMenuOpen ? 45 : 0 }}
+                animate={{ rotate: isMenuOpen ? 90 : 0 }}
                 transition={{ duration: 0.2 }}
               >
                 {isMenuOpen ? (
                   <X className="h-6 w-6" />
                 ) : (
-                  <Plus className="h-6 w-6" />
+                  <Menu className="h-6 w-6" />
                 )}
               </motion.div>
             </button>
