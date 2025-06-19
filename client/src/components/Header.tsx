@@ -47,95 +47,80 @@ const Header = () => {
         : 'bg-transparent'
     }`}>
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="flex justify-between items-center py-4">
+        <div className="flex justify-between items-center py-3 lg:py-4">
           {/* Logo */}
-          <Link to="/" className="flex items-center space-x-3 group">
-            <div className="relative">
-              <Shield className={`h-8 w-8 ${isDark ? 'text-emerald-400' : 'text-emerald-600'} transition-all duration-300 group-hover:scale-110`} />
-              <div className={`absolute inset-0 ${isDark ? 'bg-emerald-400/20' : 'bg-emerald-600/20'} blur-xl rounded-full opacity-0 group-hover:opacity-100 transition-opacity duration-300`}></div>
-            </div>
-            <span className={`text-2xl font-bold ${isDark ? 'text-white' : 'text-gray-900'} transition-colors duration-300`}>
-              Hack<span className={isDark ? 'text-emerald-400' : 'text-emerald-600'}>The</span>Shell
+          <Link href="/" className="flex items-center space-x-3 group">
+            <TerminalLogo size="md" animated />
+            <span className={`font-bold text-xl ${isDark ? 'text-white' : 'text-gray-900'} group-hover:text-emerald-500 transition-colors`}>
+              HackTheShell
             </span>
           </Link>
 
-          {/* Desktop Navigation */}
-          <nav className="hidden lg:flex items-center space-x-8">
-            {navigation.map(({ name, href, icon: Icon }) => (
-              <Link
-                key={name}
-                to={href}
-                className={`${
-                  isActivePath(href)
-                    ? isDark ? 'text-emerald-400' : 'text-emerald-600'
-                    : isDark ? 'text-gray-300 hover:text-emerald-400' : 'text-gray-700 hover:text-emerald-600'
-                } transition-all duration-200 flex items-center space-x-2 px-3 py-2 rounded-lg hover:bg-emerald-500/10 group relative`}
-              >
-                <Icon className="h-4 w-4 group-hover:scale-110 transition-transform duration-200" />
-                <span className="font-medium">{name}</span>
-                {isActivePath(href) && (
-                  <motion.div
-                    layoutId="activeTab"
-                    className="absolute bottom-0 left-0 right-0 h-0.5 bg-gradient-to-r from-emerald-500 to-teal-500 rounded-full"
-                  />
-                )}
-              </Link>
-            ))}
+          {/* Desktop Navigation - Improved spacing and design */}
+          <nav className="hidden lg:flex items-center space-x-1">
+            {navigation.map((item) => {
+              const Icon = item.icon;
+              const isActive = isActivePath(item.href);
+              return (
+                <Link
+                  key={item.name}
+                  href={item.href}
+                  className={`flex items-center space-x-2 px-4 py-2.5 rounded-xl transition-all duration-200 ${
+                    isActive
+                      ? `${isDark ? 'bg-emerald-500/20 text-emerald-400' : 'bg-emerald-100 text-emerald-700'} shadow-lg`
+                      : `${isDark ? 'text-gray-300 hover:text-emerald-400 hover:bg-gray-800/50' : 'text-gray-600 hover:text-emerald-600 hover:bg-emerald-50'}`
+                  }`}
+                >
+                  <Icon className="h-4 w-4" />
+                  <span className="font-medium">{item.name}</span>
+                </Link>
+              );
+            })}
           </nav>
 
-          {/* Desktop Actions */}
-          <div className="hidden lg:flex items-center space-x-4">
-            {/* Search */}
-            <div className="relative">
-              <button
-                onClick={() => setIsSearchOpen(!isSearchOpen)}
-                onKeyDown={(e) => e.key === 'Enter' && setIsSearchOpen(!isSearchOpen)}
-                className={`p-2 rounded-lg ${isDark ? 'bg-gray-800 hover:bg-gray-700 text-gray-400 hover:text-emerald-400' : 'bg-gray-100 hover:bg-gray-200 text-gray-600 hover:text-emerald-600'} transition-all duration-200 hover:scale-110 focus:outline-none focus:ring-2 focus:ring-emerald-500/50`}
-                aria-label="Open search"
-                aria-expanded={isSearchOpen}
-              >
-                <Search className="h-5 w-5" />
-              </button>
-              
-              <AnimatePresence>
-                {isSearchOpen && (
-                  <motion.div
-                    initial={{ opacity: 0, scale: 0.95, y: -10 }}
-                    animate={{ opacity: 1, scale: 1, y: 0 }}
-                    exit={{ opacity: 0, scale: 0.95, y: -10 }}
-                    className="absolute top-full right-0 mt-2 z-50"
-                  >
-                    <SearchBar onClose={() => setIsSearchOpen(false)} />
-                  </motion.div>
-                )}
-              </AnimatePresence>
-            </div>
+          {/* Right side actions */}
+          <div className="flex items-center space-x-3">
+            {/* Search Button */}
+            <button
+              onClick={() => setIsSearchOpen(true)}
+              className={`p-2.5 rounded-xl transition-all duration-200 ${
+                isDark 
+                  ? 'text-gray-300 hover:text-emerald-400 hover:bg-gray-800/50' 
+                  : 'text-gray-600 hover:text-emerald-600 hover:bg-emerald-50'
+              }`}
+            >
+              <Search className="h-5 w-5" />
+            </button>
 
             {/* Theme Toggle */}
             <button
               onClick={toggleTheme}
-              onKeyDown={(e) => e.key === 'Enter' && toggleTheme()}
-              className={`p-2 rounded-lg ${isDark ? 'bg-gray-800 hover:bg-gray-700 text-yellow-400' : 'bg-gray-100 hover:bg-gray-200 text-gray-700'} transition-all duration-200 hover:scale-110 focus:outline-none focus:ring-2 focus:ring-emerald-500/50`}
-              aria-label={`Switch to ${isDark ? 'light' : 'dark'} mode`}
+              className={`p-2.5 rounded-xl transition-all duration-200 ${
+                isDark 
+                  ? 'text-gray-300 hover:text-yellow-400 hover:bg-gray-800/50' 
+                  : 'text-gray-600 hover:text-orange-600 hover:bg-orange-50'
+              }`}
             >
               {isDark ? <Sun className="h-5 w-5" /> : <Moon className="h-5 w-5" />}
             </button>
 
-            {/* User Menu or Auth Buttons */}
-            {isAuthenticated && user ? (
+            {/* User Menu */}
+            {isAuthenticated ? (
               <div className="relative">
                 <button
                   onClick={() => setIsUserMenuOpen(!isUserMenuOpen)}
-                  className={`flex items-center space-x-2 p-2 rounded-lg ${isDark ? 'bg-gray-800 hover:bg-gray-700' : 'bg-gray-100 hover:bg-gray-200'} transition-all duration-200`}
+                  className={`flex items-center space-x-2 p-2 rounded-xl transition-all duration-200 ${
+                    isDark 
+                      ? 'text-gray-300 hover:text-emerald-400 hover:bg-gray-800/50' 
+                      : 'text-gray-600 hover:text-emerald-600 hover:bg-emerald-50'
+                  }`}
                 >
-                  <div className="w-8 h-8 bg-gradient-to-r from-emerald-500 to-teal-500 rounded-full flex items-center justify-center">
-                    <span className="text-white font-semibold text-sm">
-                      {user.name.charAt(0).toUpperCase()}
-                    </span>
+                  <div className={`w-8 h-8 rounded-lg flex items-center justify-center ${
+                    isDark ? 'bg-emerald-500/20 text-emerald-400' : 'bg-emerald-100 text-emerald-700'
+                  }`}>
+                    <User className="h-4 w-4" />
                   </div>
-                  <span className={`${isDark ? 'text-white' : 'text-gray-900'} font-medium`}>
-                    {user.name}
-                  </span>
+                  <span className="hidden sm:block font-medium">{user?.name}</span>
                 </button>
 
                 <AnimatePresence>
@@ -144,166 +129,118 @@ const Header = () => {
                       initial={{ opacity: 0, scale: 0.95, y: -10 }}
                       animate={{ opacity: 1, scale: 1, y: 0 }}
                       exit={{ opacity: 0, scale: 0.95, y: -10 }}
-                      className={`absolute top-full right-0 mt-2 w-48 ${isDark ? 'bg-gray-800 border-gray-700' : 'bg-white border-gray-200'} border rounded-xl shadow-xl py-2 z-50`}
+                      className={`absolute right-0 mt-2 w-56 ${
+                        isDark ? 'bg-gray-800 border-gray-700' : 'bg-white border-gray-200'
+                      } border rounded-xl shadow-xl z-50`}
                     >
-                      <Link
-                        to="/dashboard"
-                        className={`flex items-center space-x-2 px-4 py-2 ${isDark ? 'text-gray-300 hover:text-white hover:bg-gray-700' : 'text-gray-700 hover:text-gray-900 hover:bg-gray-50'} transition-colors duration-200`}
-                        onClick={() => setIsUserMenuOpen(false)}
-                      >
-                        <User className="h-4 w-4" />
-                        <span>Dashboard</span>
-                      </Link>
-                      <button
-                        className={`w-full flex items-center space-x-2 px-4 py-2 ${isDark ? 'text-gray-300 hover:text-white hover:bg-gray-700' : 'text-gray-700 hover:text-gray-900 hover:bg-gray-50'} transition-colors duration-200`}
-                      >
-                        <Settings className="h-4 w-4" />
-                        <span>Settings</span>
-                      </button>
-                      <hr className={`my-2 ${isDark ? 'border-gray-700' : 'border-gray-200'}`} />
-                      <button
-                        onClick={() => {
-                          logout();
-                          setIsUserMenuOpen(false);
-                        }}
-                        className={`w-full flex items-center space-x-2 px-4 py-2 ${isDark ? 'text-red-400 hover:text-red-300 hover:bg-gray-700' : 'text-red-600 hover:text-red-700 hover:bg-gray-50'} transition-colors duration-200`}
-                      >
-                        <LogOut className="h-4 w-4" />
-                        <span>Sign Out</span>
-                      </button>
+                      <div className="p-2 space-y-1">
+                        <Link href="/dashboard" className={`flex items-center space-x-3 w-full p-3 rounded-lg transition-colors ${
+                          isDark ? 'hover:bg-gray-700 text-gray-300' : 'hover:bg-gray-50 text-gray-700'
+                        }`}>
+                          <User className="h-4 w-4" />
+                          <span>Dashboard</span>
+                        </Link>
+                        <Link href="/settings" className={`flex items-center space-x-3 w-full p-3 rounded-lg transition-colors ${
+                          isDark ? 'hover:bg-gray-700 text-gray-300' : 'hover:bg-gray-50 text-gray-700'
+                        }`}>
+                          <Settings className="h-4 w-4" />
+                          <span>Settings</span>
+                        </Link>
+                        <hr className={`${isDark ? 'border-gray-700' : 'border-gray-200'} my-2`} />
+                        <button
+                          onClick={logout}
+                          className={`flex items-center space-x-3 w-full p-3 rounded-lg transition-colors ${
+                            isDark ? 'hover:bg-red-500/10 text-red-400' : 'hover:bg-red-50 text-red-600'
+                          }`}
+                        >
+                          <LogOut className="h-4 w-4" />
+                          <span>Sign Out</span>
+                        </button>
+                      </div>
                     </motion.div>
                   )}
                 </AnimatePresence>
               </div>
             ) : (
-              <div className="flex items-center space-x-3">
-                <button className={`${isDark ? 'text-gray-300 hover:text-emerald-400' : 'text-gray-700 hover:text-emerald-600'} px-4 py-2 rounded-lg font-medium transition-all duration-200`}>
-                  Sign In
-                </button>
-                <button className={`${isDark ? 'bg-gradient-to-r from-emerald-500 to-teal-500 hover:from-emerald-600 hover:to-teal-600' : 'bg-gradient-to-r from-emerald-600 to-teal-600 hover:from-emerald-700 hover:to-teal-700'} text-white px-6 py-2.5 rounded-lg font-semibold transition-all duration-200 transform hover:scale-105 shadow-lg hover:shadow-emerald-500/25`}>
-                  Start Learning
-                </button>
-              </div>
+              <Link
+                href="/login"
+                className={`px-6 py-2.5 rounded-xl font-medium transition-all duration-200 ${
+                  isDark 
+                    ? 'bg-emerald-500/20 text-emerald-400 hover:bg-emerald-500/30 border border-emerald-500/30' 
+                    : 'bg-emerald-500 text-white hover:bg-emerald-600 shadow-lg hover:shadow-emerald-500/25'
+                }`}
+              >
+                Sign In
+              </Link>
             )}
-          </div>
 
-          {/* Mobile menu button */}
-          <div className="lg:hidden flex items-center space-x-2">
-            <button
-              onClick={() => setIsSearchOpen(!isSearchOpen)}
-              className={`p-2.5 rounded-xl ${isDark ? 'bg-gray-800/80 hover:bg-gray-700/80 text-gray-300 hover:text-emerald-400 border border-gray-700/50' : 'bg-white/80 hover:bg-emerald-50/80 text-gray-600 hover:text-emerald-600 border border-gray-200/50'} transition-all duration-300 hover:scale-105 backdrop-blur-sm`}
-              aria-label="Search"
-            >
-              <Search className="h-4 w-4" />
-            </button>
-            <button
-              onClick={toggleTheme}
-              className={`p-2.5 rounded-xl relative overflow-hidden ${isDark ? 'bg-gradient-to-r from-yellow-500/20 to-orange-500/20 hover:from-yellow-500/30 hover:to-orange-500/30 text-yellow-400 border border-yellow-500/20' : 'bg-gradient-to-r from-purple-500/20 to-blue-500/20 hover:from-purple-500/30 hover:to-blue-500/30 text-purple-600 border border-purple-500/20'} transition-all duration-300 hover:scale-105 backdrop-blur-sm`}
-              aria-label="Toggle theme"
-            >
-              <div className="relative z-10">
-                {isDark ? <Sun className="h-4 w-4" /> : <Moon className="h-4 w-4" />}
-              </div>
-            </button>
+            {/* Mobile Menu Button */}
             <button
               onClick={toggleMenu}
-              className={`p-2.5 rounded-xl relative overflow-hidden ${isDark ? 'bg-gradient-to-r from-emerald-500/20 to-teal-500/20 hover:from-emerald-500/30 hover:to-teal-500/30 text-emerald-400 border border-emerald-500/20' : 'bg-gradient-to-r from-emerald-500/20 to-teal-500/20 hover:from-emerald-500/30 hover:to-teal-500/30 text-emerald-600 border border-emerald-500/20'} transition-all duration-300 hover:scale-105 backdrop-blur-sm`}
+              className={`lg:hidden p-2.5 rounded-xl transition-all duration-200 ${
+                isDark 
+                  ? 'text-gray-300 hover:text-emerald-400 hover:bg-gray-800/50' 
+                  : 'text-gray-600 hover:text-emerald-600 hover:bg-emerald-50'
+              }`}
             >
-              <div className="relative z-10">
-                {isMenuOpen ? <X className="h-5 w-5" /> : <Menu className="h-5 w-5" />}
-              </div>
-              <div className="absolute inset-0 bg-gradient-to-r from-emerald-500/10 to-teal-500/10 opacity-0 hover:opacity-100 transition-opacity duration-300"></div>
+              {isMenuOpen ? <X className="h-5 w-5" /> : <Menu className="h-5 w-5" />}
             </button>
           </div>
         </div>
 
-        {/* Mobile Search */}
-        <AnimatePresence>
-          {isSearchOpen && (
-            <motion.div
-              initial={{ opacity: 0, height: 0 }}
-              animate={{ opacity: 1, height: 'auto' }}
-              exit={{ opacity: 0, height: 0 }}
-              className="lg:hidden pb-4"
-            >
-              <SearchBar onClose={() => setIsSearchOpen(false)} isExpanded />
-            </motion.div>
-          )}
-        </AnimatePresence>
-
-        {/* Enhanced Mobile Navigation */}
+        {/* Mobile Navigation */}
         <AnimatePresence>
           {isMenuOpen && (
             <motion.div
               initial={{ opacity: 0, height: 0 }}
               animate={{ opacity: 1, height: 'auto' }}
               exit={{ opacity: 0, height: 0 }}
-              className="lg:hidden"
+              className={`lg:hidden overflow-hidden border-t ${
+                isDark ? 'border-gray-700 bg-gray-800/95' : 'border-gray-200 bg-white/95'
+              } backdrop-blur-xl`}
             >
-              <div className={`${isDark ? 'bg-gray-900/98' : 'bg-white/98'} backdrop-blur-xl rounded-3xl mt-4 mb-4 border ${isDark ? 'border-gray-700/50 shadow-2xl shadow-emerald-500/5' : 'border-gray-200/50 shadow-2xl shadow-emerald-500/10'} overflow-hidden`}>
-                <div className="px-4 py-6 space-y-2">
-                  {navigation.map(({ name, href, icon: Icon }) => (
+              <div className="p-4 space-y-2">
+                {navigation.map((item) => {
+                  const Icon = item.icon;
+                  const isActive = isActivePath(item.href);
+                  return (
                     <Link
-                      key={name}
-                      to={href}
+                      key={item.name}
+                      href={item.href}
                       onClick={() => setIsMenuOpen(false)}
-                      className={`w-full flex items-center space-x-3 px-4 py-3 rounded-xl ${
-                        isActivePath(href)
-                          ? isDark ? 'text-emerald-400 bg-emerald-500/10' : 'text-emerald-600 bg-emerald-50'
-                          : isDark ? 'text-gray-300 hover:text-emerald-400 hover:bg-gray-800/50' : 'text-gray-700 hover:text-emerald-600 hover:bg-emerald-50'
-                      } transition-all duration-200 group`}
+                      className={`flex items-center space-x-3 w-full p-3 rounded-xl transition-all duration-200 ${
+                        isActive
+                          ? `${isDark ? 'bg-emerald-500/20 text-emerald-400' : 'bg-emerald-100 text-emerald-700'}`
+                          : `${isDark ? 'text-gray-300 hover:text-emerald-400 hover:bg-gray-700/50' : 'text-gray-600 hover:text-emerald-600 hover:bg-emerald-50'}`
+                      }`}
                     >
-                      <Icon className="h-5 w-5 group-hover:scale-110 transition-transform duration-200" />
-                      <span className="font-medium">{name}</span>
+                      <Icon className="h-5 w-5" />
+                      <span className="font-medium">{item.name}</span>
                     </Link>
-                  ))}
-                  
-                  {isAuthenticated && user ? (
-                    <>
-                      <hr className={`my-4 ${isDark ? 'border-gray-700' : 'border-gray-200'}`} />
-                      <Link
-                        to="/dashboard"
-                        onClick={() => setIsMenuOpen(false)}
-                        className={`w-full flex items-center space-x-3 px-4 py-3 rounded-xl ${isDark ? 'text-gray-300 hover:text-emerald-400 hover:bg-gray-800/50' : 'text-gray-700 hover:text-emerald-600 hover:bg-emerald-50'} transition-all duration-200 group`}
-                      >
-                        <User className="h-5 w-5 group-hover:scale-110 transition-transform duration-200" />
-                        <span className="font-medium">Dashboard</span>
-                      </Link>
-                      <button
-                        onClick={() => {
-                          logout();
-                          setIsMenuOpen(false);
-                        }}
-                        className={`w-full flex items-center space-x-3 px-4 py-3 rounded-xl ${isDark ? 'text-red-400 hover:text-red-300 hover:bg-gray-800/50' : 'text-red-600 hover:text-red-700 hover:bg-red-50'} transition-all duration-200 group`}
-                      >
-                        <LogOut className="h-5 w-5 group-hover:scale-110 transition-transform duration-200" />
-                        <span className="font-medium">Sign Out</span>
-                      </button>
-                    </>
-                  ) : (
-                    <div className="pt-4 border-t border-gray-700/50 space-y-2">
-                      <Link
-                        to="/login"
-                        onClick={() => setIsMenuOpen(false)}
-                        className={`w-full block text-center ${isDark ? 'text-gray-300 hover:text-emerald-400 hover:bg-gray-800/50' : 'text-gray-700 hover:text-emerald-600 hover:bg-emerald-50'} px-4 py-3 rounded-xl font-medium transition-all duration-200`}
-                      >
-                        Sign In
-                      </Link>
-                      <Link
-                        to="/login"
-                        onClick={() => setIsMenuOpen(false)}
-                        className={`w-full block text-center ${isDark ? 'bg-gradient-to-r from-emerald-500 to-teal-500 hover:from-emerald-600 hover:to-teal-600' : 'bg-gradient-to-r from-emerald-600 to-teal-600 hover:from-emerald-700 hover:to-teal-700'} text-white px-6 py-3 rounded-xl font-semibold transition-all duration-200 transform hover:scale-105`}
-                      >
-                        Start Learning
-                      </Link>
-                    </div>
-                  )}
-                </div>
+                  );
+                })}
+                
+                {!isAuthenticated && (
+                  <Link
+                    href="/login"
+                    onClick={() => setIsMenuOpen(false)}
+                    className={`flex items-center justify-center w-full p-3 mt-4 rounded-xl font-medium transition-all duration-200 ${
+                      isDark 
+                        ? 'bg-emerald-500/20 text-emerald-400 hover:bg-emerald-500/30 border border-emerald-500/30' 
+                        : 'bg-emerald-500 text-white hover:bg-emerald-600'
+                    }`}
+                  >
+                    Sign In
+                  </Link>
+                )}
               </div>
             </motion.div>
           )}
         </AnimatePresence>
       </div>
+
+      {/* Search Modal */}
+      <SearchBar isExpanded={isSearchOpen} onClose={() => setIsSearchOpen(false)} />
     </header>
   );
 };

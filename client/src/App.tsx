@@ -17,7 +17,7 @@ import CTFPage from './pages/CTFPage';
 import CertificationsPage from './pages/CertificationsPage';
 import CommunityPage from './pages/CommunityPage';
 import BlogPage from './pages/BlogPage';
-import BlogPostPage from './pages/BlogPostPage';
+import EnhancedBlogPostPage from './pages/EnhancedBlogPostPage';
 import AdminPage from './pages/AdminPage';
 import CreatorPage from './pages/CreatorPage';
 import LoginPage from './pages/LoginPage';
@@ -41,7 +41,7 @@ function AppContent() {
           <Route path="/certifications" component={CertificationsPage} />
           <Route path="/community" component={CommunityPage} />
           <Route path="/blog" component={BlogPage} />
-          <Route path="/blog/:slug" component={BlogPostPage} />
+          <Route path="/blog/:slug" component={EnhancedBlogPostPage} />
           <Route path="/admin" component={AdminPage} />
           <Route path="/creator" component={CreatorPage} />
           <Route path="/login" component={LoginPage} />
