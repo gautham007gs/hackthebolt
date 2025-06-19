@@ -22,43 +22,43 @@ const BlogContentRenderer: React.FC<BlogContentRendererProps> = ({ content }) =>
   const { isDark } = useTheme();
 
   const getHeadingClass = (level: number) => {
-    const baseClasses = `font-bold leading-tight mb-6 ${isDark ? 'text-white' : 'text-gray-900'}`;
+    const baseClasses = `font-bold leading-tight mb-4 ${isDark ? 'text-white' : 'text-gray-900'}`;
     switch (level) {
       case 1:
-        return `text-4xl lg:text-5xl ${baseClasses}`;
+        return `text-3xl lg:text-4xl ${baseClasses}`;
       case 2:
-        return `text-3xl lg:text-4xl ${baseClasses} mt-12`;
+        return `text-2xl lg:text-3xl ${baseClasses} mt-8`;
       case 3:
-        return `text-2xl lg:text-3xl ${baseClasses} mt-10`;
+        return `text-xl lg:text-2xl ${baseClasses} mt-6`;
       case 4:
-        return `text-xl lg:text-2xl ${baseClasses} mt-8`;
+        return `text-lg lg:text-xl ${baseClasses} mt-5`;
       default:
-        return `text-lg lg:text-xl ${baseClasses} mt-6`;
+        return `text-base lg:text-lg ${baseClasses} mt-4`;
     }
   };
 
   const renderParagraph = (text: string) => (
-    <p className={`text-lg leading-relaxed mb-6 ${isDark ? 'text-gray-300' : 'text-gray-700'}`}>
+    <p className={`text-base leading-relaxed mb-4 ${isDark ? 'text-gray-300' : 'text-gray-700'}`}>
       {text}
     </p>
   );
 
   const renderPoints = (points: string[]) => (
-    <ul className={`space-y-3 mb-8 ml-6 ${isDark ? 'text-gray-300' : 'text-gray-700'}`}>
+    <ul className={`space-y-2 mb-6 ml-4 ${isDark ? 'text-gray-300' : 'text-gray-700'}`}>
       {points.map((point, index) => (
-        <li key={index} className="flex items-start space-x-3">
-          <span className={`inline-block w-2 h-2 rounded-full mt-3 flex-shrink-0 ${
+        <li key={index} className="flex items-start space-x-2">
+          <span className={`inline-block w-1.5 h-1.5 rounded-full mt-2 flex-shrink-0 ${
             isDark ? 'bg-emerald-400' : 'bg-emerald-600'
           }`}></span>
-          <span className="text-lg leading-relaxed">{point}</span>
+          <span className="text-base leading-relaxed">{point}</span>
         </li>
       ))}
     </ul>
   );
 
   return (
-    <article className="blog-content max-w-none prose-lg w-full overflow-hidden">
-      <div className="space-y-8 break-words">
+    <article className="blog-content max-w-none prose w-full overflow-hidden">
+      <div className="space-y-6 break-words">
         {content.sections.map((section, sectionIndex) => (
           <section key={sectionIndex} className="scroll-mt-20" id={section.heading.toLowerCase().replace(/\s+/g, '-')}>
             {section.heading && (
@@ -72,7 +72,7 @@ const BlogContentRenderer: React.FC<BlogContentRendererProps> = ({ content }) =>
             {section.points && renderPoints(section.points)}
             
             {section.subsections && (
-              <div className="space-y-8 ml-4">
+              <div className="space-y-6 ml-2">
                 {section.subsections.map((subsection, subIndex) => (
                   <div key={subIndex} className="scroll-mt-20" id={subsection.heading.toLowerCase().replace(/\s+/g, '-')}>
                     <h3 className={getHeadingClass(4)}>

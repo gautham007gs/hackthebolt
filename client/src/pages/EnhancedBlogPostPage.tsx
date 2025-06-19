@@ -334,19 +334,19 @@ const EnhancedBlogPostPage = () => {
                   )}
                 </div>
 
-                <h1 className="seo-heading-h1 mb-6">{blogPost.title}</h1>
+                <h1 className={`text-3xl lg:text-4xl font-bold mb-4 ${isDark ? 'text-white' : 'text-gray-900'}`}>{blogPost.title}</h1>
                 
-                <p className={`text-xl ${isDark ? 'text-gray-300' : 'text-gray-600'} leading-relaxed mb-8`}>
+                <p className={`text-lg ${isDark ? 'text-gray-300' : 'text-gray-600'} leading-relaxed mb-6`}>
                   {blogPost.excerpt}
                 </p>
 
                 {/* Author & Meta */}
-                <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-6 mb-8">
-                  <div className="flex items-center space-x-4">
+                <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4 mb-6">
+                  <div className="flex items-center space-x-3">
                     <img
                       src={blogPost.authorAvatar}
                       alt={blogPost.author}
-                      className="w-14 h-14 rounded-full"
+                      className="w-12 h-12 rounded-full"
                     />
                     <div>
                       <p className={`font-semibold ${isDark ? 'text-white' : 'text-gray-900'}`}>
@@ -419,7 +419,7 @@ const EnhancedBlogPostPage = () => {
                 initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.6, delay: 0.4 }}
-                className={`blog-content max-w-none mb-12 overflow-hidden`}
+                className={`blog-content max-w-none mb-8 overflow-hidden`}
               >
                 <BlogContentRenderer content={blogPost.content} />
               </motion.article>
@@ -429,7 +429,7 @@ const EnhancedBlogPostPage = () => {
                 initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.6, delay: 0.6 }}
-                className="flex flex-wrap gap-2 mt-12 pt-8 border-t border-gray-200 dark:border-gray-700"
+                className="flex flex-wrap gap-2 mt-6 pt-4 border-t border-gray-200 dark:border-gray-700"
               >
                 <Tag className="h-5 w-5 text-gray-500 mr-2" />
                 {blogPost.tags.map((tag, index) => (
@@ -449,28 +449,29 @@ const EnhancedBlogPostPage = () => {
                 initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.6, delay: 0.8 }}
-                className={`${isDark ? 'bg-gray-800' : 'bg-white'} rounded-2xl p-8 mt-12 border ${
+                className={`${isDark ? 'bg-gray-800' : 'bg-white'} rounded-2xl p-6 mt-8 border ${
                   isDark ? 'border-gray-700' : 'border-gray-200'
                 }`}
               >
-                <h3 className="seo-heading-h3 mb-4">About the Author</h3>
-                <div className="flex items-start space-x-6">
+                <h3 className={`text-lg font-semibold mb-3 ${isDark ? 'text-white' : 'text-gray-900'}`}>About the Author</h3>
+                <div className="relative">
                   <img
                     src={blogPost.authorAvatar}
                     alt={blogPost.author}
-                    className="w-20 h-20 rounded-full"
+                    className="w-16 h-16 rounded-full float-left mr-4 mb-2"
                   />
                   <div>
-                    <h4 className={`text-xl font-semibold ${isDark ? 'text-white' : 'text-gray-900'} mb-2`}>
+                    <h4 className={`text-lg font-semibold ${isDark ? 'text-white' : 'text-gray-900'} mb-1`}>
                       {blogPost.author}
                     </h4>
-                    <p className={`text-sm ${isDark ? 'text-emerald-400' : 'text-emerald-600'} mb-3`}>
+                    <p className={`text-sm ${isDark ? 'text-emerald-400' : 'text-emerald-600'} mb-2`}>
                       {blogPost.authorRole}
                     </p>
-                    <p className={`${isDark ? 'text-gray-300' : 'text-gray-600'} leading-relaxed`}>
+                    <p className={`${isDark ? 'text-gray-300' : 'text-gray-600'} text-sm leading-relaxed`}>
                       {blogPost.authorBio}
                     </p>
                   </div>
+                  <div className="clear-both"></div>
                 </div>
               </motion.div>
 
