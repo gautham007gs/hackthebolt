@@ -3,7 +3,7 @@ import { Router, Route, Switch } from 'wouter';
 import { ThemeProvider } from './contexts/ThemeContext';
 import { AuthProvider } from './contexts/AuthContext';
 import { ProgressProvider } from './contexts/ProgressContext';
-import ProfessionalHeader from './components/ProfessionalHeader';
+import ImprovedHeader from './components/ImprovedHeader';
 import Footer from './components/Footer';
 import ScrollToTop from './components/ScrollToTop';
 import ErrorBoundary from './components/ErrorBoundary';
@@ -20,6 +20,8 @@ import BlogPage from './pages/BlogPage';
 import EnhancedBlogPostPage from './pages/EnhancedBlogPostPage';
 import AdminPage from './pages/AdminPage';
 import CreatorPage from './pages/CreatorPage';
+import ProfessionalAdminPage from './pages/ProfessionalAdminPage';
+import ProfessionalCreatorPage from './pages/ProfessionalCreatorPage';
 import LoginPage from './pages/LoginPage';
 import GitHubToolsPage from './pages/GitHubToolsPage';
 import AboutPage from './pages/AboutPage';
@@ -32,7 +34,7 @@ function AppContent() {
   
   return (
     <div className="min-h-screen transition-colors duration-300 dark:bg-gray-900 bg-white">
-      <ProfessionalHeader />
+      <ImprovedHeader />
       <AnimatePresence mode="wait">
         <Switch>
           <Route path="/" component={HomePage} />
@@ -45,8 +47,8 @@ function AppContent() {
           <Route path="/community" component={CommunityPage} />
           <Route path="/blog" component={BlogPage} />
           <Route path="/blog/:slug" component={EnhancedBlogPostPage} />
-          <Route path="/admin" component={AdminPage} />
-          <Route path="/creator" component={CreatorPage} />
+          <Route path="/admin" component={ProfessionalAdminPage} />
+          <Route path="/creator" component={ProfessionalCreatorPage} />
           <Route path="/login" component={LoginPage} />
           <Route path="/github-tools" component={GitHubToolsPage} />
           <Route path="/tools" component={GitHubToolsPage} />
