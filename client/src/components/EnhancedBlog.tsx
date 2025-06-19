@@ -244,29 +244,29 @@ const EnhancedBlog = () => {
                       </p>
                       
                       {/* Author & Meta */}
-                      <div className="flex items-center justify-between">
+                      <div className="flex flex-col space-y-4 md:flex-row md:items-center md:justify-between md:space-y-0">
                         <div className="flex items-center space-x-3">
                           <img
                             src={featuredPost.authorAvatar}
                             alt={featuredPost.author}
-                            className="w-10 h-10 rounded-full"
+                            className="w-10 h-10 rounded-full flex-shrink-0"
                           />
-                          <div>
-                            <p className={`font-semibold ${isDark ? 'text-white' : 'text-gray-900'}`}>
+                          <div className="min-w-0">
+                            <p className={`font-semibold whitespace-nowrap ${isDark ? 'text-white' : 'text-gray-900'}`}>
                               {featuredPost.author}
                             </p>
-                            <p className={`text-sm ${isDark ? 'text-gray-400' : 'text-gray-500'}`}>
+                            <p className={`text-sm whitespace-nowrap ${isDark ? 'text-gray-400' : 'text-gray-500'}`}>
                               {featuredPost.authorRole}
                             </p>
                           </div>
                         </div>
                         
-                        <div className="flex items-center space-x-4 text-sm text-gray-500">
-                          <div className="flex items-center space-x-1">
+                        <div className="flex items-center space-x-4 text-sm text-gray-500 flex-shrink-0">
+                          <div className="flex items-center space-x-1 whitespace-nowrap">
                             <Calendar className="h-4 w-4" />
                             <span>{new Date(featuredPost.date).toLocaleDateString()}</span>
                           </div>
-                          <div className="flex items-center space-x-1">
+                          <div className="flex items-center space-x-1 whitespace-nowrap">
                             <Clock className="h-4 w-4" />
                             <span>{featuredPost.readTime}</span>
                           </div>

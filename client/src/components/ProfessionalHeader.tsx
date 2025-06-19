@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Plus, X, Search, Moon, Sun, User, LogOut, Shield, Zap, ChevronDown, Menu, Home, BookOpen, MessageCircle, Code, Users, Info } from 'lucide-react';
+import { Plus, X, Search, Moon, Sun, User, LogOut, Shield, Zap, ChevronDown, Menu, Home, BookOpen, MessageCircle, Github, Users, Info } from 'lucide-react';
 import { Link, useLocation } from 'wouter';
 import { useTheme } from '../contexts/ThemeContext';
 import { useAuth } from '../contexts/AuthContext';
@@ -27,6 +27,20 @@ const ProfessionalHeader = () => {
     setExpandedSection(null);
   }, [location]);
 
+  // Prevent body scroll when mobile menu is open
+  useEffect(() => {
+    if (isMenuOpen) {
+      document.body.style.overflow = 'hidden';
+    } else {
+      document.body.style.overflow = 'unset';
+    }
+    
+    // Cleanup on unmount
+    return () => {
+      document.body.style.overflow = 'unset';
+    };
+  }, [isMenuOpen]);
+
   const navigation = [
     { name: 'Home', href: '/', icon: Home },
     { 
@@ -41,7 +55,7 @@ const ProfessionalHeader = () => {
       ]
     },
     { name: 'Blog', href: '/blog', icon: MessageCircle },
-    { name: 'Tools', href: '/github-tools', icon: Code },
+    { name: 'GitHub Tools', href: '/github-tools', icon: Github },
     { name: 'Community', href: '/community', icon: Users },
     { name: 'About', href: '/about', icon: Info }
   ];
@@ -63,8 +77,8 @@ const ProfessionalHeader = () => {
   return (
     <header className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${
       isScrolled 
-        ? `${isDark ? 'bg-gray-900/95 border-gray-800' : 'bg-white/95 border-gray-200'} backdrop-blur-xl border-b shadow-2xl` 
-        : `${isDark ? 'bg-gray-900/90' : 'bg-white/90'} backdrop-blur-md`
+        ? `${isDark ? 'bg-gray-900/80 border-gray-800' : 'bg-white/80 border-gray-200'} backdrop-blur-xl border-b shadow-2xl` 
+        : `${isDark ? 'bg-gray-900/70' : 'bg-white/70'} backdrop-blur-xl`
     }`}>
       <nav className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex items-center justify-between h-16">
@@ -235,7 +249,7 @@ const ProfessionalHeader = () => {
               exit={{ opacity: 0, height: 0 }}
               transition={{ duration: 0.3, ease: 'easeInOut' }}
               className={`lg:hidden overflow-hidden ${
-                isDark ? 'bg-gray-800/95 border-gray-700' : 'bg-white/95 border-gray-200'
+                isDark ? 'bg-gray-800/98 border-gray-700' : 'bg-white/98 border-gray-200'
               } border-t backdrop-blur-xl mt-2 rounded-b-xl shadow-2xl`}
             >
               <div className="p-4 space-y-2 max-h-[calc(100vh-5rem)] overflow-y-auto">
