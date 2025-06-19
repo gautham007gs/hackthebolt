@@ -63,51 +63,68 @@ const Footer = () => {
               Empowering the next generation of cybersecurity professionals through hands-on learning and real-world scenarios.
             </p>
             
-            {/* Enhanced Newsletter CTA */}
-            <div className={`p-6 rounded-2xl border-2 border-dashed ${
-              isDark ? 'border-emerald-500/30 bg-emerald-500/5' : 'border-emerald-500/50 bg-emerald-50/50'
-            }`}>
-              <div className="flex items-center space-x-2 mb-3">
-                <div className={`w-8 h-8 rounded-lg ${
-                  isDark ? 'bg-emerald-500/20' : 'bg-emerald-100'
-                } flex items-center justify-center`}>
-                  <Shield className={`h-4 w-4 ${isDark ? 'text-emerald-400' : 'text-emerald-600'}`} />
+            {/* Big Responsive Newsletter CTA */}
+            <div className={`p-6 sm:p-8 lg:p-10 rounded-3xl relative overflow-hidden ${
+              isDark ? 'bg-gradient-to-br from-emerald-500/20 to-cyan-500/20 border-emerald-500/30' : 'bg-gradient-to-br from-emerald-50 to-cyan-50 border-emerald-200'
+            } border-2`}>
+              <div className="relative z-10">
+                <div className="flex flex-col sm:flex-row sm:items-center gap-4 mb-6">
+                  <div className={`w-12 h-12 sm:w-16 sm:h-16 rounded-2xl ${
+                    isDark ? 'bg-emerald-500/20' : 'bg-emerald-100'
+                  } flex items-center justify-center flex-shrink-0`}>
+                    <Shield className={`h-6 w-6 sm:h-8 sm:w-8 ${isDark ? 'text-emerald-400' : 'text-emerald-600'}`} />
+                  </div>
+                  <div>
+                    <h3 className={`text-xl sm:text-2xl lg:text-3xl font-bold ${isDark ? 'text-white' : 'text-gray-900'} mb-2`}>
+                      Join 10,000+ Security Professionals
+                    </h3>
+                    <p className={`text-base sm:text-lg ${isDark ? 'text-gray-300' : 'text-gray-700'}`}>
+                      Get exclusive threat intelligence, tutorials, and security alerts
+                    </p>
+                  </div>
                 </div>
-                <h4 className={`font-bold ${isDark ? 'text-white' : 'text-gray-900'}`}>
-                  Security Alerts & Updates
-                </h4>
+                
+                {subscribed ? (
+                  <div className="flex items-center justify-center space-x-3 text-emerald-500 text-lg font-medium py-4">
+                    <div className="w-3 h-3 bg-emerald-500 rounded-full animate-pulse"></div>
+                    <span>Successfully subscribed! Welcome to the community.</span>
+                  </div>
+                ) : (
+                  <form onSubmit={handleSubscribe} className="space-y-4">
+                    <div className="flex flex-col sm:flex-row gap-3">
+                      <input
+                        type="email"
+                        value={email}
+                        onChange={(e) => setEmail(e.target.value)}
+                        placeholder="Enter your professional email"
+                        className={`flex-1 px-4 sm:px-6 py-3 sm:py-4 rounded-xl sm:rounded-2xl border-2 text-base ${
+                          isDark 
+                            ? 'bg-gray-800/80 border-gray-600 text-white placeholder-gray-400 focus:border-emerald-400' 
+                            : 'bg-white/90 border-gray-300 text-gray-900 placeholder-gray-500 focus:border-emerald-600'
+                        } focus:outline-none focus:ring-2 focus:ring-emerald-500/20 backdrop-blur-sm transition-all duration-200`}
+                        required
+                      />
+                      <button
+                        type="submit"
+                        className="px-6 sm:px-8 py-3 sm:py-4 bg-gradient-to-r from-emerald-600 to-cyan-600 hover:from-emerald-700 hover:to-cyan-700 text-white rounded-xl sm:rounded-2xl font-bold text-base sm:text-lg transition-all duration-300 transform hover:scale-105 hover:shadow-2xl flex items-center justify-center space-x-2 shadow-lg whitespace-nowrap"
+                      >
+                        <Send className="h-5 w-5" />
+                        <span>Subscribe Free</span>
+                      </button>
+                    </div>
+                    <div className="flex items-center justify-center space-x-4 text-xs sm:text-sm text-gray-500 dark:text-gray-400">
+                      <span>✓ No spam</span>
+                      <span>✓ Unsubscribe anytime</span>
+                      <span>✓ Weekly insights</span>
+                    </div>
+                  </form>
+                )}
               </div>
-              <p className={`text-sm mb-4 ${isDark ? 'text-gray-300' : 'text-gray-600'}`}>
-                Get instant notifications about critical vulnerabilities, new tutorials, and exclusive cybersecurity insights.
-              </p>
-              {subscribed ? (
-                <div className="flex items-center space-x-2 text-emerald-500 text-sm font-medium">
-                  <div className="w-2 h-2 bg-emerald-500 rounded-full animate-pulse"></div>
-                  <span>Successfully subscribed!</span>
-                </div>
-              ) : (
-                <form onSubmit={handleSubscribe} className="space-y-3">
-                  <input
-                    type="email"
-                    value={email}
-                    onChange={(e) => setEmail(e.target.value)}
-                    placeholder="your@email.com"
-                    className={`w-full px-4 py-3 rounded-xl border ${
-                      isDark 
-                        ? 'bg-gray-800 border-gray-700 text-white placeholder-gray-400' 
-                        : 'bg-white border-gray-300 text-gray-900 placeholder-gray-500'
-                    } focus:outline-none focus:ring-2 focus:ring-emerald-500/20 focus:border-emerald-500 text-sm`}
-                    required
-                  />
-                  <button
-                    type="submit"
-                    className="w-full bg-gradient-to-r from-emerald-500 to-cyan-500 hover:from-emerald-600 hover:to-cyan-600 text-white px-4 py-3 rounded-xl font-semibold transition-all duration-200 flex items-center justify-center space-x-2 shadow-lg hover:shadow-emerald-500/25"
-                  >
-                    <Send className="h-4 w-4" />
-                    <span>Subscribe for Free</span>
-                  </button>
-                </form>
-              )}
+              
+              {/* Enhanced background decoration */}
+              <div className="absolute top-0 right-0 w-32 h-32 sm:w-40 sm:h-40 bg-gradient-to-br from-emerald-400/20 to-cyan-400/20 rounded-full -translate-y-16 translate-x-16"></div>
+              <div className="absolute bottom-0 left-0 w-24 h-24 sm:w-32 sm:h-32 bg-gradient-to-tr from-emerald-400/15 to-cyan-400/15 rounded-full translate-y-12 -translate-x-12"></div>
+              <div className="absolute top-1/2 left-1/2 w-16 h-16 bg-gradient-to-br from-emerald-400/10 to-cyan-400/10 rounded-full -translate-x-8 -translate-y-8"></div>
             </div>
           </div>
 

@@ -75,11 +75,9 @@ const LoginPage = () => {
               <span className={`select-none ${isDark ? 'text-emerald-400' : 'text-emerald-600'}`}>$</span>
             </div>
             <div className="text-left">
-              <h1 className={`text-2xl font-bold bg-gradient-to-r ${
-                isDark 
-                  ? 'from-white via-gray-100 to-emerald-400' 
-                  : 'from-gray-900 via-gray-800 to-emerald-600'
-              } bg-clip-text text-transparent`}>
+              <h1 className={`text-2xl font-bold ${
+                isDark ? 'text-white' : 'text-gray-900'
+              }`}>
                 HackTheShell
               </h1>
             </div>

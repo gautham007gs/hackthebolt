@@ -711,19 +711,13 @@ Success against APTs requires combining technology, processes, and people in a c
                     </div>
                   </div>
 
-                  <div className="flex items-center space-x-6 text-sm text-gray-500">
+                  <div className="flex items-center space-x-4 text-sm text-gray-500">
                     <div className="flex items-center space-x-1">
                       <Calendar className="h-4 w-4" />
                       <span>{new Date(blogPost.date).toLocaleDateString()}</span>
                     </div>
-                    <div className="flex items-center space-x-1">
-                      <Clock className="h-4 w-4" />
-                      <span>{estimatedReadTime} min read</span>
-                    </div>
-                    <div className="flex items-center space-x-1">
-                      <Eye className="h-4 w-4" />
-                      <span>{blogPost.views.toLocaleString()}</span>
-                    </div>
+                    <span className="text-gray-400">•</span>
+                    <span>By {blogPost.author}</span>
                   </div>
                 </div>
               </motion.div>

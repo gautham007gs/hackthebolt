@@ -5,7 +5,6 @@ import Hero from '../components/Hero';
 import Features from '../components/Features';
 import EnhancedBlog from '../components/EnhancedBlog';
 import Community from '../components/Community';
-import Footer from '../components/Footer';
 
 const HomePage = () => {
   return (
@@ -25,7 +24,6 @@ const HomePage = () => {
         <Features />
         <EnhancedBlog />
         <Community />
-        <Footer />
       </motion.div>
     </>
   );

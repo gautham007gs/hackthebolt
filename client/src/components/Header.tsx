@@ -34,7 +34,7 @@ const Header = () => {
       ]
     },
     { name: 'Blog', href: '/blog' },
-    { name: 'Tools', href: '/tools' },
+    { name: 'Tools', href: '/github-tools' },
     { name: 'Community', href: '/community' },
     { name: 'About', href: '/about' },
     { name: 'Contact', href: '/contact' }
@@ -61,11 +61,9 @@ const Header = () => {
               <span className={`select-none ${isDark ? 'text-emerald-400' : 'text-emerald-600'}`}>$</span>
             </div>
             <div className="flex flex-col">
-              <span className={`text-xl font-bold bg-gradient-to-r ${
-                isDark 
-                  ? 'from-white via-gray-100 to-emerald-400' 
-                  : 'from-gray-900 via-gray-800 to-emerald-600'
-              } bg-clip-text text-transparent group-hover:from-emerald-500 group-hover:to-emerald-700 transition-all duration-300`}>
+              <span className={`text-xl font-bold ${
+                isDark ? 'text-white' : 'text-gray-900'
+              } group-hover:text-emerald-500 transition-all duration-300 tracking-tight`}>
                 HackTheShell
               </span>
               <div className={`h-0.5 w-0 group-hover:w-full ${

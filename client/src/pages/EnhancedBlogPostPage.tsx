@@ -401,19 +401,13 @@ Success against APTs requires a combination of technology, processes, and people
                     </div>
                   </div>
 
-                  <div className="flex items-center space-x-6 text-sm text-gray-500">
+                  <div className="flex items-center space-x-4 text-sm text-gray-500">
                     <div className="flex items-center space-x-1">
                       <Calendar className="h-4 w-4" />
                       <span>{new Date(blogPost.date).toLocaleDateString()}</span>
                     </div>
-                    <div className="flex items-center space-x-1">
-                      <Clock className="h-4 w-4" />
-                      <span>{estimatedReadTime} min read</span>
-                    </div>
-                    <div className="flex items-center space-x-1">
-                      <Eye className="h-4 w-4" />
-                      <span>{blogPost.views.toLocaleString()}</span>
-                    </div>
+                    <span className="text-gray-400">•</span>
+                    <span>By {blogPost.author}</span>
                   </div>
                 </div>
 
@@ -586,26 +580,20 @@ Success against APTs requires a combination of technology, processes, and people
                   showOnMobile={true}
                 />
 
-                {/* Quick Actions */}
-                <div className={`${isDark ? 'bg-gray-800' : 'bg-white'} rounded-xl p-6 border ${
-                  isDark ? 'border-gray-700' : 'border-gray-200'
-                }`}>
-                  <h4 className={`font-semibold ${isDark ? 'text-white' : 'text-gray-900'} mb-4`}>
-                    Quick Actions
-                  </h4>
-                  <div className="space-y-3">
-                    <button className="btn-primary w-full text-sm py-2">
-                      Save Article
-                    </button>
-                    <button className="btn-secondary w-full text-sm py-2">
-                      Share Article
-                    </button>
-                    <button className={`w-full text-sm py-2 px-4 rounded-xl border transition-colors ${
-                      isDark ? 'border-gray-600 text-gray-300 hover:bg-gray-700' : 'border-gray-300 text-gray-600 hover:bg-gray-50'
-                    }`}>
-                      Print Article
-                    </button>
-                  </div>
+                {/* Quick Actions - Mini */}
+                <div className="flex flex-wrap gap-2 mb-6">
+                  <button className="flex items-center gap-1.5 px-3 py-1.5 text-xs font-medium bg-blue-50 hover:bg-blue-100 text-blue-600 dark:bg-blue-900/20 dark:hover:bg-blue-900/30 dark:text-blue-400 rounded-full transition-all duration-200 hover:scale-105 shadow-sm">
+                    <Bookmark className="h-3.5 w-3.5" />
+                    <span>Save</span>
+                  </button>
+                  <button className="flex items-center gap-1.5 px-3 py-1.5 text-xs font-medium bg-green-50 hover:bg-green-100 text-green-600 dark:bg-green-900/20 dark:hover:bg-green-900/30 dark:text-green-400 rounded-full transition-all duration-200 hover:scale-105 shadow-sm">
+                    <Share2 className="h-3.5 w-3.5" />
+                    <span>Share</span>
+                  </button>
+                  <button className="flex items-center gap-1.5 px-3 py-1.5 text-xs font-medium bg-purple-50 hover:bg-purple-100 text-purple-600 dark:bg-purple-900/20 dark:hover:bg-purple-900/30 dark:text-purple-400 rounded-full transition-all duration-200 hover:scale-105 shadow-sm">
+                    <MessageSquare className="h-3.5 w-3.5" />
+                    <span>Discuss</span>
+                  </button>
                 </div>
 
                 {/* Reading Stats */}
