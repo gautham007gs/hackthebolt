@@ -725,7 +725,97 @@ const GitHubTools = () => {
       githubUrl: "https://github.com/volatilityfoundation/volatility3",
       features: ["Memory Analysis", "Malware Detection", "Incident Response", "Digital Forensics"],
       difficulty: "Advanced",
-      image: "https://images.pexels.com/photos/8566473/pexels-photo-8566473.jpeg?auto=compress&cs=tinysrgb&w=400&h=250&fit=crop"
+      image: "https://images.pexels.com/photos/8566473/pexels-photo-8566473.jpeg?auto=compress&cs=tinysrgb&w=400&h=250&fit=crop",
+      guide: {
+        whatIsIt: "Volatility is like a digital detective that can examine computer memory to solve cyber crimes! When a computer is compromised, Volatility can analyze the memory dump to find evidence of what happened, like finding fingerprints at a crime scene.",
+        whyUseIt: [
+          "🔍 Find hidden malware that doesn't show up in normal scans",
+          "🕵️ Investigate security breaches and cyber attacks",
+          "💾 Recover deleted files and hidden data from memory",
+          "🔐 Extract passwords and encryption keys",
+          "📊 Analyze system behavior during incidents"
+        ],
+        installation: {
+          windows: [
+            "1️⃣ Install Python 3.6+ from python.org",
+            "2️⃣ Open Command Prompt as administrator",
+            "3️⃣ Run: pip install volatility3",
+            "4️⃣ Test with: vol -h",
+            "5️⃣ Download symbol files for Windows analysis"
+          ],
+          mac: [
+            "1️⃣ Install Python 3.6+ (use Homebrew: brew install python)",
+            "2️⃣ Install pip: python -m ensurepip --upgrade",
+            "3️⃣ Install Volatility: pip3 install volatility3",
+            "4️⃣ Test installation: vol -h"
+          ],
+          linux: [
+            "1️⃣ Ubuntu/Debian: sudo apt install python3-pip",
+            "2️⃣ Install Volatility: pip3 install volatility3",
+            "3️⃣ Or use package manager: sudo apt install volatility3",
+            "4️⃣ Test with: vol -h"
+          ]
+        },
+        basicCommands: [
+          {
+            command: "vol -f memory.dump windows.info",
+            explanation: "Get basic information about a Windows memory dump",
+            example: "Shows OS version, architecture, and dump creation time"
+          },
+          {
+            command: "vol -f memory.dump windows.pslist",
+            explanation: "List all running processes",
+            example: "See what programs were running when memory was captured"
+          },
+          {
+            command: "vol -f memory.dump windows.netscan",
+            explanation: "Show network connections",
+            example: "Find suspicious network activity or connections"
+          },
+          {
+            command: "vol -f memory.dump windows.malfind",
+            explanation: "Find hidden or suspicious code",
+            example: "Detect malware hiding in memory"
+          }
+        ],
+        commonErrors: [
+          {
+            error: "Unable to determine profile",
+            solution: "Use windows.info plugin first to identify correct profile",
+            tip: "Different Windows versions need different analysis approaches"
+          },
+          {
+            error: "No suitable address space mapping found",
+            solution: "Memory dump may be corrupted or incomplete",
+            tip: "Try different dump formats or re-acquire memory"
+          },
+          {
+            error: "ImportError: No module named volatility",
+            solution: "Install Volatility properly using pip",
+            tip: "Make sure you're using the correct Python version"
+          }
+        ],
+        alternatives: [
+          {
+            name: "Rekall",
+            description: "Memory analysis framework (discontinued)",
+            pros: "Good performance, nice interface",
+            cons: "No longer maintained"
+          },
+          {
+            name: "YARA",
+            description: "Pattern matching for malware research",
+            pros: "Great for specific pattern detection",
+            cons: "Not a complete memory analysis solution"
+          }
+        ],
+        realWorldUse: [
+          "🚔 Law enforcement investigating cybercrime",
+          "🛡️ Incident response teams analyzing breaches",
+          "🔬 Malware researchers studying new threats",
+          "🎓 Digital forensics students learning memory analysis"
+        ]
+      }
     },
     {
       name: "Nikto",
@@ -841,7 +931,99 @@ const GitHubTools = () => {
       githubUrl: "https://github.com/aircrack-ng/aircrack-ng",
       features: ["WiFi Monitoring", "WEP/WPA Cracking", "Packet Injection", "Network Analysis"],
       difficulty: "Intermediate",
-      image: "https://images.pexels.com/photos/159304/network-cable-ethernet-computer-159304.jpeg?auto=compress&cs=tinysrgb&w=400&h=250&fit=crop"
+      image: "https://images.pexels.com/photos/159304/network-cable-ethernet-computer-159304.jpeg?auto=compress&cs=tinysrgb&w=400&h=250&fit=crop",
+      guide: {
+        whatIsIt: "Aircrack-ng is like a Swiss Army knife for WiFi security testing! It's a collection of tools that help security professionals test how secure wireless networks really are. Think of it as a toolkit for checking if your WiFi locks are strong enough.",
+        whyUseIt: [
+          "🔐 Test the strength of WiFi passwords",
+          "📡 Monitor wireless network traffic",
+          "🛡️ Check if your network is vulnerable to attacks",
+          "📊 Analyze WiFi signal strength and coverage",
+          "🎓 Learn how wireless security works"
+        ],
+        installation: {
+          windows: [
+            "1️⃣ Download from https://www.aircrack-ng.org/downloads.html",
+            "2️⃣ Install compatible USB WiFi adapter",
+            "3️⃣ Install driver for monitor mode support",
+            "4️⃣ Run installer as administrator",
+            "5️⃣ Test with: aircrack-ng --help"
+          ],
+          mac: [
+            "1️⃣ Install Homebrew if needed",
+            "2️⃣ Run: brew install aircrack-ng",
+            "3️⃣ Ensure compatible WiFi adapter",
+            "4️⃣ May need to disable SIP for some features",
+            "5️⃣ Test installation: aircrack-ng --help"
+          ],
+          linux: [
+            "1️⃣ Ubuntu/Debian: sudo apt install aircrack-ng",
+            "2️⃣ Install wireless drivers if needed",
+            "3️⃣ Ensure WiFi adapter supports monitor mode",
+            "4️⃣ Test with: aircrack-ng --help",
+            "5️⃣ Check adapter compatibility: airmon-ng"
+          ]
+        },
+        basicCommands: [
+          {
+            command: "airmon-ng start wlan0",
+            explanation: "Put WiFi adapter into monitor mode",
+            example: "Enables capturing all wireless traffic, not just your own"
+          },
+          {
+            command: "airodump-ng wlan0mon",
+            explanation: "Scan for nearby WiFi networks",
+            example: "Shows all wireless networks in range with details"
+          },
+          {
+            command: "airodump-ng -c 6 --bssid AA:BB:CC:DD:EE:FF -w capture wlan0mon",
+            explanation: "Capture traffic from specific network",
+            example: "Records data packets for later analysis"
+          },
+          {
+            command: "aircrack-ng -w wordlist.txt capture-01.cap",
+            explanation: "Attempt to crack captured password",
+            example: "Uses dictionary attack to find WiFi password"
+          }
+        ],
+        commonErrors: [
+          {
+            error: "No wireless interfaces found",
+            solution: "Install compatible USB WiFi adapter that supports monitor mode",
+            tip: "Not all WiFi adapters work - check compatibility list first"
+          },
+          {
+            error: "Monitor mode not supported",
+            solution: "Install proper drivers or use different WiFi adapter",
+            tip: "Built-in laptop WiFi often doesn't support monitor mode"
+          },
+          {
+            error: "Permission denied",
+            solution: "Run commands with sudo privileges",
+            tip: "Wireless monitoring requires administrator/root access"
+          }
+        ],
+        alternatives: [
+          {
+            name: "Kismet",
+            description: "Wireless network detector and IDS",
+            pros: "Great for monitoring, works with many adapters",
+            cons: "More complex setup, different focus"
+          },
+          {
+            name: "Wifite",
+            description: "Automated wireless auditing tool",
+            pros: "Very easy to use, automates many tasks",
+            cons: "Less control over individual steps"
+          }
+        ],
+        realWorldUse: [
+          "🛡️ Security professionals testing corporate WiFi",
+          "🏠 Home users checking their network security",
+          "🎓 Students learning wireless security concepts",
+          "🔍 Researchers studying WiFi vulnerabilities"
+        ]
+      }
     }
   ];
 
