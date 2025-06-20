@@ -1130,11 +1130,81 @@ const GitHubTools = () => {
   };
 
   const LearnMoreModal = () => {
-    if (!selectedTool || !selectedTool.guide) {
+    if (!selectedTool) {
       return null;
     }
 
-    const guide = selectedTool.guide;
+    // Ensure guide exists or create comprehensive default
+    const guide = selectedTool.guide || {
+      whatIsIt: `${selectedTool.name} is a powerful cybersecurity tool that helps security professionals and ethical hackers test and secure computer systems. It's designed to identify vulnerabilities and strengthen security defenses.`,
+      whyUseIt: [
+        "Professional security testing capabilities",
+        "Identify vulnerabilities before attackers do", 
+        "Learn cybersecurity fundamentals hands-on",
+        "Industry-standard tool used by experts worldwide"
+      ],
+      installation: {
+        windows: [
+          "Download the latest release from the official repository",
+          "Run the installer as administrator",
+          "Follow the setup wizard instructions",
+          "Verify installation by opening command prompt",
+          "Type the tool name to confirm it's working"
+        ],
+        mac: [
+          "Install using Homebrew package manager",
+          "Or download the macOS version directly",
+          "Grant necessary permissions when prompted",
+          "Open Terminal to test the installation",
+          "Follow any additional setup instructions"
+        ],
+        linux: [
+          "Install via your distribution's package manager",
+          "Or compile from source code",
+          "Install any required dependencies",
+          "Configure environment variables if needed",
+          "Test the installation in terminal"
+        ]
+      },
+      basicCommands: [
+        {
+          command: `${selectedTool.name.toLowerCase()} --help`,
+          explanation: "Display help information and available options",
+          example: "Shows all commands and how to use them"
+        },
+        {
+          command: `${selectedTool.name.toLowerCase()} --version`,
+          explanation: "Check the installed version",
+          example: "Confirms you have the latest version"
+        }
+      ],
+      commonErrors: [
+        {
+          error: "Command not found",
+          solution: "Make sure the tool is properly installed and added to your system PATH",
+          tip: "Try reinstalling or checking the installation documentation"
+        },
+        {
+          error: "Permission denied",
+          solution: "Run with administrator privileges (sudo on Linux/Mac, Run as Admin on Windows)",
+          tip: "Security tools often require elevated permissions to function properly"
+        }
+      ],
+      alternatives: [
+        {
+          name: "Commercial Security Tools",
+          description: "Professional paid alternatives with support",
+          pros: "Better user interface, professional support, regular updates",
+          cons: "Expensive licensing, may have usage restrictions"
+        }
+      ],
+      realWorldUse: [
+        "Security professionals conducting penetration tests",
+        "Students learning cybersecurity fundamentals",
+        "IT teams validating system security",
+        "Researchers investigating new vulnerabilities"
+      ]
+    };
 
     return (
       <AnimatePresence>
@@ -1611,15 +1681,13 @@ const GitHubTools = () => {
                     >
                       <Eye className="h-4 w-4" />
                     </button>
-                    <a
-                      href={tool.githubUrl}
-                      target="_blank"
-                      rel="noopener noreferrer"
+                    <button
+                      onClick={() => openLearnMore(tool)}
                       className={`p-2 rounded-lg ${isDark ? 'bg-gray-700 hover:bg-blue-600 text-gray-400 hover:text-white' : 'bg-gray-100 hover:bg-blue-600 text-gray-600 hover:text-white'} transition-all duration-200 hover:scale-110`}
-                      title="Download"
+                      title="Installation Guide"
                     >
                       <Download className="h-4 w-4" />
-                    </a>
+                    </button>
                     <a
                       href={tool.githubUrl}
                       target="_blank"
