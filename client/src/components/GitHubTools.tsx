@@ -1,7 +1,6 @@
 import React, { useState } from 'react';
 import { Github, Star, GitFork, Download, ExternalLink, Search, Filter, Code, Shield, Zap, Terminal, Eye, Users, BookOpen, X, AlertTriangle, CheckCircle, Copy, Play, ArrowRight, Lightbulb, Wrench, HelpCircle } from 'lucide-react';
 import { useTheme } from '../contexts/ThemeContext';
-import { motion, AnimatePresence } from 'framer-motion';
 
 const GitHubTools = () => {
   const { isDark } = useTheme();
@@ -1207,19 +1206,10 @@ const GitHubTools = () => {
     };
 
     return (
-      <AnimatePresence>
-        <motion.div
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
-          exit={{ opacity: 0 }}
-          className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/50 backdrop-blur-sm"
-          onClick={closeLearnMore}
-        >
-          <motion.div
-            initial={{ scale: 0.9, opacity: 0 }}
-            animate={{ scale: 1, opacity: 1 }}
-            exit={{ scale: 0.9, opacity: 0 }}
-            className={`w-full max-w-6xl max-h-[90vh] overflow-hidden rounded-2xl ${
+      <div className="fixed inset-0 z-[9999] bg-black/80 backdrop-blur-sm" onClick={closeLearnMore}>
+        <div className="flex items-center justify-center min-h-screen p-4">
+          <div
+            className={`relative w-full max-w-6xl max-h-[90vh] overflow-hidden rounded-2xl ${
               isDark ? 'bg-gray-900 border-gray-700' : 'bg-white border-gray-200'
             } border shadow-2xl`}
             onClick={(e) => e.stopPropagation()}
@@ -1537,9 +1527,9 @@ const GitHubTools = () => {
                 )}
               </div>
             </div>
-          </motion.div>
-        </motion.div>
-      </AnimatePresence>
+          </div>
+        </div>
+      </div>
     );
   };
 
@@ -1743,7 +1733,235 @@ const GitHubTools = () => {
       </div>
 
       {/* Learn More Modal */}
-      {showLearnMore && <LearnMoreModal />}
+      {showLearnMore && selectedTool && (
+        <div className="fixed inset-0 z-[9999] bg-black/80 backdrop-blur-sm" onClick={closeLearnMore}>
+          <div className="flex items-center justify-center min-h-screen p-4">
+            <div
+              className={`relative w-full max-w-4xl max-h-[90vh] overflow-hidden rounded-2xl ${
+                isDark ? 'bg-gray-900 border-gray-700' : 'bg-white border-gray-200'
+              } border shadow-2xl`}
+              onClick={(e) => e.stopPropagation()}
+            >
+              {/* Header */}
+              <div className={`flex items-center justify-between p-6 border-b ${
+                isDark ? 'border-gray-700 bg-gray-800' : 'border-gray-200 bg-gray-50'
+              }`}>
+                <div className="flex items-center space-x-4">
+                  <div className={`p-3 rounded-xl ${isDark ? 'bg-emerald-500/20' : 'bg-emerald-100'}`}>
+                    <BookOpen className={`h-6 w-6 ${isDark ? 'text-emerald-400' : 'text-emerald-600'}`} />
+                  </div>
+                  <div>
+                    <h2 className={`text-2xl font-bold ${isDark ? 'text-white' : 'text-gray-900'}`}>
+                      {selectedTool.name} Complete Guide
+                    </h2>
+                    <p className={`text-sm ${isDark ? 'text-gray-400' : 'text-gray-600'}`}>
+                      Everything you need to know to get started
+                    </p>
+                  </div>
+                </div>
+                <button
+                  onClick={closeLearnMore}
+                  className={`p-2 rounded-lg ${
+                    isDark ? 'hover:bg-gray-700 text-gray-400' : 'hover:bg-gray-100 text-gray-600'
+                  } transition-colors`}
+                >
+                  <X className="h-6 w-6" />
+                </button>
+              </div>
+
+              {/* Content */}
+              <div className="overflow-y-auto max-h-[calc(90vh-120px)]">
+                <div className="p-6 space-y-8">
+                  {/* Tool Description */}
+                  <section>
+                    <h3 className={`text-xl font-semibold mb-4 ${isDark ? 'text-white' : 'text-gray-900'}`}>
+                      What is {selectedTool.name}?
+                    </h3>
+                    <p className={`text-lg leading-relaxed mb-4 ${isDark ? 'text-gray-300' : 'text-gray-700'}`}>
+                      {selectedTool.description}
+                    </p>
+                    <div className="grid md:grid-cols-2 gap-4">
+                      <div className={`p-4 rounded-lg ${isDark ? 'bg-blue-500/10 border-blue-500/20' : 'bg-blue-50 border-blue-200'} border`}>
+                        <h4 className={`font-semibold mb-2 ${isDark ? 'text-blue-400' : 'text-blue-700'}`}>Key Features</h4>
+                        <ul className="space-y-1">
+                          {selectedTool.features.map((feature: string, idx: number) => (
+                            <li key={idx} className={`text-sm ${isDark ? 'text-gray-300' : 'text-gray-700'}`}>
+                              • {feature}
+                            </li>
+                          ))}
+                        </ul>
+                      </div>
+                      <div className={`p-4 rounded-lg ${isDark ? 'bg-green-500/10 border-green-500/20' : 'bg-green-50 border-green-200'} border`}>
+                        <h4 className={`font-semibold mb-2 ${isDark ? 'text-green-400' : 'text-green-700'}`}>Tool Stats</h4>
+                        <div className="space-y-1 text-sm">
+                          <p className={`${isDark ? 'text-gray-300' : 'text-gray-700'}`}>⭐ {selectedTool.stars} stars</p>
+                          <p className={`${isDark ? 'text-gray-300' : 'text-gray-700'}`}>🍴 {selectedTool.forks} forks</p>
+                          <p className={`${isDark ? 'text-gray-300' : 'text-gray-700'}`}>💻 Language: {selectedTool.language}</p>
+                          <p className={`${isDark ? 'text-gray-300' : 'text-gray-700'}`}>📈 Difficulty: {selectedTool.difficulty}</p>
+                        </div>
+                      </div>
+                    </div>
+                  </section>
+
+                  {/* Installation Guide */}
+                  <section>
+                    <h3 className={`text-xl font-semibold mb-4 ${isDark ? 'text-white' : 'text-gray-900'}`}>
+                      Installation Guide
+                    </h3>
+                    <div className="grid md:grid-cols-3 gap-4">
+                      <div className={`p-4 rounded-lg ${isDark ? 'bg-blue-500/10 border-blue-500/20' : 'bg-blue-50 border-blue-200'} border`}>
+                        <h4 className={`font-semibold mb-3 ${isDark ? 'text-blue-400' : 'text-blue-700'}`}>Windows</h4>
+                        <ol className="space-y-2 text-sm">
+                          <li className={`${isDark ? 'text-gray-300' : 'text-gray-700'}`}>1. Visit the GitHub repository</li>
+                          <li className={`${isDark ? 'text-gray-300' : 'text-gray-700'}`}>2. Download Windows release</li>
+                          <li className={`${isDark ? 'text-gray-300' : 'text-gray-700'}`}>3. Run as administrator</li>
+                          <li className={`${isDark ? 'text-gray-300' : 'text-gray-700'}`}>4. Follow setup wizard</li>
+                          <li className={`${isDark ? 'text-gray-300' : 'text-gray-700'}`}>5. Test installation</li>
+                        </ol>
+                      </div>
+                      <div className={`p-4 rounded-lg ${isDark ? 'bg-gray-500/10 border-gray-500/20' : 'bg-gray-50 border-gray-200'} border`}>
+                        <h4 className={`font-semibold mb-3 ${isDark ? 'text-gray-400' : 'text-gray-700'}`}>macOS</h4>
+                        <ol className="space-y-2 text-sm">
+                          <li className={`${isDark ? 'text-gray-300' : 'text-gray-700'}`}>1. Install via Homebrew</li>
+                          <li className={`${isDark ? 'text-gray-300' : 'text-gray-700'}`}>2. Or download from GitHub</li>
+                          <li className={`${isDark ? 'text-gray-300' : 'text-gray-700'}`}>3. Grant permissions</li>
+                          <li className={`${isDark ? 'text-gray-300' : 'text-gray-700'}`}>4. Test in Terminal</li>
+                          <li className={`${isDark ? 'text-gray-300' : 'text-gray-700'}`}>5. Configure if needed</li>
+                        </ol>
+                      </div>
+                      <div className={`p-4 rounded-lg ${isDark ? 'bg-green-500/10 border-green-500/20' : 'bg-green-50 border-green-200'} border`}>
+                        <h4 className={`font-semibold mb-3 ${isDark ? 'text-green-400' : 'text-green-700'}`}>Linux</h4>
+                        <ol className="space-y-2 text-sm">
+                          <li className={`${isDark ? 'text-gray-300' : 'text-gray-700'}`}>1. Use package manager</li>
+                          <li className={`${isDark ? 'text-gray-300' : 'text-gray-700'}`}>2. Install dependencies</li>
+                          <li className={`${isDark ? 'text-gray-300' : 'text-gray-700'}`}>3. Configure environment</li>
+                          <li className={`${isDark ? 'text-gray-300' : 'text-gray-700'}`}>4. Test installation</li>
+                          <li className={`${isDark ? 'text-gray-300' : 'text-gray-700'}`}>5. Set up permissions</li>
+                        </ol>
+                      </div>
+                    </div>
+                  </section>
+
+                  {/* Basic Usage */}
+                  <section>
+                    <h3 className={`text-xl font-semibold mb-4 ${isDark ? 'text-white' : 'text-gray-900'}`}>
+                      Basic Usage & Commands
+                    </h3>
+                    <div className="space-y-4">
+                      <div className={`p-4 rounded-lg ${isDark ? 'bg-gray-800 border-gray-700' : 'bg-white border-gray-200'} border`}>
+                        <div className="flex items-start justify-between mb-2">
+                          <code className={`px-3 py-1 rounded text-sm font-mono ${
+                            isDark ? 'bg-gray-700 text-emerald-400' : 'bg-gray-100 text-emerald-600'
+                          }`}>
+                            {selectedTool.name.toLowerCase()} --help
+                          </code>
+                          <button
+                            onClick={() => copyToClipboard(`${selectedTool.name.toLowerCase()} --help`)}
+                            className={`p-1 rounded ${
+                              isDark ? 'hover:bg-gray-700 text-gray-400' : 'hover:bg-gray-100 text-gray-600'
+                            } transition-colors`}
+                          >
+                            <Copy className="h-4 w-4" />
+                          </button>
+                        </div>
+                        <p className={`text-sm ${isDark ? 'text-gray-300' : 'text-gray-700'}`}>
+                          Display help information and available options
+                        </p>
+                      </div>
+                      <div className={`p-4 rounded-lg ${isDark ? 'bg-gray-800 border-gray-700' : 'bg-white border-gray-200'} border`}>
+                        <div className="flex items-start justify-between mb-2">
+                          <code className={`px-3 py-1 rounded text-sm font-mono ${
+                            isDark ? 'bg-gray-700 text-emerald-400' : 'bg-gray-100 text-emerald-600'
+                          }`}>
+                            {selectedTool.name.toLowerCase()} --version
+                          </code>
+                          <button
+                            onClick={() => copyToClipboard(`${selectedTool.name.toLowerCase()} --version`)}
+                            className={`p-1 rounded ${
+                              isDark ? 'hover:bg-gray-700 text-gray-400' : 'hover:bg-gray-100 text-gray-600'
+                            } transition-colors`}
+                          >
+                            <Copy className="h-4 w-4" />
+                          </button>
+                        </div>
+                        <p className={`text-sm ${isDark ? 'text-gray-300' : 'text-gray-700'}`}>
+                          Check the installed version
+                        </p>
+                      </div>
+                    </div>
+                  </section>
+
+                  {/* Common Issues */}
+                  <section>
+                    <h3 className={`text-xl font-semibold mb-4 ${isDark ? 'text-white' : 'text-gray-900'}`}>
+                      Common Issues & Solutions
+                    </h3>
+                    <div className="space-y-4">
+                      <div className={`p-4 rounded-lg ${isDark ? 'bg-red-500/10 border-red-500/20' : 'bg-red-50 border-red-200'} border`}>
+                        <h4 className={`font-semibold mb-2 ${isDark ? 'text-red-400' : 'text-red-700'}`}>
+                          Command not found
+                        </h4>
+                        <p className={`text-sm mb-2 ${isDark ? 'text-gray-300' : 'text-gray-700'}`}>
+                          <strong>Solution:</strong> Make sure the tool is properly installed and added to your system PATH
+                        </p>
+                        <p className={`text-xs ${isDark ? 'text-gray-500' : 'text-gray-500'}`}>
+                          <strong>Tip:</strong> Try reinstalling or checking the installation documentation
+                        </p>
+                      </div>
+                      <div className={`p-4 rounded-lg ${isDark ? 'bg-red-500/10 border-red-500/20' : 'bg-red-50 border-red-200'} border`}>
+                        <h4 className={`font-semibold mb-2 ${isDark ? 'text-red-400' : 'text-red-700'}`}>
+                          Permission denied
+                        </h4>
+                        <p className={`text-sm mb-2 ${isDark ? 'text-gray-300' : 'text-gray-700'}`}>
+                          <strong>Solution:</strong> Run with administrator privileges (sudo on Linux/Mac, Run as Admin on Windows)
+                        </p>
+                        <p className={`text-xs ${isDark ? 'text-gray-500' : 'text-gray-500'}`}>
+                          <strong>Tip:</strong> Security tools often require elevated permissions to function properly
+                        </p>
+                      </div>
+                    </div>
+                  </section>
+
+                  {/* Real World Applications */}
+                  <section>
+                    <h3 className={`text-xl font-semibold mb-4 ${isDark ? 'text-white' : 'text-gray-900'}`}>
+                      Real-World Applications
+                    </h3>
+                    <div className="grid md:grid-cols-2 gap-3">
+                      <div className={`p-3 rounded-lg ${isDark ? 'bg-purple-500/10 border-purple-500/20' : 'bg-purple-50 border-purple-200'} border`}>
+                        <p className={`text-sm ${isDark ? 'text-gray-300' : 'text-gray-700'}`}>Security professionals conducting penetration tests</p>
+                      </div>
+                      <div className={`p-3 rounded-lg ${isDark ? 'bg-purple-500/10 border-purple-500/20' : 'bg-purple-50 border-purple-200'} border`}>
+                        <p className={`text-sm ${isDark ? 'text-gray-300' : 'text-gray-700'}`}>Students learning cybersecurity fundamentals</p>
+                      </div>
+                      <div className={`p-3 rounded-lg ${isDark ? 'bg-purple-500/10 border-purple-500/20' : 'bg-purple-50 border-purple-200'} border`}>
+                        <p className={`text-sm ${isDark ? 'text-gray-300' : 'text-gray-700'}`}>IT teams validating system security</p>
+                      </div>
+                      <div className={`p-3 rounded-lg ${isDark ? 'bg-purple-500/10 border-purple-500/20' : 'bg-purple-50 border-purple-200'} border`}>
+                        <p className={`text-sm ${isDark ? 'text-gray-300' : 'text-gray-700'}`}>Researchers investigating vulnerabilities</p>
+                      </div>
+                    </div>
+                  </section>
+
+                  {/* GitHub Link */}
+                  <section className="text-center">
+                    <a
+                      href={selectedTool.githubUrl}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="inline-flex items-center space-x-2 bg-gradient-to-r from-emerald-500 to-teal-500 hover:from-emerald-600 hover:to-teal-600 text-white px-6 py-3 rounded-xl font-semibold transition-all duration-200 transform hover:scale-105"
+                    >
+                      <Github className="h-5 w-5" />
+                      <span>View on GitHub</span>
+                      <ExternalLink className="h-4 w-4" />
+                    </a>
+                  </section>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      )}
     </section>
   );
 };
