@@ -1,11 +1,14 @@
 import React, { useState } from 'react';
-import { Github, Star, GitFork, Download, ExternalLink, Search, Filter, Code, Shield, Zap, Terminal, Eye, Users } from 'lucide-react';
+import { Github, Star, GitFork, Download, ExternalLink, Search, Filter, Code, Shield, Zap, Terminal, Eye, Users, BookOpen, X, AlertTriangle, CheckCircle, Copy, Play, ArrowRight, Lightbulb, Wrench, HelpCircle } from 'lucide-react';
 import { useTheme } from '../contexts/ThemeContext';
+import { motion, AnimatePresence } from 'framer-motion';
 
 const GitHubTools = () => {
   const { isDark } = useTheme();
   const [searchTerm, setSearchTerm] = useState('');
   const [selectedCategory, setSelectedCategory] = useState('All');
+  const [selectedTool, setSelectedTool] = useState<any>(null);
+  const [showLearnMore, setShowLearnMore] = useState(false);
 
   const categories = ['All', 'Reconnaissance', 'Exploitation', 'Post-Exploitation', 'Forensics', 'Web Security', 'Network Security'];
 
@@ -21,7 +24,105 @@ const GitHubTools = () => {
       githubUrl: "https://github.com/nmap/nmap",
       features: ["Port Scanning", "OS Detection", "Service Detection", "Script Engine"],
       difficulty: "Intermediate",
-      image: "https://images.pexels.com/photos/270404/pexels-photo-270404.jpeg?auto=compress&cs=tinysrgb&w=400&h=250&fit=crop"
+      image: "https://images.pexels.com/photos/270404/pexels-photo-270404.jpeg?auto=compress&cs=tinysrgb&w=400&h=250&fit=crop",
+      guide: {
+        whatIsIt: "Nmap (Network Mapper) is like a special detective tool for computers! It helps you discover what devices are connected to a network and what services they're running. Think of it as a friendly robot that knocks on doors (ports) to see who's home.",
+        whyUseIt: [
+          "🔍 Find all devices on your network (like computers, phones, printers)",
+          "🚪 Check which services are running (like websites, email servers)",
+          "🛡️ Test your network security to find weak spots",
+          "📊 Create maps of your network structure"
+        ],
+        installation: {
+          windows: [
+            "1️⃣ Go to https://nmap.org/download.html",
+            "2️⃣ Click 'Latest stable release self-installer'",
+            "3️⃣ Download the .exe file",
+            "4️⃣ Right-click and 'Run as administrator'",
+            "5️⃣ Follow the installation wizard",
+            "6️⃣ Open Command Prompt and type 'nmap --version'"
+          ],
+          mac: [
+            "1️⃣ Install Homebrew first: /bin/bash -c \"$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)\"",
+            "2️⃣ Open Terminal",
+            "3️⃣ Type: brew install nmap",
+            "4️⃣ Wait for installation to complete",
+            "5️⃣ Test with: nmap --version"
+          ],
+          linux: [
+            "1️⃣ Open Terminal",
+            "2️⃣ Ubuntu/Debian: sudo apt-get install nmap",
+            "3️⃣ CentOS/RHEL: sudo yum install nmap",
+            "4️⃣ Arch Linux: sudo pacman -S nmap",
+            "5️⃣ Test with: nmap --version"
+          ]
+        },
+        basicCommands: [
+          {
+            command: "nmap google.com",
+            explanation: "Scan Google's website to see what ports are open",
+            example: "This will show you which services Google is running"
+          },
+          {
+            command: "nmap -sP 192.168.1.0/24",
+            explanation: "Find all devices on your home network",
+            example: "Shows all phones, computers, smart TVs connected to your WiFi"
+          },
+          {
+            command: "nmap -O target",
+            explanation: "Try to guess what operating system the target is running",
+            example: "Is it Windows? Linux? macOS?"
+          },
+          {
+            command: "nmap -sV target",
+            explanation: "Find out what versions of services are running",
+            example: "What version of Apache web server is running?"
+          }
+        ],
+        commonErrors: [
+          {
+            error: "Permission denied",
+            solution: "Run as administrator/sudo. Some scans need special permissions.",
+            tip: "On Windows: Right-click Command Prompt → 'Run as administrator'"
+          },
+          {
+            error: "Host seems down",
+            solution: "The target might have a firewall blocking pings. Try: nmap -Pn target",
+            tip: "Some computers hide from ping but still have open ports"
+          },
+          {
+            error: "No route to host",
+            solution: "Check your internet connection and make sure the target address is correct",
+            tip: "Can you ping the target first? Try: ping google.com"
+          }
+        ],
+        alternatives: [
+          {
+            name: "Angry IP Scanner",
+            description: "Simple GUI tool for network scanning",
+            pros: "Easy to use, visual interface",
+            cons: "Less powerful than Nmap"
+          },
+          {
+            name: "Masscan",
+            description: "Very fast port scanner",
+            pros: "Extremely fast for large networks",
+            cons: "Less detailed information"
+          },
+          {
+            name: "Zenmap",
+            description: "Official Nmap GUI",
+            pros: "Visual interface for Nmap",
+            cons: "Still requires Nmap knowledge"
+          }
+        ],
+        realWorldUse: [
+          "🏢 IT administrators checking network security",
+          "🔒 Security professionals finding vulnerabilities",
+          "🏠 Home users mapping their network devices",
+          "🎓 Students learning network concepts"
+        ]
+      }
     },
     {
       name: "Metasploit Framework",
@@ -34,7 +135,144 @@ const GitHubTools = () => {
       githubUrl: "https://github.com/rapid7/metasploit-framework",
       features: ["Exploit Development", "Payload Generation", "Post-Exploitation", "Vulnerability Assessment"],
       difficulty: "Advanced",
-      image: "https://images.pexels.com/photos/442150/pexels-photo-442150.jpeg?auto=compress&cs=tinysrgb&w=400&h=250&fit=crop"
+      image: "https://images.pexels.com/photos/442150/pexels-photo-442150.jpeg?auto=compress&cs=tinysrgb&w=400&h=250&fit=crop",
+      guide: {
+        whatIsIt: "Metasploit is like a Swiss Army knife for ethical hackers! It's a powerful framework that helps security professionals find and test vulnerabilities in computer systems. Think of it as a toolbox full of specialized tools for testing how secure systems really are.",
+        whyUseIt: [
+          "🎯 Test if systems are vulnerable to known attacks",
+          "🛠️ Generate custom payloads for penetration testing",
+          "📊 Assess security posture of networks and applications",
+          "🎓 Learn about exploitation techniques safely",
+          "🔬 Research and develop new security exploits"
+        ],
+        installation: {
+          windows: [
+            "1️⃣ Download Metasploit Community Edition from rapid7.com",
+            "2️⃣ Create a free account",
+            "3️⃣ Download the Windows installer",
+            "4️⃣ Run installer as administrator",
+            "5️⃣ Follow setup wizard",
+            "6️⃣ Launch from Start Menu"
+          ],
+          mac: [
+            "1️⃣ Install with Homebrew: brew install metasploit",
+            "2️⃣ Or download from rapid7.com",
+            "3️⃣ Install required dependencies",
+            "4️⃣ Run: msfconsole to start"
+          ],
+          linux: [
+            "1️⃣ Comes pre-installed on Kali Linux",
+            "2️⃣ Ubuntu/Debian: curl https://raw.githubusercontent.com/rapid7/metasploit-omnibus/master/config/templates/metasploit-framework-wrappers/msfupdate.erb > msfinstall && chmod 755 msfinstall && ./msfinstall",
+            "3️⃣ Or: apt-get install metasploit-framework",
+            "4️⃣ Start with: msfconsole"
+          ]
+        },
+        basicCommands: [
+          {
+            command: "search ms17-010",
+            explanation: "Search for exploits related to MS17-010 (EternalBlue)",
+            example: "Find exploits for the famous Windows SMB vulnerability"
+          },
+          {
+            command: "use exploit/windows/smb/ms17_010_eternalblue",
+            explanation: "Select a specific exploit to use",
+            example: "Load the EternalBlue exploit module"
+          },
+          {
+            command: "show options",
+            explanation: "Display required and optional parameters for the current module",
+            example: "See what settings you need to configure"
+          },
+          {
+            command: "set RHOSTS 192.168.1.100",
+            explanation: "Set the target IP address",
+            example: "Tell Metasploit which computer to test"
+          }
+        ],
+        stepByStepGuide: [
+          {
+            step: "1. Starting Metasploit",
+            details: [
+              "Open terminal and type 'msfconsole'",
+              "Wait for the framework to load (shows ASCII art)",
+              "You'll see the msf6 > prompt when ready",
+              "Type 'help' to see available commands"
+            ]
+          },
+          {
+            step: "2. Finding an Exploit",
+            details: [
+              "Use 'search' to find exploits: search windows smb",
+              "Look at the results and note the exploit paths",
+              "Choose one that matches your target system",
+              "Use 'info' command to learn more about an exploit"
+            ]
+          },
+          {
+            step: "3. Configuring the Exploit",
+            details: [
+              "Use 'use' command to select an exploit",
+              "Run 'show options' to see required settings",
+              "Set RHOSTS (target) and LHOST (your IP) at minimum",
+              "Use 'check' to verify if target is vulnerable"
+            ]
+          }
+        ],
+        commonErrors: [
+          {
+            error: "No such file or directory - ruby",
+            solution: "Install Ruby runtime environment first",
+            tip: "Metasploit requires Ruby 2.7 or higher to function"
+          },
+          {
+            error: "Database not connected",
+            solution: "Start PostgreSQL service and run 'msfdb init'",
+            tip: "Database improves performance and stores scan results"
+          },
+          {
+            error: "Exploit failed - target not vulnerable",
+            solution: "Verify target OS/version matches exploit requirements",
+            tip: "Use 'check' command before running exploit to verify compatibility"
+          },
+          {
+            error: "Payload delivery failed",
+            solution: "Check firewall settings and network connectivity",
+            tip: "Ensure your LHOST setting matches your actual IP address"
+          }
+        ],
+        alternatives: [
+          {
+            name: "Cobalt Strike",
+            description: "Commercial penetration testing platform",
+            pros: "Professional features, excellent team collaboration",
+            cons: "Expensive license, often used by malicious actors"
+          },
+          {
+            name: "Core Impact",
+            description: "Commercial exploitation framework",
+            pros: "User-friendly GUI, comprehensive reporting",
+            cons: "Very expensive, less community support"
+          },
+          {
+            name: "Canvas",
+            description: "Commercial vulnerability assessment platform",
+            pros: "Good exploit development tools",
+            cons: "Costly, smaller exploit database"
+          }
+        ],
+        realWorldUse: [
+          "🛡️ Penetration testers validating security defenses",
+          "🎓 Security researchers developing new exploits",
+          "💼 Red team exercises simulating real attacks",
+          "🔍 Vulnerability researchers testing patches"
+        ],
+        proTips: [
+          "Always use Metasploit in authorized environments only",
+          "Practice on vulnerable VMs like Metasploitable first",
+          "Keep the framework updated with 'msfupdate'",
+          "Learn to write custom modules for unique scenarios"
+        ]
+      }
     },
     {
       name: "Burp Suite Community",
@@ -47,7 +285,128 @@ const GitHubTools = () => {
       githubUrl: "https://github.com/PortSwigger/burp-extensions-montoya-api",
       features: ["Web App Scanning", "Proxy Interception", "Vulnerability Detection", "Manual Testing"],
       difficulty: "Intermediate",
-      image: "https://images.pexels.com/photos/546819/pexels-photo-546819.jpeg?auto=compress&cs=tinysrgb&w=400&h=250&fit=crop"
+      image: "https://images.pexels.com/photos/546819/pexels-photo-546819.jpeg?auto=compress&cs=tinysrgb&w=400&h=250&fit=crop",
+      guide: {
+        whatIsIt: "Burp Suite is like having a security expert sitting between your browser and websites, watching everything that happens! It intercepts, modifies, and analyzes web traffic to help find security vulnerabilities in web applications.",
+        whyUseIt: [
+          "🔍 Intercept and modify web requests in real-time",
+          "🕷️ Automatically crawl websites to map all functionality",
+          "🛡️ Scan for common web vulnerabilities",
+          "🎯 Perform manual security testing with powerful tools",
+          "📊 Generate detailed security reports"
+        ],
+        installation: {
+          windows: [
+            "1️⃣ Download from https://portswigger.net/burp/communitydownload",
+            "2️⃣ Install Java 11+ if not already installed",
+            "3️⃣ Run the downloaded installer",
+            "4️⃣ Follow installation wizard",
+            "5️⃣ Launch Burp Suite Community Edition"
+          ],
+          mac: [
+            "1️⃣ Download from PortSwigger website",
+            "2️⃣ Install Java if needed",
+            "3️⃣ Open the downloaded DMG file",
+            "4️⃣ Drag Burp Suite to Applications",
+            "5️⃣ Launch and configure proxy settings"
+          ],
+          linux: [
+            "1️⃣ Download the Linux version",
+            "2️⃣ Install Java: sudo apt install default-jre",
+            "3️⃣ Make executable: chmod +x burpsuite_community_linux_*.sh",
+            "4️⃣ Run installer: ./burpsuite_community_linux_*.sh",
+            "5️⃣ Launch from applications menu"
+          ]
+        },
+        basicCommands: [
+          {
+            command: "Configure Browser Proxy",
+            explanation: "Set browser to use Burp as proxy (localhost:8080)",
+            example: "This lets Burp see all your web traffic"
+          },
+          {
+            command: "Install CA Certificate",
+            explanation: "Download and install Burp's certificate for HTTPS",
+            example: "Visit http://burpsuite in browser and download certificate"
+          },
+          {
+            command: "Target Scope",
+            explanation: "Define which websites Burp should focus on",
+            example: "Add target domain to scope to avoid testing other sites"
+          },
+          {
+            command: "Spider/Crawler",
+            explanation: "Automatically discover all pages and functionality",
+            example: "Right-click target and select 'Spider this host'"
+          }
+        ],
+        stepByStepGuide: [
+          {
+            step: "1. Setup Browser Proxy",
+            details: [
+              "Configure your browser to use proxy 127.0.0.1:8080",
+              "Firefox: Settings → Network Settings → Manual proxy",
+              "Chrome: Use extension like FoxyProxy",
+              "Test by visiting any website - traffic should appear in Burp"
+            ]
+          },
+          {
+            step: "2. Install Certificate",
+            details: [
+              "Visit http://burpsuite in your browser",
+              "Click 'CA Certificate' to download",
+              "Install in browser's certificate store",
+              "This allows Burp to intercept HTTPS traffic"
+            ]
+          },
+          {
+            step: "3. Define Target Scope",
+            details: [
+              "Go to Target → Site map",
+              "Right-click your target domain",
+              "Select 'Add to scope'",
+              "This focuses testing on your target only"
+            ]
+          }
+        ],
+        commonErrors: [
+          {
+            error: "Browser can't connect to websites",
+            solution: "Check proxy settings are correct (127.0.0.1:8080) and Burp is running",
+            tip: "Make sure Intercept is OFF when browsing normally"
+          },
+          {
+            error: "Certificate errors on HTTPS sites",
+            solution: "Install Burp's CA certificate in your browser",
+            tip: "Each browser has different certificate installation process"
+          },
+          {
+            error: "Burp running slowly",
+            solution: "Increase Java heap size in startup options",
+            tip: "Use -Xmx2g flag to allocate 2GB of RAM"
+          }
+        ],
+        alternatives: [
+          {
+            name: "OWASP ZAP",
+            description: "Free alternative to Burp Suite",
+            pros: "Completely free, good automation",
+            cons: "Less polished interface, fewer advanced features"
+          },
+          {
+            name: "Burp Suite Professional",
+            description: "Commercial version with more features",
+            pros: "Advanced scanner, better reporting, extensions",
+            cons: "Expensive annual license"
+          }
+        ],
+        realWorldUse: [
+          "🔒 Security consultants testing client applications",
+          "💼 Developers finding security issues before release",
+          "🎓 Security students learning web application testing",
+          "🛡️ Bug bounty hunters finding vulnerabilities"
+        ]
+      }
     },
     {
       name: "Wireshark",
@@ -60,7 +419,147 @@ const GitHubTools = () => {
       githubUrl: "https://github.com/wireshark/wireshark",
       features: ["Packet Analysis", "Protocol Decoding", "Network Troubleshooting", "Live Capture"],
       difficulty: "Intermediate",
-      image: "https://images.pexels.com/photos/159304/network-cable-ethernet-computer-159304.jpeg?auto=compress&cs=tinysrgb&w=400&h=250&fit=crop"
+      image: "https://images.pexels.com/photos/159304/network-cable-ethernet-computer-159304.jpeg?auto=compress&cs=tinysrgb&w=400&h=250&fit=crop",
+      guide: {
+        whatIsIt: "Wireshark is like a super-powered magnifying glass for computer networks! It captures and shows you all the data packets traveling through your network. Think of it as being able to see every letter and package being delivered in your digital neighborhood.",
+        whyUseIt: [
+          "🔍 See exactly what data is traveling on your network",
+          "🐛 Find network problems and bottlenecks",
+          "🛡️ Detect suspicious or malicious network activity",
+          "📊 Analyze network performance and usage",
+          "🎓 Learn how network protocols actually work"
+        ],
+        installation: {
+          windows: [
+            "1️⃣ Visit https://www.wireshark.org/download.html",
+            "2️⃣ Click 'Windows Installer (64-bit)'",
+            "3️⃣ Download the .exe file",
+            "4️⃣ Run installer as administrator",
+            "5️⃣ Follow installation wizard (install WinPcap when prompted)",
+            "6️⃣ Launch Wireshark from Start Menu"
+          ],
+          mac: [
+            "1️⃣ Download from https://www.wireshark.org/download.html",
+            "2️⃣ Choose 'macOS Intel 64-bit DMG'",
+            "3️⃣ Open downloaded .dmg file",
+            "4️⃣ Drag Wireshark to Applications",
+            "5️⃣ Install ChmodBPF (for packet capture permissions)",
+            "6️⃣ Launch Wireshark from Applications"
+          ],
+          linux: [
+            "1️⃣ Ubuntu/Debian: sudo apt-get install wireshark",
+            "2️⃣ CentOS/RHEL: sudo yum install wireshark",
+            "3️⃣ Add user to wireshark group: sudo usermod -a -G wireshark $USER",
+            "4️⃣ Log out and log back in",
+            "5️⃣ Launch with: wireshark"
+          ]
+        },
+        basicCommands: [
+          {
+            command: "Start Capture",
+            explanation: "Click on your network interface (like WiFi or Ethernet) to start capturing packets",
+            example: "Choose 'Wi-Fi' to see all wireless traffic on your computer"
+          },
+          {
+            command: "http filter",
+            explanation: "Type 'http' in the filter bar to see only web traffic",
+            example: "Perfect for seeing which websites you're visiting"
+          },
+          {
+            command: "ip.addr == 192.168.1.1",
+            explanation: "Show only traffic to/from a specific IP address",
+            example: "See all communication with your router"
+          },
+          {
+            command: "tcp.port == 80",
+            explanation: "Show only traffic on port 80 (web traffic)",
+            example: "Focus on HTTP web requests and responses"
+          }
+        ],
+        stepByStepGuide: [
+          {
+            step: "1. First Capture",
+            details: [
+              "Open Wireshark and you'll see a list of network interfaces",
+              "Click on your active network (usually WiFi or Ethernet)",
+              "Click the blue shark fin icon to start capturing",
+              "You'll immediately see packets flowing - this is normal!"
+            ]
+          },
+          {
+            step: "2. Understanding the Interface",
+            details: [
+              "Top panel: List of captured packets (each row is one packet)",
+              "Middle panel: Details of selected packet (headers and data)",
+              "Bottom panel: Raw data in hexadecimal and ASCII",
+              "Colors help identify traffic types (green=TCP, blue=UDP, etc.)"
+            ]
+          },
+          {
+            step: "3. Your First Filter",
+            details: [
+              "Type 'http' in the filter bar at the top",
+              "Press Enter to apply the filter",
+              "Now you only see web traffic",
+              "Try visiting a website to see new packets appear"
+            ]
+          }
+        ],
+        commonErrors: [
+          {
+            error: "No interfaces available for capture",
+            solution: "Run Wireshark as administrator/sudo or install proper capture drivers",
+            tip: "On Windows, make sure WinPcap or Npcap is installed"
+          },
+          {
+            error: "Permission denied on Linux",
+            solution: "Add your user to the wireshark group: sudo usermod -a -G wireshark $USER",
+            tip: "You need to log out and log back in for group changes to take effect"
+          },
+          {
+            error: "Too many packets, can't keep up",
+            solution: "Use capture filters to reduce traffic: Capture → Capture Filters",
+            tip: "Start with simple filters like 'host google.com' to limit what you capture"
+          },
+          {
+            error: "Can't understand the data",
+            solution: "Start with high-level protocols like HTTP, then work down to lower levels",
+            tip: "Use Follow → TCP Stream to see human-readable conversations"
+          }
+        ],
+        alternatives: [
+          {
+            name: "tcpdump",
+            description: "Command-line packet analyzer",
+            pros: "Lightweight, available on most Unix systems",
+            cons: "No GUI, steeper learning curve"
+          },
+          {
+            name: "NetworkMiner",
+            description: "Network forensic analysis tool",
+            pros: "Great for forensics, easy file extraction",
+            cons: "Windows only, less real-time analysis"
+          },
+          {
+            name: "Ettercap",
+            description: "Network security tool with packet capture",
+            pros: "Includes active attacks, MITM capabilities",
+            cons: "More complex, security-focused rather than analysis"
+          }
+        ],
+        realWorldUse: [
+          "🔧 Network administrators troubleshooting connectivity issues",
+          "🛡️ Security analysts investigating network breaches",
+          "📚 Students learning how internet protocols work",
+          "🐛 Developers debugging application network problems"
+        ],
+        proTips: [
+          "Always get permission before capturing network traffic in corporate environments",
+          "Use display filters (not capture filters) when learning - they're more forgiving",
+          "Right-click packets for context menus with useful analysis options",
+          "Save interesting captures as .pcap files for later analysis"
+        ]
+      }
     },
     {
       name: "OWASP ZAP",
@@ -73,7 +572,147 @@ const GitHubTools = () => {
       githubUrl: "https://github.com/zaproxy/zaproxy",
       features: ["Automated Scanning", "Manual Testing", "API Security", "CI/CD Integration"],
       difficulty: "Beginner",
-      image: "https://images.pexels.com/photos/60504/security-protection-anti-virus-software-60504.jpeg?auto=compress&cs=tinysrgb&w=400&h=250&fit=crop"
+      image: "https://images.pexels.com/photos/60504/security-protection-anti-virus-software-60504.jpeg?auto=compress&cs=tinysrgb&w=400&h=250&fit=crop",
+      guide: {
+        whatIsIt: "OWASP ZAP (Zed Attack Proxy) is like a security guard for websites! It sits between your browser and the website you're testing, watching all the traffic and looking for security problems. It's perfect for beginners because it has a user-friendly interface.",
+        whyUseIt: [
+          "🕷️ Automatically crawl websites to find all pages",
+          "🔍 Scan for common security vulnerabilities",
+          "🛡️ Test if hackers could break into websites",
+          "📱 Works with any web application",
+          "🆓 Completely free and open source"
+        ],
+        installation: {
+          windows: [
+            "1️⃣ Go to https://www.zaproxy.org/download/",
+            "2️⃣ Click 'Download ZAP 2.x.x'",
+            "3️⃣ Choose 'Windows (64) Installer'",
+            "4️⃣ Run the downloaded .exe file",
+            "5️⃣ Follow the installation wizard",
+            "6️⃣ Launch ZAP from Start Menu"
+          ],
+          mac: [
+            "1️⃣ Visit https://www.zaproxy.org/download/",
+            "2️⃣ Download 'MacOS DMG Package'",
+            "3️⃣ Open the downloaded .dmg file",
+            "4️⃣ Drag ZAP to Applications folder",
+            "5️⃣ Right-click ZAP → Open (first time only)",
+            "6️⃣ Click 'Open' when warned about unidentified developer"
+          ],
+          linux: [
+            "1️⃣ Download from https://www.zaproxy.org/download/",
+            "2️⃣ Choose 'Linux Package'",
+            "3️⃣ Extract: tar -xzf ZAP_2.x.x_Linux.tar.gz",
+            "4️⃣ Navigate to ZAP folder",
+            "5️⃣ Run: ./zap.sh",
+            "6️⃣ Or install via package manager: sudo apt install zaproxy"
+          ]
+        },
+        basicCommands: [
+          {
+            command: "Quick Start - Automated Scan",
+            explanation: "Enter a website URL and let ZAP find vulnerabilities automatically",
+            example: "Perfect for your first scan! Just type 'http://testphp.vulnweb.com/' and click 'Attack'"
+          },
+          {
+            command: "Manual Explore",
+            explanation: "Use ZAP's browser to manually explore a website",
+            example: "ZAP records everything you click and builds a map of the website"
+          },
+          {
+            command: "Spider Scan",
+            explanation: "Automatically discover all pages on a website",
+            example: "Like having a robot click every link to map the entire site"
+          },
+          {
+            command: "Active Scan",
+            explanation: "Test for vulnerabilities by sending attack patterns",
+            example: "ZAP tries different hacking techniques to find weak spots"
+          }
+        ],
+        stepByStepGuide: [
+          {
+            step: "1. First Launch",
+            details: [
+              "When you open ZAP, choose 'No, I do not want to persist this session'",
+              "This is perfect for learning - no need to save anything yet",
+              "You'll see the main interface with tabs and panels"
+            ]
+          },
+          {
+            step: "2. Your First Scan",
+            details: [
+              "Click 'Automated Scan' in the Quick Start tab",
+              "Enter a test website: http://testphp.vulnweb.com/",
+              "Check 'Use traditional spider' and 'Use Ajax spider'",
+              "Click 'Attack' and watch ZAP work!"
+            ]
+          },
+          {
+            step: "3. Understanding Results",
+            details: [
+              "Red alerts = High risk vulnerabilities (fix immediately!)",
+              "Orange alerts = Medium risk (fix when possible)",
+              "Yellow alerts = Low risk (good to fix)",
+              "Blue alerts = Informational (just FYI)"
+            ]
+          }
+        ],
+        commonErrors: [
+          {
+            error: "ZAP won't start - Java error",
+            solution: "Install Java 11 or higher from https://adoptium.net/",
+            tip: "ZAP needs Java to run. Download the LTS version for best compatibility"
+          },
+          {
+            error: "Can't access websites through ZAP",
+            solution: "Configure your browser to use ZAP as proxy (localhost:8080)",
+            tip: "ZAP acts as a 'man in the middle' - your browser must be configured to use it"
+          },
+          {
+            error: "SSL/HTTPS errors",
+            solution: "Install ZAP's root certificate in your browser",
+            tip: "Go to ZAP → Tools → Options → Dynamic SSL Certificates → Save certificate"
+          },
+          {
+            error: "Scans taking too long",
+            solution: "Reduce scan scope or use faster scan policies",
+            tip: "Start with small websites and increase scope as you learn"
+          }
+        ],
+        alternatives: [
+          {
+            name: "Burp Suite Community",
+            description: "Professional web security testing platform",
+            pros: "Very powerful, industry standard",
+            cons: "Steeper learning curve, limited free version"
+          },
+          {
+            name: "Nikto",
+            description: "Command-line web vulnerability scanner",
+            pros: "Fast, lightweight, good for automation",
+            cons: "No GUI, requires command-line knowledge"
+          },
+          {
+            name: "W3af",
+            description: "Web application attack and audit framework",
+            pros: "Good automation features",
+            cons: "Less user-friendly, development less active"
+          }
+        ],
+        realWorldUse: [
+          "🎓 Students learning web security basics",
+          "💼 Developers testing their own applications",
+          "🔒 Security professionals doing penetration tests",
+          "🏢 Companies checking website security before launch"
+        ],
+        proTips: [
+          "Always get permission before scanning any website",
+          "Start with intentionally vulnerable sites like DVWA or WebGoat",
+          "Use ZAP's HUD (Heads Up Display) for easier manual testing",
+          "Save interesting findings as ZAP sessions for later review"
+        ]
+      }
     },
     {
       name: "Volatility",
@@ -99,7 +738,97 @@ const GitHubTools = () => {
       githubUrl: "https://github.com/sullo/nikto",
       features: ["Web Server Scanning", "Vulnerability Detection", "SSL Testing", "CGI Scanning"],
       difficulty: "Beginner",
-      image: "https://images.pexels.com/photos/270404/pexels-photo-270404.jpeg?auto=compress&cs=tinysrgb&w=400&h=250&fit=crop"
+      image: "https://images.pexels.com/photos/270404/pexels-photo-270404.jpeg?auto=compress&cs=tinysrgb&w=400&h=250&fit=crop",
+      guide: {
+        whatIsIt: "Nikto is like a security health checkup for websites! It's a command-line tool that automatically tests web servers for thousands of known security problems, outdated software, and dangerous files. Think of it as a robot doctor that checks websites for common illnesses.",
+        whyUseIt: [
+          "🔍 Automatically find common web server vulnerabilities",
+          "📝 Generate detailed reports of security issues",
+          "⚡ Quick and easy to use - just point it at a website",
+          "🆓 Completely free and regularly updated",
+          "📊 Test multiple servers quickly"
+        ],
+        installation: {
+          windows: [
+            "1️⃣ Install Perl from https://strawberryperl.com/",
+            "2️⃣ Download Nikto from https://github.com/sullo/nikto",
+            "3️⃣ Extract the ZIP file",
+            "4️⃣ Open Command Prompt in the nikto/program folder",
+            "5️⃣ Run: perl nikto.pl -h"
+          ],
+          mac: [
+            "1️⃣ Install Homebrew if not installed",
+            "2️⃣ Run: brew install nikto",
+            "3️⃣ Or download manually from GitHub",
+            "4️⃣ Test with: nikto -h"
+          ],
+          linux: [
+            "1️⃣ Ubuntu/Debian: sudo apt-get install nikto",
+            "2️⃣ CentOS/RHEL: sudo yum install nikto",
+            "3️⃣ Or download from GitHub: git clone https://github.com/sullo/nikto.git",
+            "4️⃣ Test with: nikto -h"
+          ]
+        },
+        basicCommands: [
+          {
+            command: "nikto -h http://example.com",
+            explanation: "Basic scan of a website",
+            example: "Scans example.com for common vulnerabilities"
+          },
+          {
+            command: "nikto -h http://example.com -p 80,443",
+            explanation: "Scan specific ports",
+            example: "Check both HTTP (80) and HTTPS (443) ports"
+          },
+          {
+            command: "nikto -h http://example.com -o report.html -Format html",
+            explanation: "Save results to HTML report",
+            example: "Creates a nice HTML report you can open in a browser"
+          },
+          {
+            command: "nikto -h http://example.com -Tuning 1,2,3",
+            explanation: "Run specific test categories only",
+            example: "Focus on interesting files, misconfiguration, and information disclosure"
+          }
+        ],
+        commonErrors: [
+          {
+            error: "Perl not found",
+            solution: "Install Perl on your system first",
+            tip: "Windows users can use Strawberry Perl, which includes everything needed"
+          },
+          {
+            error: "Connection timeout",
+            solution: "The target server might be blocking scans or is slow",
+            tip: "Try adding -timeout 30 to increase the timeout"
+          },
+          {
+            error: "403 Forbidden errors",
+            solution: "Server is blocking the scan - this is normal for protected sites",
+            tip: "Some servers detect and block security scanners automatically"
+          }
+        ],
+        alternatives: [
+          {
+            name: "OWASP ZAP",
+            description: "GUI-based web application security scanner",
+            pros: "User-friendly interface, more comprehensive testing",
+            cons: "Heavier, requires more setup"
+          },
+          {
+            name: "Nessus",
+            description: "Professional vulnerability scanner",
+            pros: "Very comprehensive, great reporting",
+            cons: "Expensive, overkill for simple web scanning"
+          }
+        ],
+        realWorldUse: [
+          "🔒 Quick security assessment of new websites",
+          "📋 Regular security audits for web servers",
+          "🎓 Learning about common web vulnerabilities",
+          "🛡️ Pre-deployment security checks"
+        ]
+      }
     },
     {
       name: "Aircrack-ng",
@@ -130,6 +859,362 @@ const GitHubTools = () => {
       case 'Advanced': return isDark ? 'bg-red-500/20 text-red-400 border-red-500/30' : 'bg-red-100 text-red-700 border-red-300';
       default: return isDark ? 'bg-gray-500/20 text-gray-400 border-gray-500/30' : 'bg-gray-100 text-gray-700 border-gray-300';
     }
+  };
+
+  const openLearnMore = (tool: any) => {
+    setSelectedTool(tool);
+    setShowLearnMore(true);
+  };
+
+  const closeLearnMore = () => {
+    setShowLearnMore(false);
+    setSelectedTool(null);
+  };
+
+  const copyToClipboard = (text: string) => {
+    navigator.clipboard.writeText(text);
+  };
+
+  const LearnMoreModal = () => {
+    if (!selectedTool || !selectedTool.guide) return null;
+
+    const guide = selectedTool.guide;
+
+    return (
+      <AnimatePresence>
+        <motion.div
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          exit={{ opacity: 0 }}
+          className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/50 backdrop-blur-sm"
+          onClick={closeLearnMore}
+        >
+          <motion.div
+            initial={{ scale: 0.9, opacity: 0 }}
+            animate={{ scale: 1, opacity: 1 }}
+            exit={{ scale: 0.9, opacity: 0 }}
+            className={`w-full max-w-6xl max-h-[90vh] overflow-hidden rounded-2xl ${
+              isDark ? 'bg-gray-900 border-gray-700' : 'bg-white border-gray-200'
+            } border shadow-2xl`}
+            onClick={(e) => e.stopPropagation()}
+          >
+            {/* Header */}
+            <div className={`flex items-center justify-between p-6 border-b ${
+              isDark ? 'border-gray-700 bg-gray-800' : 'border-gray-200 bg-gray-50'
+            }`}>
+              <div className="flex items-center space-x-4">
+                <div className={`p-3 rounded-xl ${isDark ? 'bg-emerald-500/20' : 'bg-emerald-100'}`}>
+                  <BookOpen className={`h-6 w-6 ${isDark ? 'text-emerald-400' : 'text-emerald-600'}`} />
+                </div>
+                <div>
+                  <h2 className={`text-2xl font-bold ${isDark ? 'text-white' : 'text-gray-900'}`}>
+                    {selectedTool.name} Complete Guide
+                  </h2>
+                  <p className={`text-sm ${isDark ? 'text-gray-400' : 'text-gray-600'}`}>
+                    Everything you need to know to get started
+                  </p>
+                </div>
+              </div>
+              <button
+                onClick={closeLearnMore}
+                className={`p-2 rounded-lg ${
+                  isDark ? 'hover:bg-gray-700 text-gray-400' : 'hover:bg-gray-100 text-gray-600'
+                } transition-colors`}
+              >
+                <X className="h-6 w-6" />
+              </button>
+            </div>
+
+            {/* Content */}
+            <div className="overflow-y-auto max-h-[calc(90vh-120px)]">
+              <div className="p-6 space-y-8">
+                {/* What is it */}
+                <section>
+                  <div className="flex items-center space-x-3 mb-4">
+                    <HelpCircle className={`h-5 w-5 ${isDark ? 'text-blue-400' : 'text-blue-600'}`} />
+                    <h3 className={`text-xl font-semibold ${isDark ? 'text-white' : 'text-gray-900'}`}>
+                      What is {selectedTool.name}?
+                    </h3>
+                  </div>
+                  <p className={`text-lg leading-relaxed ${isDark ? 'text-gray-300' : 'text-gray-700'}`}>
+                    {guide.whatIsIt}
+                  </p>
+                </section>
+
+                {/* Why use it */}
+                <section>
+                  <div className="flex items-center space-x-3 mb-4">
+                    <Lightbulb className={`h-5 w-5 ${isDark ? 'text-yellow-400' : 'text-yellow-600'}`} />
+                    <h3 className={`text-xl font-semibold ${isDark ? 'text-white' : 'text-gray-900'}`}>
+                      Why Use {selectedTool.name}?
+                    </h3>
+                  </div>
+                  <div className="grid md:grid-cols-2 gap-3">
+                    {guide.whyUseIt.map((reason: string, index: number) => (
+                      <div
+                        key={index}
+                        className={`p-4 rounded-lg ${
+                          isDark ? 'bg-gray-800 border-gray-700' : 'bg-gray-50 border-gray-200'
+                        } border`}
+                      >
+                        <p className={`${isDark ? 'text-gray-300' : 'text-gray-700'}`}>{reason}</p>
+                      </div>
+                    ))}
+                  </div>
+                </section>
+
+                {/* Installation */}
+                <section>
+                  <div className="flex items-center space-x-3 mb-4">
+                    <Download className={`h-5 w-5 ${isDark ? 'text-green-400' : 'text-green-600'}`} />
+                    <h3 className={`text-xl font-semibold ${isDark ? 'text-white' : 'text-gray-900'}`}>
+                      Installation Guide
+                    </h3>
+                  </div>
+                  <div className="grid md:grid-cols-3 gap-6">
+                    {/* Windows */}
+                    <div className={`p-4 rounded-lg ${
+                      isDark ? 'bg-blue-500/10 border-blue-500/20' : 'bg-blue-50 border-blue-200'
+                    } border`}>
+                      <h4 className={`font-semibold mb-3 ${isDark ? 'text-blue-400' : 'text-blue-700'}`}>
+                        🪟 Windows
+                      </h4>
+                      <ol className="space-y-2">
+                        {guide.installation.windows.map((step: string, index: number) => (
+                          <li key={index} className={`text-sm ${isDark ? 'text-gray-300' : 'text-gray-700'}`}>
+                            {step}
+                          </li>
+                        ))}
+                      </ol>
+                    </div>
+
+                    {/* macOS */}
+                    <div className={`p-4 rounded-lg ${
+                      isDark ? 'bg-gray-500/10 border-gray-500/20' : 'bg-gray-50 border-gray-200'
+                    } border`}>
+                      <h4 className={`font-semibold mb-3 ${isDark ? 'text-gray-400' : 'text-gray-700'}`}>
+                        🍎 macOS
+                      </h4>
+                      <ol className="space-y-2">
+                        {guide.installation.mac.map((step: string, index: number) => (
+                          <li key={index} className={`text-sm ${isDark ? 'text-gray-300' : 'text-gray-700'}`}>
+                            {step}
+                          </li>
+                        ))}
+                      </ol>
+                    </div>
+
+                    {/* Linux */}
+                    <div className={`p-4 rounded-lg ${
+                      isDark ? 'bg-orange-500/10 border-orange-500/20' : 'bg-orange-50 border-orange-200'
+                    } border`}>
+                      <h4 className={`font-semibold mb-3 ${isDark ? 'text-orange-400' : 'text-orange-700'}`}>
+                        🐧 Linux
+                      </h4>
+                      <ol className="space-y-2">
+                        {guide.installation.linux.map((step: string, index: number) => (
+                          <li key={index} className={`text-sm ${isDark ? 'text-gray-300' : 'text-gray-700'}`}>
+                            {step}
+                          </li>
+                        ))}
+                      </ol>
+                    </div>
+                  </div>
+                </section>
+
+                {/* Basic Commands */}
+                <section>
+                  <div className="flex items-center space-x-3 mb-4">
+                    <Terminal className={`h-5 w-5 ${isDark ? 'text-purple-400' : 'text-purple-600'}`} />
+                    <h3 className={`text-xl font-semibold ${isDark ? 'text-white' : 'text-gray-900'}`}>
+                      Basic Commands & Usage
+                    </h3>
+                  </div>
+                  <div className="space-y-4">
+                    {guide.basicCommands.map((cmd: any, index: number) => (
+                      <div
+                        key={index}
+                        className={`p-4 rounded-lg ${
+                          isDark ? 'bg-gray-800 border-gray-700' : 'bg-white border-gray-200'
+                        } border`}
+                      >
+                        <div className="flex items-start justify-between mb-2">
+                          <code className={`px-3 py-1 rounded text-sm font-mono ${
+                            isDark ? 'bg-gray-700 text-emerald-400' : 'bg-gray-100 text-emerald-600'
+                          }`}>
+                            {cmd.command}
+                          </code>
+                          <button
+                            onClick={() => copyToClipboard(cmd.command)}
+                            className={`p-1 rounded ${
+                              isDark ? 'hover:bg-gray-700 text-gray-400' : 'hover:bg-gray-100 text-gray-600'
+                            } transition-colors`}
+                          >
+                            <Copy className="h-4 w-4" />
+                          </button>
+                        </div>
+                        <p className={`text-sm mb-1 ${isDark ? 'text-gray-300' : 'text-gray-700'}`}>
+                          {cmd.explanation}
+                        </p>
+                        <p className={`text-xs ${isDark ? 'text-gray-500' : 'text-gray-500'}`}>
+                          💡 {cmd.example}
+                        </p>
+                      </div>
+                    ))}
+                  </div>
+                </section>
+
+                {/* Step by Step Guide (if available) */}
+                {guide.stepByStepGuide && (
+                  <section>
+                    <div className="flex items-center space-x-3 mb-4">
+                      <Play className={`h-5 w-5 ${isDark ? 'text-green-400' : 'text-green-600'}`} />
+                      <h3 className={`text-xl font-semibold ${isDark ? 'text-white' : 'text-gray-900'}`}>
+                        Step-by-Step Tutorial
+                      </h3>
+                    </div>
+                    <div className="space-y-4">
+                      {guide.stepByStepGuide.map((step: any, index: number) => (
+                        <div
+                          key={index}
+                          className={`p-4 rounded-lg ${
+                            isDark ? 'bg-emerald-500/10 border-emerald-500/20' : 'bg-emerald-50 border-emerald-200'
+                          } border`}
+                        >
+                          <h4 className={`font-semibold mb-2 ${isDark ? 'text-emerald-400' : 'text-emerald-700'}`}>
+                            {step.step}
+                          </h4>
+                          <ul className="space-y-1">
+                            {step.details.map((detail: string, idx: number) => (
+                              <li key={idx} className={`text-sm ${isDark ? 'text-gray-300' : 'text-gray-700'}`}>
+                                • {detail}
+                              </li>
+                            ))}
+                          </ul>
+                        </div>
+                      ))}
+                    </div>
+                  </section>
+                )}
+
+                {/* Common Errors */}
+                <section>
+                  <div className="flex items-center space-x-3 mb-4">
+                    <AlertTriangle className={`h-5 w-5 ${isDark ? 'text-red-400' : 'text-red-600'}`} />
+                    <h3 className={`text-xl font-semibold ${isDark ? 'text-white' : 'text-gray-900'}`}>
+                      Common Problems & Solutions
+                    </h3>
+                  </div>
+                  <div className="space-y-4">
+                    {guide.commonErrors.map((error: any, index: number) => (
+                      <div
+                        key={index}
+                        className={`p-4 rounded-lg ${
+                          isDark ? 'bg-red-500/10 border-red-500/20' : 'bg-red-50 border-red-200'
+                        } border`}
+                      >
+                        <h4 className={`font-semibold mb-2 ${isDark ? 'text-red-400' : 'text-red-700'}`}>
+                          ❌ {error.error}
+                        </h4>
+                        <p className={`text-sm mb-2 ${isDark ? 'text-gray-300' : 'text-gray-700'}`}>
+                          <strong>Solution:</strong> {error.solution}
+                        </p>
+                        <p className={`text-xs ${isDark ? 'text-gray-500' : 'text-gray-500'}`}>
+                          💡 <strong>Tip:</strong> {error.tip}
+                        </p>
+                      </div>
+                    ))}
+                  </div>
+                </section>
+
+                {/* Alternatives */}
+                <section>
+                  <div className="flex items-center space-x-3 mb-4">
+                    <Wrench className={`h-5 w-5 ${isDark ? 'text-gray-400' : 'text-gray-600'}`} />
+                    <h3 className={`text-xl font-semibold ${isDark ? 'text-white' : 'text-gray-900'}`}>
+                      Alternative Tools
+                    </h3>
+                  </div>
+                  <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-4">
+                    {guide.alternatives.map((alt: any, index: number) => (
+                      <div
+                        key={index}
+                        className={`p-4 rounded-lg ${
+                          isDark ? 'bg-gray-800 border-gray-700' : 'bg-white border-gray-200'
+                        } border`}
+                      >
+                        <h4 className={`font-semibold mb-2 ${isDark ? 'text-white' : 'text-gray-900'}`}>
+                          {alt.name}
+                        </h4>
+                        <p className={`text-sm mb-2 ${isDark ? 'text-gray-300' : 'text-gray-700'}`}>
+                          {alt.description}
+                        </p>
+                        <div className="space-y-1">
+                          <p className={`text-xs ${isDark ? 'text-green-400' : 'text-green-600'}`}>
+                            ✅ <strong>Pros:</strong> {alt.pros}
+                          </p>
+                          <p className={`text-xs ${isDark ? 'text-red-400' : 'text-red-600'}`}>
+                            ❌ <strong>Cons:</strong> {alt.cons}
+                          </p>
+                        </div>
+                      </div>
+                    ))}
+                  </div>
+                </section>
+
+                {/* Real World Use */}
+                <section>
+                  <div className="flex items-center space-x-3 mb-4">
+                    <Users className={`h-5 w-5 ${isDark ? 'text-purple-400' : 'text-purple-600'}`} />
+                    <h3 className={`text-xl font-semibold ${isDark ? 'text-white' : 'text-gray-900'}`}>
+                      Real-World Applications
+                    </h3>
+                  </div>
+                  <div className="grid md:grid-cols-2 gap-3">
+                    {guide.realWorldUse.map((use: string, index: number) => (
+                      <div
+                        key={index}
+                        className={`p-3 rounded-lg ${
+                          isDark ? 'bg-purple-500/10 border-purple-500/20' : 'bg-purple-50 border-purple-200'
+                        } border`}
+                      >
+                        <p className={`text-sm ${isDark ? 'text-gray-300' : 'text-gray-700'}`}>{use}</p>
+                      </div>
+                    ))}
+                  </div>
+                </section>
+
+                {/* Pro Tips (if available) */}
+                {guide.proTips && (
+                  <section>
+                    <div className="flex items-center space-x-3 mb-4">
+                      <Star className={`h-5 w-5 ${isDark ? 'text-yellow-400' : 'text-yellow-600'}`} />
+                      <h3 className={`text-xl font-semibold ${isDark ? 'text-white' : 'text-gray-900'}`}>
+                        Pro Tips
+                      </h3>
+                    </div>
+                    <div className="space-y-3">
+                      {guide.proTips.map((tip: string, index: number) => (
+                        <div
+                          key={index}
+                          className={`p-3 rounded-lg ${
+                            isDark ? 'bg-yellow-500/10 border-yellow-500/20' : 'bg-yellow-50 border-yellow-200'
+                          } border`}
+                        >
+                          <p className={`text-sm ${isDark ? 'text-gray-300' : 'text-gray-700'}`}>
+                            💡 {tip}
+                          </p>
+                        </div>
+                      ))}
+                    </div>
+                  </section>
+                )}
+              </div>
+            </div>
+          </motion.div>
+        </motion.div>
+      </AnimatePresence>
+    );
   };
 
   return (
@@ -263,17 +1348,28 @@ const GitHubTools = () => {
                     Updated {tool.lastUpdate}
                   </span>
                   <div className="flex items-center space-x-2">
-                    <button className={`p-2 rounded-lg ${isDark ? 'bg-gray-700 hover:bg-emerald-600 text-gray-400 hover:text-white' : 'bg-gray-100 hover:bg-emerald-600 text-gray-600 hover:text-white'} transition-all duration-200 hover:scale-110`}>
+                    <button 
+                      onClick={() => openLearnMore(tool)}
+                      className={`p-2 rounded-lg ${isDark ? 'bg-gray-700 hover:bg-emerald-600 text-gray-400 hover:text-white' : 'bg-gray-100 hover:bg-emerald-600 text-gray-600 hover:text-white'} transition-all duration-200 hover:scale-110`}
+                      title="Learn More"
+                    >
                       <Eye className="h-4 w-4" />
-                    </button>
-                    <button className={`p-2 rounded-lg ${isDark ? 'bg-gray-700 hover:bg-emerald-600 text-gray-400 hover:text-white' : 'bg-gray-100 hover:bg-emerald-600 text-gray-600 hover:text-white'} transition-all duration-200 hover:scale-110`}>
-                      <Download className="h-4 w-4" />
                     </button>
                     <a
                       href={tool.githubUrl}
                       target="_blank"
                       rel="noopener noreferrer"
+                      className={`p-2 rounded-lg ${isDark ? 'bg-gray-700 hover:bg-blue-600 text-gray-400 hover:text-white' : 'bg-gray-100 hover:bg-blue-600 text-gray-600 hover:text-white'} transition-all duration-200 hover:scale-110`}
+                      title="Download"
+                    >
+                      <Download className="h-4 w-4" />
+                    </a>
+                    <a
+                      href={tool.githubUrl}
+                      target="_blank"
+                      rel="noopener noreferrer"
                       className={`p-2 rounded-lg bg-gradient-to-r from-emerald-500 to-teal-500 hover:from-emerald-600 hover:to-teal-600 text-white transition-all duration-200 hover:scale-110`}
+                      title="View on GitHub"
                     >
                       <ExternalLink className="h-4 w-4" />
                     </a>
@@ -321,6 +1417,9 @@ const GitHubTools = () => {
           </div>
         </div>
       </div>
+
+      {/* Learn More Modal */}
+      {showLearnMore && <LearnMoreModal />}
     </section>
   );
 };
