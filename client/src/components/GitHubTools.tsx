@@ -1044,6 +1044,78 @@ const GitHubTools = () => {
   };
 
   const openLearnMore = (tool: any) => {
+    
+    // If tool doesn't have a guide, create a basic one
+    if (!tool.guide) {
+      tool.guide = {
+        whatIsIt: `${tool.name} is a powerful cybersecurity tool used for ${tool.description}`,
+        whyUseIt: [
+          "🔍 Professional security testing capabilities",
+          "🛡️ Helps identify vulnerabilities and security issues", 
+          "📊 Provides detailed analysis and reporting",
+          "🎓 Essential for learning cybersecurity concepts"
+        ],
+        installation: {
+          windows: [
+            "1️⃣ Visit the official GitHub repository",
+            "2️⃣ Download the latest release for Windows",
+            "3️⃣ Follow the installation instructions",
+            "4️⃣ Test the installation"
+          ],
+          mac: [
+            "1️⃣ Install using Homebrew or download from GitHub",
+            "2️⃣ Follow macOS-specific installation steps",
+            "3️⃣ Configure any required permissions",
+            "4️⃣ Verify the installation"
+          ],
+          linux: [
+            "1️⃣ Install via package manager or compile from source",
+            "2️⃣ Install any required dependencies",
+            "3️⃣ Configure the tool for your system",
+            "4️⃣ Test functionality"
+          ]
+        },
+        basicCommands: [
+          {
+            command: `${tool.name.toLowerCase()} --help`,
+            explanation: "Display help and available options",
+            example: "Learn about all available commands and parameters"
+          },
+          {
+            command: `${tool.name.toLowerCase()} --version`,
+            explanation: "Check the installed version",
+            example: "Verify you have the latest version installed"
+          }
+        ],
+        commonErrors: [
+          {
+            error: "Command not found",
+            solution: "Ensure the tool is properly installed and in your PATH",
+            tip: "Try reinstalling or checking installation documentation"
+          },
+          {
+            error: "Permission denied",
+            solution: "Run with appropriate privileges (sudo on Linux/Mac, Administrator on Windows)",
+            tip: "Security tools often require elevated permissions"
+          }
+        ],
+        alternatives: [
+          {
+            name: "Commercial alternatives",
+            description: "Professional security tools with similar functionality",
+            pros: "Often have better support and user interfaces",
+            cons: "Usually expensive and may have licensing restrictions"
+          }
+        ],
+        realWorldUse: [
+          "🛡️ Security professionals conducting assessments",
+          "🎓 Students learning cybersecurity fundamentals",
+          "💼 IT teams validating system security",
+          "🔍 Researchers investigating vulnerabilities"
+        ]
+      };
+    }
+    
     setSelectedTool(tool);
     setShowLearnMore(true);
   };
@@ -1058,7 +1130,9 @@ const GitHubTools = () => {
   };
 
   const LearnMoreModal = () => {
-    if (!selectedTool || !selectedTool.guide) return null;
+    if (!selectedTool || !selectedTool.guide) {
+      return null;
+    }
 
     const guide = selectedTool.guide;
 
