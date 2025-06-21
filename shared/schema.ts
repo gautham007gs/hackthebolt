@@ -151,6 +151,130 @@ export const seoMetrics = pgTable("seo_metrics", {
   createdAt: timestamp("created_at").defaultNow(),
 });
 
+// Professional Labs System
+export const labs = pgTable("labs", {
+  id: serial("id").primaryKey(),
+  title: text("title").notNull(),
+  slug: text("slug").notNull().unique(),
+  description: text("description").notNull(),
+  category: text("category").notNull(), // web-security, network, forensics, crypto, reverse-engineering
+  difficulty: text("difficulty").notNull(), // beginner, intermediate, advanced, expert
+  tags: text("tags").array(),
+  objectives: text("objectives").array(),
+  prerequisites: text("prerequisites").array(),
+  estimatedTime: integer("estimated_time"), // in minutes
+  maxAttempts: integer("max_attempts").default(3),
+  content: jsonb("content").notNull(), // lab instructions, hints, resources
+  environment: jsonb("environment"), // docker config, vm setup, etc
+  solution: jsonb("solution"), // step-by-step solution
+  hints: jsonb("hints").array(),
+  resources: jsonb("resources").array(),
+  points: integer("points").default(0),
+  completionRate: integer("completion_rate").default(0),
+  averageRating: integer("average_rating").default(0),
+  totalRatings: integer("total_ratings").default(0),
+  featured: boolean("featured").default(false),
+  isActive: boolean("is_active").default(true),
+  authorId: varchar("author_id").notNull(),
+  createdAt: timestamp("created_at").defaultNow(),
+  updatedAt: timestamp("updated_at").defaultNow(),
+});
+
+// Lab Progress Tracking
+export const labProgress = pgTable("lab_progress", {
+  id: serial("id").primaryKey(),
+  userId: varchar("user_id").notNull(),
+  labId: integer("lab_id").notNull(),
+  status: text("status").notNull().default("not_started"), // not_started, in_progress, completed, failed
+  attempts: integer("attempts").default(0),
+  score: integer("score").default(0),
+  timeSpent: integer("time_spent").default(0), // in seconds
+  hints_used: integer("hints_used").default(0),
+  completedAt: timestamp("completed_at"),
+  lastAccessedAt: timestamp("last_accessed_at").defaultNow(),
+  progress: jsonb("progress"), // checkpoints, flags found, etc
+  createdAt: timestamp("created_at").defaultNow(),
+});
+
+// CTF Challenges System
+export const ctfChallenges = pgTable("ctf_challenges", {
+  id: serial("id").primaryKey(),
+  title: text("title").notNull(),
+  slug: text("slug").notNull().unique(),
+  description: text("description").notNull(),
+  category: text("category").notNull(), // web, crypto, pwn, reverse, forensics, misc
+  difficulty: text("difficulty").notNull(), // easy, medium, hard, insane
+  tags: text("tags").array(),
+  flag: text("flag").notNull(), // encrypted or hashed
+  flagFormat: text("flag_format").default("CTF{...}"),
+  points: integer("points").notNull(),
+  solves: integer("solves").default(0),
+  files: jsonb("files").array(), // downloadable files
+  hints: jsonb("hints").array(),
+  environment: jsonb("environment"), // deployment info
+  writeupRequired: boolean("writeup_required").default(false),
+  isActive: boolean("is_active").default(true),
+  authorId: varchar("author_id").notNull(),
+  createdAt: timestamp("created_at").defaultNow(),
+  updatedAt: timestamp("updated_at").defaultNow(),
+});
+
+// CTF Submissions
+export const ctfSubmissions = pgTable("ctf_submissions", {
+  id: serial("id").primaryKey(),
+  userId: varchar("user_id").notNull(),
+  challengeId: integer("challenge_id").notNull(),
+  submittedFlag: text("submitted_flag").notNull(),
+  isCorrect: boolean("is_correct").notNull(),
+  points: integer("points").default(0),
+  solveTime: integer("solve_time"), // time to solve in seconds
+  submittedAt: timestamp("submitted_at").defaultNow(),
+});
+
+// Certificates System
+export const certificates = pgTable("certificates", {
+  id: serial("id").primaryKey(),
+  userId: varchar("user_id").notNull(),
+  type: text("type").notNull(), // course_completion, lab_mastery, ctf_champion, skill_badge
+  title: text("title").notNull(),
+  description: text("description"),
+  category: text("category"), // web-security, network, forensics, etc
+  criteria: jsonb("criteria"), // requirements met
+  imageUrl: text("image_url"),
+  certificateCode: text("certificate_code").unique().notNull(),
+  verificationUrl: text("verification_url"),
+  issueDate: timestamp("issue_date").defaultNow(),
+  expiryDate: timestamp("expiry_date"),
+  metadata: jsonb("metadata"), // additional data like score, rank, etc
+  isRevoked: boolean("is_revoked").default(false),
+  createdAt: timestamp("created_at").defaultNow(),
+});
+
+// Leaderboards
+export const leaderboards = pgTable("leaderboards", {
+  id: serial("id").primaryKey(),
+  userId: varchar("user_id").notNull(),
+  category: text("category").notNull(), // overall, monthly, ctf, labs
+  rank: integer("rank").notNull(),
+  score: integer("score").notNull(),
+  periodStart: timestamp("period_start"),
+  periodEnd: timestamp("period_end"),
+  metadata: jsonb("metadata"),
+  updatedAt: timestamp("updated_at").defaultNow(),
+});
+
+// Lab Reviews and Ratings
+export const labReviews = pgTable("lab_reviews", {
+  id: serial("id").primaryKey(),
+  userId: varchar("user_id").notNull(),
+  labId: integer("lab_id").notNull(),
+  rating: integer("rating").notNull(), // 1-5 stars
+  review: text("review"),
+  difficulty_rating: integer("difficulty_rating"), // actual vs expected
+  helpful: boolean("helpful").default(false),
+  createdAt: timestamp("created_at").defaultNow(),
+});
+
 // Insert schemas
 export const insertUserSchema = createInsertSchema(users).pick({
   username: true,
@@ -194,6 +318,59 @@ export const insertCommentSchema = createInsertSchema(comments).pick({
   parentId: true,
 });
 
+export const insertLabSchema = createInsertSchema(labs).pick({
+  title: true,
+  slug: true,
+  description: true,
+  category: true,
+  difficulty: true,
+  tags: true,
+  objectives: true,
+  prerequisites: true,
+  estimatedTime: true,
+  maxAttempts: true,
+  content: true,
+  environment: true,
+  solution: true,
+  hints: true,
+  resources: true,
+  points: true,
+});
+
+export const insertCtfChallengeSchema = createInsertSchema(ctfChallenges).pick({
+  title: true,
+  slug: true,
+  description: true,
+  category: true,
+  difficulty: true,
+  tags: true,
+  flag: true,
+  flagFormat: true,
+  points: true,
+  files: true,
+  hints: true,
+  environment: true,
+  writeupRequired: true,
+});
+
+export const insertCtfSubmissionSchema = createInsertSchema(ctfSubmissions).pick({
+  challengeId: true,
+  submittedFlag: true,
+});
+
+export const insertCertificateSchema = createInsertSchema(certificates).pick({
+  type: true,
+  title: true,
+  description: true,
+  category: true,
+  criteria: true,
+  imageUrl: true,
+  certificateCode: true,
+  verificationUrl: true,
+  expiryDate: true,
+  metadata: true,
+});
+
 // Types
 export type User = typeof users.$inferSelect;
 export type InsertUser = z.infer<typeof insertUserSchema>;
@@ -207,6 +384,21 @@ export type InsertGithubTool = z.infer<typeof insertGithubToolSchema>;
 
 export type Comment = typeof comments.$inferSelect;
 export type InsertComment = z.infer<typeof insertCommentSchema>;
+
+export type Lab = typeof labs.$inferSelect;
+export type InsertLab = z.infer<typeof insertLabSchema>;
+export type LabProgress = typeof labProgress.$inferSelect;
+
+export type CtfChallenge = typeof ctfChallenges.$inferSelect;
+export type InsertCtfChallenge = z.infer<typeof insertCtfChallengeSchema>;
+export type CtfSubmission = typeof ctfSubmissions.$inferSelect;
+export type InsertCtfSubmission = z.infer<typeof insertCtfSubmissionSchema>;
+
+export type Certificate = typeof certificates.$inferSelect;
+export type InsertCertificate = z.infer<typeof insertCertificateSchema>;
+
+export type Leaderboard = typeof leaderboards.$inferSelect;
+export type LabReview = typeof labReviews.$inferSelect;
 
 export type Achievement = typeof achievements.$inferSelect;
 export type UserActivity = typeof userActivity.$inferSelect;

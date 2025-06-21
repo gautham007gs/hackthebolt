@@ -7,6 +7,13 @@ import {
   userActivity,
   comments,
   seoMetrics,
+  labs,
+  labProgress,
+  ctfChallenges,
+  ctfSubmissions,
+  certificates,
+  leaderboards,
+  labReviews,
   type User, 
   type UpsertUser,
   type BlogPost,
@@ -15,6 +22,17 @@ import {
   type InsertGithubTool,
   type Comment,
   type InsertComment,
+  type Lab,
+  type InsertLab,
+  type LabProgress,
+  type CtfChallenge,
+  type InsertCtfChallenge,
+  type CtfSubmission,
+  type InsertCtfSubmission,
+  type Certificate,
+  type InsertCertificate,
+  type Leaderboard,
+  type LabReview,
   type Achievement,
   type SiteConfig,
   type UserActivity,
@@ -69,11 +87,62 @@ export interface IStorage {
   // SEO metrics
   updateSeoMetrics(url: string, data: Partial<SeoMetric>): Promise<void>;
   getSeoMetrics(url: string): Promise<SeoMetric | undefined>;
+  
+  // Labs operations
+  getAllLabs(category?: string, difficulty?: string): Promise<Lab[]>;
+  getLab(id: number): Promise<Lab | undefined>;
+  getLabBySlug(slug: string): Promise<Lab | undefined>;
+  createLab(lab: InsertLab & { authorId: string }): Promise<Lab>;
+  updateLab(id: number, lab: Partial<Lab>): Promise<Lab>;
+  deleteLab(id: number): Promise<void>;
+  
+  // Lab progress tracking
+  getLabProgress(userId: string, labId: number): Promise<LabProgress | undefined>;
+  getUserLabProgress(userId: string): Promise<LabProgress[]>;
+  updateLabProgress(userId: string, labId: number, progress: Partial<LabProgress>): Promise<LabProgress>;
+  completeLabProgress(userId: string, labId: number, score: number, timeSpent: number): Promise<void>;
+  
+  // CTF operations
+  getAllCtfChallenges(category?: string, difficulty?: string): Promise<CtfChallenge[]>;
+  getCtfChallenge(id: number): Promise<CtfChallenge | undefined>;
+  getCtfChallengeBySlug(slug: string): Promise<CtfChallenge | undefined>;
+  createCtfChallenge(challenge: InsertCtfChallenge & { authorId: string }): Promise<CtfChallenge>;
+  updateCtfChallenge(id: number, challenge: Partial<CtfChallenge>): Promise<CtfChallenge>;
+  deleteCtfChallenge(id: number): Promise<void>;
+  
+  // CTF submissions
+  submitCtfFlag(userId: string, challengeId: number, flag: string): Promise<{ correct: boolean; points: number; message: string }>;
+  getCtfSubmissions(userId: string, challengeId?: number): Promise<CtfSubmission[]>;
+  getCtfLeaderboard(challengeId?: number): Promise<Leaderboard[]>;
+  
+  // Certificates
+  getUserCertificates(userId: string): Promise<Certificate[]>;
+  createCertificate(certificate: InsertCertificate & { userId: string }): Promise<Certificate>;
+  verifyCertificate(certificateCode: string): Promise<Certificate | undefined>;
+  
+  // Reviews and ratings
+  createLabReview(userId: string, labId: number, rating: number, review?: string): Promise<LabReview>;
+  getLabReviews(labId: number): Promise<LabReview[]>;
 }
 
 // Minimal storage implementation for migration compatibility
 export class MemoryStorage implements IStorage {
   private nextId = 1;
+  private users: User[] = [];
+  private blogPosts: BlogPost[] = [];
+  private githubTools: GithubTool[] = [];
+  private comments: Comment[] = [];
+  private siteConfigs: SiteConfig[] = [];
+  private achievements: Achievement[] = [];
+  private userActivities: UserActivity[] = [];
+  private seoMetrics: SeoMetric[] = [];
+  private labs: Lab[] = [];
+  private labProgresses: LabProgress[] = [];
+  private ctfChallenges: CtfChallenge[] = [];
+  private ctfSubmissions: CtfSubmission[] = [];
+  private certificates: Certificate[] = [];
+  private leaderboards: Leaderboard[] = [];
+  private labReviews: LabReview[] = [];
 
   // User operations
   async getUser(id: string): Promise<User | undefined> {
@@ -373,7 +442,232 @@ export class MemoryStorage implements IStorage {
   }
 
   async getSeoMetrics(url: string): Promise<SeoMetric | undefined> {
-    return this.seoMetrics.get(url);
+    return this.seoMetrics.find(metric => metric.url === url);
+  }
+
+  // Labs operations
+  async getAllLabs(category?: string, difficulty?: string): Promise<Lab[]> {
+    let filtered = this.labs.filter(lab => lab.isActive);
+    if (category) filtered = filtered.filter(lab => lab.category === category);
+    if (difficulty) filtered = filtered.filter(lab => lab.difficulty === difficulty);
+    return filtered.sort((a, b) => (b.createdAt?.getTime() || 0) - (a.createdAt?.getTime() || 0));
+  }
+
+  async getLab(id: number): Promise<Lab | undefined> {
+    return this.labs.find(lab => lab.id === id);
+  }
+
+  async getLabBySlug(slug: string): Promise<Lab | undefined> {
+    return this.labs.find(lab => lab.slug === slug);
+  }
+
+  async createLab(lab: InsertLab & { authorId: string }): Promise<Lab> {
+    const now = new Date();
+    const newLab: Lab = {
+      id: this.nextId++,
+      ...lab,
+      completionRate: 0,
+      averageRating: 0,
+      totalRatings: 0,
+      featured: false,
+      isActive: true,
+      createdAt: now,
+      updatedAt: now,
+    };
+    this.labs.push(newLab);
+    return newLab;
+  }
+
+  async updateLab(id: number, lab: Partial<Lab>): Promise<Lab> {
+    const index = this.labs.findIndex(l => l.id === id);
+    if (index === -1) throw new Error('Lab not found');
+    this.labs[index] = { ...this.labs[index], ...lab, updatedAt: new Date() };
+    return this.labs[index];
+  }
+
+  async deleteLab(id: number): Promise<void> {
+    const index = this.labs.findIndex(lab => lab.id === id);
+    if (index !== -1) this.labs.splice(index, 1);
+  }
+
+  // Lab progress tracking
+  async getLabProgress(userId: string, labId: number): Promise<LabProgress | undefined> {
+    return this.labProgresses.find(p => p.userId === userId && p.labId === labId);
+  }
+
+  async getUserLabProgress(userId: string): Promise<LabProgress[]> {
+    return this.labProgresses.filter(p => p.userId === userId);
+  }
+
+  async updateLabProgress(userId: string, labId: number, progress: Partial<LabProgress>): Promise<LabProgress> {
+    let existing = this.labProgresses.find(p => p.userId === userId && p.labId === labId);
+    
+    if (!existing) {
+      existing = {
+        id: this.nextId++,
+        userId,
+        labId,
+        status: 'not_started',
+        attempts: 0,
+        score: 0,
+        timeSpent: 0,
+        hints_used: 0,
+        completedAt: null,
+        lastAccessedAt: new Date(),
+        progress: null,
+        createdAt: new Date(),
+      };
+      this.labProgresses.push(existing);
+    }
+
+    Object.assign(existing, progress, { lastAccessedAt: new Date() });
+    return existing;
+  }
+
+  async completeLabProgress(userId: string, labId: number, score: number, timeSpent: number): Promise<void> {
+    await this.updateLabProgress(userId, labId, {
+      status: 'completed',
+      score,
+      timeSpent,
+      completedAt: new Date()
+    });
+  }
+
+  // CTF operations
+  async getAllCtfChallenges(category?: string, difficulty?: string): Promise<CtfChallenge[]> {
+    let filtered = this.ctfChallenges.filter(challenge => challenge.isActive);
+    if (category) filtered = filtered.filter(challenge => challenge.category === category);
+    if (difficulty) filtered = filtered.filter(challenge => challenge.difficulty === difficulty);
+    return filtered.sort((a, b) => (b.createdAt?.getTime() || 0) - (a.createdAt?.getTime() || 0));
+  }
+
+  async getCtfChallenge(id: number): Promise<CtfChallenge | undefined> {
+    return this.ctfChallenges.find(challenge => challenge.id === id);
+  }
+
+  async getCtfChallengeBySlug(slug: string): Promise<CtfChallenge | undefined> {
+    return this.ctfChallenges.find(challenge => challenge.slug === slug);
+  }
+
+  async createCtfChallenge(challenge: InsertCtfChallenge & { authorId: string }): Promise<CtfChallenge> {
+    const now = new Date();
+    const newChallenge: CtfChallenge = {
+      id: this.nextId++,
+      ...challenge,
+      solves: 0,
+      isActive: true,
+      createdAt: now,
+      updatedAt: now,
+    };
+    this.ctfChallenges.push(newChallenge);
+    return newChallenge;
+  }
+
+  async updateCtfChallenge(id: number, challenge: Partial<CtfChallenge>): Promise<CtfChallenge> {
+    const index = this.ctfChallenges.findIndex(c => c.id === id);
+    if (index === -1) throw new Error('Challenge not found');
+    this.ctfChallenges[index] = { ...this.ctfChallenges[index], ...challenge, updatedAt: new Date() };
+    return this.ctfChallenges[index];
+  }
+
+  async deleteCtfChallenge(id: number): Promise<void> {
+    const index = this.ctfChallenges.findIndex(challenge => challenge.id === id);
+    if (index !== -1) this.ctfChallenges.splice(index, 1);
+  }
+
+  // CTF submissions
+  async submitCtfFlag(userId: string, challengeId: number, flag: string): Promise<{ correct: boolean; points: number; message: string }> {
+    const challenge = await this.getCtfChallenge(challengeId);
+    if (!challenge) throw new Error('Challenge not found');
+
+    // Check if already solved
+    const existingCorrect = this.ctfSubmissions.find(s => s.userId === userId && s.challengeId === challengeId && s.isCorrect);
+    if (existingCorrect) {
+      return { correct: false, points: 0, message: 'You have already solved this challenge!' };
+    }
+
+    const isCorrect = flag.trim() === challenge.flag;
+    const points = isCorrect ? challenge.points : 0;
+
+    const submission: CtfSubmission = {
+      id: this.nextId++,
+      userId,
+      challengeId,
+      submittedFlag: flag,
+      isCorrect,
+      points,
+      solveTime: null,
+      submittedAt: new Date(),
+    };
+
+    this.ctfSubmissions.push(submission);
+
+    if (isCorrect) {
+      // Update challenge solves count
+      challenge.solves = (challenge.solves || 0) + 1;
+      await this.updateUserPoints(userId, points);
+    }
+
+    return {
+      correct: isCorrect,
+      points,
+      message: isCorrect ? 'Congratulations! Correct flag!' : 'Incorrect flag. Try again!'
+    };
+  }
+
+  async getCtfSubmissions(userId: string, challengeId?: number): Promise<CtfSubmission[]> {
+    let filtered = this.ctfSubmissions.filter(s => s.userId === userId);
+    if (challengeId) filtered = filtered.filter(s => s.challengeId === challengeId);
+    return filtered.sort((a, b) => (b.submittedAt?.getTime() || 0) - (a.submittedAt?.getTime() || 0));
+  }
+
+  async getCtfLeaderboard(challengeId?: number): Promise<Leaderboard[]> {
+    return this.leaderboards.filter(l => challengeId ? l.metadata?.challengeId === challengeId : true)
+      .sort((a, b) => a.rank - b.rank);
+  }
+
+  // Certificates
+  async getUserCertificates(userId: string): Promise<Certificate[]> {
+    return this.certificates.filter(cert => cert.userId === userId && !cert.isRevoked)
+      .sort((a, b) => (b.issueDate?.getTime() || 0) - (a.issueDate?.getTime() || 0));
+  }
+
+  async createCertificate(certificate: InsertCertificate & { userId: string }): Promise<Certificate> {
+    const now = new Date();
+    const newCertificate: Certificate = {
+      id: this.nextId++,
+      ...certificate,
+      issueDate: now,
+      isRevoked: false,
+      createdAt: now,
+    };
+    this.certificates.push(newCertificate);
+    return newCertificate;
+  }
+
+  async verifyCertificate(certificateCode: string): Promise<Certificate | undefined> {
+    return this.certificates.find(cert => cert.certificateCode === certificateCode && !cert.isRevoked);
+  }
+
+  // Reviews and ratings
+  async createLabReview(userId: string, labId: number, rating: number, review?: string): Promise<LabReview> {
+    const newReview: LabReview = {
+      id: this.nextId++,
+      userId,
+      labId,
+      rating,
+      review: review || null,
+      difficulty_rating: null,
+      helpful: false,
+      createdAt: new Date(),
+    };
+    this.labReviews.push(newReview);
+    return newReview;
+  }
+
+  async getLabReviews(labId: number): Promise<LabReview[]> {
+    return this.labReviews.filter(review => review.labId === labId)
+      .sort((a, b) => (b.createdAt?.getTime() || 0) - (a.createdAt?.getTime() || 0));
   }
 }
 
