@@ -41,6 +41,7 @@ const ProfessionalDashboardLayout: React.FC<ProfessionalDashboardLayoutProps> = 
   const { isDark } = useTheme();
   const { user, logout } = useAuth();
   const [sidebarCollapsed, setSidebarCollapsed] = useState(false);
+  const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [showNotifications, setShowNotifications] = useState(false);
   const [showUserMenu, setShowUserMenu] = useState(false);
 
@@ -103,26 +104,46 @@ const ProfessionalDashboardLayout: React.FC<ProfessionalDashboardLayoutProps> = 
 
   const handleSidebarItemClick = (itemId: string) => {
     onTabChange(itemId);
+    setMobileMenuOpen(false); // Close mobile menu when item is clicked
   };
 
   return (
     <div className={`min-h-screen flex ${isDark ? 'bg-gray-900' : 'bg-gray-50'}`}>
+      {/* Mobile Overlay */}
+      <AnimatePresence>
+        {mobileMenuOpen && (
+          <motion.div
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            className="fixed inset-0 bg-black bg-opacity-50 z-40 lg:hidden"
+            onClick={() => setMobileMenuOpen(false)}
+          />
+        )}
+      </AnimatePresence>
+
       {/* Sidebar */}
-      <div className={`${
-        sidebarCollapsed ? 'w-16' : 'w-64'
-      } ${isDark ? 'bg-gray-800 border-gray-700' : 'bg-white border-gray-200'} 
-        border-r transition-all duration-300 flex flex-col fixed h-full z-30`}>
-        
+      <motion.div 
+        initial={false}
+        animate={{
+          x: mobileMenuOpen ? 0 : '-100%'
+        }}
+        transition={{ type: "spring", stiffness: 300, damping: 30 }}
+        className={`${
+          sidebarCollapsed ? 'w-16' : 'w-64'
+        } ${isDark ? 'bg-gray-800 border-gray-700' : 'bg-white border-gray-200'} 
+          border-r flex flex-col fixed h-full z-50 lg:relative lg:translate-x-0`}
+      >
         {/* Sidebar Header */}
-        <div className="p-4 border-b border-gray-200 dark:border-gray-700">
+        <div className="p-3 lg:p-4 border-b border-gray-200 dark:border-gray-700">
           <div className="flex items-center justify-between">
             {!sidebarCollapsed && (
-              <div className="flex items-center space-x-3">
-                <div className={`w-8 h-8 rounded-lg ${isDark ? 'bg-emerald-600' : 'bg-emerald-500'} flex items-center justify-center`}>
-                  <Shield className="h-5 w-5 text-white" />
+              <div className="flex items-center space-x-2 lg:space-x-3">
+                <div className={`w-6 h-6 lg:w-8 lg:h-8 rounded-lg ${isDark ? 'bg-emerald-600' : 'bg-emerald-500'} flex items-center justify-center`}>
+                  <Shield className="h-3 w-3 lg:h-5 lg:w-5 text-white" />
                 </div>
                 <div>
-                  <h2 className={`text-sm font-semibold ${isDark ? 'text-white' : 'text-gray-900'}`}>
+                  <h2 className={`text-xs lg:text-sm font-semibold ${isDark ? 'text-white' : 'text-gray-900'}`}>
                     HackTheShell
                   </h2>
                   <p className={`text-xs ${isDark ? 'text-gray-400' : 'text-gray-500'}`}>
@@ -131,24 +152,36 @@ const ProfessionalDashboardLayout: React.FC<ProfessionalDashboardLayoutProps> = 
                 </div>
               </div>
             )}
-            <button
-              onClick={() => setSidebarCollapsed(!sidebarCollapsed)}
-              className={`p-1.5 rounded-lg ${
-                isDark ? 'hover:bg-gray-700 text-gray-400' : 'hover:bg-gray-100 text-gray-600'
-              } transition-colors`}
-            >
-              <Menu className="h-4 w-4" />
-            </button>
+            <div className="flex items-center space-x-2">
+              {/* Mobile close button */}
+              <button
+                onClick={() => setMobileMenuOpen(false)}
+                className={`p-1.5 rounded-lg lg:hidden ${
+                  isDark ? 'hover:bg-gray-700 text-gray-400' : 'hover:bg-gray-100 text-gray-600'
+                } transition-colors`}
+              >
+                <X className="h-4 w-4" />
+              </button>
+              {/* Collapse button for desktop */}
+              <button
+                onClick={() => setSidebarCollapsed(!sidebarCollapsed)}
+                className={`p-1.5 rounded-lg hidden lg:block ${
+                  isDark ? 'hover:bg-gray-700 text-gray-400' : 'hover:bg-gray-100 text-gray-600'
+                } transition-colors`}
+              >
+                <Menu className="h-4 w-4" />
+              </button>
+            </div>
           </div>
         </div>
 
         {/* Navigation */}
-        <nav className="flex-1 p-4 space-y-2 overflow-y-auto">
+        <nav className="flex-1 p-2 lg:p-4 space-y-1 lg:space-y-2 overflow-y-auto">
           {sidebarItems.map((item) => (
             <div key={item.id}>
               <button
                 onClick={() => handleSidebarItemClick(item.id)}
-                className={`w-full flex items-center justify-between p-3 rounded-lg transition-all duration-200 group ${
+                className={`w-full flex items-center justify-between p-2 lg:p-3 rounded-lg transition-all duration-200 group ${
                   activeTab === item.id || activeTab.startsWith(item.id + '-')
                     ? isDark 
                       ? 'bg-emerald-600 text-white' 
@@ -158,22 +191,22 @@ const ProfessionalDashboardLayout: React.FC<ProfessionalDashboardLayoutProps> = 
                       : 'hover:bg-gray-100 text-gray-700 hover:text-gray-900'
                 }`}
               >
-                <div className="flex items-center space-x-3">
-                  <item.icon className={`h-5 w-5 ${sidebarCollapsed ? 'mx-auto' : ''}`} />
+                <div className="flex items-center space-x-2 lg:space-x-3">
+                  <item.icon className={`h-4 w-4 lg:h-5 lg:w-5 ${sidebarCollapsed ? 'mx-auto' : ''}`} />
                   {!sidebarCollapsed && (
-                    <span className="text-sm font-medium">{item.name}</span>
+                    <span className="text-xs lg:text-sm font-medium">{item.name}</span>
                   )}
                 </div>
                 
                 {!sidebarCollapsed && (
                   <div className="flex items-center space-x-2">
                     {item.badge && item.badge > 0 && (
-                      <span className="bg-red-500 text-white text-xs px-2 py-1 rounded-full min-w-[20px] text-center">
+                      <span className="bg-red-500 text-white text-xs px-1.5 py-0.5 rounded-full min-w-[18px] text-center">
                         {item.badge}
                       </span>
                     )}
                     {item.subItems && (
-                      <ChevronDown className="h-4 w-4" />
+                      <ChevronDown className="h-3 w-3 lg:h-4 lg:w-4" />
                     )}
                   </div>
                 )}
@@ -181,12 +214,12 @@ const ProfessionalDashboardLayout: React.FC<ProfessionalDashboardLayoutProps> = 
 
               {/* Sub-items */}
               {item.subItems && !sidebarCollapsed && (activeTab.startsWith(item.id)) && (
-                <div className="ml-4 mt-2 space-y-1">
+                <div className="ml-2 lg:ml-4 mt-1 lg:mt-2 space-y-1">
                   {item.subItems.map((subItem) => (
                     <button
                       key={subItem.id}
                       onClick={() => handleSidebarItemClick(subItem.id)}
-                      className={`w-full flex items-center space-x-3 p-2 rounded-lg text-sm transition-all duration-200 ${
+                      className={`w-full flex items-center space-x-2 lg:space-x-3 p-1.5 lg:p-2 rounded-lg text-xs lg:text-sm transition-all duration-200 ${
                         activeTab === subItem.id
                           ? isDark 
                             ? 'bg-emerald-600/50 text-emerald-300' 
@@ -196,7 +229,7 @@ const ProfessionalDashboardLayout: React.FC<ProfessionalDashboardLayoutProps> = 
                             : 'hover:bg-gray-100 text-gray-600 hover:text-gray-900'
                       }`}
                     >
-                      <subItem.icon className="h-4 w-4" />
+                      <subItem.icon className="h-3 w-3 lg:h-4 lg:w-4" />
                       <span>{subItem.name}</span>
                     </button>
                   ))}
@@ -208,26 +241,26 @@ const ProfessionalDashboardLayout: React.FC<ProfessionalDashboardLayoutProps> = 
 
         {/* User Info */}
         {!sidebarCollapsed && (
-          <div className="p-4 border-t border-gray-200 dark:border-gray-700">
+          <div className="p-2 lg:p-4 border-t border-gray-200 dark:border-gray-700">
             <div className="relative">
               <button
                 onClick={() => setShowUserMenu(!showUserMenu)}
-                className={`w-full flex items-center space-x-3 p-3 rounded-lg transition-all duration-200 ${
+                className={`w-full flex items-center space-x-2 lg:space-x-3 p-2 lg:p-3 rounded-lg transition-all duration-200 ${
                   isDark ? 'hover:bg-gray-700' : 'hover:bg-gray-100'
                 }`}
               >
-                <div className={`w-8 h-8 rounded-full ${isDark ? 'bg-gray-600' : 'bg-gray-300'} flex items-center justify-center`}>
-                  <User className="h-4 w-4" />
+                <div className={`w-6 h-6 lg:w-8 lg:h-8 rounded-full ${isDark ? 'bg-gray-600' : 'bg-gray-300'} flex items-center justify-center`}>
+                  <User className="h-3 w-3 lg:h-4 lg:w-4" />
                 </div>
                 <div className="flex-1 text-left">
-                  <p className={`text-sm font-medium ${isDark ? 'text-white' : 'text-gray-900'}`}>
+                  <p className={`text-xs lg:text-sm font-medium ${isDark ? 'text-white' : 'text-gray-900'}`}>
                     {user?.name || 'User'}
                   </p>
                   <p className={`text-xs ${isDark ? 'text-gray-400' : 'text-gray-500'}`}>
-                    {user?.email || 'user@example.com'}
+                    {user?.email ? (user.email.length > 20 ? user.email.substring(0, 20) + '...' : user.email) : 'user@example.com'}
                   </p>
                 </div>
-                <ChevronDown className={`h-4 w-4 ${isDark ? 'text-gray-400' : 'text-gray-600'}`} />
+                <ChevronDown className={`h-3 w-3 lg:h-4 lg:w-4 ${isDark ? 'text-gray-400' : 'text-gray-600'}`} />
               </button>
 
               {/* User Menu Dropdown */}
@@ -243,20 +276,20 @@ const ProfessionalDashboardLayout: React.FC<ProfessionalDashboardLayoutProps> = 
                   >
                     <button
                       onClick={() => handleSidebarItemClick('profile')}
-                      className={`w-full flex items-center space-x-2 px-4 py-3 text-sm transition-colors ${
+                      className={`w-full flex items-center space-x-2 px-3 lg:px-4 py-2 lg:py-3 text-xs lg:text-sm transition-colors ${
                         isDark ? 'hover:bg-gray-600 text-gray-300' : 'hover:bg-gray-50 text-gray-700'
                       }`}
                     >
-                      <User className="h-4 w-4" />
+                      <User className="h-3 w-3 lg:h-4 lg:w-4" />
                       <span>Profile Settings</span>
                     </button>
                     <button
                       onClick={logout}
-                      className={`w-full flex items-center space-x-2 px-4 py-3 text-sm transition-colors ${
+                      className={`w-full flex items-center space-x-2 px-3 lg:px-4 py-2 lg:py-3 text-xs lg:text-sm transition-colors ${
                         isDark ? 'hover:bg-gray-600 text-red-400' : 'hover:bg-gray-50 text-red-600'
                       }`}
                     >
-                      <LogOut className="h-4 w-4" />
+                      <LogOut className="h-3 w-3 lg:h-4 lg:w-4" />
                       <span>Sign Out</span>
                     </button>
                   </motion.div>
@@ -265,41 +298,53 @@ const ProfessionalDashboardLayout: React.FC<ProfessionalDashboardLayoutProps> = 
             </div>
           </div>
         )}
-      </div>
+      </motion.div>
 
       {/* Main Content */}
-      <div className={`flex-1 ${sidebarCollapsed ? 'ml-16' : 'ml-64'} transition-all duration-300 min-h-screen flex flex-col`}>
+      <div className={`flex-1 ${sidebarCollapsed ? 'lg:ml-16' : 'lg:ml-64'} transition-all duration-300 min-h-screen flex flex-col`}>
         {/* Top Header */}
         <header className={`${
           isDark ? 'bg-gray-800 border-gray-700' : 'bg-white border-gray-200'
-        } border-b px-6 py-4`}>
+        } border-b px-4 lg:px-6 py-3 lg:py-4`}>
           <div className="flex items-center justify-between">
-            <div>
-              <h1 className={`text-2xl font-bold ${isDark ? 'text-white' : 'text-gray-900'}`}>
-                {userRole === 'admin' ? 'Admin Dashboard' : 'Creator Studio'}
-              </h1>
-              <p className={`text-sm ${isDark ? 'text-gray-400' : 'text-gray-600'}`}>
-                {userRole === 'admin' 
-                  ? 'Manage users, content, and system settings'
-                  : 'Create, manage, and analyze your content'
-                }
-              </p>
+            <div className="flex items-center space-x-4">
+              {/* Mobile menu button */}
+              <button
+                onClick={() => setMobileMenuOpen(true)}
+                className={`p-2 rounded-lg lg:hidden ${
+                  isDark ? 'hover:bg-gray-700 text-gray-400' : 'hover:bg-gray-100 text-gray-600'
+                } transition-colors`}
+              >
+                <Menu className="h-5 w-5" />
+              </button>
+              
+              <div>
+                <h1 className={`text-lg lg:text-2xl font-bold ${isDark ? 'text-white' : 'text-gray-900'}`}>
+                  {userRole === 'admin' ? 'Admin Dashboard' : 'Creator Studio'}
+                </h1>
+                <p className={`text-xs lg:text-sm ${isDark ? 'text-gray-400' : 'text-gray-600'} hidden sm:block`}>
+                  {userRole === 'admin' 
+                    ? 'Manage users, content, and system settings'
+                    : 'Create, manage, and analyze your content'
+                  }
+                </p>
+              </div>
             </div>
 
-            <div className="flex items-center space-x-4">
-              {/* Search */}
-              <div className="relative">
+            <div className="flex items-center space-x-2 lg:space-x-4">
+              {/* Search - Hidden on small screens */}
+              <div className="relative hidden md:block">
                 <Search className={`absolute left-3 top-1/2 transform -translate-y-1/2 h-4 w-4 ${
                   isDark ? 'text-gray-400' : 'text-gray-500'
                 }`} />
                 <input
                   type="text"
                   placeholder="Search..."
-                  className={`pl-10 pr-4 py-2 w-64 rounded-lg text-sm ${
+                  className={`pl-10 pr-4 py-2 w-32 lg:w-64 rounded-lg text-sm ${
                     isDark 
                       ? 'bg-gray-700 border-gray-600 text-white placeholder-gray-400' 
-                      : 'bg-gray-50 border-gray-200 text-gray-900 placeholder-gray-500'
-                  } border focus:ring-2 focus:ring-emerald-500 focus:border-emerald-500 outline-none transition-all duration-200`}
+                      : 'bg-gray-50 border-gray-300 text-gray-900 placeholder-gray-500'
+                  } border focus:outline-none focus:ring-2 focus:ring-emerald-500 focus:border-transparent transition-colors`}
                 />
               </div>
 
@@ -307,52 +352,58 @@ const ProfessionalDashboardLayout: React.FC<ProfessionalDashboardLayoutProps> = 
               <div className="relative">
                 <button
                   onClick={() => setShowNotifications(!showNotifications)}
-                  className={`p-2 rounded-lg ${
+                  className={`p-2 rounded-lg relative ${
                     isDark ? 'hover:bg-gray-700 text-gray-400' : 'hover:bg-gray-100 text-gray-600'
-                  } transition-colors relative`}
+                  } transition-colors`}
                 >
                   <Bell className="h-5 w-5" />
                   {unreadNotifications > 0 && (
-                    <span className="absolute -top-1 -right-1 bg-red-500 text-white text-xs rounded-full h-5 w-5 flex items-center justify-center">
+                    <span className="absolute -top-1 -right-1 bg-red-500 text-white text-xs w-4 h-4 rounded-full flex items-center justify-center">
                       {unreadNotifications}
                     </span>
                   )}
                 </button>
 
-                {/* Notifications Dropdown */}
+                {/* Notifications Dropdown - Mobile Optimized */}
                 <AnimatePresence>
                   {showNotifications && (
                     <motion.div
                       initial={{ opacity: 0, y: 10 }}
                       animate={{ opacity: 1, y: 0 }}
                       exit={{ opacity: 0, y: 10 }}
-                      className={`absolute right-0 mt-2 w-80 ${
+                      className={`absolute right-0 top-full mt-2 w-72 lg:w-80 ${
                         isDark ? 'bg-gray-800 border-gray-700' : 'bg-white border-gray-200'
-                      } border rounded-lg shadow-lg z-50`}
+                      } border rounded-lg shadow-xl overflow-hidden z-50`}
                     >
-                      <div className="p-4 border-b border-gray-200 dark:border-gray-700">
-                        <h3 className={`font-semibold ${isDark ? 'text-white' : 'text-gray-900'}`}>
+                      <div className="p-3 lg:p-4 border-b border-gray-200 dark:border-gray-700">
+                        <h3 className={`text-sm lg:text-base font-semibold ${isDark ? 'text-white' : 'text-gray-900'}`}>
                           Notifications
                         </h3>
                       </div>
-                      <div className="max-h-64 overflow-y-auto">
-                        {notifications.slice(0, 5).map((notification) => (
-                          <div key={notification.id} className={`p-4 border-b border-gray-200 dark:border-gray-700 last:border-b-0 ${
-                            isDark ? 'hover:bg-gray-700' : 'hover:bg-gray-50'
-                          } transition-colors`}>
-                            <p className={`text-sm ${isDark ? 'text-gray-300' : 'text-gray-700'}`}>
-                              {notification.message}
-                            </p>
-                            <p className={`text-xs mt-1 ${isDark ? 'text-gray-500' : 'text-gray-500'}`}>
-                              {notification.time}
+                      <div className="max-h-64 lg:max-h-80 overflow-y-auto">
+                        {notifications.length > 0 ? (
+                          notifications.map((notification) => (
+                            <div
+                              key={notification.id}
+                              className={`p-3 lg:p-4 border-b border-gray-200 dark:border-gray-700 last:border-b-0 ${
+                                isDark ? 'hover:bg-gray-700' : 'hover:bg-gray-50'
+                              } transition-colors cursor-pointer`}
+                            >
+                              <p className={`text-xs lg:text-sm ${isDark ? 'text-white' : 'text-gray-900'}`}>
+                                {notification.message}
+                              </p>
+                              <p className={`text-xs ${isDark ? 'text-gray-400' : 'text-gray-500'} mt-1`}>
+                                {notification.time}
+                              </p>
+                            </div>
+                          ))
+                        ) : (
+                          <div className="p-6 text-center">
+                            <p className={`text-sm ${isDark ? 'text-gray-400' : 'text-gray-500'}`}>
+                              No notifications
                             </p>
                           </div>
-                        ))}
-                      </div>
-                      <div className="p-4 border-t border-gray-200 dark:border-gray-700">
-                        <button className={`text-sm ${isDark ? 'text-emerald-400 hover:text-emerald-300' : 'text-emerald-600 hover:text-emerald-500'} transition-colors`}>
-                          View all notifications
-                        </button>
+                        )}
                       </div>
                     </motion.div>
                   )}
@@ -362,19 +413,11 @@ const ProfessionalDashboardLayout: React.FC<ProfessionalDashboardLayoutProps> = 
           </div>
         </header>
 
-        {/* Main Content Area */}
-        <main className="flex-1 p-6 pb-20">
+        {/* Content Area */}
+        <main className="flex-1 p-4 lg:p-6 overflow-auto">
           {children}
         </main>
       </div>
-
-      {/* Mobile Overlay */}
-      {showNotifications && (
-        <div 
-          className="fixed inset-0 bg-black bg-opacity-50 z-40 lg:hidden"
-          onClick={() => setShowNotifications(false)}
-        />
-      )}
     </div>
   );
 };

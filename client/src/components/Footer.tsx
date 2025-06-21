@@ -82,22 +82,22 @@ const Footer = () => {
                 </div>
 
                 {/* Form Section */}
-                <div className="w-full max-w-md mx-auto lg:max-w-none">
+                <div className="w-full">
                   {subscribed ? (
-                    <div className="flex items-center justify-center space-x-3 text-emerald-500 text-xl font-medium py-8 bg-emerald-50 dark:bg-emerald-900/30 rounded-2xl">
+                    <div className="flex items-center justify-center space-x-3 text-emerald-500 text-base lg:text-xl font-medium py-6 lg:py-8 bg-emerald-50 dark:bg-emerald-900/30 rounded-2xl">
                       <div className="w-4 h-4 bg-emerald-500 rounded-full animate-pulse"></div>
-                      <span>Successfully subscribed! Welcome to the community.</span>
+                      <span className="text-center">Successfully subscribed! Welcome to the community.</span>
                     </div>
                   ) : (
-                    <div className="space-y-6">
+                    <div className="space-y-4 lg:space-y-6">
                       <form onSubmit={handleSubscribe} className="space-y-4">
-                        <div className="flex flex-col sm:flex-row gap-4">
+                        <div className="flex flex-col gap-3 lg:flex-row lg:gap-4">
                           <input
                             type="email"
                             value={email}
                             onChange={(e) => setEmail(e.target.value)}
                             placeholder="Enter your professional email"
-                            className={`flex-1 px-6 py-4 rounded-2xl border-2 text-lg ${
+                            className={`w-full px-4 py-3 lg:px-6 lg:py-4 rounded-xl lg:rounded-2xl border-2 text-base lg:text-lg ${
                               isDark 
                                 ? 'bg-gray-800/80 border-gray-600 text-white placeholder-gray-400 focus:border-emerald-400' 
                                 : 'bg-white/90 border-gray-300 text-gray-900 placeholder-gray-500 focus:border-emerald-600'
@@ -106,14 +106,14 @@ const Footer = () => {
                           />
                           <button
                             type="submit"
-                            className="px-8 py-4 bg-gradient-to-r from-emerald-600 to-cyan-600 hover:from-emerald-700 hover:to-cyan-700 text-white rounded-2xl font-bold text-lg transition-all duration-300 transform hover:scale-105 hover:shadow-2xl flex items-center justify-center space-x-3 shadow-lg whitespace-nowrap min-w-[220px]"
+                            className="w-full lg:w-auto px-6 py-3 lg:px-8 lg:py-4 bg-gradient-to-r from-emerald-600 to-cyan-600 hover:from-emerald-700 hover:to-cyan-700 text-white rounded-xl lg:rounded-2xl font-bold text-base lg:text-lg transition-all duration-300 transform hover:scale-105 hover:shadow-2xl flex items-center justify-center space-x-3 shadow-lg lg:min-w-[220px]"
                           >
-                            <Send className="h-6 w-6" />
+                            <Send className="h-5 w-5 lg:h-6 lg:w-6" />
                             <span>Subscribe Free</span>
                           </button>
                         </div>
                       </form>
-                      <div className="flex items-center justify-center space-x-6 text-sm text-gray-500 dark:text-gray-400">
+                      <div className="flex flex-col sm:flex-row items-center justify-center gap-3 sm:gap-6 text-xs lg:text-sm text-gray-500 dark:text-gray-400">
                         <span className="flex items-center space-x-2">
                           <div className="w-2 h-2 bg-green-500 rounded-full"></div>
                           <span>No spam</span>
