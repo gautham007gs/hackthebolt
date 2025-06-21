@@ -1,13 +1,16 @@
 import React, { useState } from 'react';
-import { motion } from 'framer-motion';
-import { Target, Clock, Users, Star, Filter, Search, Play, ArrowRight, Shield, Zap, Lock } from 'lucide-react';
+import { motion, AnimatePresence } from 'framer-motion';
+import { Target, Clock, Users, Star, Search, Play, Shield, Lock, Terminal, Award, Eye, Brain } from 'lucide-react';
 import { useTheme } from '../contexts/ThemeContext';
+import { useAuth } from '../contexts/AuthContext';
 
 const LabsPage = () => {
   const { isDark } = useTheme();
+  const { user, isAuthenticated } = useAuth();
   const [searchTerm, setSearchTerm] = useState('');
   const [selectedDifficulty, setSelectedDifficulty] = useState('All');
   const [selectedCategory, setSelectedCategory] = useState('All');
+  const [selectedTab, setSelectedTab] = useState('labs');
 
   const categories = ['All', 'Web Security', 'Network Security', 'Cryptography', 'Forensics', 'Reverse Engineering', 'OSINT'];
   const difficulties = ['All', 'Beginner', 'Intermediate', 'Advanced', 'Expert'];
@@ -16,93 +19,104 @@ const LabsPage = () => {
     {
       id: '1',
       title: 'SQL Injection Playground',
-      description: 'Practice SQL injection techniques in a safe environment with multiple vulnerability types and difficulty levels.',
+      description: 'Master SQL injection techniques in a comprehensive lab environment with real databases, multiple vulnerability types, and progressive challenges.',
       difficulty: 'Beginner',
       category: 'Web Security',
       duration: '45 min',
       participants: '25.3K',
       rating: 4.8,
       points: 100,
+      completionRate: 87,
       image: 'https://images.pexels.com/photos/270404/pexels-photo-270404.jpeg?auto=compress&cs=tinysrgb&w=600&h=400&fit=crop',
-      tools: ['Burp Suite', 'SQLMap', 'Browser'],
-      objectives: ['Find SQL injection vulnerabilities', 'Extract database information', 'Bypass authentication'],
+      tools: ['Burp Suite', 'SQLMap', 'Browser', 'Interactive Terminal'],
+      objectives: ['Identify SQL injection entry points', 'Extract sensitive data from databases', 'Bypass authentication mechanisms'],
       featured: true,
-      premium: false
+      premium: false,
+      hasTerminal: true
     },
     {
       id: '2',
       title: 'Network Penetration Testing Lab',
-      description: 'Comprehensive network security assessment lab with multiple target machines and realistic network topology.',
+      description: 'Comprehensive network security assessment lab with multiple target machines, realistic network topology, and enterprise-grade security tools.',
       difficulty: 'Advanced',
       category: 'Network Security',
       duration: '2 hours',
       participants: '18.7K',
       rating: 4.9,
       points: 250,
+      completionRate: 74,
       image: 'https://images.pexels.com/photos/442150/pexels-photo-442150.jpeg?auto=compress&cs=tinysrgb&w=600&h=400&fit=crop',
       tools: ['Nmap', 'Metasploit', 'Wireshark', 'Nessus'],
-      objectives: ['Perform network reconnaissance', 'Identify vulnerabilities', 'Exploit target systems'],
-      premium: true
+      objectives: ['Perform network reconnaissance', 'Identify vulnerabilities', 'Execute exploitation attacks'],
+      premium: true,
+      hasTerminal: true
     },
     {
       id: '3',
-      title: 'Cross-Site Scripting (XSS) Challenge',
-      description: 'Master XSS attacks with progressive challenges covering reflected, stored, and DOM-based XSS vulnerabilities.',
-      difficulty: 'Intermediate',
-      category: 'Web Security',
-      duration: '1 hour',
-      participants: '22.1K',
-      rating: 4.7,
-      points: 150,
-      image: 'https://images.pexels.com/photos/546819/pexels-photo-546819.jpeg?auto=compress&cs=tinysrgb&w=600&h=400&fit=crop',
-      tools: ['Browser', 'Burp Suite', 'XSS Hunter'],
-      objectives: ['Identify XSS vulnerabilities', 'Craft malicious payloads', 'Bypass XSS filters'],
-      premium: false
-    },
-    {
-      id: '4',
-      title: 'Cryptography Breaking Lab',
-      description: 'Analyze and break various cryptographic implementations including weak ciphers and poor key management.',
+      title: 'Advanced Cryptography Workshop',
+      description: 'Deep dive into modern cryptographic systems with hands-on exercises in encryption, digital signatures, and cryptanalysis.',
       difficulty: 'Expert',
       category: 'Cryptography',
       duration: '3 hours',
-      participants: '8.9K',
+      participants: '12.4K',
       rating: 4.9,
       points: 400,
+      completionRate: 58,
       image: 'https://images.pexels.com/photos/60504/security-protection-anti-virus-software-60504.jpeg?auto=compress&cs=tinysrgb&w=600&h=400&fit=crop',
-      tools: ['Python', 'OpenSSL', 'John the Ripper', 'Hashcat'],
-      objectives: ['Analyze cryptographic algorithms', 'Identify implementation flaws', 'Recover encrypted data'],
-      premium: true
+      tools: ['Python', 'OpenSSL', 'SageMath', 'CyberChef'],
+      objectives: ['Implement cryptographic algorithms', 'Break weak implementations', 'Analyze side-channel attacks'],
+      premium: true,
+      hasTerminal: true
+    }
+  ];
+
+  const ctfChallenges = [
+    {
+      id: 'ctf1',
+      title: 'Corporate Breach Investigation',
+      description: 'A Fortune 500 company has been breached. Investigate the attack chain and identify the threat actor.',
+      difficulty: 'Expert',
+      category: 'Incident Response',
+      duration: '4-6 hours',
+      participants: '3.2K',
+      rating: 4.9,
+      points: 800,
+      completionRate: 23,
+      teamBased: true,
+      premium: true,
+      image: 'https://images.pexels.com/photos/60504/security-protection-anti-virus-software-60504.jpeg?auto=compress&cs=tinysrgb&w=600&h=400&fit=crop'
     },
     {
-      id: '5',
-      title: 'Digital Forensics Investigation',
-      description: 'Investigate a simulated cyber incident with disk images, network captures, and memory dumps.',
-      difficulty: 'Advanced',
-      category: 'Forensics',
-      duration: '2.5 hours',
-      participants: '12.4K',
+      id: 'ctf2',
+      title: 'Zero-Day Exploit Development',
+      description: 'Discover and exploit a previously unknown vulnerability in a custom application.',
+      difficulty: 'Expert',
+      category: 'Exploit Development',
+      duration: '6-8 hours',
+      participants: '1.8K',
       rating: 4.8,
-      points: 300,
-      image: 'https://images.pexels.com/photos/8566473/pexels-photo-8566473.jpeg?auto=compress&cs=tinysrgb&w=600&h=400&fit=crop',
-      tools: ['Autopsy', 'Volatility', 'Wireshark', 'Sleuth Kit'],
-      objectives: ['Analyze digital evidence', 'Reconstruct attack timeline', 'Identify threat actors'],
-      premium: true
-    },
+      points: 1000,
+      completionRate: 12,
+      teamBased: false,
+      premium: true,
+      image: 'https://images.pexels.com/photos/546819/pexels-photo-546819.jpeg?auto=compress&cs=tinysrgb&w=600&h=400&fit=crop'
+    }
+  ];
+
+  const learningPaths = [
     {
-      id: '6',
-      title: 'OSINT Investigation Challenge',
-      description: 'Use open source intelligence techniques to gather information about targets and solve investigation puzzles.',
-      difficulty: 'Intermediate',
-      category: 'OSINT',
-      duration: '1.5 hours',
-      participants: '16.8K',
-      rating: 4.6,
-      points: 200,
-      image: 'https://images.pexels.com/photos/159304/network-cable-ethernet-computer-159304.jpeg?auto=compress&cs=tinysrgb&w=600&h=400&fit=crop',
-      tools: ['Google Dorking', 'Shodan', 'Maltego', 'Social Media'],
-      objectives: ['Gather intelligence from public sources', 'Correlate information', 'Build target profiles'],
-      premium: false
+      id: 'path1',
+      title: 'Penetration Testing Mastery',
+      description: 'Complete certification-ready penetration testing curriculum from beginner to expert level.',
+      duration: '3-6 months',
+      courses: 12,
+      labs: 25,
+      ctfs: 8,
+      certification: 'HTS Certified Penetration Tester',
+      difficulty: 'Progressive',
+      completionRate: 78,
+      enrolled: '45.2K',
+      image: 'https://images.pexels.com/photos/270404/pexels-photo-270404.jpeg?auto=compress&cs=tinysrgb&w=600&h=400&fit=crop'
     }
   ];
 
@@ -111,6 +125,14 @@ const LabsPage = () => {
                          lab.description.toLowerCase().includes(searchTerm.toLowerCase());
     const matchesDifficulty = selectedDifficulty === 'All' || lab.difficulty === selectedDifficulty;
     const matchesCategory = selectedCategory === 'All' || lab.category === selectedCategory;
+    return matchesSearch && matchesDifficulty && matchesCategory;
+  });
+
+  const filteredCtfChallenges = ctfChallenges.filter(ctf => {
+    const matchesSearch = ctf.title.toLowerCase().includes(searchTerm.toLowerCase()) ||
+                         ctf.description.toLowerCase().includes(searchTerm.toLowerCase());
+    const matchesDifficulty = selectedDifficulty === 'All' || ctf.difficulty === selectedDifficulty;
+    const matchesCategory = selectedCategory === 'All' || ctf.category === selectedCategory;
     return matchesSearch && matchesDifficulty && matchesCategory;
   });
 
@@ -124,248 +146,555 @@ const LabsPage = () => {
     }
   };
 
+  const getTabIcon = (tab: string) => {
+    switch (tab) {
+      case 'labs': return Terminal;
+      case 'ctf': return Target;
+      case 'paths': return Brain;
+      default: return Terminal;
+    }
+  };
+
+  const renderTabButton = (tabKey: string, label: string, count: number) => {
+    const Icon = getTabIcon(tabKey);
+    const isActive = selectedTab === tabKey;
+    
+    return (
+      <button
+        key={tabKey}
+        onClick={() => setSelectedTab(tabKey)}
+        className={`flex items-center space-x-2 px-6 py-3 rounded-lg font-medium transition-all duration-200 ${
+          isActive
+            ? isDark 
+              ? 'bg-emerald-600 text-white shadow-lg' 
+              : 'bg-emerald-500 text-white shadow-lg'
+            : isDark
+              ? 'bg-gray-800 text-gray-300 hover:bg-gray-700 hover:text-white'
+              : 'bg-white text-gray-700 hover:bg-gray-50 hover:text-gray-900 border border-gray-200'
+        }`}
+      >
+        <Icon className="h-5 w-5" />
+        <span>{label}</span>
+        <span className={`px-2 py-1 rounded-full text-xs font-bold ${
+          isActive
+            ? 'bg-white/20 text-white'
+            : isDark
+              ? 'bg-gray-700 text-gray-300'
+              : 'bg-gray-100 text-gray-600'
+        }`}>
+          {count}
+        </span>
+      </button>
+    );
+  };
+
+  const renderLabCard = (lab: any) => (
+    <motion.div
+      key={lab.id}
+      layout
+      initial={{ opacity: 0, y: 20 }}
+      animate={{ opacity: 1, y: 0 }}
+      className={`${isDark ? 'bg-gray-800 border-gray-700' : 'bg-white border-gray-200'} rounded-xl border shadow-lg hover:shadow-xl transition-all duration-300 overflow-hidden group`}
+    >
+      <div className="relative">
+        <img 
+          src={lab.image} 
+          alt={lab.title}
+          className="w-full h-48 object-cover group-hover:scale-105 transition-transform duration-300"
+        />
+        <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent" />
+        
+        <div className="absolute top-4 left-4 flex flex-wrap gap-2">
+          {lab.featured && (
+            <span className="bg-yellow-500 text-black px-2 py-1 rounded-full text-xs font-bold">
+              Featured
+            </span>
+          )}
+          {lab.premium && (
+            <span className="bg-purple-500 text-white px-2 py-1 rounded-full text-xs font-bold flex items-center">
+              <Lock className="h-3 w-3 mr-1" />
+              Premium
+            </span>
+          )}
+          {lab.hasTerminal && (
+            <span className="bg-green-500 text-white px-2 py-1 rounded-full text-xs font-bold flex items-center">
+              <Terminal className="h-3 w-3 mr-1" />
+              Interactive
+            </span>
+          )}
+        </div>
+
+        <div className="absolute top-4 right-4">
+          <span className={`px-3 py-1 rounded-full text-xs font-medium border ${getDifficultyColor(lab.difficulty)}`}>
+            {lab.difficulty}
+          </span>
+        </div>
+
+        <div className="absolute bottom-4 left-4 right-4 flex justify-between items-center text-white">
+          <div className="flex items-center space-x-4 text-sm">
+            <div className="flex items-center space-x-1">
+              <Clock className="h-4 w-4" />
+              <span>{lab.duration}</span>
+            </div>
+            <div className="flex items-center space-x-1">
+              <Users className="h-4 w-4" />
+              <span>{lab.participants}</span>
+            </div>
+          </div>
+          <div className="flex items-center space-x-1">
+            <Star className="h-4 w-4 text-yellow-400 fill-current" />
+            <span className="text-sm font-medium">{lab.rating}</span>
+          </div>
+        </div>
+      </div>
+
+      <div className="p-6">
+        <div className="flex justify-between items-start mb-3">
+          <h3 className={`text-lg font-bold ${isDark ? 'text-white' : 'text-gray-900'} group-hover:text-emerald-500 transition-colors`}>
+            {lab.title}
+          </h3>
+          <div className="flex items-center space-x-1 text-emerald-500">
+            <Award className="h-4 w-4" />
+            <span className="text-sm font-medium">{lab.points} pts</span>
+          </div>
+        </div>
+
+        <p className={`text-sm ${isDark ? 'text-gray-300' : 'text-gray-600'} mb-4 line-clamp-2`}>
+          {lab.description}
+        </p>
+
+        {lab.completionRate && (
+          <div className="mb-4">
+            <div className="flex justify-between items-center mb-1">
+              <span className={`text-xs ${isDark ? 'text-gray-400' : 'text-gray-500'}`}>Completion Rate</span>
+              <span className={`text-xs font-medium ${isDark ? 'text-gray-300' : 'text-gray-700'}`}>{lab.completionRate}%</span>
+            </div>
+            <div className={`w-full h-2 ${isDark ? 'bg-gray-700' : 'bg-gray-200'} rounded-full overflow-hidden`}>
+              <div 
+                className="h-full bg-gradient-to-r from-emerald-500 to-cyan-500 transition-all duration-300"
+                style={{ width: `${lab.completionRate}%` }}
+              />
+            </div>
+          </div>
+        )}
+
+        <div className="mb-4">
+          <h4 className={`text-xs font-medium ${isDark ? 'text-gray-400' : 'text-gray-500'} mb-2`}>Tools & Technologies</h4>
+          <div className="flex flex-wrap gap-1">
+            {lab.tools?.slice(0, 4).map((tool: string, index: number) => (
+              <span 
+                key={index}
+                className={`px-2 py-1 text-xs rounded-md ${
+                  isDark ? 'bg-gray-700 text-gray-300' : 'bg-gray-100 text-gray-600'
+                }`}
+              >
+                {tool}
+              </span>
+            ))}
+            {lab.tools?.length > 4 && (
+              <span className={`px-2 py-1 text-xs rounded-md ${isDark ? 'bg-gray-700 text-gray-300' : 'bg-gray-100 text-gray-600'}`}>
+                +{lab.tools.length - 4} more
+              </span>
+            )}
+          </div>
+        </div>
+
+        <div className="flex space-x-2">
+          <button className="flex-1 flex items-center justify-center space-x-2 py-3 px-4 bg-emerald-600 text-white rounded-lg font-medium hover:bg-emerald-700 hover:scale-105 active:scale-95 transition-all duration-200">
+            <Play className="h-4 w-4" />
+            <span>Start Lab</span>
+          </button>
+          <button className={`p-3 rounded-lg transition-all duration-200 ${
+            isDark ? 'bg-gray-700 text-gray-300 hover:bg-gray-600' : 'bg-gray-100 text-gray-600 hover:bg-gray-200'
+          }`}>
+            <Eye className="h-4 w-4" />
+          </button>
+        </div>
+      </div>
+    </motion.div>
+  );
+
+  const renderCtfCard = (ctf: any) => (
+    <motion.div
+      key={ctf.id}
+      layout
+      initial={{ opacity: 0, y: 20 }}
+      animate={{ opacity: 1, y: 0 }}
+      className={`${isDark ? 'bg-gray-800 border-gray-700' : 'bg-white border-gray-200'} rounded-xl border shadow-lg hover:shadow-xl transition-all duration-300 overflow-hidden group`}
+    >
+      <div className="relative">
+        <img 
+          src={ctf.image} 
+          alt={ctf.title}
+          className="w-full h-48 object-cover group-hover:scale-105 transition-transform duration-300"
+        />
+        <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent" />
+        
+        <div className="absolute top-4 left-4 flex flex-wrap gap-2">
+          {ctf.teamBased && (
+            <span className="bg-blue-500 text-white px-2 py-1 rounded-full text-xs font-bold flex items-center">
+              <Users className="h-3 w-3 mr-1" />
+              Team
+            </span>
+          )}
+          {ctf.premium && (
+            <span className="bg-purple-500 text-white px-2 py-1 rounded-full text-xs font-bold flex items-center">
+              <Lock className="h-3 w-3 mr-1" />
+              Premium
+            </span>
+          )}
+          <span className="bg-red-500 text-white px-2 py-1 rounded-full text-xs font-bold flex items-center">
+            <Target className="h-3 w-3 mr-1" />
+            CTF
+          </span>
+        </div>
+
+        <div className="absolute top-4 right-4">
+          <span className={`px-3 py-1 rounded-full text-xs font-medium border ${getDifficultyColor(ctf.difficulty)}`}>
+            {ctf.difficulty}
+          </span>
+        </div>
+
+        <div className="absolute bottom-4 left-4 right-4 flex justify-between items-center text-white">
+          <div className="flex items-center space-x-4 text-sm">
+            <div className="flex items-center space-x-1">
+              <Clock className="h-4 w-4" />
+              <span>{ctf.duration}</span>
+            </div>
+            <div className="flex items-center space-x-1">
+              <Users className="h-4 w-4" />
+              <span>{ctf.participants}</span>
+            </div>
+          </div>
+          <div className="flex items-center space-x-1">
+            <Star className="h-4 w-4 text-yellow-400 fill-current" />
+            <span className="text-sm font-medium">{ctf.rating}</span>
+          </div>
+        </div>
+      </div>
+
+      <div className="p-6">
+        <div className="flex justify-between items-start mb-3">
+          <h3 className={`text-lg font-bold ${isDark ? 'text-white' : 'text-gray-900'} group-hover:text-red-500 transition-colors`}>
+            {ctf.title}
+          </h3>
+          <div className="flex items-center space-x-1 text-red-500">
+            <Award className="h-4 w-4" />
+            <span className="text-sm font-medium">{ctf.points} pts</span>
+          </div>
+        </div>
+
+        <p className={`text-sm ${isDark ? 'text-gray-300' : 'text-gray-600'} mb-4 line-clamp-2`}>
+          {ctf.description}
+        </p>
+
+        <div className="mb-4">
+          <div className="flex justify-between items-center mb-1">
+            <span className={`text-xs ${isDark ? 'text-gray-400' : 'text-gray-500'}`}>Success Rate</span>
+            <span className={`text-xs font-medium ${isDark ? 'text-gray-300' : 'text-gray-700'}`}>{ctf.completionRate}%</span>
+          </div>
+          <div className={`w-full h-2 ${isDark ? 'bg-gray-700' : 'bg-gray-200'} rounded-full overflow-hidden`}>
+            <div 
+              className="h-full bg-gradient-to-r from-red-500 to-orange-500 transition-all duration-300"
+              style={{ width: `${ctf.completionRate}%` }}
+            />
+          </div>
+        </div>
+
+        <div className="flex space-x-2">
+          <button className="flex-1 flex items-center justify-center space-x-2 py-3 px-4 bg-red-600 text-white rounded-lg font-medium hover:bg-red-700 hover:scale-105 active:scale-95 transition-all duration-200">
+            <Target className="h-4 w-4" />
+            <span>Start Challenge</span>
+          </button>
+          <button className={`p-3 rounded-lg transition-all duration-200 ${
+            isDark ? 'bg-gray-700 text-gray-300 hover:bg-gray-600' : 'bg-gray-100 text-gray-600 hover:bg-gray-200'
+          }`}>
+            <Eye className="h-4 w-4" />
+          </button>
+        </div>
+      </div>
+    </motion.div>
+  );
+
+  const renderLearningPathCard = (path: any) => (
+    <motion.div
+      key={path.id}
+      layout
+      initial={{ opacity: 0, y: 20 }}
+      animate={{ opacity: 1, y: 0 }}
+      className={`${isDark ? 'bg-gray-800 border-gray-700' : 'bg-white border-gray-200'} rounded-xl border shadow-lg hover:shadow-xl transition-all duration-300 overflow-hidden group`}
+    >
+      <div className="relative">
+        <img 
+          src={path.image} 
+          alt={path.title}
+          className="w-full h-48 object-cover group-hover:scale-105 transition-transform duration-300"
+        />
+        <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent" />
+        
+        <div className="absolute top-4 left-4">
+          <span className="bg-blue-500 text-white px-3 py-1 rounded-full text-xs font-bold flex items-center">
+            <Brain className="h-3 w-3 mr-1" />
+            Learning Path
+          </span>
+        </div>
+
+        <div className="absolute top-4 right-4">
+          <span className={`px-3 py-1 rounded-full text-xs font-medium border ${getDifficultyColor(path.difficulty)}`}>
+            {path.difficulty}
+          </span>
+        </div>
+
+        <div className="absolute bottom-4 left-4 right-4 flex justify-between items-center text-white">
+          <div className="flex items-center space-x-4 text-sm">
+            <div className="flex items-center space-x-1">
+              <Clock className="h-4 w-4" />
+              <span>{path.duration}</span>
+            </div>
+            <div className="flex items-center space-x-1">
+              <Users className="h-4 w-4" />
+              <span>{path.enrolled}</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div className="p-6">
+        <h3 className={`text-lg font-bold ${isDark ? 'text-white' : 'text-gray-900'} group-hover:text-blue-500 transition-colors mb-3`}>
+          {path.title}
+        </h3>
+
+        <p className={`text-sm ${isDark ? 'text-gray-300' : 'text-gray-600'} mb-4 line-clamp-2`}>
+          {path.description}
+        </p>
+
+        <div className="mb-4">
+          <div className="flex justify-between items-center mb-1">
+            <span className={`text-xs ${isDark ? 'text-gray-400' : 'text-gray-500'}`}>Completion Rate</span>
+            <span className={`text-xs font-medium ${isDark ? 'text-gray-300' : 'text-gray-700'}`}>{path.completionRate}%</span>
+          </div>
+          <div className={`w-full h-2 ${isDark ? 'bg-gray-700' : 'bg-gray-200'} rounded-full overflow-hidden`}>
+            <div 
+              className="h-full bg-gradient-to-r from-blue-500 to-purple-500 transition-all duration-300"
+              style={{ width: `${path.completionRate}%` }}
+            />
+          </div>
+        </div>
+
+        <div className="mb-4 grid grid-cols-3 gap-2 text-center">
+          <div className={`p-2 rounded-lg ${isDark ? 'bg-gray-700' : 'bg-gray-50'}`}>
+            <p className={`text-lg font-bold ${isDark ? 'text-white' : 'text-gray-900'}`}>{path.courses}</p>
+            <p className={`text-xs ${isDark ? 'text-gray-400' : 'text-gray-500'}`}>Courses</p>
+          </div>
+          <div className={`p-2 rounded-lg ${isDark ? 'bg-gray-700' : 'bg-gray-50'}`}>
+            <p className={`text-lg font-bold ${isDark ? 'text-white' : 'text-gray-900'}`}>{path.labs}</p>
+            <p className={`text-xs ${isDark ? 'text-gray-400' : 'text-gray-500'}`}>Labs</p>
+          </div>
+          <div className={`p-2 rounded-lg ${isDark ? 'bg-gray-700' : 'bg-gray-50'}`}>
+            <p className={`text-lg font-bold ${isDark ? 'text-white' : 'text-gray-900'}`}>{path.ctfs}</p>
+            <p className={`text-xs ${isDark ? 'text-gray-400' : 'text-gray-500'}`}>CTFs</p>
+          </div>
+        </div>
+
+        <div className={`mb-4 p-3 rounded-lg ${isDark ? 'bg-blue-500/10 border-blue-500/20' : 'bg-blue-50 border-blue-200'} border`}>
+          <div className="flex items-center space-x-2">
+            <Award className={`h-4 w-4 ${isDark ? 'text-blue-400' : 'text-blue-600'}`} />
+            <span className={`text-sm font-medium ${isDark ? 'text-blue-400' : 'text-blue-700'}`}>
+              {path.certification}
+            </span>
+          </div>
+        </div>
+
+        <button className="w-full flex items-center justify-center space-x-2 py-3 px-4 bg-blue-600 text-white rounded-lg font-medium hover:bg-blue-700 hover:scale-105 active:scale-95 transition-all duration-200">
+          <Brain className="h-4 w-4" />
+          <span>Start Learning Path</span>
+        </button>
+      </div>
+    </motion.div>
+  );
+
   return (
     <motion.div
       initial={{ opacity: 0, y: 20 }}
       animate={{ opacity: 1, y: 0 }}
-      exit={{ opacity: 0, y: -20 }}
-      transition={{ duration: 0.5 }}
-      className={`min-h-screen ${isDark ? 'bg-black' : 'bg-white'} pt-20`}
+      className={`min-h-screen ${isDark ? 'bg-gray-900' : 'bg-gray-50'} py-8`}
     >
-      {/* Hero Section */}
-      <section className={`py-20 ${isDark ? 'bg-gradient-to-br from-gray-900 via-gray-800 to-black' : 'bg-gradient-to-br from-gray-50 via-white to-emerald-50'} relative overflow-hidden`}>
-        <div className="absolute inset-0">
-          <div className={`absolute top-1/4 left-1/4 w-96 h-96 ${isDark ? 'bg-emerald-500/10' : 'bg-emerald-500/20'} rounded-full blur-3xl animate-pulse`}></div>
-          <div className={`absolute bottom-1/4 right-1/4 w-96 h-96 ${isDark ? 'bg-teal-500/10' : 'bg-teal-500/20'} rounded-full blur-3xl animate-pulse delay-1000`}></div>
-        </div>
-
-        <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div className="mb-12">
           <motion.div
-            initial={{ opacity: 0, y: 30 }}
+            initial={{ opacity: 0, y: -20 }}
             animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.8 }}
+            className="text-center mb-8"
           >
-            <div className={`inline-flex items-center space-x-3 ${isDark ? 'bg-emerald-500/10 border-emerald-500/20' : 'bg-emerald-100 border-emerald-300'} border rounded-full px-6 py-3 mb-6`}>
-              <Target className={`h-5 w-5 ${isDark ? 'text-emerald-400' : 'text-emerald-600'}`} />
-              <span className={`${isDark ? 'text-emerald-400' : 'text-emerald-700'} font-semibold`}>Hands-on Security Labs</span>
-            </div>
-            
-            <h1 className={`text-5xl lg:text-6xl font-bold ${isDark ? 'text-white' : 'text-gray-900'} mb-6`}>
-              Practice <span className="bg-gradient-to-r from-emerald-500 to-teal-500 bg-clip-text text-transparent">Real-World</span> Scenarios
+            <h1 className={`text-4xl md:text-5xl font-bold ${isDark ? 'text-white' : 'text-gray-900'} mb-4`}>
+              Cybersecurity Learning Center
             </h1>
-            <p className={`text-xl ${isDark ? 'text-gray-300' : 'text-gray-600'} max-w-3xl mx-auto mb-8`}>
-              Sharpen your cybersecurity skills with interactive labs designed to simulate real-world attack scenarios and defense strategies.
+            <p className={`text-xl ${isDark ? 'text-gray-300' : 'text-gray-600'} max-w-3xl mx-auto`}>
+              Master cybersecurity through hands-on labs, competitive CTF challenges, and structured learning paths designed by industry experts.
             </p>
-            <div className="flex flex-col sm:flex-row gap-4 justify-center">
-              <button className="bg-gradient-to-r from-emerald-500 to-teal-500 hover:from-emerald-600 hover:to-teal-600 text-white px-8 py-4 rounded-xl font-semibold transition-all duration-200 transform hover:scale-105 shadow-xl hover:shadow-emerald-500/25 flex items-center justify-center space-x-2">
-                <Play className="h-5 w-5" />
-                <span>Start Lab Now</span>
-              </button>
-              <button className={`border-2 ${isDark ? 'border-emerald-500/30 text-emerald-400 hover:bg-emerald-500/10' : 'border-emerald-600/30 text-emerald-600 hover:bg-emerald-50'} px-8 py-4 rounded-xl font-semibold transition-all duration-200 flex items-center justify-center space-x-2`}>
-                <Shield className="h-5 w-5" />
-                <span>Browse All Labs</span>
-              </button>
-            </div>
           </motion.div>
-        </div>
-      </section>
 
-      {/* Stats Section */}
-      <section className={`py-16 ${isDark ? 'bg-gray-900' : 'bg-gray-50'}`}>
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="grid grid-cols-2 lg:grid-cols-4 gap-8">
-            {[
-              { label: 'Active Labs', value: '50+', icon: Target },
-              { label: 'Students Trained', value: '100K+', icon: Users },
-              { label: 'Success Rate', value: '94%', icon: Star },
-              { label: 'Avg Completion', value: '85%', icon: Zap }
-            ].map((stat, index) => {
-              const Icon = stat.icon;
-              return (
-                <motion.div
-                  key={index}
-                  initial={{ opacity: 0, y: 20 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  transition={{ duration: 0.5, delay: index * 0.1 }}
-                  className="text-center"
-                >
-                  <div className={`inline-flex items-center justify-center w-16 h-16 ${isDark ? 'bg-gradient-to-br from-emerald-500/20 to-teal-500/20' : 'bg-gradient-to-br from-emerald-100 to-teal-100'} rounded-full mb-4`}>
-                    <Icon className={`h-8 w-8 ${isDark ? 'text-emerald-400' : 'text-emerald-600'}`} />
-                  </div>
-                  <div className={`text-3xl font-bold ${isDark ? 'text-white' : 'text-gray-900'} mb-2`}>{stat.value}</div>
-                  <div className={`${isDark ? 'text-gray-400' : 'text-gray-600'}`}>{stat.label}</div>
-                </motion.div>
-              );
-            })}
+          <div className="flex flex-wrap justify-center gap-4 mb-8">
+            {renderTabButton('labs', 'Interactive Labs', filteredLabs.length)}
+            {renderTabButton('ctf', 'CTF Challenges', filteredCtfChallenges.length)}
+            {renderTabButton('paths', 'Learning Paths', learningPaths.length)}
           </div>
-        </div>
-      </section>
 
-      {/* Filters Section */}
-      <section className={`py-12 ${isDark ? 'bg-black' : 'bg-white'}`}>
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="flex flex-col gap-6">
-            {/* Search */}
-            <div className="relative w-full max-w-2xl mx-auto lg:mx-0">
-              <Search className={`absolute left-3 top-1/2 transform -translate-y-1/2 h-5 w-5 ${isDark ? 'text-gray-400' : 'text-gray-500'}`} />
-              <input
-                type="text"
-                placeholder="Search labs..."
-                value={searchTerm}
-                onChange={(e) => setSearchTerm(e.target.value)}
-                className={`w-full pl-10 pr-4 py-3 rounded-xl border ${isDark ? 'bg-gray-800 border-gray-700 text-white placeholder-gray-400 focus:border-emerald-500' : 'bg-white border-gray-300 text-gray-900 placeholder-gray-500 focus:border-emerald-500'} focus:outline-none focus:ring-2 focus:ring-emerald-500/20 transition-all duration-200`}
-              />
-            </div>
-
-            {/* Filters */}
-            <div className="flex flex-col sm:flex-row gap-4 sm:items-center sm:justify-center lg:justify-start">
-              <div className="flex items-center space-x-2">
-                <Filter className={`h-5 w-5 ${isDark ? 'text-gray-400' : 'text-gray-500'}`} />
-                <span className={`text-sm font-medium ${isDark ? 'text-gray-300' : 'text-gray-700'}`}>Filter by:</span>
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            className={`${isDark ? 'bg-gray-800' : 'bg-white'} rounded-xl p-6 shadow-lg border ${isDark ? 'border-gray-700' : 'border-gray-200'}`}
+          >
+            <div className="grid grid-cols-1 md:grid-cols-4 gap-4">
+              <div className="md:col-span-2">
+                <div className="relative">
+                  <Search className={`absolute left-3 top-1/2 transform -translate-y-1/2 h-5 w-5 ${isDark ? 'text-gray-400' : 'text-gray-500'}`} />
+                  <input
+                    type="text"
+                    placeholder="Search labs, CTFs, and learning paths..."
+                    value={searchTerm}
+                    onChange={(e) => setSearchTerm(e.target.value)}
+                    className={`w-full pl-10 pr-4 py-3 rounded-lg border transition-all duration-200 focus:ring-2 focus:ring-emerald-500 focus:border-transparent ${
+                      isDark 
+                        ? 'bg-gray-700 border-gray-600 text-white placeholder-gray-400' 
+                        : 'bg-gray-50 border-gray-300 text-gray-900 placeholder-gray-500'
+                    }`}
+                  />
+                </div>
               </div>
-              
-              <div className="flex flex-col sm:flex-row gap-3 w-full sm:w-auto">
-                <select
-                  value={selectedCategory}
-                  onChange={(e) => setSelectedCategory(e.target.value)}
-                  className={`flex-1 sm:w-48 px-4 py-3 rounded-xl border ${isDark ? 'bg-gray-800 border-gray-700 text-white focus:border-emerald-500' : 'bg-white border-gray-300 text-gray-900 focus:border-emerald-500'} focus:outline-none focus:ring-2 focus:ring-emerald-500/20 transition-all duration-200`}
-                >
-                  {categories.map(category => (
-                    <option key={category} value={category}>{category}</option>
-                  ))}
-                </select>
 
+              <div>
                 <select
                   value={selectedDifficulty}
                   onChange={(e) => setSelectedDifficulty(e.target.value)}
-                  className={`flex-1 sm:w-40 px-4 py-3 rounded-xl border ${isDark ? 'bg-gray-800 border-gray-700 text-white focus:border-emerald-500' : 'bg-white border-gray-300 text-gray-900 focus:border-emerald-500'} focus:outline-none focus:ring-2 focus:ring-emerald-500/20 transition-all duration-200`}
+                  className={`w-full py-3 px-4 rounded-lg border transition-all duration-200 focus:ring-2 focus:ring-emerald-500 focus:border-transparent ${
+                    isDark 
+                      ? 'bg-gray-700 border-gray-600 text-white' 
+                      : 'bg-gray-50 border-gray-300 text-gray-900'
+                  }`}
                 >
                   {difficulties.map(difficulty => (
-                    <option key={difficulty} value={difficulty}>{difficulty}</option>
+                    <option key={difficulty} value={difficulty}>
+                      {difficulty === 'All' ? 'All Difficulties' : difficulty}
+                    </option>
+                  ))}
+                </select>
+              </div>
+
+              <div>
+                <select
+                  value={selectedCategory}
+                  onChange={(e) => setSelectedCategory(e.target.value)}
+                  className={`w-full py-3 px-4 rounded-lg border transition-all duration-200 focus:ring-2 focus:ring-emerald-500 focus:border-transparent ${
+                    isDark 
+                      ? 'bg-gray-700 border-gray-600 text-white' 
+                      : 'bg-gray-50 border-gray-300 text-gray-900'
+                  }`}
+                >
+                  {categories.map(category => (
+                    <option key={category} value={category}>
+                      {category === 'All' ? 'All Categories' : category}
+                    </option>
                   ))}
                 </select>
               </div>
             </div>
-          </div>
-        </div>
-      </section>
 
-      {/* Labs Grid */}
-      <section className={`py-16 ${isDark ? 'bg-black' : 'bg-white'}`}>
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
-            {filteredLabs.map((lab, index) => (
-              <motion.div
-                key={lab.id}
-                initial={{ opacity: 0, y: 20 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.5, delay: index * 0.1 }}
-                className={`group ${isDark ? 'bg-gray-900/50 border-gray-800/50 hover:bg-gray-900/80 hover:border-emerald-500/30' : 'bg-gray-50 border-gray-200 hover:bg-white hover:border-emerald-300'} border rounded-2xl overflow-hidden transition-all duration-300 transform hover:-translate-y-2 hover:shadow-xl ${isDark ? 'hover:shadow-emerald-500/10' : 'hover:shadow-emerald-500/20'}`}
-              >
-                <div className="relative overflow-hidden">
-                  <img
-                    src={lab.image}
-                    alt={lab.title}
-                    className="w-full h-48 object-cover group-hover:scale-110 transition-transform duration-300"
-                  />
-                  <div className="absolute inset-0 bg-gradient-to-t from-gray-900/60 to-transparent"></div>
-                  <div className="absolute top-4 left-4 flex items-center space-x-2">
-                    {lab.featured && (
-                      <span className="bg-gradient-to-r from-emerald-500 to-teal-500 text-white px-3 py-1 rounded-full text-xs font-semibold">
-                        FEATURED
-                      </span>
-                    )}
-                    <span className={`px-3 py-1 rounded-full text-xs font-semibold border ${getDifficultyColor(lab.difficulty)}`}>
-                      {lab.difficulty}
-                    </span>
-                  </div>
-                  <div className="absolute top-4 right-4 flex items-center space-x-2">
-                    {lab.premium && (
-                      <span className={`px-3 py-1 rounded-full text-xs font-semibold ${isDark ? 'bg-yellow-500/20 text-yellow-400' : 'bg-yellow-100 text-yellow-700'} flex items-center space-x-1`}>
-                        <Lock className="h-3 w-3" />
-                        <span>Premium</span>
-                      </span>
-                    )}
-                    <span className={`px-3 py-1 rounded-full text-xs font-semibold ${isDark ? 'bg-emerald-500/20 text-emerald-400' : 'bg-emerald-100 text-emerald-700'}`}>
-                      {lab.points} pts
-                    </span>
-                  </div>
+            <div className="mt-6 grid grid-cols-2 md:grid-cols-4 gap-4">
+              <div className={`text-center p-4 rounded-lg ${isDark ? 'bg-gray-700' : 'bg-gray-50'}`}>
+                <div className={`text-2xl font-bold ${isDark ? 'text-emerald-400' : 'text-emerald-600'}`}>
+                  {selectedTab === 'labs' ? filteredLabs.length : selectedTab === 'ctf' ? filteredCtfChallenges.length : learningPaths.length}
                 </div>
-
-                <div className="p-6">
-                  <div className="mb-3">
-                    <span className={`text-sm ${isDark ? 'text-emerald-400' : 'text-emerald-600'} font-medium`}>
-                      {lab.category}
-                    </span>
-                  </div>
-                  
-                  <h3 className={`text-xl font-bold ${isDark ? 'text-white group-hover:text-emerald-300' : 'text-gray-900 group-hover:text-emerald-600'} mb-3 transition-colors duration-300 line-clamp-2`}>
-                    {lab.title}
-                  </h3>
-                  
-                  <p className={`${isDark ? 'text-gray-400' : 'text-gray-600'} mb-4 line-clamp-3 text-sm leading-relaxed`}>
-                    {lab.description}
-                  </p>
-
-                  {/* Tools */}
-                  <div className="mb-4">
-                    <div className="flex flex-wrap gap-2">
-                      {lab.tools.slice(0, 3).map((tool, idx) => (
-                        <span
-                          key={idx}
-                          className={`px-2 py-1 rounded-lg text-xs ${isDark ? 'bg-gray-800 text-gray-300' : 'bg-gray-200 text-gray-700'}`}
-                        >
-                          {tool}
-                        </span>
-                      ))}
-                      {lab.tools.length > 3 && (
-                        <span className={`px-2 py-1 rounded-lg text-xs ${isDark ? 'bg-gray-700 text-gray-400' : 'bg-gray-200 text-gray-600'}`}>
-                          +{lab.tools.length - 3} more
-                        </span>
-                      )}
-                    </div>
-                  </div>
-
-                  <div className={`flex items-center justify-between text-sm ${isDark ? 'text-gray-500' : 'text-gray-600'} mb-4`}>
-                    <div className="flex items-center space-x-4">
-                      <div className="flex items-center space-x-1">
-                        <Clock className="h-4 w-4" />
-                        <span>{lab.duration}</span>
-                      </div>
-                      <div className="flex items-center space-x-1">
-                        <Users className="h-4 w-4" />
-                        <span>{lab.participants}</span>
-                      </div>
-                    </div>
-                    <div className="flex items-center space-x-1">
-                      <Star className="h-4 w-4 text-yellow-400 fill-current" />
-                      <span>{lab.rating}</span>
-                    </div>
-                  </div>
-
-                  <button className={`group/btn w-full ${isDark ? 'bg-gray-800 hover:bg-gradient-to-r hover:from-emerald-500 hover:to-teal-500 text-gray-300 hover:text-white' : 'bg-gray-200 hover:bg-gradient-to-r hover:from-emerald-500 hover:to-teal-500 text-gray-700 hover:text-white'} px-4 py-3 rounded-lg font-semibold transition-all duration-200 flex items-center justify-center space-x-2`}>
-                    <Target className="h-4 w-4" />
-                    <span>Start Lab</span>
-                    <ArrowRight className="h-4 w-4 group-hover/btn:translate-x-1 transition-transform duration-200" />
-                  </button>
+                <div className={`text-sm ${isDark ? 'text-gray-400' : 'text-gray-600'}`}>
+                  Available {selectedTab === 'labs' ? 'Labs' : selectedTab === 'ctf' ? 'CTFs' : 'Paths'}
                 </div>
-              </motion.div>
-            ))}
-          </div>
-
-          {filteredLabs.length === 0 && (
-            <div className="text-center py-16">
-              <Target className={`h-16 w-16 ${isDark ? 'text-gray-600' : 'text-gray-400'} mx-auto mb-4`} />
-              <h3 className={`text-xl font-semibold ${isDark ? 'text-gray-400' : 'text-gray-600'} mb-2`}>
-                No labs found
-              </h3>
-              <p className={`${isDark ? 'text-gray-500' : 'text-gray-500'}`}>
-                Try adjusting your search terms or filters
-              </p>
+              </div>
+              <div className={`text-center p-4 rounded-lg ${isDark ? 'bg-gray-700' : 'bg-gray-50'}`}>
+                <div className={`text-2xl font-bold ${isDark ? 'text-blue-400' : 'text-blue-600'}`}>
+                  {user?.level || 1}
+                </div>
+                <div className={`text-sm ${isDark ? 'text-gray-400' : 'text-gray-600'}`}>
+                  Your Level
+                </div>
+              </div>
+              <div className={`text-center p-4 rounded-lg ${isDark ? 'bg-gray-700' : 'bg-gray-50'}`}>
+                <div className={`text-2xl font-bold ${isDark ? 'text-purple-400' : 'text-purple-600'}`}>
+                  {user?.points || 0}
+                </div>
+                <div className={`text-sm ${isDark ? 'text-gray-400' : 'text-gray-600'}`}>
+                  Total Points
+                </div>
+              </div>
+              <div className={`text-center p-4 rounded-lg ${isDark ? 'bg-gray-700' : 'bg-gray-50'}`}>
+                <div className={`text-2xl font-bold ${isDark ? 'text-orange-400' : 'text-orange-600'}`}>
+                  {user?.achievements?.length || 0}
+                </div>
+                <div className={`text-sm ${isDark ? 'text-gray-400' : 'text-gray-600'}`}>
+                  Achievements
+                </div>
+              </div>
             </div>
-          )}
+          </motion.div>
         </div>
-      </section>
+
+        <AnimatePresence mode="wait">
+          {selectedTab === 'labs' && (
+            <motion.div
+              key="labs"
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              exit={{ opacity: 0, y: -20 }}
+              className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-6"
+            >
+              {filteredLabs.map(renderLabCard)}
+            </motion.div>
+          )}
+
+          {selectedTab === 'ctf' && (
+            <motion.div
+              key="ctf"
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              exit={{ opacity: 0, y: -20 }}
+              className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-6"
+            >
+              {filteredCtfChallenges.map(renderCtfCard)}
+            </motion.div>
+          )}
+
+          {selectedTab === 'paths' && (
+            <motion.div
+              key="paths"
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              exit={{ opacity: 0, y: -20 }}
+              className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-6"
+            >
+              {learningPaths.map(renderLearningPathCard)}
+            </motion.div>
+          )}
+        </AnimatePresence>
+
+        {((selectedTab === 'labs' && filteredLabs.length === 0) ||
+          (selectedTab === 'ctf' && filteredCtfChallenges.length === 0) ||
+          (selectedTab === 'paths' && learningPaths.length === 0)) && (
+          <motion.div
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            className="text-center py-12"
+          >
+            <div className={`text-6xl mb-4 ${isDark ? 'text-gray-600' : 'text-gray-400'}`}>
+              🔍
+            </div>
+            <h3 className={`text-xl font-semibold ${isDark ? 'text-gray-300' : 'text-gray-700'} mb-2`}>
+              No {selectedTab === 'labs' ? 'labs' : selectedTab === 'ctf' ? 'CTF challenges' : 'learning paths'} found
+            </h3>
+            <p className={`${isDark ? 'text-gray-400' : 'text-gray-500'}`}>
+              Try adjusting your search criteria or filters
+            </p>
+          </motion.div>
+        )}
+      </div>
     </motion.div>
   );
 };
