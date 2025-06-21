@@ -17,6 +17,7 @@ interface AuthContextType {
   isAuthenticated: boolean;
   login: (email: string, password: string) => Promise<boolean>;
   register: (name: string, email: string, password: string) => Promise<boolean>;
+  socialLogin: (provider: 'google' | 'github', userData: any) => Promise<boolean>;
   logout: () => void;
   updateUser: (updates: Partial<User>) => void;
 }
@@ -79,6 +80,27 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
     return true;
   };
 
+  const socialLogin = async (provider: 'google' | 'github', userData: any): Promise<boolean> => {
+    // Simulate social login API call
+    await new Promise(resolve => setTimeout(resolve, 1000));
+    
+    const user: User = {
+      id: userData.id || Date.now().toString(),
+      name: userData.name,
+      email: userData.email,
+      level: 1,
+      points: 0,
+      achievements: [],
+      joinedDate: new Date().toISOString().split('T')[0],
+      role: 'user'
+    };
+
+    setUser(user);
+    setIsAuthenticated(true);
+    localStorage.setItem('hacktheshell_user', JSON.stringify(user));
+    return true;
+  };
+
   const logout = () => {
     setUser(null);
     setIsAuthenticated(false);
@@ -99,6 +121,7 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
       isAuthenticated,
       login,
       register,
+      socialLogin,
       logout,
       updateUser
     }}>

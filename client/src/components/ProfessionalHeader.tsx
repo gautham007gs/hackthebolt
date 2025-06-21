@@ -166,13 +166,13 @@ const ProfessionalHeader = () => {
             <button
               onClick={toggleTheme}
               className={`p-2 rounded-lg transition-all duration-200 ${
-                isDark ? 'hover:bg-gray-800/60 text-gray-300' : 'hover:bg-gray-100/60 text-gray-600'
+                isDark ? 'hover:bg-gray-800/60 text-gray-300' : 'hover:bg-gray-100/60 text-gray-700'
               }`}
             >
               {isDark ? (
                 <Sun className="h-5 w-5 text-yellow-500" />
               ) : (
-                <Moon className="h-5 w-5 text-gray-600" />
+                <Moon className="h-5 w-5 text-gray-700" />
               )}
             </button>
 

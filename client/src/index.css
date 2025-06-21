@@ -58,7 +58,41 @@
   }
   
   .btn-secondary {
-    @apply px-4 py-2 border border-gray-300 dark:border-gray-600 text-gray-700 dark:text-gray-300 font-medium rounded-lg hover:bg-gray-50 dark:hover:bg-gray-700 transition-all duration-300 hover:scale-105 active:scale-95;
+    @apply px-4 py-2 border border-gray-300 dark:border-gray-600 text-gray-800 dark:text-gray-300 font-medium rounded-lg hover:bg-gray-100 dark:hover:bg-gray-700 transition-all duration-300 hover:scale-105 active:scale-95;
+  }
+
+  /* Enhanced light theme text colors */
+  .text-primary-light {
+    @apply text-gray-900 dark:text-white;
+  }
+  
+  .text-secondary-light {
+    @apply text-gray-700 dark:text-gray-300;
+  }
+  
+  .text-tertiary-light {
+    @apply text-gray-600 dark:text-gray-400;
+  }
+  
+  .text-muted-light {
+    @apply text-gray-500 dark:text-gray-500;
+  }
+
+  /* Enhanced light theme backgrounds */
+  .bg-primary-light {
+    @apply bg-white dark:bg-gray-800;
+  }
+  
+  .bg-secondary-light {
+    @apply bg-gray-50 dark:bg-gray-900;
+  }
+  
+  .bg-card-light {
+    @apply bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700;
+  }
+  
+  .bg-hover-light {
+    @apply hover:bg-gray-100 dark:hover:bg-gray-700;
   }
 
   /* Enhanced interactive elements */

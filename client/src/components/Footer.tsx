@@ -49,7 +49,7 @@ const Footer = () => {
         {/* Newsletter Section - Full Width Professional Design */}
         <div className="mb-16">
           <div className={`relative overflow-hidden rounded-3xl ${
-            isDark ? 'bg-gradient-to-r from-emerald-900/50 via-gray-800/50 to-cyan-900/50 border-emerald-500/20' : 'bg-gradient-to-r from-emerald-50 via-white to-cyan-50 border-emerald-200'
+            isDark ? 'bg-gradient-to-r from-emerald-900/50 via-gray-800/50 to-cyan-900/50 border-emerald-500/20' : 'bg-gradient-to-r from-emerald-50 via-gray-50 to-cyan-50 border-emerald-300'
           } border-2 shadow-2xl`}>
             {/* Background Effects */}
             <div className="absolute inset-0 opacity-30">
@@ -65,13 +65,13 @@ const Footer = () => {
                     <div className={`w-16 h-16 lg:w-20 lg:h-20 rounded-2xl ${
                       isDark ? 'bg-emerald-500/20' : 'bg-emerald-100'
                     } flex items-center justify-center`}>
-                      <Shield className={`h-8 w-8 lg:h-10 lg:w-10 ${isDark ? 'text-emerald-400' : 'text-emerald-600'}`} />
+                      <Shield className={`h-8 w-8 lg:h-10 lg:w-10 ${isDark ? 'text-emerald-400' : 'text-emerald-700'}`} />
                     </div>
                     <div className="text-left">
                       <h3 className={`text-2xl sm:text-3xl lg:text-4xl xl:text-5xl font-bold ${isDark ? 'text-white' : 'text-gray-900'} leading-tight`}>
                         Join 10,000+
                       </h3>
-                      <p className={`text-xl sm:text-2xl lg:text-3xl font-bold ${isDark ? 'text-emerald-400' : 'text-emerald-600'} leading-tight`}>
+                      <p className={`text-xl sm:text-2xl lg:text-3xl font-bold ${isDark ? 'text-emerald-400' : 'text-emerald-700'} leading-tight`}>
                         Security Professionals
                       </p>
                     </div>

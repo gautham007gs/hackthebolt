@@ -134,6 +134,15 @@ Changelog:
   - Added slide-in mobile navigation with overlay
   - Fixed newsletter section mobile layout and email input alignment
   - Enhanced touch-friendly interface elements for mobile devices
+- June 21, 2025. Authentication system enhancements and light theme improvements
+  - Enhanced authentication context with social login support (Google/GitHub)
+  - Improved login/signup system with success messages and loading states
+  - Added forgot password functionality with email reset simulation
+  - Enhanced light theme contrast and readability across all components
+  - Improved header navigation with better color schemes for light mode
+  - Enhanced dashboard sidebar navigation with improved text contrast
+  - Updated footer newsletter section with better light theme styling
+  - Strengthened CSS utility classes for consistent light/dark theme support
 ```
 
 ## User Preferences

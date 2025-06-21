@@ -139,14 +139,14 @@ const ProfessionalDashboardLayout: React.FC<ProfessionalDashboardLayoutProps> = 
           <div className="flex items-center justify-between">
             {!sidebarCollapsed && (
               <div className="flex items-center space-x-2 lg:space-x-3">
-                <div className={`w-6 h-6 lg:w-8 lg:h-8 rounded-lg ${isDark ? 'bg-emerald-600' : 'bg-emerald-500'} flex items-center justify-center`}>
+                <div className={`w-6 h-6 lg:w-8 lg:h-8 rounded-lg ${isDark ? 'bg-emerald-600' : 'bg-emerald-600'} flex items-center justify-center`}>
                   <Shield className="h-3 w-3 lg:h-5 lg:w-5 text-white" />
                 </div>
                 <div>
                   <h2 className={`text-xs lg:text-sm font-semibold ${isDark ? 'text-white' : 'text-gray-900'}`}>
                     HackTheShell
                   </h2>
-                  <p className={`text-xs ${isDark ? 'text-gray-400' : 'text-gray-500'}`}>
+                  <p className={`text-xs ${isDark ? 'text-gray-400' : 'text-gray-600'}`}>
                     {userRole === 'admin' ? 'Admin Panel' : 'Creator Studio'}
                   </p>
                 </div>
@@ -188,7 +188,7 @@ const ProfessionalDashboardLayout: React.FC<ProfessionalDashboardLayoutProps> = 
                       : 'bg-emerald-500 text-white'
                     : isDark
                       ? 'hover:bg-gray-700 text-gray-300 hover:text-white'
-                      : 'hover:bg-gray-100 text-gray-700 hover:text-gray-900'
+                      : 'hover:bg-gray-100 text-gray-800 hover:text-gray-900'
                 }`}
               >
                 <div className="flex items-center space-x-2 lg:space-x-3">
