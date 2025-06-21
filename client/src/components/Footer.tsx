@@ -47,8 +47,8 @@ const Footer = () => {
     <footer className={`${isDark ? 'bg-gray-900 border-gray-800' : 'bg-white border-gray-200'} border-t`}>
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
         <div className="grid lg:grid-cols-4 gap-8">
-          {/* Brand & Newsletter */}
-          <div className="lg:col-span-1">
+          {/* Brand & Newsletter - Expanded to take more space on desktop */}
+          <div className="lg:col-span-2">
             <div className="flex items-center space-x-2 mb-6">
               <div className={`w-6 h-4 ${
                 isDark ? 'bg-gray-900 border-emerald-400' : 'bg-gray-50 border-emerald-600'
@@ -91,13 +91,13 @@ const Footer = () => {
                   </div>
                 ) : (
                   <form onSubmit={handleSubscribe} className="space-y-4">
-                    <div className="flex flex-col sm:flex-row gap-3">
+                    <div className="flex flex-col lg:flex-row gap-3 lg:gap-4">
                       <input
                         type="email"
                         value={email}
                         onChange={(e) => setEmail(e.target.value)}
                         placeholder="Enter your professional email"
-                        className={`flex-1 px-4 sm:px-6 py-3 sm:py-4 rounded-xl sm:rounded-2xl border-2 text-base ${
+                        className={`flex-1 px-6 py-4 rounded-2xl border-2 text-base lg:text-lg ${
                           isDark 
                             ? 'bg-gray-800/80 border-gray-600 text-white placeholder-gray-400 focus:border-emerald-400' 
                             : 'bg-white/90 border-gray-300 text-gray-900 placeholder-gray-500 focus:border-emerald-600'
@@ -106,7 +106,7 @@ const Footer = () => {
                       />
                       <button
                         type="submit"
-                        className="px-6 sm:px-8 py-3 sm:py-4 bg-gradient-to-r from-emerald-600 to-cyan-600 hover:from-emerald-700 hover:to-cyan-700 text-white rounded-xl sm:rounded-2xl font-bold text-base sm:text-lg transition-all duration-300 transform hover:scale-105 hover:shadow-2xl flex items-center justify-center space-x-2 shadow-lg whitespace-nowrap"
+                        className="px-8 py-4 bg-gradient-to-r from-emerald-600 to-cyan-600 hover:from-emerald-700 hover:to-cyan-700 text-white rounded-2xl font-bold text-base lg:text-lg transition-all duration-300 transform hover:scale-105 hover:shadow-2xl flex items-center justify-center space-x-2 shadow-lg whitespace-nowrap min-w-[200px]"
                       >
                         <Send className="h-5 w-5" />
                         <span>Subscribe Free</span>
@@ -129,7 +129,7 @@ const Footer = () => {
           </div>
 
           {/* Links */}
-          <div className="lg:col-span-3 grid md:grid-cols-3 gap-8">
+          <div className="lg:col-span-2 grid md:grid-cols-3 gap-8">
             <div>
               <h4 className={`font-semibold ${isDark ? 'text-white' : 'text-gray-900'} mb-4`}>
                 Learn

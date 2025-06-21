@@ -1,5 +1,5 @@
 import React from 'react';
-import { Router, Route, Switch } from 'wouter';
+import { Router, Route, Switch, useLocation } from 'wouter';
 import { ThemeProvider } from './contexts/ThemeContext';
 import { AuthProvider } from './contexts/AuthContext';
 import { ProgressProvider } from './contexts/ProgressContext';
@@ -33,10 +33,14 @@ import { motion, AnimatePresence } from 'framer-motion';
 
 function AppContent() {
   useScrollToTop();
+  const [location] = useLocation();
+  
+  // Hide footer on admin and creator dashboard pages
+  const isDashboardPage = location === '/admin' || location === '/creator';
   
   return (
     <div className="min-h-screen transition-colors duration-300 dark:bg-gray-900 bg-white">
-      <ProfessionalHeader />
+      {!isDashboardPage && <ProfessionalHeader />}
       <AnimatePresence mode="wait">
         <Switch>
           <Route path="/" component={HomePage} />
@@ -59,7 +63,7 @@ function AppContent() {
           <Route path="/apply-creator" component={CreatorApplicationPage} />
         </Switch>
       </AnimatePresence>
-      <Footer />
+      {!isDashboardPage && <Footer />}
       <ScrollToTop />
     </div>
   );
