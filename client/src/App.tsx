@@ -22,6 +22,8 @@ import AdminPage from './pages/AdminPage';
 import CreatorPage from './pages/CreatorPage';
 import ProfessionalAdminPage from './pages/ProfessionalAdminPage';
 import ProfessionalCreatorPage from './pages/ProfessionalCreatorPage';
+import ImprovedAdminPage from './pages/ImprovedAdminPage';
+import ImprovedCreatorPage from './pages/ImprovedCreatorPage';
 import LoginPage from './pages/LoginPage';
 import GitHubToolsPage from './pages/GitHubToolsPage';
 import AboutPage from './pages/AboutPage';
@@ -47,8 +49,8 @@ function AppContent() {
           <Route path="/community" component={CommunityPage} />
           <Route path="/blog" component={BlogPage} />
           <Route path="/blog/:slug" component={EnhancedBlogPostPage} />
-          <Route path="/admin" component={ProfessionalAdminPage} />
-          <Route path="/creator" component={ProfessionalCreatorPage} />
+          <Route path="/admin" component={ImprovedAdminPage} />
+          <Route path="/creator" component={ImprovedCreatorPage} />
           <Route path="/login" component={LoginPage} />
           <Route path="/github-tools" component={GitHubToolsPage} />
           <Route path="/tools" component={GitHubToolsPage} />

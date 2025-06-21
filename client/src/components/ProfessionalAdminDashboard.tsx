@@ -56,6 +56,7 @@ import {
 } from 'lucide-react';
 import { useTheme } from '../contexts/ThemeContext';
 import { useAuth } from '../contexts/AuthContext';
+import ProfessionalDashboardLayout from './ProfessionalDashboardLayout';
 
 const ProfessionalAdminDashboard = () => {
   const { isDark } = useTheme();
