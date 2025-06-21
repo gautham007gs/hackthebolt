@@ -63,22 +63,22 @@ const Footer = () => {
               Empowering the next generation of cybersecurity professionals through hands-on learning and real-world scenarios.
             </p>
             
-            {/* Big Responsive Newsletter CTA */}
-            <div className={`p-6 sm:p-8 lg:p-10 rounded-3xl relative overflow-hidden ${
+            {/* Big Responsive Newsletter CTA - Fixed Desktop Sizing */}
+            <div className={`p-6 sm:p-8 md:p-10 xl:p-12 rounded-3xl relative overflow-hidden ${
               isDark ? 'bg-gradient-to-br from-emerald-500/20 to-cyan-500/20 border-emerald-500/30' : 'bg-gradient-to-br from-emerald-50 to-cyan-50 border-emerald-200'
             } border-2`}>
               <div className="relative z-10">
-                <div className="flex flex-col sm:flex-row sm:items-center gap-4 mb-6">
-                  <div className={`w-12 h-12 sm:w-16 sm:h-16 rounded-2xl ${
+                <div className="flex flex-col lg:flex-row lg:items-center gap-4 md:gap-6 mb-6">
+                  <div className={`w-12 h-12 sm:w-16 sm:h-16 md:w-20 md:h-20 rounded-2xl ${
                     isDark ? 'bg-emerald-500/20' : 'bg-emerald-100'
                   } flex items-center justify-center flex-shrink-0`}>
-                    <Shield className={`h-6 w-6 sm:h-8 sm:w-8 ${isDark ? 'text-emerald-400' : 'text-emerald-600'}`} />
+                    <Shield className={`h-6 w-6 sm:h-8 sm:w-8 md:h-10 md:w-10 ${isDark ? 'text-emerald-400' : 'text-emerald-600'}`} />
                   </div>
-                  <div>
-                    <h3 className={`text-xl sm:text-2xl lg:text-3xl font-bold ${isDark ? 'text-white' : 'text-gray-900'} mb-2`}>
+                  <div className="min-w-0 flex-1">
+                    <h3 className={`text-xl sm:text-2xl md:text-3xl xl:text-4xl font-bold ${isDark ? 'text-white' : 'text-gray-900'} mb-2 leading-tight`}>
                       Join 10,000+ Security Professionals
                     </h3>
-                    <p className={`text-base sm:text-lg ${isDark ? 'text-gray-300' : 'text-gray-700'}`}>
+                    <p className={`text-base sm:text-lg md:text-xl ${isDark ? 'text-gray-300' : 'text-gray-700'} leading-relaxed`}>
                       Get exclusive threat intelligence, tutorials, and security alerts
                     </p>
                   </div>

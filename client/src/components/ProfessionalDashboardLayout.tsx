@@ -268,7 +268,7 @@ const ProfessionalDashboardLayout: React.FC<ProfessionalDashboardLayoutProps> = 
       </div>
 
       {/* Main Content */}
-      <div className={`flex-1 ${sidebarCollapsed ? 'ml-16' : 'ml-64'} transition-all duration-300`}>
+      <div className={`flex-1 ${sidebarCollapsed ? 'ml-16' : 'ml-64'} transition-all duration-300 min-h-screen flex flex-col`}>
         {/* Top Header */}
         <header className={`${
           isDark ? 'bg-gray-800 border-gray-700' : 'bg-white border-gray-200'
@@ -363,7 +363,7 @@ const ProfessionalDashboardLayout: React.FC<ProfessionalDashboardLayoutProps> = 
         </header>
 
         {/* Main Content Area */}
-        <main className="p-6">
+        <main className="flex-1 p-6 pb-20">
           {children}
         </main>
       </div>

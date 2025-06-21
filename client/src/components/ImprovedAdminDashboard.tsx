@@ -173,47 +173,89 @@ const ImprovedAdminDashboard = () => {
 
   // Render dashboard overview
   const renderDashboard = () => (
-    <div className="space-y-6">
-      {/* Stats Grid */}
+    <div className="space-y-8">
+      {/* Enhanced Stats Grid with Better Visual Design */}
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
         {[
-          { label: 'Total Users', value: dashboardStats.totalUsers.toLocaleString(), icon: Users, change: '+12.5%', trend: 'up' },
-          { label: 'Active Users', value: dashboardStats.activeUsers.toLocaleString(), icon: UserCheck, change: '+8.2%', trend: 'up' },
-          { label: 'Pending Reviews', value: dashboardStats.pendingBlogs, icon: AlertTriangle, change: '-5.1%', trend: 'down' },
-          { label: 'System Health', value: `${dashboardStats.systemHealth}%`, icon: Activity, change: '+0.3%', trend: 'up' }
+          { 
+            label: 'Total Users', 
+            value: dashboardStats.totalUsers.toLocaleString(), 
+            icon: Users, 
+            change: '+12.5%', 
+            trend: 'up',
+            color: 'blue',
+            bgGradient: 'from-blue-500/10 to-blue-600/10',
+            borderColor: 'border-blue-500/20'
+          },
+          { 
+            label: 'Active Users', 
+            value: dashboardStats.activeUsers.toLocaleString(), 
+            icon: UserCheck, 
+            change: '+8.2%', 
+            trend: 'up',
+            color: 'green',
+            bgGradient: 'from-green-500/10 to-green-600/10',
+            borderColor: 'border-green-500/20'
+          },
+          { 
+            label: 'Pending Reviews', 
+            value: dashboardStats.pendingBlogs, 
+            icon: AlertTriangle, 
+            change: '-5.1%', 
+            trend: 'down',
+            color: 'orange',
+            bgGradient: 'from-orange-500/10 to-orange-600/10',
+            borderColor: 'border-orange-500/20'
+          },
+          { 
+            label: 'System Health', 
+            value: `${dashboardStats.systemHealth}%`, 
+            icon: Activity, 
+            change: '+0.3%', 
+            trend: 'up',
+            color: 'emerald',
+            bgGradient: 'from-emerald-500/10 to-emerald-600/10',
+            borderColor: 'border-emerald-500/20'
+          }
         ].map((stat, index) => (
           <motion.div
             key={stat.label}
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: index * 0.1 }}
-            className={`p-6 rounded-xl ${
-              isDark ? 'bg-gray-800 border-gray-700' : 'bg-white border-gray-200'
-            } border shadow-sm hover:shadow-md transition-all duration-200`}
+            className={`relative p-6 rounded-2xl bg-gradient-to-br ${stat.bgGradient} ${
+              isDark ? 'bg-gray-800/50 border-gray-700/50' : 'bg-white/80 border-gray-200/50'
+            } border ${stat.borderColor} backdrop-blur-sm shadow-lg hover:shadow-xl transition-all duration-300 group overflow-hidden`}
           >
-            <div className="flex items-center justify-between">
-              <div>
-                <p className={`text-sm font-medium ${isDark ? 'text-gray-400' : 'text-gray-600'}`}>
-                  {stat.label}
-                </p>
-                <p className={`text-2xl font-bold mt-1 ${isDark ? 'text-white' : 'text-gray-900'}`}>
-                  {stat.value}
-                </p>
-                <div className="flex items-center mt-2">
-                  <span className={`text-sm font-medium ${
-                    stat.trend === 'up' ? 'text-green-500' : 'text-red-500'
-                  }`}>
-                    {stat.change}
-                  </span>
-                  <span className={`text-sm ml-1 ${isDark ? 'text-gray-400' : 'text-gray-500'}`}>
-                    vs last month
-                  </span>
+            {/* Background Pattern */}
+            <div className="absolute inset-0 opacity-5">
+              <div className="absolute inset-0 bg-gradient-to-br from-current to-transparent"></div>
+            </div>
+            
+            <div className="relative z-10">
+              <div className="flex items-center justify-between mb-4">
+                <div className={`p-3 rounded-xl bg-gradient-to-br from-${stat.color}-500/20 to-${stat.color}-600/20 group-hover:scale-110 transition-transform duration-300`}>
+                  <stat.icon className={`h-6 w-6 text-${stat.color}-500`} />
+                </div>
+                <div className={`px-3 py-1 rounded-full text-xs font-medium ${
+                  stat.trend === 'up' 
+                    ? 'bg-green-100 text-green-700 dark:bg-green-900/30 dark:text-green-400' 
+                    : 'bg-red-100 text-red-700 dark:bg-red-900/30 dark:text-red-400'
+                }`}>
+                  {stat.change}
                 </div>
               </div>
-              <div className={`p-3 rounded-lg ${
-                isDark ? 'bg-gray-700' : 'bg-gray-100'
-              }`}>
-                <stat.icon className={`h-6 w-6 ${isDark ? 'text-gray-300' : 'text-gray-600'}`} />
+              
+              <div>
+                <p className={`text-sm font-medium mb-1 ${isDark ? 'text-gray-400' : 'text-gray-600'}`}>
+                  {stat.label}
+                </p>
+                <p className={`text-3xl font-bold ${isDark ? 'text-white' : 'text-gray-900'} mb-2`}>
+                  {stat.value}
+                </p>
+                <p className={`text-xs ${isDark ? 'text-gray-500' : 'text-gray-500'}`}>
+                  vs last month
+                </p>
               </div>
             </div>
           </motion.div>
