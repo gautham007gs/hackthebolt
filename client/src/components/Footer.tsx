@@ -46,9 +46,99 @@ const Footer = () => {
   return (
     <footer className={`${isDark ? 'bg-gray-900 border-gray-800' : 'bg-white border-gray-200'} border-t`}>
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
+        {/* Newsletter Section - Full Width Professional Design */}
+        <div className="mb-16">
+          <div className={`relative overflow-hidden rounded-3xl ${
+            isDark ? 'bg-gradient-to-r from-emerald-900/50 via-gray-800/50 to-cyan-900/50 border-emerald-500/20' : 'bg-gradient-to-r from-emerald-50 via-white to-cyan-50 border-emerald-200'
+          } border-2 shadow-2xl`}>
+            {/* Background Effects */}
+            <div className="absolute inset-0 opacity-30">
+              <div className="absolute top-0 right-0 w-96 h-96 bg-gradient-to-br from-emerald-400/20 to-cyan-400/20 rounded-full -translate-y-48 translate-x-48"></div>
+              <div className="absolute bottom-0 left-0 w-80 h-80 bg-gradient-to-tr from-emerald-400/15 to-cyan-400/15 rounded-full translate-y-40 -translate-x-40"></div>
+            </div>
+            
+            <div className="relative z-10 px-8 py-12 sm:px-12 sm:py-16 lg:px-16 lg:py-20">
+              <div className="grid lg:grid-cols-2 gap-8 lg:gap-16 items-center">
+                {/* Content Section */}
+                <div className="text-center lg:text-left">
+                  <div className="flex items-center justify-center lg:justify-start space-x-4 mb-6">
+                    <div className={`w-16 h-16 lg:w-20 lg:h-20 rounded-2xl ${
+                      isDark ? 'bg-emerald-500/20' : 'bg-emerald-100'
+                    } flex items-center justify-center`}>
+                      <Shield className={`h-8 w-8 lg:h-10 lg:w-10 ${isDark ? 'text-emerald-400' : 'text-emerald-600'}`} />
+                    </div>
+                    <div className="text-left">
+                      <h3 className={`text-2xl sm:text-3xl lg:text-4xl xl:text-5xl font-bold ${isDark ? 'text-white' : 'text-gray-900'} leading-tight`}>
+                        Join 10,000+
+                      </h3>
+                      <p className={`text-xl sm:text-2xl lg:text-3xl font-bold ${isDark ? 'text-emerald-400' : 'text-emerald-600'} leading-tight`}>
+                        Security Professionals
+                      </p>
+                    </div>
+                  </div>
+                  <p className={`text-lg sm:text-xl lg:text-2xl ${isDark ? 'text-gray-300' : 'text-gray-700'} leading-relaxed mb-8`}>
+                    Get exclusive threat intelligence, cutting-edge tutorials, and real-time security alerts delivered directly to your inbox.
+                  </p>
+                </div>
+
+                {/* Form Section */}
+                <div className="w-full max-w-md mx-auto lg:max-w-none">
+                  {subscribed ? (
+                    <div className="flex items-center justify-center space-x-3 text-emerald-500 text-xl font-medium py-8 bg-emerald-50 dark:bg-emerald-900/30 rounded-2xl">
+                      <div className="w-4 h-4 bg-emerald-500 rounded-full animate-pulse"></div>
+                      <span>Successfully subscribed! Welcome to the community.</span>
+                    </div>
+                  ) : (
+                    <div className="space-y-6">
+                      <form onSubmit={handleSubscribe} className="space-y-4">
+                        <div className="flex flex-col sm:flex-row gap-4">
+                          <input
+                            type="email"
+                            value={email}
+                            onChange={(e) => setEmail(e.target.value)}
+                            placeholder="Enter your professional email"
+                            className={`flex-1 px-6 py-4 rounded-2xl border-2 text-lg ${
+                              isDark 
+                                ? 'bg-gray-800/80 border-gray-600 text-white placeholder-gray-400 focus:border-emerald-400' 
+                                : 'bg-white/90 border-gray-300 text-gray-900 placeholder-gray-500 focus:border-emerald-600'
+                            } focus:outline-none focus:ring-2 focus:ring-emerald-500/20 backdrop-blur-sm transition-all duration-200 shadow-lg`}
+                            required
+                          />
+                          <button
+                            type="submit"
+                            className="px-8 py-4 bg-gradient-to-r from-emerald-600 to-cyan-600 hover:from-emerald-700 hover:to-cyan-700 text-white rounded-2xl font-bold text-lg transition-all duration-300 transform hover:scale-105 hover:shadow-2xl flex items-center justify-center space-x-3 shadow-lg whitespace-nowrap min-w-[220px]"
+                          >
+                            <Send className="h-6 w-6" />
+                            <span>Subscribe Free</span>
+                          </button>
+                        </div>
+                      </form>
+                      <div className="flex items-center justify-center space-x-6 text-sm text-gray-500 dark:text-gray-400">
+                        <span className="flex items-center space-x-2">
+                          <div className="w-2 h-2 bg-green-500 rounded-full"></div>
+                          <span>No spam</span>
+                        </span>
+                        <span className="flex items-center space-x-2">
+                          <div className="w-2 h-2 bg-blue-500 rounded-full"></div>
+                          <span>Unsubscribe anytime</span>
+                        </span>
+                        <span className="flex items-center space-x-2">
+                          <div className="w-2 h-2 bg-purple-500 rounded-full"></div>
+                          <span>Weekly insights</span>
+                        </span>
+                      </div>
+                    </div>
+                  )}
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        {/* Footer Links Section */}
         <div className="grid lg:grid-cols-4 gap-8">
-          {/* Brand & Newsletter - Expanded to take more space on desktop */}
-          <div className="lg:col-span-2">
+          {/* Brand */}
+          <div className="lg:col-span-1">
             <div className="flex items-center space-x-2 mb-6">
               <div className={`w-6 h-4 ${
                 isDark ? 'bg-gray-900 border-emerald-400' : 'bg-gray-50 border-emerald-600'
@@ -62,74 +152,10 @@ const Footer = () => {
             <p className={`${isDark ? 'text-gray-400' : 'text-gray-600'} mb-6 leading-relaxed`}>
               Empowering the next generation of cybersecurity professionals through hands-on learning and real-world scenarios.
             </p>
-            
-            {/* Big Responsive Newsletter CTA - Fixed Desktop Sizing */}
-            <div className={`p-6 sm:p-8 md:p-10 xl:p-12 rounded-3xl relative overflow-hidden ${
-              isDark ? 'bg-gradient-to-br from-emerald-500/20 to-cyan-500/20 border-emerald-500/30' : 'bg-gradient-to-br from-emerald-50 to-cyan-50 border-emerald-200'
-            } border-2`}>
-              <div className="relative z-10">
-                <div className="flex flex-col lg:flex-row lg:items-center gap-4 md:gap-6 mb-6">
-                  <div className={`w-12 h-12 sm:w-16 sm:h-16 md:w-20 md:h-20 rounded-2xl ${
-                    isDark ? 'bg-emerald-500/20' : 'bg-emerald-100'
-                  } flex items-center justify-center flex-shrink-0`}>
-                    <Shield className={`h-6 w-6 sm:h-8 sm:w-8 md:h-10 md:w-10 ${isDark ? 'text-emerald-400' : 'text-emerald-600'}`} />
-                  </div>
-                  <div className="min-w-0 flex-1">
-                    <h3 className={`text-xl sm:text-2xl md:text-3xl xl:text-4xl font-bold ${isDark ? 'text-white' : 'text-gray-900'} mb-2 leading-tight`}>
-                      Join 10,000+ Security Professionals
-                    </h3>
-                    <p className={`text-base sm:text-lg md:text-xl ${isDark ? 'text-gray-300' : 'text-gray-700'} leading-relaxed`}>
-                      Get exclusive threat intelligence, tutorials, and security alerts
-                    </p>
-                  </div>
-                </div>
-                
-                {subscribed ? (
-                  <div className="flex items-center justify-center space-x-3 text-emerald-500 text-lg font-medium py-4">
-                    <div className="w-3 h-3 bg-emerald-500 rounded-full animate-pulse"></div>
-                    <span>Successfully subscribed! Welcome to the community.</span>
-                  </div>
-                ) : (
-                  <form onSubmit={handleSubscribe} className="space-y-4">
-                    <div className="flex flex-col lg:flex-row gap-3 lg:gap-4">
-                      <input
-                        type="email"
-                        value={email}
-                        onChange={(e) => setEmail(e.target.value)}
-                        placeholder="Enter your professional email"
-                        className={`flex-1 px-6 py-4 rounded-2xl border-2 text-base lg:text-lg ${
-                          isDark 
-                            ? 'bg-gray-800/80 border-gray-600 text-white placeholder-gray-400 focus:border-emerald-400' 
-                            : 'bg-white/90 border-gray-300 text-gray-900 placeholder-gray-500 focus:border-emerald-600'
-                        } focus:outline-none focus:ring-2 focus:ring-emerald-500/20 backdrop-blur-sm transition-all duration-200`}
-                        required
-                      />
-                      <button
-                        type="submit"
-                        className="px-8 py-4 bg-gradient-to-r from-emerald-600 to-cyan-600 hover:from-emerald-700 hover:to-cyan-700 text-white rounded-2xl font-bold text-base lg:text-lg transition-all duration-300 transform hover:scale-105 hover:shadow-2xl flex items-center justify-center space-x-2 shadow-lg whitespace-nowrap min-w-[200px]"
-                      >
-                        <Send className="h-5 w-5" />
-                        <span>Subscribe Free</span>
-                      </button>
-                    </div>
-                    <div className="flex items-center justify-center space-x-4 text-xs sm:text-sm text-gray-500 dark:text-gray-400">
-                      <span>✓ No spam</span>
-                      <span>✓ Unsubscribe anytime</span>
-                      <span>✓ Weekly insights</span>
-                    </div>
-                  </form>
-                )}
-              </div>
-              
-              {/* Enhanced background decoration */}
-              <div className="absolute top-0 right-0 w-32 h-32 sm:w-40 sm:h-40 bg-gradient-to-br from-emerald-400/20 to-cyan-400/20 rounded-full -translate-y-16 translate-x-16"></div>
-              <div className="absolute bottom-0 left-0 w-24 h-24 sm:w-32 sm:h-32 bg-gradient-to-tr from-emerald-400/15 to-cyan-400/15 rounded-full translate-y-12 -translate-x-12"></div>
-              <div className="absolute top-1/2 left-1/2 w-16 h-16 bg-gradient-to-br from-emerald-400/10 to-cyan-400/10 rounded-full -translate-x-8 -translate-y-8"></div>
-            </div>
           </div>
 
           {/* Links */}
-          <div className="lg:col-span-2 grid md:grid-cols-3 gap-8">
+          <div className="lg:col-span-3 grid md:grid-cols-3 gap-8">
             <div>
               <h4 className={`font-semibold ${isDark ? 'text-white' : 'text-gray-900'} mb-4`}>
                 Learn
