@@ -10,7 +10,8 @@ import {
   ArrowRight,
   Flame,
   Star,
-  Zap
+  Zap,
+  Shield
 } from 'lucide-react';
 import { Link } from 'wouter';
 import { useTheme } from '../contexts/ThemeContext';
@@ -273,70 +274,185 @@ const ProfessionalTrendingSection = () => {
             </div>
           </motion.div>
 
-          {/* Trending List */}
-          <motion.div variants={itemVariants} className="space-y-4">
-            <div className={`p-6 rounded-xl ${isDark ? 'bg-gray-800 border-gray-700' : 'bg-white border-blue-100 shadow-blue-50/50'} border shadow-lg`}>
-              <div className="flex items-center space-x-2 mb-6">
-                <Zap className="h-5 w-5 text-yellow-500" />
-                <h3 className={`text-lg font-semibold ${isDark ? 'text-white' : 'text-gray-900'}`}>
-                  Top Trending
-                </h3>
+          {/* Trending List & Security Alerts - Enhanced for Desktop */}
+          <motion.div variants={itemVariants} className="space-y-6">
+            {/* Trending Now Box - Professional Desktop Design */}
+            <div className={`${isDark ? 'bg-gradient-to-br from-gray-800 via-gray-800 to-gray-900 border-gray-700' : 'bg-gradient-to-br from-white via-blue-50/30 to-indigo-50/40 border-blue-100 shadow-blue-50/50'} border shadow-xl rounded-2xl overflow-hidden transition-all duration-300 hover:shadow-2xl hover:scale-[1.02]`}>
+              {/* Header with enhanced styling */}
+              <div className={`${isDark ? 'bg-gradient-to-r from-orange-500/10 to-red-500/10 border-b border-gray-700' : 'bg-gradient-to-r from-orange-50 to-red-50 border-b border-orange-100'} p-6 pb-4`}>
+                <div className="flex items-center justify-between">
+                  <div className="flex items-center space-x-3">
+                    <div className="relative">
+                      <Flame className="h-6 w-6 text-orange-500" />
+                      <div className="absolute -top-1 -right-1 w-3 h-3 bg-red-500 rounded-full animate-pulse" />
+                    </div>
+                    <h3 className={`text-xl font-bold ${isDark ? 'text-white' : 'text-gray-900'}`}>
+                      🔥 Trending Now
+                    </h3>
+                  </div>
+                  <div className={`px-3 py-1 rounded-full text-xs font-medium ${isDark ? 'bg-orange-500/20 text-orange-400' : 'bg-orange-100 text-orange-700'}`}>
+                    Live
+                  </div>
+                </div>
               </div>
 
-              <div className="space-y-4">
-                {trendingPosts.map((post, index) => (
-                  <motion.div
-                    key={post.id}
-                    whileHover={{ x: 8 }}
-                    transition={{ duration: 0.2, ease: "easeOut" }}
-                    className={`p-4 rounded-lg transition-all duration-300 cursor-pointer ${
-                      index === activeIndex
-                        ? isDark ? 'bg-gray-700 border-orange-500/50' : 'bg-blue-50 border-blue-200'
-                        : isDark ? 'hover:bg-gray-700' : 'hover:bg-blue-50/50'
-                    } border ${isDark ? 'border-gray-600' : 'border-blue-100'}`}
-                    onClick={() => setActiveIndex(index)}
-                  >
-                    <div className="flex items-start space-x-3">
-                      <div className={`flex-shrink-0 w-8 h-8 rounded-full flex items-center justify-center text-sm font-bold ${
-                        index === 0 ? 'bg-gradient-to-r from-yellow-400 to-orange-500 text-white' :
-                        index === 1 ? 'bg-gradient-to-r from-orange-400 to-red-500 text-white' :
-                        'bg-gradient-to-r from-red-400 to-pink-500 text-white'
-                      }`}>
-                        {index + 1}
-                      </div>
-                      
-                      <div className="flex-1 min-w-0">
-                        <h4 className={`font-semibold text-sm mb-1 line-clamp-2 ${
-                          isDark ? 'text-white' : 'text-gray-900'
+              {/* Enhanced content area */}
+              <div className="p-6">
+                <div className="space-y-5">
+                  {trendingPosts.map((post, index) => (
+                    <motion.div
+                      key={post.id}
+                      whileHover={{ x: 8, scale: 1.02 }}
+                      transition={{ duration: 0.2, ease: "easeOut" }}
+                      className={`p-5 rounded-xl transition-all duration-300 cursor-pointer group ${
+                        index === activeIndex
+                          ? isDark ? 'bg-gradient-to-r from-gray-700 to-gray-700/80 border-orange-500/50 shadow-lg' : 'bg-gradient-to-r from-blue-50 to-indigo-50 border-blue-200 shadow-md'
+                          : isDark ? 'hover:bg-gray-700/50 border-gray-600/50' : 'hover:bg-blue-50/30 border-blue-100/50'
+                      } border backdrop-blur-sm`}
+                      onClick={() => setActiveIndex(index)}
+                    >
+                      <div className="flex items-start space-x-4">
+                        <div className={`flex-shrink-0 w-10 h-10 rounded-full flex items-center justify-center text-sm font-bold shadow-lg ${
+                          index === 0 ? 'bg-gradient-to-r from-yellow-400 to-orange-500 text-white' :
+                          index === 1 ? 'bg-gradient-to-r from-orange-400 to-red-500 text-white' :
+                          'bg-gradient-to-r from-red-400 to-pink-500 text-white'
                         }`}>
-                          {post.title}
-                        </h4>
+                          {index + 1}
+                        </div>
                         
-                        <div className="flex items-center space-x-3 text-xs">
-                          <span className={isDark ? 'text-gray-400' : 'text-gray-500'}>
-                            {post.author}
-                          </span>
-                          <div className={`flex items-center space-x-1 ${isDark ? 'text-gray-400' : 'text-gray-500'}`}>
-                            <Eye className="h-3 w-3" />
-                            <span>{(post.views / 1000).toFixed(1)}K</span>
+                        <div className="flex-1 min-w-0">
+                          <h4 className={`font-bold text-base mb-2 line-clamp-2 group-hover:text-orange-500 transition-colors ${
+                            isDark ? 'text-white' : 'text-gray-900'
+                          }`}>
+                            {post.title}
+                          </h4>
+                          
+                          <div className="flex items-center justify-between">
+                            <div className="flex items-center space-x-4 text-sm">
+                              <span className={`font-medium ${isDark ? 'text-gray-300' : 'text-gray-600'}`}>
+                                {post.author}
+                              </span>
+                              <div className={`flex items-center space-x-1 ${isDark ? 'text-gray-400' : 'text-gray-500'}`}>
+                                <Eye className="h-4 w-4" />
+                                <span>{(post.views / 1000).toFixed(1)}K</span>
+                              </div>
+                            </div>
+                            <div className={`px-2 py-1 rounded-full text-xs font-medium ${isDark ? 'bg-gray-600 text-gray-300' : 'bg-gray-100 text-gray-600'}`}>
+                              {post.category}
+                            </div>
                           </div>
                         </div>
                       </div>
+                    </motion.div>
+                  ))}
+                </div>
+
+                <Link href="/blog">
+                  <motion.button
+                    whileHover={{ scale: 1.02 }}
+                    whileTap={{ scale: 0.98 }}
+                    className="w-full mt-6 bg-gradient-to-r from-orange-500 to-red-500 hover:from-orange-600 hover:to-red-600 text-white py-4 px-6 rounded-xl font-bold text-base transition-all duration-300 flex items-center justify-center space-x-3 shadow-lg hover:shadow-xl"
+                  >
+                    <span>View All Trending</span>
+                    <ArrowRight className="h-5 w-5" />
+                  </motion.button>
+                </Link>
+              </div>
+            </div>
+
+            {/* Security Alerts Box - Professional Desktop Design */}
+            <div className={`${isDark ? 'bg-gradient-to-br from-red-900/20 via-gray-800 to-orange-900/20 border-red-700/50' : 'bg-gradient-to-br from-red-50 via-white to-orange-50 border-red-200'} border shadow-xl rounded-2xl overflow-hidden transition-all duration-300 hover:shadow-2xl hover:scale-[1.02]`}>
+              {/* Header */}
+              <div className={`${isDark ? 'bg-gradient-to-r from-red-500/10 to-orange-500/10 border-b border-red-700/50' : 'bg-gradient-to-r from-red-50 to-orange-50 border-b border-red-100'} p-6 pb-4`}>
+                <div className="flex items-center justify-between">
+                  <div className="flex items-center space-x-3">
+                    <div className="relative">
+                      <Shield className="h-6 w-6 text-red-500" />
+                      <div className="absolute -top-1 -right-1 w-3 h-3 bg-orange-500 rounded-full animate-pulse" />
                     </div>
-                  </motion.div>
-                ))}
+                    <h3 className={`text-xl font-bold ${isDark ? 'text-white' : 'text-gray-900'}`}>
+                      🚨 Security Alerts
+                    </h3>
+                  </div>
+                  <div className={`px-3 py-1 rounded-full text-xs font-medium ${isDark ? 'bg-red-500/20 text-red-400' : 'bg-red-100 text-red-700'}`}>
+                    Critical
+                  </div>
+                </div>
               </div>
 
-              <Link href="/blog">
+              {/* Content */}
+              <div className="p-6">
+                <div className="space-y-4">
+                  <motion.div
+                    whileHover={{ x: 6 }}
+                    className={`p-4 rounded-xl border transition-all duration-300 ${isDark ? 'bg-red-900/20 border-red-700/50 hover:bg-red-900/30' : 'bg-red-50 border-red-200 hover:bg-red-100'}`}
+                  >
+                    <div className="flex items-start space-x-3">
+                      <div className="w-3 h-3 bg-red-500 rounded-full mt-2 animate-pulse"></div>
+                      <div>
+                        <h4 className={`font-bold text-sm mb-1 ${isDark ? 'text-red-400' : 'text-red-700'}`}>
+                          Critical CVE-2024-0001
+                        </h4>
+                        <p className={`text-sm ${isDark ? 'text-gray-300' : 'text-gray-600'}`}>
+                          Remote code execution in Apache framework
+                        </p>
+                        <span className={`text-xs ${isDark ? 'text-gray-400' : 'text-gray-500'}`}>
+                          2 hours ago
+                        </span>
+                      </div>
+                    </div>
+                  </motion.div>
+
+                  <motion.div
+                    whileHover={{ x: 6 }}
+                    className={`p-4 rounded-xl border transition-all duration-300 ${isDark ? 'bg-orange-900/20 border-orange-700/50 hover:bg-orange-900/30' : 'bg-orange-50 border-orange-200 hover:bg-orange-100'}`}
+                  >
+                    <div className="flex items-start space-x-3">
+                      <div className="w-3 h-3 bg-orange-500 rounded-full mt-2 animate-pulse"></div>
+                      <div>
+                        <h4 className={`font-bold text-sm mb-1 ${isDark ? 'text-orange-400' : 'text-orange-700'}`}>
+                          Ransomware Campaign
+                        </h4>
+                        <p className={`text-sm ${isDark ? 'text-gray-300' : 'text-gray-600'}`}>
+                          New variant targeting healthcare systems
+                        </p>
+                        <span className={`text-xs ${isDark ? 'text-gray-400' : 'text-gray-500'}`}>
+                          4 hours ago
+                        </span>
+                      </div>
+                    </div>
+                  </motion.div>
+
+                  <motion.div
+                    whileHover={{ x: 6 }}
+                    className={`p-4 rounded-xl border transition-all duration-300 ${isDark ? 'bg-yellow-900/20 border-yellow-700/50 hover:bg-yellow-900/30' : 'bg-yellow-50 border-yellow-200 hover:bg-yellow-100'}`}
+                  >
+                    <div className="flex items-start space-x-3">
+                      <div className="w-3 h-3 bg-yellow-500 rounded-full mt-2 animate-pulse"></div>
+                      <div>
+                        <h4 className={`font-bold text-sm mb-1 ${isDark ? 'text-yellow-400' : 'text-yellow-700'}`}>
+                          Phishing Surge
+                        </h4>
+                        <p className={`text-sm ${isDark ? 'text-gray-300' : 'text-gray-600'}`}>
+                          AI-generated phishing emails detected
+                        </p>
+                        <span className={`text-xs ${isDark ? 'text-gray-400' : 'text-gray-500'}`}>
+                          6 hours ago
+                        </span>
+                      </div>
+                    </div>
+                  </motion.div>
+                </div>
+
                 <motion.button
                   whileHover={{ scale: 1.02 }}
                   whileTap={{ scale: 0.98 }}
-                  className="w-full mt-6 bg-gradient-to-r from-orange-500 to-red-500 hover:from-orange-600 hover:to-red-600 text-white py-3 px-4 rounded-lg font-medium transition-all duration-300 flex items-center justify-center space-x-2 shadow-lg hover:shadow-xl"
+                  className="w-full mt-6 bg-gradient-to-r from-red-500 to-orange-500 hover:from-red-600 hover:to-orange-600 text-white py-4 px-6 rounded-xl font-bold text-base transition-all duration-300 flex items-center justify-center space-x-3 shadow-lg hover:shadow-xl"
                 >
-                  <span>View All Trending</span>
-                  <ArrowRight className="h-4 w-4" />
+                  <span>View All Alerts</span>
+                  <ArrowRight className="h-5 w-5" />
                 </motion.button>
-              </Link>
+              </div>
             </div>
           </motion.div>
         </motion.div>
