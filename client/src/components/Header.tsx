@@ -33,6 +33,7 @@ const Header = () => {
         { name: 'Certifications', href: '/certifications' }
       ]
     },
+    { name: 'News', href: '/news' },
     { name: 'Blog', href: '/blog' },
     { name: 'Tools', href: '/github-tools' },
     { name: 'Community', href: '/community' },

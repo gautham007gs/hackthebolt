@@ -1,8 +1,10 @@
 import React from 'react';
 import { Router, Route, Switch, useLocation } from 'wouter';
+import { QueryClientProvider } from '@tanstack/react-query';
 import { ThemeProvider } from './contexts/ThemeContext';
 import { AuthProvider } from './contexts/AuthContext';
 import { ProgressProvider } from './contexts/ProgressContext';
+import { queryClient } from './lib/queryClient';
 import ProfessionalHeader from './components/ProfessionalHeader';
 import Footer from './components/Footer';
 import ScrollToTop from './components/ScrollToTop';
@@ -18,12 +20,13 @@ import CertificationsPage from './pages/CertificationsPage';
 import CommunityPage from './pages/CommunityPage';
 import BlogPage from './pages/BlogPage';
 import EnhancedBlogPostPage from './pages/EnhancedBlogPostPage';
+import { NewsPage } from './pages/NewsPage';
 import AdminPage from './pages/AdminPage';
 import CreatorPage from './pages/CreatorPage';
 import ProfessionalAdminPage from './pages/ProfessionalAdminPage';
 import ProfessionalCreatorPage from './pages/ProfessionalCreatorPage';
 import ImprovedAdminPage from './pages/ImprovedAdminPage';
-import ImprovedCreatorPage from './pages/ImprovedCreatorPage';
+import ImprovedCreatorPageWithEditor from './pages/ImprovedCreatorPageWithEditor';
 import LoginPage from './pages/LoginPage';
 import GitHubToolsPage from './pages/GitHubToolsPage';
 import AboutPage from './pages/AboutPage';
@@ -53,8 +56,9 @@ function AppContent() {
           <Route path="/community" component={CommunityPage} />
           <Route path="/blog" component={BlogPage} />
           <Route path="/blog/:slug" component={EnhancedBlogPostPage} />
+          <Route path="/news" component={NewsPage} />
           <Route path="/admin" component={ImprovedAdminPage} />
-          <Route path="/creator" component={ImprovedCreatorPage} />
+          <Route path="/creator" component={ImprovedCreatorPageWithEditor} />
           <Route path="/login" component={LoginPage} />
           <Route path="/github-tools" component={GitHubToolsPage} />
           <Route path="/tools" component={GitHubToolsPage} />
@@ -72,15 +76,17 @@ function AppContent() {
 function App() {
   return (
     <ErrorBoundary>
-      <ThemeProvider>
-        <AuthProvider>
-          <ProgressProvider>
-            <Router>
-              <AppContent />
-            </Router>
-          </ProgressProvider>
-        </AuthProvider>
-      </ThemeProvider>
+      <QueryClientProvider client={queryClient}>
+        <ThemeProvider>
+          <AuthProvider>
+            <ProgressProvider>
+              <Router>
+                <AppContent />
+              </Router>
+            </ProgressProvider>
+          </AuthProvider>
+        </ThemeProvider>
+      </QueryClientProvider>
     </ErrorBoundary>
   );
 }
