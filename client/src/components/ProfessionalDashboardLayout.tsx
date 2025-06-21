@@ -301,7 +301,7 @@ const ProfessionalDashboardLayout: React.FC<ProfessionalDashboardLayoutProps> = 
       </motion.div>
 
       {/* Main Content */}
-      <div className={`flex-1 ${sidebarCollapsed ? 'lg:ml-16' : 'lg:ml-64'} transition-all duration-300 min-h-screen flex flex-col`}>
+      <div className={`flex-1 ${sidebarCollapsed ? 'lg:ml-16' : 'lg:ml-64'} transition-all duration-300 min-h-screen flex flex-col w-full lg:w-auto`}>
         {/* Top Header */}
         <header className={`${
           isDark ? 'bg-gray-800 border-gray-700' : 'bg-white border-gray-200'
