@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { Link } from 'wouter';
 import { useTheme } from '../contexts/ThemeContext';
 import { Github, Twitter, Linkedin, Youtube, Send, ChevronRight, Shield } from 'lucide-react';
+import { motion } from 'framer-motion';
 
 const Footer = () => {
   const { isDark } = useTheme();
@@ -48,13 +49,14 @@ const Footer = () => {
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
         {/* Newsletter Section - Full Width Professional Design */}
         <div className="mb-16">
-          <div className={`relative overflow-hidden rounded-2xl ${
-            isDark ? 'bg-gradient-to-br from-emerald-900/40 via-gray-800/40 to-cyan-900/40 border-emerald-500/30' : 'bg-gradient-to-br from-emerald-50 via-white to-cyan-50 border-emerald-200'
-          } border shadow-xl`}>
+          <div className={`relative overflow-hidden rounded-3xl ${
+            isDark ? 'bg-gradient-to-br from-emerald-900/50 via-gray-800/30 to-cyan-900/50' : 'bg-gradient-to-br from-emerald-50 via-white to-cyan-50'
+          } shadow-2xl border-0`}>
             {/* Background Effects */}
-            <div className="absolute inset-0 opacity-20">
-              <div className="absolute top-0 right-0 w-64 h-64 bg-gradient-to-br from-emerald-400/30 to-cyan-400/30 rounded-full -translate-y-32 translate-x-32"></div>
-              <div className="absolute bottom-0 left-0 w-48 h-48 bg-gradient-to-tr from-emerald-400/20 to-cyan-400/20 rounded-full translate-y-24 -translate-x-24"></div>
+            <div className="absolute inset-0">
+              <div className="absolute top-0 right-0 w-80 h-80 bg-gradient-to-br from-emerald-400/10 to-cyan-400/10 rounded-full -translate-y-40 translate-x-40 filter blur-3xl"></div>
+              <div className="absolute bottom-0 left-0 w-96 h-96 bg-gradient-to-tr from-cyan-400/10 to-purple-400/10 rounded-full translate-y-48 -translate-x-48 filter blur-3xl"></div>
+              <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-64 h-64 bg-gradient-to-r from-emerald-400/5 to-cyan-400/5 rounded-full filter blur-2xl"></div>
             </div>
             
             <div className="relative z-10 px-4 py-6 sm:px-6 sm:py-8 lg:px-10 lg:py-10">
@@ -91,26 +93,31 @@ const Footer = () => {
                   ) : (
                     <div className="space-y-4 lg:space-y-6">
                       <form onSubmit={handleSubscribe} className="space-y-4">
-                        <div className="flex flex-col sm:flex-row gap-2 sm:gap-3">
-                          <input
-                            type="email"
-                            value={email}
-                            onChange={(e) => setEmail(e.target.value)}
-                            placeholder="Enter your email"
-                            className={`flex-1 px-3 py-2.5 sm:px-4 sm:py-3 lg:px-6 lg:py-4 rounded-lg lg:rounded-xl border-2 text-sm sm:text-base lg:text-lg ${
-                              isDark 
-                                ? 'bg-gray-800/80 border-gray-600 text-white placeholder-gray-400 focus:border-emerald-400' 
-                                : 'bg-white/90 border-gray-300 text-gray-900 placeholder-gray-500 focus:border-emerald-600'
-                            } focus:outline-none focus:ring-2 focus:ring-emerald-500/20 backdrop-blur-sm transition-all duration-200 shadow-lg`}
-                            required
-                          />
-                          <button
+                        <div className="flex flex-col sm:flex-row gap-3 sm:gap-4">
+                          <div className="flex-1 relative group">
+                            <input
+                              type="email"
+                              value={email}
+                              onChange={(e) => setEmail(e.target.value)}
+                              placeholder="Enter your professional email"
+                              className={`w-full px-4 py-3 sm:px-5 sm:py-4 lg:px-6 lg:py-5 rounded-2xl border-0 text-sm sm:text-base lg:text-lg font-medium ${
+                                isDark 
+                                  ? 'bg-white/10 text-white placeholder-gray-300 focus:bg-white/15' 
+                                  : 'bg-white/80 text-gray-900 placeholder-gray-500 focus:bg-white'
+                              } focus:outline-none focus:ring-3 focus:ring-emerald-400/30 backdrop-blur-lg transition-all duration-300 shadow-xl group-hover:shadow-2xl`}
+                              required
+                            />
+                            <div className="absolute inset-0 rounded-2xl bg-gradient-to-r from-emerald-400/20 to-cyan-400/20 opacity-0 group-hover:opacity-100 transition-opacity duration-300 pointer-events-none"></div>
+                          </div>
+                          <motion.button
+                            whileHover={{ scale: 1.05 }}
+                            whileTap={{ scale: 0.95 }}
                             type="submit"
-                            className="px-4 py-2.5 sm:px-6 sm:py-3 lg:px-8 lg:py-4 bg-gradient-to-r from-emerald-600 to-cyan-600 hover:from-emerald-700 hover:to-cyan-700 text-white rounded-lg lg:rounded-xl font-bold text-sm sm:text-base lg:text-lg transition-all duration-300 transform hover:scale-105 hover:shadow-2xl flex items-center justify-center space-x-2 shadow-lg whitespace-nowrap"
+                            className="px-6 py-3 sm:px-8 sm:py-4 lg:px-10 lg:py-5 bg-gradient-to-r from-emerald-500 via-cyan-500 to-blue-500 hover:from-emerald-600 hover:via-cyan-600 hover:to-blue-600 text-white rounded-2xl font-bold text-sm sm:text-base lg:text-lg transition-all duration-300 flex items-center justify-center space-x-3 shadow-2xl hover:shadow-emerald-500/25 border border-white/20 backdrop-blur-sm whitespace-nowrap"
                           >
                             <Send className="h-4 w-4 sm:h-5 sm:w-5" />
-                            <span>Subscribe</span>
-                          </button>
+                            <span>Get Alerts</span>
+                          </motion.button>
                         </div>
                       </form>
                       <div className="flex flex-wrap items-center justify-center gap-2 sm:gap-4 text-xs text-gray-500 dark:text-gray-400 mt-3">
