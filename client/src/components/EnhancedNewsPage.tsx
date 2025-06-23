@@ -354,7 +354,8 @@ export function EnhancedNewsPage() {
   return (
     <div className={`min-h-screen pt-16 ${isDark ? 'bg-gray-900' : 'bg-gray-50'}`}>
       {/* Header */}
-      <div className={`${isDark ? 'bg-gray-800/95' : 'bg-white/95'} backdrop-blur-lg border-b ${isDark ? 'border-gray-700' : 'border-gray-200'} sticky top-16 z-10`}>
+      <div className={`${isDark ? 'bg-gray-800/90' : 'bg-white/90'} backdrop-blur-xl sticky top-16 z-10 transition-all duration-300`}>
+        <div className={`absolute bottom-0 left-0 right-0 h-px bg-gradient-to-r ${isDark ? 'from-transparent via-gray-600/30 to-transparent' : 'from-transparent via-gray-300/30 to-transparent'}`}></div>
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4">
           <div className="flex items-center justify-between">
             <div className="flex items-center space-x-3">

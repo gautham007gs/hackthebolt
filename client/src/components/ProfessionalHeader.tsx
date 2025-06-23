@@ -78,7 +78,7 @@ const ProfessionalHeader = () => {
   return (
     <header className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${
       isScrolled 
-        ? `${isDark ? 'bg-gray-900/80 border-gray-800' : 'bg-white/80 border-gray-200'} backdrop-blur-xl border-b shadow-2xl` 
+        ? `${isDark ? 'bg-gray-900/85 border-gray-800/50' : 'bg-white/85 border-gray-200/50'} backdrop-blur-xl border-b` 
         : `${isDark ? 'bg-gray-900/70' : 'bg-white/70'} backdrop-blur-xl`
     }`}>
       <nav className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
