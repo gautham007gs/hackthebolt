@@ -1,8 +1,8 @@
 import React from 'react';
-import ProfessionalCreatorDashboard from '../components/ProfessionalCreatorDashboard';
+import FixedCreatorDashboard from '../components/FixedCreatorDashboard';
 
 const ProfessionalCreatorPage = () => {
-  return <ProfessionalCreatorDashboard />;
+  return <FixedCreatorDashboard />;
 };
 
 export default ProfessionalCreatorPage;

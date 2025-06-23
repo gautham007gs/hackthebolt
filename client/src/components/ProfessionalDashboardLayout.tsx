@@ -340,11 +340,11 @@ const ProfessionalDashboardLayout: React.FC<ProfessionalDashboardLayoutProps> = 
                 <input
                   type="text"
                   placeholder="Search..."
-                  className={`pl-10 pr-4 py-2 w-32 lg:w-64 rounded-lg text-sm ${
+                  className={`pl-10 pr-4 py-2 w-32 lg:w-64 rounded-lg text-sm border transition-colors ${
                     isDark 
-                      ? 'bg-gray-700 border-gray-600 text-white placeholder-gray-400' 
-                      : 'bg-gray-50 border-gray-300 text-gray-900 placeholder-gray-500'
-                  } border focus:outline-none focus:ring-2 focus:ring-emerald-500 focus:border-transparent transition-colors`}
+                      ? 'bg-gray-700/80 border-gray-600/60 text-white placeholder-gray-300 focus:bg-gray-700 focus:border-emerald-400' 
+                      : 'bg-gray-50 border-gray-300 text-gray-900 placeholder-gray-500 focus:bg-white focus:border-emerald-500'
+                  } focus:outline-none focus:ring-1 focus:ring-emerald-500/30`}
                 />
               </div>
 

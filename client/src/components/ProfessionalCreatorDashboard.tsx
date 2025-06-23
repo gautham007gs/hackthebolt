@@ -249,7 +249,7 @@ const ProfessionalCreatorDashboard = () => {
           >
             <div className="flex items-center justify-between">
               <div>
-                <p className={`text-xs font-medium ${isDark ? 'text-gray-300' : 'text-gray-700'}`}>
+                <p className={`text-xs font-medium ${isDark ? 'text-gray-200' : 'text-gray-700'}`}>
                   {stat.label}
                 </p>
                 <p className={`text-lg lg:text-xl font-bold mt-1 ${isDark ? 'text-white' : 'text-gray-900'}`}>
