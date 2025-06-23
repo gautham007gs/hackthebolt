@@ -259,45 +259,73 @@ export function ProfessionalCyberNews() {
           transition={{ delay: 0.1 }}
           className="mb-8"
         >
-          <div className="flex flex-col lg:flex-row gap-4">
-            <div className="flex-1">
-              <div className="relative">
-                <Search className={`absolute left-3 top-1/2 transform -translate-y-1/2 h-4 w-4 ${isDark ? 'text-gray-400' : 'text-gray-500'}`} />
-                <Input
-                  placeholder="Search cybersecurity news..."
-                  value={searchTerm}
-                  onChange={(e) => setSearchTerm(e.target.value)}
-                  className={`pl-10 h-12 ${isDark ? 'bg-gray-800 border-gray-700 text-white' : 'bg-white border-gray-300'}`}
-                />
+          <div className={`p-4 rounded-xl ${isDark ? 'bg-gray-800/50 border border-gray-700' : 'bg-white/80 border border-gray-200'} backdrop-blur-sm`}>
+            {/* Mobile-first responsive layout */}
+            <div className="flex flex-col space-y-3 sm:flex-row sm:space-y-0 sm:space-x-3">
+              {/* Search Input */}
+              <div className="flex-1">
+                <div className="relative">
+                  <Search className={`absolute left-3 top-1/2 transform -translate-y-1/2 h-4 w-4 ${isDark ? 'text-gray-300' : 'text-gray-600'}`} />
+                  <Input
+                    placeholder="Search cybersecurity news..."
+                    value={searchTerm}
+                    onChange={(e) => setSearchTerm(e.target.value)}
+                    className={`pl-10 h-10 sm:h-11 text-sm ${isDark ? 'bg-gray-700 border-gray-600 text-white placeholder:text-gray-400 focus:border-blue-500' : 'bg-white border-gray-300 text-gray-900 placeholder:text-gray-500 focus:border-blue-500'} transition-colors`}
+                  />
+                </div>
+              </div>
+              
+              {/* Filters */}
+              <div className="flex space-x-2 sm:space-x-3">
+                <Select value={selectedCategory} onValueChange={setSelectedCategory}>
+                  <SelectTrigger className={`w-full sm:w-36 h-10 sm:h-11 text-sm ${isDark ? 'bg-gray-700 border-gray-600 text-white focus:border-blue-500' : 'bg-white border-gray-300 text-gray-900 focus:border-blue-500'} transition-colors`}>
+                    <SelectValue placeholder="Category" />
+                  </SelectTrigger>
+                  <SelectContent className={isDark ? 'bg-gray-800 border-gray-700' : 'bg-white border-gray-200'}>
+                    <SelectItem value="all">All Categories</SelectItem>
+                    <SelectItem value="breach">Breaches</SelectItem>
+                    <SelectItem value="vulnerability">Vulnerabilities</SelectItem>
+                    <SelectItem value="threat">Threats</SelectItem>
+                    <SelectItem value="policy">Policy</SelectItem>
+                    <SelectItem value="research">Research</SelectItem>
+                    <SelectItem value="tools">Tools</SelectItem>
+                  </SelectContent>
+                </Select>
+                
+                <Select value={selectedSeverity} onValueChange={setSelectedSeverity}>
+                  <SelectTrigger className={`w-full sm:w-28 h-10 sm:h-11 text-sm ${isDark ? 'bg-gray-700 border-gray-600 text-white focus:border-blue-500' : 'bg-white border-gray-300 text-gray-900 focus:border-blue-500'} transition-colors`}>
+                    <SelectValue placeholder="Severity" />
+                  </SelectTrigger>
+                  <SelectContent className={isDark ? 'bg-gray-800 border-gray-700' : 'bg-white border-gray-200'}>
+                    <SelectItem value="all">All</SelectItem>
+                    <SelectItem value="critical">Critical</SelectItem>
+                    <SelectItem value="high">High</SelectItem>
+                    <SelectItem value="medium">Medium</SelectItem>
+                    <SelectItem value="low">Low</SelectItem>
+                  </SelectContent>
+                </Select>
               </div>
             </div>
-            <div className="flex gap-3">
-              <Select value={selectedCategory} onValueChange={setSelectedCategory}>
-                <SelectTrigger className={`w-full lg:w-40 h-12 ${isDark ? 'bg-gray-800 border-gray-700' : 'bg-white border-gray-300'}`}>
-                  <SelectValue placeholder="Category" />
-                </SelectTrigger>
-                <SelectContent>
-                  <SelectItem value="all">All Categories</SelectItem>
-                  <SelectItem value="breach">Breaches</SelectItem>
-                  <SelectItem value="vulnerability">Vulnerabilities</SelectItem>
-                  <SelectItem value="threat">Threats</SelectItem>
-                  <SelectItem value="policy">Policy</SelectItem>
-                  <SelectItem value="research">Research</SelectItem>
-                  <SelectItem value="tools">Tools</SelectItem>
-                </SelectContent>
-              </Select>
-              <Select value={selectedSeverity} onValueChange={setSelectedSeverity}>
-                <SelectTrigger className={`w-full lg:w-32 h-12 ${isDark ? 'bg-gray-800 border-gray-700' : 'bg-white border-gray-300'}`}>
-                  <SelectValue placeholder="Severity" />
-                </SelectTrigger>
-                <SelectContent>
-                  <SelectItem value="all">All</SelectItem>
-                  <SelectItem value="critical">Critical</SelectItem>
-                  <SelectItem value="high">High</SelectItem>
-                  <SelectItem value="medium">Medium</SelectItem>
-                  <SelectItem value="low">Low</SelectItem>
-                </SelectContent>
-              </Select>
+            
+            {/* Results count */}
+            <div className="mt-3 pt-3 border-t border-gray-200 dark:border-gray-700">
+              <div className="flex items-center justify-between text-xs">
+                <span className={`${isDark ? 'text-gray-400' : 'text-gray-600'}`}>
+                  {filteredArticles.length} articles found
+                </span>
+                {(searchTerm || selectedCategory !== 'all' || selectedSeverity !== 'all') && (
+                  <button
+                    onClick={() => {
+                      setSearchTerm('');
+                      setSelectedCategory('all');
+                      setSelectedSeverity('all');
+                    }}
+                    className={`text-xs hover:underline ${isDark ? 'text-blue-400 hover:text-blue-300' : 'text-blue-600 hover:text-blue-700'} transition-colors`}
+                  >
+                    Clear filters
+                  </button>
+                )}
+              </div>
             </div>
           </div>
         </motion.div>

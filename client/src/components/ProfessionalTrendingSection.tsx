@@ -1,5 +1,5 @@
-import React, { useState, useEffect } from 'react';
-import { motion, AnimatePresence } from 'framer-motion';
+import React, { useState, useEffect, useRef } from 'react';
+import { motion, AnimatePresence, PanInfo } from 'framer-motion';
 import { 
   TrendingUp, 
   Eye, 
@@ -19,6 +19,32 @@ import { useTheme } from '../contexts/ThemeContext';
 const ProfessionalTrendingSection = () => {
   const { isDark } = useTheme();
   const [activeIndex, setActiveIndex] = useState(0);
+  const swipeThreshold = 50;
+  const autoPlayRef = useRef<NodeJS.Timeout | null>(null);
+
+  const handleSwipe = (info: PanInfo) => {
+    const offset = info.offset.x;
+    const velocity = info.velocity.x;
+
+    if (Math.abs(offset) > swipeThreshold || Math.abs(velocity) > 500) {
+      if (offset > 0 || velocity > 0) {
+        // Swipe right - go to previous
+        setActiveIndex((prev) => (prev - 1 + trendingPosts.length) % trendingPosts.length);
+      } else {
+        // Swipe left - go to next
+        setActiveIndex((prev) => (prev + 1) % trendingPosts.length);
+      }
+    }
+  };
+
+  const resetAutoPlay = () => {
+    if (autoPlayRef.current) {
+      clearInterval(autoPlayRef.current);
+    }
+    autoPlayRef.current = setInterval(() => {
+      setActiveIndex((prev) => (prev + 1) % trendingPosts.length);
+    }, 5000);
+  };
 
   const trendingPosts = [
     {
@@ -77,13 +103,20 @@ const ProfessionalTrendingSection = () => {
     }
   ];
 
-  // Auto-rotate trending posts
+  // Auto-rotate trending posts with cleanup
   useEffect(() => {
-    const interval = setInterval(() => {
-      setActiveIndex((prev) => (prev + 1) % trendingPosts.length);
-    }, 5000);
-    return () => clearInterval(interval);
+    resetAutoPlay();
+    return () => {
+      if (autoPlayRef.current) {
+        clearInterval(autoPlayRef.current);
+      }
+    };
   }, [trendingPosts.length]);
+
+  // Reset autoplay when user interacts
+  useEffect(() => {
+    resetAutoPlay();
+  }, [activeIndex]);
 
   const containerVariants = {
     hidden: { opacity: 0 },
@@ -162,8 +195,104 @@ const ProfessionalTrendingSection = () => {
           variants={containerVariants}
           className="grid lg:grid-cols-3 gap-8"
         >
-          {/* Featured Trending Post */}
-          <motion.div variants={itemVariants} className="lg:col-span-2">
+          {/* Mobile Swipeable Cards */}
+          <motion.div variants={itemVariants} className="lg:col-span-2 lg:hidden">
+            <div className="relative">
+              <AnimatePresence mode="wait">
+                <motion.div
+                  key={activeIndex}
+                  initial={{ opacity: 0, x: 50 }}
+                  animate={{ opacity: 1, x: 0 }}
+                  exit={{ opacity: 0, x: -50 }}
+                  transition={{ duration: 0.5, ease: [0.25, 0.46, 0.45, 0.94] }}
+                  drag="x"
+                  dragConstraints={{ left: 0, right: 0 }}
+                  dragElastic={0.3}
+                  onDragEnd={(_, info) => handleSwipe(info)}
+                  className={`relative overflow-hidden rounded-xl ${
+                    isDark ? 'bg-gray-800 border-gray-700' : 'bg-white border-blue-100 shadow-blue-100/50'
+                  } border shadow-lg group hover:shadow-xl transition-all duration-500 cursor-grab active:cursor-grabbing`}
+                >
+                  <div className="relative overflow-hidden">
+                    <img
+                      src={trendingPosts[activeIndex].image}
+                      alt={trendingPosts[activeIndex].title}
+                      className="w-full h-48 object-cover group-hover:scale-105 transition-transform duration-700"
+                    />
+                    <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent" />
+                    
+                    {/* Trending Badge - Mobile */}
+                    <div className="absolute top-3 left-3">
+                      <div className="bg-gradient-to-r from-orange-500 to-red-500 text-white px-2 py-1 rounded-full text-xs font-bold flex items-center space-x-1 shadow-lg">
+                        <TrendingUp className="h-3 w-3" />
+                        <span>#{activeIndex + 1}</span>
+                      </div>
+                    </div>
+
+                    {/* Category - Mobile */}
+                    <div className="absolute top-3 right-3">
+                      <span className={`px-2 py-1 rounded-full text-xs font-medium ${
+                        isDark ? 'bg-gray-800/80 text-gray-200' : 'bg-white/80 text-gray-800'
+                      } backdrop-blur-sm`}>
+                        {trendingPosts[activeIndex].category}
+                      </span>
+                    </div>
+                  </div>
+
+                  <div className="p-4">
+                    <Link href={`/blog/${trendingPosts[activeIndex].id}`}>
+                      <h3 className={`text-lg font-bold mb-2 line-clamp-2 group-hover:text-transparent group-hover:bg-clip-text group-hover:bg-gradient-to-r group-hover:from-orange-500 group-hover:to-red-500 transition-all duration-300 ${
+                        isDark ? 'text-white' : 'text-gray-900'
+                      }`}>
+                        {trendingPosts[activeIndex].title}
+                      </h3>
+                    </Link>
+                    
+                    <p className={`text-sm leading-relaxed mb-3 line-clamp-2 ${
+                      isDark ? 'text-gray-300' : 'text-gray-600'
+                    }`}>
+                      {trendingPosts[activeIndex].excerpt}
+                    </p>
+
+                    {/* Stats - Mobile */}
+                    <div className="flex items-center justify-between text-xs">
+                      <div className="flex items-center space-x-3">
+                        <div className={`flex items-center space-x-1 ${isDark ? 'text-gray-400' : 'text-gray-500'}`}>
+                          <Eye className="h-3 w-3" />
+                          <span>{(trendingPosts[activeIndex].views / 1000).toFixed(1)}K</span>
+                        </div>
+                        <div className={`flex items-center space-x-1 ${isDark ? 'text-gray-400' : 'text-gray-500'}`}>
+                          <Heart className="h-3 w-3" />
+                          <span>{trendingPosts[activeIndex].likes}</span>
+                        </div>
+                      </div>
+                      <span className={`text-xs ${isDark ? 'text-gray-400' : 'text-gray-500'}`}>
+                        {trendingPosts[activeIndex].readTime}
+                      </span>
+                    </div>
+                  </div>
+                </motion.div>
+              </AnimatePresence>
+
+              {/* Mobile Progress Indicators */}
+              <div className="flex justify-center space-x-2 mt-4">
+                {trendingPosts.map((_, index) => (
+                  <button
+                    key={index}
+                    onClick={() => setActiveIndex(index)}
+                    className={`w-2 h-2 rounded-full transition-all duration-300 ${
+                      index === activeIndex
+                        ? 'bg-gradient-to-r from-orange-500 to-red-500 scale-125'
+                        : isDark ? 'bg-gray-600 hover:bg-gray-500' : 'bg-gray-300 hover:bg-gray-400'
+                    }`}
+                  />
+                ))}
+              </div>
+            </div>
+          </motion.div>
+
+          {/* Desktop Featured Post */}
+          <motion.div variants={itemVariants} className="lg:col-span-2 hidden lg:block">
             <AnimatePresence mode="wait">
               <motion.div
                 key={activeIndex}
