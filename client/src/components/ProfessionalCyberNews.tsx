@@ -203,32 +203,23 @@ export function ProfessionalCyberNews() {
 
   return (
     <div className={`min-h-screen pt-16 ${isDark ? 'bg-gray-900' : 'bg-gray-50'}`}>
-      {/* Enhanced Header with live indicator */}
-      <div className={`${isDark ? 'bg-gray-800 border-gray-700' : 'bg-white border-gray-200'} border-b sticky top-16 z-10 backdrop-blur-lg bg-opacity-95`}>
+      {/* Clean Header */}
+      <div className={`${isDark ? 'bg-gray-800/95' : 'bg-white/95'} backdrop-blur-lg border-b ${isDark ? 'border-gray-700' : 'border-gray-200'} sticky top-16 z-10`}>
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="flex items-center justify-between h-20">
-            <div className="flex items-center space-x-6">
-              <div className="flex items-center space-x-3">
-                <div className="relative">
-                  <div className="w-4 h-4 bg-red-500 rounded-full animate-pulse"></div>
-                  <div className="absolute -top-1 -right-1 w-2 h-2 bg-red-300 rounded-full animate-ping"></div>
-                </div>
-                <span className={`text-sm font-bold ${isDark ? 'text-red-400' : 'text-red-600'}`}>LIVE</span>
-              </div>
+          <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between py-4 gap-4">
+            <div className="flex items-center space-x-4">
               <div className="flex items-center space-x-2">
-                <Shield className={`h-6 w-6 ${isDark ? 'text-blue-400' : 'text-blue-600'}`} />
-                <h1 className={`text-2xl lg:text-3xl font-bold ${isDark ? 'text-white' : 'text-gray-900'} tracking-tight`}>
-                  CyberSec News
-                </h1>
+                <div className="w-3 h-3 bg-red-500 rounded-full animate-pulse"></div>
+                <span className={`text-xs font-semibold uppercase tracking-wide ${isDark ? 'text-red-400' : 'text-red-600'}`}>Live</span>
               </div>
+              <h1 className={`text-xl sm:text-2xl font-bold ${isDark ? 'text-white' : 'text-gray-900'}`}>
+                Cybersecurity News
+              </h1>
             </div>
-            <div className={`flex items-center space-x-4 text-sm ${isDark ? 'text-gray-300' : 'text-gray-600'}`}>
-              <div className="flex items-center space-x-2">
-                <Clock className="h-4 w-4" />
-                <span className="font-mono">{currentTime.toLocaleTimeString()}</span>
-              </div>
-              <Badge variant="outline" className={`${isDark ? 'text-green-400 border-green-400' : 'text-green-600 border-green-600'}`}>
-                <div className="w-2 h-2 bg-green-500 rounded-full mr-2 animate-pulse"></div>
+            <div className={`flex items-center space-x-3 text-sm ${isDark ? 'text-gray-400' : 'text-gray-600'}`}>
+              <Clock className="h-4 w-4" />
+              <span className="font-mono hidden sm:inline">{currentTime.toLocaleTimeString()}</span>
+              <Badge variant="outline" className={`text-xs ${isDark ? 'border-green-500 text-green-400' : 'border-green-600 text-green-600'}`}>
                 Online
               </Badge>
             </div>
@@ -239,147 +230,139 @@ export function ProfessionalCyberNews() {
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6">
         {/* Breaking News Banner */}
         {breakingNews.length > 0 && (
-          <div className="mb-6">
-            <div className="bg-red-600 text-white p-4 rounded-lg shadow-lg">
-              <div className="flex items-center space-x-3 mb-2">
-                <AlertTriangle className="h-5 w-5 animate-pulse" />
-                <span className="font-bold text-lg">BREAKING NEWS</span>
+          <motion.div
+            initial={{ opacity: 0, y: -20 }}
+            animate={{ opacity: 1, y: 0 }}
+            className="mb-8"
+          >
+            <div className="bg-gradient-to-r from-red-600 to-red-700 text-white rounded-xl p-4 sm:p-6 shadow-lg">
+              <div className="flex items-center space-x-3 mb-3">
+                <AlertTriangle className="h-5 w-5 animate-pulse flex-shrink-0" />
+                <span className="font-bold text-lg sm:text-xl">Breaking News</span>
               </div>
-              <div className="space-y-2">
-                {breakingNews.map(article => (
-                  <div key={article.id} className="cursor-pointer hover:underline">
-                    <h3 className="font-semibold">{article.title}</h3>
+              <div className="space-y-3">
+                {breakingNews.slice(0, 1).map(article => (
+                  <div key={article.id} className="cursor-pointer hover:bg-red-500/20 p-2 rounded-lg transition-colors">
+                    <h3 className="font-semibold text-base sm:text-lg mb-1">{article.title}</h3>
                     <p className="text-red-100 text-sm">{formatTimeAgo(article.publishedAt)}</p>
                   </div>
                 ))}
               </div>
             </div>
-          </div>
+          </motion.div>
         )}
 
         {/* Search and Filters */}
-        <div className="mb-6">
-          <div className="grid grid-cols-1 md:grid-cols-4 gap-4">
-            <div className="md:col-span-2">
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ delay: 0.1 }}
+          className="mb-8"
+        >
+          <div className="flex flex-col lg:flex-row gap-4">
+            <div className="flex-1">
               <div className="relative">
-                <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 h-4 w-4 text-gray-400" />
+                <Search className={`absolute left-3 top-1/2 transform -translate-y-1/2 h-4 w-4 ${isDark ? 'text-gray-400' : 'text-gray-500'}`} />
                 <Input
-                  placeholder="Search news, threats, vulnerabilities..."
+                  placeholder="Search cybersecurity news..."
                   value={searchTerm}
                   onChange={(e) => setSearchTerm(e.target.value)}
-                  className="pl-10"
+                  className={`pl-10 h-12 ${isDark ? 'bg-gray-800 border-gray-700 text-white' : 'bg-white border-gray-300'}`}
                 />
               </div>
             </div>
-            <Select value={selectedCategory} onValueChange={setSelectedCategory}>
-              <SelectTrigger>
-                <SelectValue placeholder="Category" />
-              </SelectTrigger>
-              <SelectContent>
-                <SelectItem value="all">All Categories</SelectItem>
-                <SelectItem value="breach">Data Breaches</SelectItem>
-                <SelectItem value="vulnerability">Vulnerabilities</SelectItem>
-                <SelectItem value="threat">Threats</SelectItem>
-                <SelectItem value="policy">Policy</SelectItem>
-                <SelectItem value="research">Research</SelectItem>
-                <SelectItem value="tools">Tools</SelectItem>
-              </SelectContent>
-            </Select>
-            <Select value={selectedSeverity} onValueChange={setSelectedSeverity}>
-              <SelectTrigger>
-                <SelectValue placeholder="Severity" />
-              </SelectTrigger>
-              <SelectContent>
-                <SelectItem value="all">All Severities</SelectItem>
-                <SelectItem value="critical">Critical</SelectItem>
-                <SelectItem value="high">High</SelectItem>
-                <SelectItem value="medium">Medium</SelectItem>
-                <SelectItem value="low">Low</SelectItem>
-              </SelectContent>
-            </Select>
+            <div className="flex gap-3">
+              <Select value={selectedCategory} onValueChange={setSelectedCategory}>
+                <SelectTrigger className={`w-full lg:w-40 h-12 ${isDark ? 'bg-gray-800 border-gray-700' : 'bg-white border-gray-300'}`}>
+                  <SelectValue placeholder="Category" />
+                </SelectTrigger>
+                <SelectContent>
+                  <SelectItem value="all">All Categories</SelectItem>
+                  <SelectItem value="breach">Breaches</SelectItem>
+                  <SelectItem value="vulnerability">Vulnerabilities</SelectItem>
+                  <SelectItem value="threat">Threats</SelectItem>
+                  <SelectItem value="policy">Policy</SelectItem>
+                  <SelectItem value="research">Research</SelectItem>
+                  <SelectItem value="tools">Tools</SelectItem>
+                </SelectContent>
+              </Select>
+              <Select value={selectedSeverity} onValueChange={setSelectedSeverity}>
+                <SelectTrigger className={`w-full lg:w-32 h-12 ${isDark ? 'bg-gray-800 border-gray-700' : 'bg-white border-gray-300'}`}>
+                  <SelectValue placeholder="Severity" />
+                </SelectTrigger>
+                <SelectContent>
+                  <SelectItem value="all">All</SelectItem>
+                  <SelectItem value="critical">Critical</SelectItem>
+                  <SelectItem value="high">High</SelectItem>
+                  <SelectItem value="medium">Medium</SelectItem>
+                  <SelectItem value="low">Low</SelectItem>
+                </SelectContent>
+              </Select>
+            </div>
           </div>
-        </div>
+        </motion.div>
 
-        <div className="grid grid-cols-1 lg:grid-cols-4 gap-6">
+        <div className="grid grid-cols-1 xl:grid-cols-4 gap-8">
           {/* Main Content */}
-          <div className="lg:col-span-3 space-y-6">
+          <div className="xl:col-span-3 space-y-8">
             {/* Featured Stories */}
             {featuredArticles.length > 0 && (
               <motion.div
                 initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.5 }}
+                transition={{ duration: 0.5, delay: 0.2 }}
               >
-                <div className="flex items-center space-x-3 mb-6">
-                  <Star className={`h-6 w-6 ${isDark ? 'text-yellow-400' : 'text-yellow-600'}`} />
-                  <h2 className={`text-2xl font-bold ${isDark ? 'text-white' : 'text-gray-900'} tracking-tight`}>Featured Stories</h2>
-                  <div className={`h-px flex-1 ${isDark ? 'bg-gray-700' : 'bg-gray-300'}`}></div>
+                <div className="mb-6">
+                  <h2 className={`text-xl sm:text-2xl font-bold ${isDark ? 'text-white' : 'text-gray-900'} mb-2`}>
+                    Featured Stories
+                  </h2>
+                  <p className={`text-sm ${isDark ? 'text-gray-400' : 'text-gray-600'}`}>
+                    Critical updates and trending cybersecurity news
+                  </p>
                 </div>
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
                   {featuredArticles.slice(0, 2).map((article, index) => (
                     <motion.div
                       key={article.id}
-                      initial={{ opacity: 0, x: index % 2 === 0 ? -20 : 20 }}
-                      animate={{ opacity: 1, x: 0 }}
-                      transition={{ duration: 0.5, delay: index * 0.1 }}
+                      initial={{ opacity: 0, y: 20 }}
+                      animate={{ opacity: 1, y: 0 }}
+                      transition={{ duration: 0.5, delay: 0.3 + index * 0.1 }}
                     >
-                      <Card className={`overflow-hidden hover:shadow-2xl transition-all duration-300 cursor-pointer group ${
+                      <Card className={`group cursor-pointer overflow-hidden ${
                         isDark ? 'bg-gray-800 border-gray-700 hover:border-gray-600' : 'bg-white border-gray-200 hover:border-gray-300'
-                      }`}>
-                        <div className="relative overflow-hidden">
+                      } hover:shadow-xl transition-all duration-300`}>
+                        <div className="relative">
                           <img 
                             src={article.image} 
                             alt={article.title}
-                            className="w-full h-52 object-cover group-hover:scale-105 transition-transform duration-300"
+                            className="w-full h-48 sm:h-56 object-cover group-hover:scale-105 transition-transform duration-300"
                           />
-                          <div className="absolute inset-0 bg-gradient-to-t from-black/50 to-transparent"></div>
-                          <div className="absolute top-4 left-4 flex gap-2">
-                            <Badge className={`${categoryColors[article.category]} shadow-lg`}>
+                          <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent"></div>
+                          <div className="absolute top-3 left-3 flex gap-2 flex-wrap">
+                            <Badge className={`${categoryColors[article.category]} text-xs`}>
                               {article.category.toUpperCase()}
                             </Badge>
-                            <Badge className={`${severityColors[article.severity]} shadow-lg border`}>
+                            <Badge className={`${severityColors[article.severity]} text-xs border`}>
                               {article.severity.toUpperCase()}
                             </Badge>
                           </div>
-                          <div className="absolute top-4 right-4">
-                            <Button
-                              size="sm"
-                              variant="ghost"
-                              className="text-white hover:bg-white/20 p-2"
-                              onClick={(e) => {
-                                e.stopPropagation();
-                                toggleBookmark(article.id);
-                              }}
-                            >
-                              <Bookmark 
-                                className={`h-4 w-4 ${bookmarkedArticles.has(article.id) ? 'fill-current' : ''}`} 
-                              />
-                            </Button>
-                          </div>
                         </div>
-                        <CardContent className="p-6">
-                          <h3 className={`font-bold text-xl mb-3 line-clamp-2 ${isDark ? 'text-white' : 'text-gray-900'} group-hover:text-blue-600 transition-colors`}>
+                        <CardContent className="p-4 sm:p-6">
+                          <h3 className={`font-bold text-lg sm:text-xl mb-3 line-clamp-2 ${isDark ? 'text-white' : 'text-gray-900'} group-hover:text-blue-600 transition-colors`}>
                             {article.title}
                           </h3>
                           <p className={`text-sm mb-4 line-clamp-3 leading-relaxed ${isDark ? 'text-gray-300' : 'text-gray-600'}`}>
                             {article.excerpt}
                           </p>
                           <div className="flex items-center justify-between">
-                            <div className={`flex items-center space-x-4 text-xs ${isDark ? 'text-gray-400' : 'text-gray-500'}`}>
-                              <div className="flex items-center space-x-1">
-                                <User className="h-3 w-3" />
-                                <span className="font-medium">{article.author}</span>
-                              </div>
-                              <div className="flex items-center space-x-1">
-                                <Calendar className="h-3 w-3" />
-                                <span>{formatTimeAgo(article.publishedAt)}</span>
-                              </div>
-                              <div className="flex items-center space-x-1">
-                                <Clock className="h-3 w-3" />
-                                <span>{article.readTime} min read</span>
-                              </div>
+                            <div className={`flex items-center space-x-3 text-xs ${isDark ? 'text-gray-400' : 'text-gray-500'}`}>
+                              <span className="font-medium">{article.author}</span>
+                              <span>•</span>
+                              <span>{formatTimeAgo(article.publishedAt)}</span>
+                              <span>•</span>
+                              <span>{article.readTime} min</span>
                             </div>
-                            <div className={`flex items-center space-x-2 text-xs ${isDark ? 'text-gray-400' : 'text-gray-500'}`}>
+                            <div className={`flex items-center space-x-1 text-xs ${isDark ? 'text-gray-400' : 'text-gray-500'}`}>
                               <Eye className="h-3 w-3" />
                               <span>{article.views.toLocaleString()}</span>
                             </div>
@@ -392,104 +375,89 @@ export function ProfessionalCyberNews() {
               </motion.div>
             )}
 
-            {/* Regular Articles */}
+            {/* Latest News */}
             <motion.div
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.5, delay: 0.2 }}
+              transition={{ duration: 0.5, delay: 0.4 }}
             >
-              <div className="flex items-center justify-between mb-6">
-                <div className="flex items-center space-x-3">
-                  <Globe className={`h-6 w-6 ${isDark ? 'text-blue-400' : 'text-blue-600'}`} />
-                  <h2 className={`text-2xl font-bold ${isDark ? 'text-white' : 'text-gray-900'} tracking-tight`}>Latest News</h2>
-                  <div className={`h-px flex-1 ${isDark ? 'bg-gray-700' : 'bg-gray-300'} ml-4`}></div>
+              <div className="mb-6">
+                <div className="flex items-center justify-between mb-2">
+                  <h2 className={`text-xl sm:text-2xl font-bold ${isDark ? 'text-white' : 'text-gray-900'}`}>
+                    Latest News
+                  </h2>
+                  <Badge variant="outline" className={`text-xs ${isDark ? 'border-gray-600 text-gray-400' : 'border-gray-300 text-gray-600'}`}>
+                    {filteredArticles.length} articles
+                  </Badge>
                 </div>
-                <Badge variant="outline" className={`${isDark ? 'text-gray-300 border-gray-600' : 'text-gray-600 border-gray-300'}`}>
-                  {filteredArticles.length} articles
-                </Badge>
+                <p className={`text-sm ${isDark ? 'text-gray-400' : 'text-gray-600'}`}>
+                  Real-time cybersecurity updates and analysis
+                </p>
               </div>
-              <div className="space-y-6">
+              <div className="space-y-4">
                 {regularArticles.map((article, index) => (
                   <motion.div
                     key={article.id}
-                    initial={{ opacity: 0, x: -20 }}
-                    animate={{ opacity: 1, x: 0 }}
-                    transition={{ duration: 0.5, delay: index * 0.05 }}
+                    initial={{ opacity: 0, y: 20 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    transition={{ duration: 0.3, delay: 0.5 + index * 0.05 }}
                   >
-                    <Card className={`hover:shadow-xl transition-all duration-300 cursor-pointer group ${
+                    <Card className={`group cursor-pointer ${
                       isDark ? 'bg-gray-800 border-gray-700 hover:border-gray-600' : 'bg-white border-gray-200 hover:border-gray-300'
-                    }`}>
-                      <CardContent className="p-6">
-                        <div className="flex flex-col sm:flex-row gap-6">
-                          <div className="relative sm:w-40 flex-shrink-0">
+                    } hover:shadow-lg transition-all duration-300`}>
+                      <CardContent className="p-4 sm:p-6">
+                        <div className="flex flex-col sm:flex-row gap-4">
+                          <div className="w-full sm:w-32 md:w-40 flex-shrink-0">
                             <img 
                               src={article.image} 
                               alt={article.title}
-                              className="w-full sm:w-40 h-32 object-cover rounded-xl group-hover:scale-105 transition-transform duration-300"
+                              className="w-full h-24 sm:h-28 object-cover rounded-lg group-hover:scale-105 transition-transform duration-300"
                             />
-                            <div className="absolute top-2 right-2">
-                              <Button
-                                size="sm"
-                                variant="ghost"
-                                className="text-white hover:bg-black/20 p-1.5"
-                                onClick={(e) => {
-                                  e.stopPropagation();
-                                  toggleBookmark(article.id);
-                                }}
-                              >
-                                <Bookmark 
-                                  className={`h-3 w-3 ${bookmarkedArticles.has(article.id) ? 'fill-current' : ''}`} 
-                                />
-                              </Button>
-                            </div>
                           </div>
                           <div className="flex-1 min-w-0">
                             <div className="flex items-center flex-wrap gap-2 mb-3">
-                              <Badge className={`${categoryColors[article.category]} text-xs font-medium px-2 py-1`}>
-                                {article.category.toUpperCase()}
+                              <Badge className={`${categoryColors[article.category]} text-xs px-2 py-1`}>
+                                {article.category}
                               </Badge>
-                              <Badge className={`${severityColors[article.severity]} text-xs font-medium px-2 py-1 border`}>
-                                {article.severity.toUpperCase()}
+                              <Badge className={`${severityColors[article.severity]} text-xs px-2 py-1 border`}>
+                                {article.severity}
                               </Badge>
                               {article.trending && (
-                                <Badge variant="outline" className={`text-xs ${isDark ? 'text-green-400 border-green-400' : 'text-green-600 border-green-600'}`}>
+                                <Badge variant="outline" className={`text-xs ${isDark ? 'text-orange-400 border-orange-400' : 'text-orange-600 border-orange-600'}`}>
                                   <TrendingUp className="h-3 w-3 mr-1" />
                                   Trending
                                 </Badge>
                               )}
                             </div>
-                            <h3 className={`font-bold text-xl mb-3 line-clamp-2 ${isDark ? 'text-white' : 'text-gray-900'} group-hover:text-blue-600 transition-colors leading-tight`}>
+                            <h3 className={`font-bold text-lg mb-2 line-clamp-2 ${isDark ? 'text-white' : 'text-gray-900'} group-hover:text-blue-600 transition-colors`}>
                               {article.title}
                             </h3>
-                            <p className={`text-sm mb-4 line-clamp-3 leading-relaxed ${isDark ? 'text-gray-300' : 'text-gray-600'}`}>
+                            <p className={`text-sm mb-3 line-clamp-2 ${isDark ? 'text-gray-300' : 'text-gray-600'}`}>
                               {article.excerpt}
                             </p>
                             <div className="flex items-center justify-between">
-                              <div className={`flex items-center space-x-4 text-xs ${isDark ? 'text-gray-400' : 'text-gray-500'}`}>
-                                <div className="flex items-center space-x-1">
-                                  <User className="h-3 w-3" />
-                                  <span className="font-medium">{article.author}</span>
-                                </div>
-                                <div className="flex items-center space-x-1">
-                                  <Calendar className="h-3 w-3" />
-                                  <span>{formatTimeAgo(article.publishedAt)}</span>
-                                </div>
-                                <div className="flex items-center space-x-1">
-                                  <Clock className="h-3 w-3" />
-                                  <span>{article.readTime} min read</span>
-                                </div>
+                              <div className={`flex items-center space-x-3 text-xs ${isDark ? 'text-gray-400' : 'text-gray-500'}`}>
+                                <span className="font-medium">{article.author}</span>
+                                <span>•</span>
+                                <span>{formatTimeAgo(article.publishedAt)}</span>
+                                <span className="hidden sm:inline">•</span>
+                                <span className="hidden sm:inline">{article.readTime} min</span>
                               </div>
                               <div className="flex items-center space-x-3">
                                 <div className={`flex items-center space-x-1 text-xs ${isDark ? 'text-gray-400' : 'text-gray-500'}`}>
                                   <Eye className="h-3 w-3" />
-                                  <span>{article.views.toLocaleString()}</span>
+                                  <span className="hidden sm:inline">{article.views.toLocaleString()}</span>
                                 </div>
                                 <Button 
                                   variant="ghost" 
                                   size="sm" 
-                                  className={`h-7 w-7 p-0 ${isDark ? 'hover:bg-gray-700' : 'hover:bg-gray-100'}`}
+                                  className={`h-8 w-8 p-0 ${isDark ? 'hover:bg-gray-700' : 'hover:bg-gray-100'}`}
+                                  onClick={(e) => {
+                                    e.stopPropagation();
+                                    toggleBookmark(article.id);
+                                  }}
                                 >
-                                  <Share2 className="h-3 w-3" />
+                                  <Bookmark className={`h-3 w-3 ${bookmarkedArticles.has(article.id) ? 'fill-current' : ''}`} />
                                 </Button>
                               </div>
                             </div>
@@ -504,7 +472,7 @@ export function ProfessionalCyberNews() {
           </div>
 
           {/* Sidebar */}
-          <div className="space-y-6">
+          <div className="xl:col-span-1 space-y-6">
             {/* Trending Now */}
             {trendingArticles.length > 0 && (
               <motion.div
@@ -616,26 +584,34 @@ export function ProfessionalCyberNews() {
             </motion.div>
 
             {/* Newsletter Signup */}
-            <Card className="bg-gradient-to-br from-blue-500 to-purple-600 text-white">
-              <CardContent className="p-6">
-                <h3 className="font-bold text-lg mb-2">Stay Ahead of Threats</h3>
-                <p className="text-sm mb-4 opacity-90">
-                  Get real-time security alerts and expert analysis delivered to your inbox.
-                </p>
-                <div className="space-y-2">
-                  <Input 
-                    placeholder="Enter your email" 
-                    className="bg-white/10 border-white/20 text-white placeholder-white/70"
-                  />
-                  <Button variant="secondary" className="w-full">
-                    Subscribe Now
-                  </Button>
-                </div>
-                <p className="text-xs mt-2 opacity-70">
-                  Join 50,000+ security professionals
-                </p>
-              </CardContent>
-            </Card>
+            <motion.div
+              initial={{ opacity: 0, x: 20 }}
+              animate={{ opacity: 1, x: 0 }}
+              transition={{ duration: 0.5, delay: 0.6 }}
+            >
+              <Card className="bg-gradient-to-br from-blue-600 to-purple-700 text-white overflow-hidden">
+                <CardContent className="p-6 relative">
+                  <div className="absolute top-0 right-0 w-20 h-20 bg-white/10 rounded-full -mr-10 -mt-10"></div>
+                  <Shield className="h-8 w-8 mb-3 text-blue-200" />
+                  <h3 className="font-bold text-lg mb-2">Security Alerts</h3>
+                  <p className="text-sm mb-4 text-blue-100">
+                    Get instant notifications about critical threats and vulnerabilities.
+                  </p>
+                  <div className="space-y-3">
+                    <Input 
+                      placeholder="Enter your email" 
+                      className="bg-white/10 border-white/20 text-white placeholder-white/60 h-10"
+                    />
+                    <Button variant="secondary" className="w-full h-10 bg-white text-blue-600 hover:bg-blue-50 font-semibold">
+                      Subscribe Now
+                    </Button>
+                  </div>
+                  <p className="text-xs mt-3 text-blue-200">
+                    Join 50,000+ cybersecurity professionals
+                  </p>
+                </CardContent>
+              </Card>
+            </motion.div>
           </div>
         </div>
       </div>
