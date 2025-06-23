@@ -242,72 +242,76 @@ export function EnhancedNewsPage() {
             ← Back to News
           </Button>
           
-          <article className={`${isDark ? 'bg-gray-800' : 'bg-white'} rounded-xl shadow-lg overflow-hidden`}>
+          <article className={`${isDark ? 'bg-gray-800/95 border border-gray-700/50' : 'bg-white border border-gray-200'} rounded-xl shadow-xl overflow-hidden max-w-4xl mx-auto`}>
             <img 
               src={selectedArticle.image} 
               alt={selectedArticle.title}
-              className="w-full h-64 object-cover"
+              className="w-full h-48 sm:h-64 object-cover"
             />
             
-            <div className="p-6 sm:p-8">
+            <div className="p-4 sm:p-6 lg:p-8">
               <div className="flex items-center space-x-3 mb-4">
-                <Badge className={categoryColors[selectedArticle.category]}>
+                <Badge className={`${categoryColors[selectedArticle.category]} font-semibold px-3 py-1`}>
                   {selectedArticle.category.toUpperCase()}
                 </Badge>
-                <Badge className={`${severityColors[selectedArticle.severity]} border`}>
+                <Badge className={`${severityColors[selectedArticle.severity]} border font-semibold px-3 py-1`}>
                   {selectedArticle.severity.toUpperCase()}
                 </Badge>
               </div>
               
-              <h1 className={`text-2xl sm:text-3xl font-bold mb-4 ${isDark ? 'text-white' : 'text-gray-900'}`}>
+              <h1 className={`text-xl sm:text-2xl lg:text-3xl font-bold mb-4 leading-tight ${isDark ? 'text-gray-50' : 'text-gray-900'}`}>
                 {selectedArticle.title}
               </h1>
               
-              <div className={`flex items-center space-x-4 text-sm mb-6 ${isDark ? 'text-gray-400' : 'text-gray-600'}`}>
-                <div className="flex items-center space-x-1">
+              <div className={`flex flex-wrap items-center gap-4 text-sm mb-6 pb-4 border-b ${isDark ? 'text-gray-300 border-gray-700' : 'text-gray-600 border-gray-200'}`}>
+                <div className="flex items-center space-x-2">
                   <User className="h-4 w-4" />
-                  <span>{selectedArticle.author}</span>
+                  <span className="font-medium">{selectedArticle.author}</span>
                 </div>
-                <div className="flex items-center space-x-1">
+                <div className="flex items-center space-x-2">
                   <Calendar className="h-4 w-4" />
                   <span>{formatTimeAgo(selectedArticle.publishedAt)}</span>
                 </div>
-                <div className="flex items-center space-x-1">
+                <div className="flex items-center space-x-2">
                   <Clock className="h-4 w-4" />
                   <span>{selectedArticle.readTime} min read</span>
                 </div>
-                <div className="flex items-center space-x-1">
+                <div className="flex items-center space-x-2">
                   <Eye className="h-4 w-4" />
-                  <span>{selectedArticle.views.toLocaleString()}</span>
+                  <span>{selectedArticle.views.toLocaleString()} views</span>
                 </div>
               </div>
               
-              <div className={`prose prose-lg max-w-none ${isDark ? 'prose-invert' : ''}`}>
+              <div className="prose prose-base max-w-none">
                 {selectedArticle.content.split('\n').map((paragraph, index) => {
                   if (paragraph.startsWith('## ')) {
                     return (
-                      <h2 key={index} className={`text-xl font-bold mt-8 mb-4 ${isDark ? 'text-white' : 'text-gray-900'}`}>
+                      <h2 key={index} className={`text-lg sm:text-xl font-bold mt-8 mb-4 ${isDark ? 'text-blue-300' : 'text-blue-700'} border-l-4 ${isDark ? 'border-blue-400' : 'border-blue-600'} pl-4`}>
                         {paragraph.replace('## ', '')}
                       </h2>
                     );
                   }
                   if (paragraph.startsWith('- ')) {
                     return (
-                      <li key={index} className={`ml-4 ${isDark ? 'text-gray-300' : 'text-gray-700'}`}>
+                      <div key={index} className={`ml-6 mb-2 ${isDark ? 'text-gray-200' : 'text-gray-700'} relative`}>
+                        <span className={`absolute -left-4 ${isDark ? 'text-blue-400' : 'text-blue-600'}`}>•</span>
                         {paragraph.replace('- ', '')}
-                      </li>
+                      </div>
                     );
                   }
                   if (paragraph.match(/^\d+\. /)) {
                     return (
-                      <li key={index} className={`ml-4 ${isDark ? 'text-gray-300' : 'text-gray-700'}`}>
+                      <div key={index} className={`ml-6 mb-2 ${isDark ? 'text-gray-200' : 'text-gray-700'} relative`}>
+                        <span className={`absolute -left-6 font-semibold ${isDark ? 'text-blue-400' : 'text-blue-600'}`}>
+                          {paragraph.match(/^\d+/)?.[0]}.
+                        </span>
                         {paragraph.replace(/^\d+\. /, '')}
-                      </li>
+                      </div>
                     );
                   }
                   if (paragraph.trim()) {
                     return (
-                      <p key={index} className={`mb-4 leading-relaxed ${isDark ? 'text-gray-300' : 'text-gray-700'}`}>
+                      <p key={index} className={`mb-4 leading-relaxed text-base ${isDark ? 'text-gray-200' : 'text-gray-700'}`}>
                         {paragraph}
                       </p>
                     );
@@ -316,22 +320,23 @@ export function EnhancedNewsPage() {
                 })}
               </div>
               
-              <div className="flex items-center justify-between mt-8 pt-6 border-t border-gray-200 dark:border-gray-700">
-                <div className="flex items-center space-x-2">
+              <div className={`flex flex-col sm:flex-row sm:items-center sm:justify-between mt-8 pt-6 border-t ${isDark ? 'border-gray-700' : 'border-gray-200'} gap-4`}>
+                <div className="flex flex-wrap items-center gap-2">
                   {selectedArticle.tags.map(tag => (
-                    <Badge key={tag} variant="outline" className="text-xs">
+                    <Badge key={tag} variant="outline" className={`text-xs px-2 py-1 ${isDark ? 'border-gray-600 text-gray-300' : 'border-gray-300 text-gray-600'}`}>
                       #{tag}
                     </Badge>
                   ))}
                 </div>
-                <div className="flex items-center space-x-2">
-                  <Button variant="outline" size="sm">
+                <div className="flex items-center space-x-3">
+                  <Button variant="outline" size="sm" className={`${isDark ? 'border-gray-600 text-gray-300 hover:bg-gray-700' : 'border-gray-300 text-gray-700 hover:bg-gray-50'}`}>
                     <Share2 className="h-4 w-4 mr-2" />
                     Share
                   </Button>
                   <Button 
                     variant="outline" 
                     size="sm"
+                    className={`${isDark ? 'border-gray-600 text-gray-300 hover:bg-gray-700' : 'border-gray-300 text-gray-700 hover:bg-gray-50'}`}
                     onClick={() => toggleBookmark(selectedArticle.id)}
                   >
                     <Bookmark className={`h-4 w-4 mr-2 ${bookmarkedArticles.has(selectedArticle.id) ? 'fill-current' : ''}`} />
@@ -442,7 +447,7 @@ export function EnhancedNewsPage() {
                   {featuredArticles.slice(0, 2).map((article) => (
                     <Card 
                       key={article.id} 
-                      className={`cursor-pointer group ${isDark ? 'bg-gray-800 border-gray-700 hover:border-gray-600' : 'bg-white border-gray-200 hover:border-gray-300'} hover:shadow-lg transition-all duration-300`}
+                      className={`cursor-pointer group overflow-hidden ${isDark ? 'bg-gray-800/80 border-gray-700/50 hover:border-blue-500/50 hover:bg-gray-800' : 'bg-white/90 border-gray-200 hover:border-blue-300 hover:bg-white'} hover:shadow-xl transition-all duration-300`}
                       onClick={() => setSelectedArticle(article)}
                     >
                       <CardContent className="p-0">
@@ -450,36 +455,36 @@ export function EnhancedNewsPage() {
                           <img 
                             src={article.image} 
                             alt={article.title}
-                            className="w-full sm:w-48 h-36 object-cover"
+                            className="w-full sm:w-40 h-28 sm:h-32 object-cover"
                           />
-                          <div className="p-4 flex-1">
+                          <div className="p-3 sm:p-4 flex-1">
                             <div className="flex items-center space-x-2 mb-2">
-                              <Badge className={`${categoryColors[article.category]} text-xs`}>
+                              <Badge className={`${categoryColors[article.category]} text-xs px-2 py-0.5 font-medium`}>
                                 {article.category}
                               </Badge>
-                              <Badge className={`${severityColors[article.severity]} text-xs border`}>
+                              <Badge className={`${severityColors[article.severity]} text-xs px-2 py-0.5 border font-medium`}>
                                 {article.severity}
                               </Badge>
                               {article.trending && (
-                                <Badge variant="outline" className="text-xs">
-                                  <TrendingUp className="h-3 w-3 mr-1" />
-                                  Trending
+                                <Badge variant="outline" className={`text-xs px-2 py-0.5 ${isDark ? 'border-orange-400 text-orange-300' : 'border-orange-500 text-orange-600'}`}>
+                                  <TrendingUp className="h-2.5 w-2.5 mr-1" />
+                                  Hot
                                 </Badge>
                               )}
                             </div>
-                            <h3 className={`font-bold text-lg mb-2 line-clamp-2 ${isDark ? 'text-white' : 'text-gray-900'} group-hover:text-blue-600 transition-colors`}>
+                            <h3 className={`font-bold text-base sm:text-lg mb-2 line-clamp-2 leading-tight ${isDark ? 'text-gray-100 group-hover:text-blue-300' : 'text-gray-900 group-hover:text-blue-600'} transition-colors`}>
                               {article.title}
                             </h3>
-                            <p className={`text-sm mb-3 line-clamp-2 ${isDark ? 'text-gray-300' : 'text-gray-600'}`}>
+                            <p className={`text-sm mb-3 line-clamp-2 leading-relaxed ${isDark ? 'text-gray-300' : 'text-gray-600'}`}>
                               {article.excerpt}
                             </p>
                             <div className={`flex items-center justify-between text-xs ${isDark ? 'text-gray-400' : 'text-gray-500'}`}>
-                              <div className="flex items-center space-x-3">
-                                <span>{article.author}</span>
+                              <div className="flex items-center space-x-2">
+                                <span className="font-medium">{article.author}</span>
                                 <span>•</span>
                                 <span>{formatTimeAgo(article.publishedAt)}</span>
-                                <span>•</span>
-                                <span>{article.readTime} min</span>
+                                <span className="hidden sm:inline">•</span>
+                                <span className="hidden sm:inline">{article.readTime} min</span>
                               </div>
                               <div className="flex items-center space-x-1">
                                 <Eye className="h-3 w-3" />
@@ -497,45 +502,45 @@ export function EnhancedNewsPage() {
 
             {/* Regular Articles */}
             <div>
-              <h2 className={`text-lg font-bold mb-4 ${isDark ? 'text-white' : 'text-gray-900'}`}>
+              <h2 className={`text-lg font-bold mb-4 ${isDark ? 'text-gray-100' : 'text-gray-900'}`}>
                 Latest News
               </h2>
               <div className="space-y-3">
                 {regularArticles.map((article) => (
                   <Card 
                     key={article.id} 
-                    className={`cursor-pointer group ${isDark ? 'bg-gray-800 border-gray-700 hover:border-gray-600' : 'bg-white border-gray-200 hover:border-gray-300'} hover:shadow-md transition-all duration-300`}
+                    className={`cursor-pointer group ${isDark ? 'bg-gray-800/60 border-gray-700/40 hover:border-blue-500/40 hover:bg-gray-800/80' : 'bg-white/80 border-gray-200 hover:border-blue-300 hover:bg-white'} hover:shadow-lg transition-all duration-300`}
                     onClick={() => setSelectedArticle(article)}
                   >
-                    <CardContent className="p-4">
-                      <div className="flex space-x-4">
+                    <CardContent className="p-3">
+                      <div className="flex space-x-3">
                         <img 
                           src={article.image} 
                           alt={article.title}
-                          className="w-20 h-20 object-cover rounded-lg flex-shrink-0"
+                          className="w-16 h-16 object-cover rounded-lg flex-shrink-0"
                         />
                         <div className="flex-1 min-w-0">
-                          <div className="flex items-center space-x-2 mb-2">
-                            <Badge className={`${categoryColors[article.category]} text-xs`}>
+                          <div className="flex items-center space-x-2 mb-1.5">
+                            <Badge className={`${categoryColors[article.category]} text-xs px-1.5 py-0.5 font-medium`}>
                               {article.category}
                             </Badge>
-                            <Badge className={`${severityColors[article.severity]} text-xs border`}>
+                            <Badge className={`${severityColors[article.severity]} text-xs px-1.5 py-0.5 border font-medium`}>
                               {article.severity}
                             </Badge>
                           </div>
-                          <h3 className={`font-semibold text-base mb-1 line-clamp-2 ${isDark ? 'text-white' : 'text-gray-900'} group-hover:text-blue-600 transition-colors`}>
+                          <h3 className={`font-semibold text-sm mb-1 line-clamp-2 leading-tight ${isDark ? 'text-gray-100 group-hover:text-blue-300' : 'text-gray-900 group-hover:text-blue-600'} transition-colors`}>
                             {article.title}
                           </h3>
-                          <p className={`text-sm mb-2 line-clamp-1 ${isDark ? 'text-gray-300' : 'text-gray-600'}`}>
+                          <p className={`text-xs mb-2 line-clamp-1 ${isDark ? 'text-gray-300' : 'text-gray-600'}`}>
                             {article.excerpt}
                           </p>
                           <div className={`flex items-center justify-between text-xs ${isDark ? 'text-gray-400' : 'text-gray-500'}`}>
-                            <div className="flex items-center space-x-2">
-                              <span>{article.author}</span>
+                            <div className="flex items-center space-x-1.5">
+                              <span className="font-medium">{article.author}</span>
                               <span>•</span>
                               <span>{formatTimeAgo(article.publishedAt)}</span>
                             </div>
-                            <div className="flex items-center space-x-3">
+                            <div className="flex items-center space-x-2">
                               <div className="flex items-center space-x-1">
                                 <Eye className="h-3 w-3" />
                                 <span>{article.views.toLocaleString()}</span>
@@ -543,13 +548,13 @@ export function EnhancedNewsPage() {
                               <Button 
                                 variant="ghost" 
                                 size="sm" 
-                                className="h-6 w-6 p-0"
+                                className={`h-5 w-5 p-0 ${isDark ? 'hover:bg-gray-700' : 'hover:bg-gray-100'}`}
                                 onClick={(e) => {
                                   e.stopPropagation();
                                   toggleBookmark(article.id);
                                 }}
                               >
-                                <Bookmark className={`h-3 w-3 ${bookmarkedArticles.has(article.id) ? 'fill-current' : ''}`} />
+                                <Bookmark className={`h-2.5 w-2.5 ${bookmarkedArticles.has(article.id) ? 'fill-current' : ''} ${isDark ? 'text-gray-300' : 'text-gray-600'}`} />
                               </Button>
                             </div>
                           </div>
@@ -563,39 +568,88 @@ export function EnhancedNewsPage() {
           </div>
 
           {/* Sidebar */}
-          <div className="space-y-6">
-            {/* Threat Level */}
-            <Card className={`${isDark ? 'bg-gray-800 border-gray-700' : 'bg-white border-gray-200'}`}>
+          <div className="space-y-4">
+            {/* Trending Topics */}
+            <Card className={`${isDark ? 'bg-gray-800/80 border-gray-700/50' : 'bg-white/90 border-gray-200'}`}>
               <CardContent className="p-4">
-                <h3 className={`font-semibold mb-3 ${isDark ? 'text-white' : 'text-gray-900'}`}>
+                <h3 className={`font-semibold text-sm mb-3 ${isDark ? 'text-gray-100' : 'text-gray-900'}`}>
+                  Trending Topics
+                </h3>
+                <div className="space-y-2">
+                  {['Zero-day exploits', 'Ransomware attacks', 'APT campaigns', 'Cloud security'].map((topic, index) => (
+                    <div key={topic} className={`flex items-center justify-between text-xs p-2 rounded ${isDark ? 'hover:bg-gray-700/50' : 'hover:bg-gray-50'} cursor-pointer transition-colors`}>
+                      <span className={`${isDark ? 'text-gray-200' : 'text-gray-700'}`}>{topic}</span>
+                      <Badge variant="outline" className={`text-xs px-1.5 py-0.5 ${isDark ? 'border-gray-600 text-gray-400' : 'border-gray-300 text-gray-500'}`}>
+                        {12 - index * 3}
+                      </Badge>
+                    </div>
+                  ))}
+                </div>
+              </CardContent>
+            </Card>
+
+            {/* Threat Level */}
+            <Card className={`${isDark ? 'bg-gray-800/80 border-gray-700/50' : 'bg-white/90 border-gray-200'}`}>
+              <CardContent className="p-4">
+                <h3 className={`font-semibold text-sm mb-3 ${isDark ? 'text-gray-100' : 'text-gray-900'}`}>
                   Global Threat Level
                 </h3>
                 <div className="text-center">
-                  <div className="w-16 h-16 mx-auto mb-2 rounded-full bg-red-500 flex items-center justify-center">
-                    <span className="text-white font-bold text-sm">HIGH</span>
+                  <div className="w-14 h-14 mx-auto mb-2 rounded-full bg-gradient-to-br from-red-500 to-red-600 flex items-center justify-center shadow-lg">
+                    <span className="text-white font-bold text-xs">HIGH</span>
                   </div>
-                  <p className={`text-xs ${isDark ? 'text-gray-400' : 'text-gray-600'}`}>
-                    Multiple critical vulnerabilities detected
+                  <p className={`text-xs leading-relaxed ${isDark ? 'text-gray-300' : 'text-gray-600'}`}>
+                    Multiple critical vulnerabilities actively exploited
                   </p>
+                  <div className={`mt-3 p-2 rounded text-xs ${isDark ? 'bg-red-900/30 text-red-300' : 'bg-red-50 text-red-700'}`}>
+                    <span className="font-medium">Latest:</span> CVE-2024-0001
+                  </div>
                 </div>
               </CardContent>
             </Card>
 
             {/* Newsletter */}
-            <Card className="bg-gradient-to-br from-blue-600 to-purple-700 text-white">
-              <CardContent className="p-4">
-                <Shield className="h-6 w-6 mb-2" />
-                <h3 className="font-semibold mb-2">Security Alerts</h3>
-                <p className="text-sm mb-3 text-blue-100">
-                  Get instant notifications about critical threats.
+            <Card className="bg-gradient-to-br from-blue-600 to-purple-700 text-white overflow-hidden">
+              <CardContent className="p-4 relative">
+                <div className="absolute top-0 right-0 w-16 h-16 bg-white/10 rounded-full -mr-8 -mt-8"></div>
+                <Shield className="h-5 w-5 mb-2 text-blue-200" />
+                <h3 className="font-semibold text-sm mb-2">Security Alerts</h3>
+                <p className="text-xs mb-3 text-blue-100 leading-relaxed">
+                  Get instant notifications about critical threats and vulnerabilities.
                 </p>
                 <Input 
-                  placeholder="Enter email" 
-                  className="bg-white/10 border-white/20 text-white placeholder-white/60 mb-2"
+                  placeholder="Enter email address" 
+                  className="bg-white/10 border-white/20 text-white placeholder-white/60 mb-2 text-xs h-8"
                 />
-                <Button variant="secondary" className="w-full text-blue-600">
-                  Subscribe
+                <Button variant="secondary" className="w-full text-blue-600 text-xs h-8 font-medium">
+                  Subscribe Now
                 </Button>
+                <p className="text-xs mt-2 text-blue-200/80">
+                  Join 50,000+ professionals
+                </p>
+              </CardContent>
+            </Card>
+
+            {/* Quick Stats */}
+            <Card className={`${isDark ? 'bg-gray-800/80 border-gray-700/50' : 'bg-white/90 border-gray-200'}`}>
+              <CardContent className="p-4">
+                <h3 className={`font-semibold text-sm mb-3 ${isDark ? 'text-gray-100' : 'text-gray-900'}`}>
+                  Today's Stats
+                </h3>
+                <div className="space-y-2">
+                  <div className="flex justify-between items-center">
+                    <span className={`text-xs ${isDark ? 'text-gray-300' : 'text-gray-600'}`}>New Threats</span>
+                    <span className={`text-xs font-semibold ${isDark ? 'text-red-400' : 'text-red-600'}`}>+7</span>
+                  </div>
+                  <div className="flex justify-between items-center">
+                    <span className={`text-xs ${isDark ? 'text-gray-300' : 'text-gray-600'}`}>Updates</span>
+                    <span className={`text-xs font-semibold ${isDark ? 'text-blue-400' : 'text-blue-600'}`}>23</span>
+                  </div>
+                  <div className="flex justify-between items-center">
+                    <span className={`text-xs ${isDark ? 'text-gray-300' : 'text-gray-600'}`}>Advisories</span>
+                    <span className={`text-xs font-semibold ${isDark ? 'text-green-400' : 'text-green-600'}`}>12</span>
+                  </div>
+                </div>
               </CardContent>
             </Card>
           </div>
