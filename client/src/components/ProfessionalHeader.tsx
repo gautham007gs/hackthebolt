@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Plus, X, Search, Moon, Sun, User, LogOut, Shield, Zap, ChevronDown, Menu, Home, BookOpen, MessageCircle, Github, Users, Info } from 'lucide-react';
+import { Plus, X, Search, Moon, Sun, User, LogOut, Shield, Zap, ChevronDown, Menu, Home, BookOpen, MessageCircle, Github, Users, Info, Newspaper } from 'lucide-react';
 import { Link, useLocation } from 'wouter';
 import { useTheme } from '../contexts/ThemeContext';
 import { useAuth } from '../contexts/AuthContext';
@@ -54,6 +54,7 @@ const ProfessionalHeader = () => {
         { name: 'Certifications', href: '/certifications', desc: 'Industry-recognized credentials' }
       ]
     },
+    { name: 'News', href: '/news', icon: Newspaper },
     { name: 'Blog', href: '/blog', icon: MessageCircle },
     { name: 'GitHub Tools', href: '/github-tools', icon: Github },
     { name: 'Community', href: '/community', icon: Users },

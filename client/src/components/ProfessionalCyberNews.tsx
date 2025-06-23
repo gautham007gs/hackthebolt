@@ -1,10 +1,12 @@
 import { useState, useEffect } from 'react';
-import { Clock, TrendingUp, Eye, Share2, Bookmark, AlertTriangle, Shield, Zap, Target, Globe, Users, ChevronRight, Filter, Search } from 'lucide-react';
+import { Clock, TrendingUp, Eye, Share2, Bookmark, AlertTriangle, Shield, Zap, Target, Globe, Users, ChevronRight, Filter, Search, Star, ThumbsUp, MessageCircle, ExternalLink, Calendar, User, Tag } from 'lucide-react';
 import { Card, CardHeader, CardTitle, CardContent } from './ui/card';
 import { Button } from './ui/button';
 import { Badge } from './ui/badge';
 import { Input } from './ui/input';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from './ui/select';
+import { useTheme } from '../contexts/ThemeContext';
+import { motion, AnimatePresence } from 'framer-motion';
 
 interface NewsArticle {
   id: string;
@@ -113,28 +115,31 @@ const sampleNews: NewsArticle[] = [
 ];
 
 const categoryColors = {
-  breach: 'bg-red-500',
-  vulnerability: 'bg-orange-500',
-  threat: 'bg-purple-500',
-  policy: 'bg-blue-500',
-  research: 'bg-green-500',
-  tools: 'bg-indigo-500'
+  breach: 'bg-red-600 hover:bg-red-700 text-white',
+  vulnerability: 'bg-orange-600 hover:bg-orange-700 text-white',
+  threat: 'bg-purple-600 hover:bg-purple-700 text-white',
+  policy: 'bg-blue-600 hover:bg-blue-700 text-white',
+  research: 'bg-green-600 hover:bg-green-700 text-white',
+  tools: 'bg-indigo-600 hover:bg-indigo-700 text-white'
 };
 
 const severityColors = {
-  critical: 'text-red-600 bg-red-50 border-red-200',
-  high: 'text-orange-600 bg-orange-50 border-orange-200',
-  medium: 'text-yellow-600 bg-yellow-50 border-yellow-200',
-  low: 'text-green-600 bg-green-50 border-green-200'
+  critical: 'text-red-700 bg-red-100 border-red-300 dark:text-red-300 dark:bg-red-900/30 dark:border-red-700',
+  high: 'text-orange-700 bg-orange-100 border-orange-300 dark:text-orange-300 dark:bg-orange-900/30 dark:border-orange-700',
+  medium: 'text-yellow-700 bg-yellow-100 border-yellow-300 dark:text-yellow-300 dark:bg-yellow-900/30 dark:border-yellow-700',
+  low: 'text-green-700 bg-green-100 border-green-300 dark:text-green-300 dark:bg-green-900/30 dark:border-green-700'
 };
 
 export function ProfessionalCyberNews() {
+  const { isDark } = useTheme();
   const [articles, setArticles] = useState<NewsArticle[]>(sampleNews);
   const [filteredArticles, setFilteredArticles] = useState<NewsArticle[]>(sampleNews);
   const [selectedCategory, setSelectedCategory] = useState<string>('all');
   const [selectedSeverity, setSelectedSeverity] = useState<string>('all');
   const [searchTerm, setSearchTerm] = useState('');
   const [currentTime, setCurrentTime] = useState(new Date());
+  const [bookmarkedArticles, setBookmarkedArticles] = useState<Set<string>>(new Set());
+  const [expandedArticle, setExpandedArticle] = useState<string | null>(null);
 
   // Update time every minute for real-time feel
   useEffect(() => {
@@ -180,24 +185,52 @@ export function ProfessionalCyberNews() {
   const trendingArticles = filteredArticles.filter(article => article.trending);
   const regularArticles = filteredArticles.filter(article => !article.featured && !article.breaking);
 
+  const toggleBookmark = (articleId: string) => {
+    setBookmarkedArticles(prev => {
+      const newSet = new Set(prev);
+      if (newSet.has(articleId)) {
+        newSet.delete(articleId);
+      } else {
+        newSet.add(articleId);
+      }
+      return newSet;
+    });
+  };
+
+  const toggleArticleExpansion = (articleId: string) => {
+    setExpandedArticle(expandedArticle === articleId ? null : articleId);
+  };
+
   return (
-    <div className="min-h-screen bg-gray-50 dark:bg-gray-900">
-      {/* Header with live indicator */}
-      <div className="bg-white dark:bg-gray-800 border-b border-gray-200 dark:border-gray-700 sticky top-0 z-10">
+    <div className={`min-h-screen pt-16 ${isDark ? 'bg-gray-900' : 'bg-gray-50'}`}>
+      {/* Enhanced Header with live indicator */}
+      <div className={`${isDark ? 'bg-gray-800 border-gray-700' : 'bg-white border-gray-200'} border-b sticky top-16 z-10 backdrop-blur-lg bg-opacity-95`}>
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="flex items-center justify-between h-16">
-            <div className="flex items-center space-x-4">
-              <div className="flex items-center space-x-2">
-                <div className="w-3 h-3 bg-red-500 rounded-full animate-pulse"></div>
-                <span className="text-sm font-medium text-gray-900 dark:text-white">LIVE</span>
+          <div className="flex items-center justify-between h-20">
+            <div className="flex items-center space-x-6">
+              <div className="flex items-center space-x-3">
+                <div className="relative">
+                  <div className="w-4 h-4 bg-red-500 rounded-full animate-pulse"></div>
+                  <div className="absolute -top-1 -right-1 w-2 h-2 bg-red-300 rounded-full animate-ping"></div>
+                </div>
+                <span className={`text-sm font-bold ${isDark ? 'text-red-400' : 'text-red-600'}`}>LIVE</span>
               </div>
-              <h1 className="text-xl lg:text-2xl font-bold text-gray-900 dark:text-white">
-                CyberSec News
-              </h1>
+              <div className="flex items-center space-x-2">
+                <Shield className={`h-6 w-6 ${isDark ? 'text-blue-400' : 'text-blue-600'}`} />
+                <h1 className={`text-2xl lg:text-3xl font-bold ${isDark ? 'text-white' : 'text-gray-900'} tracking-tight`}>
+                  CyberSec News
+                </h1>
+              </div>
             </div>
-            <div className="flex items-center space-x-2 text-sm text-gray-500 dark:text-gray-400">
-              <Clock className="h-4 w-4" />
-              <span>{currentTime.toLocaleTimeString()}</span>
+            <div className={`flex items-center space-x-4 text-sm ${isDark ? 'text-gray-300' : 'text-gray-600'}`}>
+              <div className="flex items-center space-x-2">
+                <Clock className="h-4 w-4" />
+                <span className="font-mono">{currentTime.toLocaleTimeString()}</span>
+              </div>
+              <Badge variant="outline" className={`${isDark ? 'text-green-400 border-green-400' : 'text-green-600 border-green-600'}`}>
+                <div className="w-2 h-2 bg-green-500 rounded-full mr-2 animate-pulse"></div>
+                Online
+              </Badge>
             </div>
           </div>
         </div>
@@ -272,205 +305,315 @@ export function ProfessionalCyberNews() {
           <div className="lg:col-span-3 space-y-6">
             {/* Featured Stories */}
             {featuredArticles.length > 0 && (
-              <div>
-                <div className="flex items-center space-x-2 mb-4">
-                  <Target className="h-5 w-5 text-blue-600" />
-                  <h2 className="text-xl font-bold text-gray-900 dark:text-white">Featured Stories</h2>
+              <motion.div
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.5 }}
+              >
+                <div className="flex items-center space-x-3 mb-6">
+                  <Star className={`h-6 w-6 ${isDark ? 'text-yellow-400' : 'text-yellow-600'}`} />
+                  <h2 className={`text-2xl font-bold ${isDark ? 'text-white' : 'text-gray-900'} tracking-tight`}>Featured Stories</h2>
+                  <div className={`h-px flex-1 ${isDark ? 'bg-gray-700' : 'bg-gray-300'}`}></div>
                 </div>
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                  {featuredArticles.slice(0, 2).map(article => (
-                    <Card key={article.id} className="overflow-hidden hover:shadow-lg transition-shadow cursor-pointer">
-                      <div className="relative">
-                        <img 
-                          src={article.image} 
-                          alt={article.title}
-                          className="w-full h-48 object-cover"
-                        />
-                        <div className="absolute top-3 left-3">
-                          <Badge className={`${categoryColors[article.category]} text-white`}>
-                            {article.category.toUpperCase()}
-                          </Badge>
-                        </div>
-                        <div className="absolute top-3 right-3">
-                          <Badge className={severityColors[article.severity]}>
-                            {article.severity.toUpperCase()}
-                          </Badge>
-                        </div>
-                      </div>
-                      <CardContent className="p-4">
-                        <h3 className="font-bold text-lg mb-2 line-clamp-2">{article.title}</h3>
-                        <p className="text-gray-600 dark:text-gray-400 text-sm mb-3 line-clamp-2">
-                          {article.excerpt}
-                        </p>
-                        <div className="flex items-center justify-between text-xs text-gray-500">
-                          <div className="flex items-center space-x-4">
-                            <span>{article.author}</span>
-                            <span>{formatTimeAgo(article.publishedAt)}</span>
-                            <span>{article.readTime} min read</span>
+                  {featuredArticles.slice(0, 2).map((article, index) => (
+                    <motion.div
+                      key={article.id}
+                      initial={{ opacity: 0, x: index % 2 === 0 ? -20 : 20 }}
+                      animate={{ opacity: 1, x: 0 }}
+                      transition={{ duration: 0.5, delay: index * 0.1 }}
+                    >
+                      <Card className={`overflow-hidden hover:shadow-2xl transition-all duration-300 cursor-pointer group ${
+                        isDark ? 'bg-gray-800 border-gray-700 hover:border-gray-600' : 'bg-white border-gray-200 hover:border-gray-300'
+                      }`}>
+                        <div className="relative overflow-hidden">
+                          <img 
+                            src={article.image} 
+                            alt={article.title}
+                            className="w-full h-52 object-cover group-hover:scale-105 transition-transform duration-300"
+                          />
+                          <div className="absolute inset-0 bg-gradient-to-t from-black/50 to-transparent"></div>
+                          <div className="absolute top-4 left-4 flex gap-2">
+                            <Badge className={`${categoryColors[article.category]} shadow-lg`}>
+                              {article.category.toUpperCase()}
+                            </Badge>
+                            <Badge className={`${severityColors[article.severity]} shadow-lg border`}>
+                              {article.severity.toUpperCase()}
+                            </Badge>
                           </div>
-                          <div className="flex items-center space-x-2">
-                            <Eye className="h-3 w-3" />
-                            <span>{article.views.toLocaleString()}</span>
+                          <div className="absolute top-4 right-4">
+                            <Button
+                              size="sm"
+                              variant="ghost"
+                              className="text-white hover:bg-white/20 p-2"
+                              onClick={(e) => {
+                                e.stopPropagation();
+                                toggleBookmark(article.id);
+                              }}
+                            >
+                              <Bookmark 
+                                className={`h-4 w-4 ${bookmarkedArticles.has(article.id) ? 'fill-current' : ''}`} 
+                              />
+                            </Button>
                           </div>
                         </div>
-                      </CardContent>
-                    </Card>
+                        <CardContent className="p-6">
+                          <h3 className={`font-bold text-xl mb-3 line-clamp-2 ${isDark ? 'text-white' : 'text-gray-900'} group-hover:text-blue-600 transition-colors`}>
+                            {article.title}
+                          </h3>
+                          <p className={`text-sm mb-4 line-clamp-3 leading-relaxed ${isDark ? 'text-gray-300' : 'text-gray-600'}`}>
+                            {article.excerpt}
+                          </p>
+                          <div className="flex items-center justify-between">
+                            <div className={`flex items-center space-x-4 text-xs ${isDark ? 'text-gray-400' : 'text-gray-500'}`}>
+                              <div className="flex items-center space-x-1">
+                                <User className="h-3 w-3" />
+                                <span className="font-medium">{article.author}</span>
+                              </div>
+                              <div className="flex items-center space-x-1">
+                                <Calendar className="h-3 w-3" />
+                                <span>{formatTimeAgo(article.publishedAt)}</span>
+                              </div>
+                              <div className="flex items-center space-x-1">
+                                <Clock className="h-3 w-3" />
+                                <span>{article.readTime} min read</span>
+                              </div>
+                            </div>
+                            <div className={`flex items-center space-x-2 text-xs ${isDark ? 'text-gray-400' : 'text-gray-500'}`}>
+                              <Eye className="h-3 w-3" />
+                              <span>{article.views.toLocaleString()}</span>
+                            </div>
+                          </div>
+                        </CardContent>
+                      </Card>
+                    </motion.div>
                   ))}
                 </div>
-              </div>
+              </motion.div>
             )}
 
             {/* Regular Articles */}
-            <div>
-              <div className="flex items-center justify-between mb-4">
-                <div className="flex items-center space-x-2">
-                  <Globe className="h-5 w-5 text-blue-600" />
-                  <h2 className="text-xl font-bold text-gray-900 dark:text-white">Latest News</h2>
+            <motion.div
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.5, delay: 0.2 }}
+            >
+              <div className="flex items-center justify-between mb-6">
+                <div className="flex items-center space-x-3">
+                  <Globe className={`h-6 w-6 ${isDark ? 'text-blue-400' : 'text-blue-600'}`} />
+                  <h2 className={`text-2xl font-bold ${isDark ? 'text-white' : 'text-gray-900'} tracking-tight`}>Latest News</h2>
+                  <div className={`h-px flex-1 ${isDark ? 'bg-gray-700' : 'bg-gray-300'} ml-4`}></div>
                 </div>
-                <span className="text-sm text-gray-500">
+                <Badge variant="outline" className={`${isDark ? 'text-gray-300 border-gray-600' : 'text-gray-600 border-gray-300'}`}>
                   {filteredArticles.length} articles
-                </span>
+                </Badge>
               </div>
-              <div className="space-y-4">
-                {regularArticles.map(article => (
-                  <Card key={article.id} className="hover:shadow-md transition-shadow cursor-pointer">
-                    <CardContent className="p-4">
-                      <div className="flex flex-col sm:flex-row gap-4">
-                        <img 
-                          src={article.image} 
-                          alt={article.title}
-                          className="w-full sm:w-32 h-24 object-cover rounded-lg flex-shrink-0"
-                        />
-                        <div className="flex-1 min-w-0">
-                          <div className="flex items-start justify-between mb-2">
-                            <div className="flex items-center space-x-2 mb-2">
-                              <Badge className={`${categoryColors[article.category]} text-white text-xs`}>
-                                {article.category}
+              <div className="space-y-6">
+                {regularArticles.map((article, index) => (
+                  <motion.div
+                    key={article.id}
+                    initial={{ opacity: 0, x: -20 }}
+                    animate={{ opacity: 1, x: 0 }}
+                    transition={{ duration: 0.5, delay: index * 0.05 }}
+                  >
+                    <Card className={`hover:shadow-xl transition-all duration-300 cursor-pointer group ${
+                      isDark ? 'bg-gray-800 border-gray-700 hover:border-gray-600' : 'bg-white border-gray-200 hover:border-gray-300'
+                    }`}>
+                      <CardContent className="p-6">
+                        <div className="flex flex-col sm:flex-row gap-6">
+                          <div className="relative sm:w-40 flex-shrink-0">
+                            <img 
+                              src={article.image} 
+                              alt={article.title}
+                              className="w-full sm:w-40 h-32 object-cover rounded-xl group-hover:scale-105 transition-transform duration-300"
+                            />
+                            <div className="absolute top-2 right-2">
+                              <Button
+                                size="sm"
+                                variant="ghost"
+                                className="text-white hover:bg-black/20 p-1.5"
+                                onClick={(e) => {
+                                  e.stopPropagation();
+                                  toggleBookmark(article.id);
+                                }}
+                              >
+                                <Bookmark 
+                                  className={`h-3 w-3 ${bookmarkedArticles.has(article.id) ? 'fill-current' : ''}`} 
+                                />
+                              </Button>
+                            </div>
+                          </div>
+                          <div className="flex-1 min-w-0">
+                            <div className="flex items-center flex-wrap gap-2 mb-3">
+                              <Badge className={`${categoryColors[article.category]} text-xs font-medium px-2 py-1`}>
+                                {article.category.toUpperCase()}
                               </Badge>
-                              <Badge className={`${severityColors[article.severity]} text-xs`}>
-                                {article.severity}
+                              <Badge className={`${severityColors[article.severity]} text-xs font-medium px-2 py-1 border`}>
+                                {article.severity.toUpperCase()}
                               </Badge>
                               {article.trending && (
-                                <Badge variant="outline" className="text-xs">
+                                <Badge variant="outline" className={`text-xs ${isDark ? 'text-green-400 border-green-400' : 'text-green-600 border-green-600'}`}>
                                   <TrendingUp className="h-3 w-3 mr-1" />
                                   Trending
                                 </Badge>
                               )}
                             </div>
-                          </div>
-                          <h3 className="font-semibold text-lg mb-2 line-clamp-2">{article.title}</h3>
-                          <p className="text-gray-600 dark:text-gray-400 text-sm mb-3 line-clamp-2">
-                            {article.excerpt}
-                          </p>
-                          <div className="flex items-center justify-between text-xs text-gray-500">
-                            <div className="flex items-center space-x-4">
-                              <span>{article.author}</span>
-                              <span>{formatTimeAgo(article.publishedAt)}</span>
-                              <span>{article.readTime} min read</span>
-                            </div>
-                            <div className="flex items-center space-x-4">
-                              <div className="flex items-center space-x-1">
-                                <Eye className="h-3 w-3" />
-                                <span>{article.views.toLocaleString()}</span>
+                            <h3 className={`font-bold text-xl mb-3 line-clamp-2 ${isDark ? 'text-white' : 'text-gray-900'} group-hover:text-blue-600 transition-colors leading-tight`}>
+                              {article.title}
+                            </h3>
+                            <p className={`text-sm mb-4 line-clamp-3 leading-relaxed ${isDark ? 'text-gray-300' : 'text-gray-600'}`}>
+                              {article.excerpt}
+                            </p>
+                            <div className="flex items-center justify-between">
+                              <div className={`flex items-center space-x-4 text-xs ${isDark ? 'text-gray-400' : 'text-gray-500'}`}>
+                                <div className="flex items-center space-x-1">
+                                  <User className="h-3 w-3" />
+                                  <span className="font-medium">{article.author}</span>
+                                </div>
+                                <div className="flex items-center space-x-1">
+                                  <Calendar className="h-3 w-3" />
+                                  <span>{formatTimeAgo(article.publishedAt)}</span>
+                                </div>
+                                <div className="flex items-center space-x-1">
+                                  <Clock className="h-3 w-3" />
+                                  <span>{article.readTime} min read</span>
+                                </div>
                               </div>
-                              <Button variant="ghost" size="sm" className="h-6 w-6 p-0">
-                                <Share2 className="h-3 w-3" />
-                              </Button>
-                              <Button variant="ghost" size="sm" className="h-6 w-6 p-0">
-                                <Bookmark className="h-3 w-3" />
-                              </Button>
+                              <div className="flex items-center space-x-3">
+                                <div className={`flex items-center space-x-1 text-xs ${isDark ? 'text-gray-400' : 'text-gray-500'}`}>
+                                  <Eye className="h-3 w-3" />
+                                  <span>{article.views.toLocaleString()}</span>
+                                </div>
+                                <Button 
+                                  variant="ghost" 
+                                  size="sm" 
+                                  className={`h-7 w-7 p-0 ${isDark ? 'hover:bg-gray-700' : 'hover:bg-gray-100'}`}
+                                >
+                                  <Share2 className="h-3 w-3" />
+                                </Button>
+                              </div>
                             </div>
                           </div>
                         </div>
-                      </div>
-                    </CardContent>
-                  </Card>
+                      </CardContent>
+                    </Card>
+                  </motion.div>
                 ))}
               </div>
-            </div>
+            </motion.div>
           </div>
 
           {/* Sidebar */}
           <div className="space-y-6">
             {/* Trending Now */}
             {trendingArticles.length > 0 && (
-              <Card>
-                <CardHeader className="pb-3">
-                  <CardTitle className="flex items-center space-x-2 text-lg">
-                    <TrendingUp className="h-5 w-5 text-orange-500" />
-                    <span>Trending Now</span>
-                  </CardTitle>
-                </CardHeader>
-                <CardContent>
-                  <div className="space-y-3">
-                    {trendingArticles.slice(0, 5).map((article, index) => (
-                      <div key={article.id} className="flex items-start space-x-3 cursor-pointer hover:bg-gray-50 dark:hover:bg-gray-800 p-2 rounded-lg transition-colors">
-                        <span className="text-lg font-bold text-orange-500 flex-shrink-0">
-                          {index + 1}
-                        </span>
-                        <div className="min-w-0 flex-1">
-                          <h4 className="font-medium text-sm line-clamp-2 mb-1">{article.title}</h4>
-                          <div className="flex items-center space-x-2 text-xs text-gray-500">
-                            <span>{formatTimeAgo(article.publishedAt)}</span>
-                            <Eye className="h-3 w-3" />
-                            <span>{article.views.toLocaleString()}</span>
+              <motion.div
+                initial={{ opacity: 0, x: 20 }}
+                animate={{ opacity: 1, x: 0 }}
+                transition={{ duration: 0.5, delay: 0.3 }}
+              >
+                <Card className={`${isDark ? 'bg-gray-800 border-gray-700' : 'bg-white border-gray-200'}`}>
+                  <CardHeader className="pb-3">
+                    <CardTitle className={`flex items-center space-x-2 text-lg ${isDark ? 'text-white' : 'text-gray-900'}`}>
+                      <TrendingUp className="h-5 w-5 text-orange-500" />
+                      <span>Trending Now</span>
+                    </CardTitle>
+                  </CardHeader>
+                  <CardContent>
+                    <div className="space-y-3">
+                      {trendingArticles.slice(0, 5).map((article, index) => (
+                        <div key={article.id} className={`flex items-start space-x-3 cursor-pointer p-3 rounded-lg transition-all duration-200 ${
+                          isDark ? 'hover:bg-gray-700' : 'hover:bg-gray-50'
+                        }`}>
+                          <span className="text-lg font-bold text-orange-500 flex-shrink-0 w-6">
+                            {index + 1}
+                          </span>
+                          <div className="min-w-0 flex-1">
+                            <h4 className={`font-semibold text-sm line-clamp-2 mb-2 ${isDark ? 'text-white' : 'text-gray-900'}`}>
+                              {article.title}
+                            </h4>
+                            <div className={`flex items-center space-x-3 text-xs ${isDark ? 'text-gray-400' : 'text-gray-500'}`}>
+                              <span>{formatTimeAgo(article.publishedAt)}</span>
+                              <div className="flex items-center space-x-1">
+                                <Eye className="h-3 w-3" />
+                                <span>{article.views.toLocaleString()}</span>
+                              </div>
+                            </div>
                           </div>
                         </div>
-                      </div>
-                    ))}
-                  </div>
-                </CardContent>
-              </Card>
+                      ))}
+                    </div>
+                  </CardContent>
+                </Card>
+              </motion.div>
             )}
 
             {/* Threat Level Indicator */}
-            <Card>
-              <CardHeader className="pb-3">
-                <CardTitle className="flex items-center space-x-2 text-lg">
-                  <Shield className="h-5 w-5 text-red-500" />
-                  <span>Global Threat Level</span>
-                </CardTitle>
-              </CardHeader>
-              <CardContent>
-                <div className="text-center">
-                  <div className="w-20 h-20 mx-auto mb-3 rounded-full bg-red-500 flex items-center justify-center">
-                    <span className="text-white font-bold text-xl">HIGH</span>
-                  </div>
-                  <p className="text-sm text-gray-600 dark:text-gray-400 mb-3">
-                    Current threat level based on recent attacks and vulnerabilities
-                  </p>
-                  <div className="bg-red-50 dark:bg-red-900/20 border border-red-200 rounded-lg p-3">
-                    <p className="text-xs text-red-700 dark:text-red-300">
-                      ⚠️ Multiple critical vulnerabilities actively exploited
+            <motion.div
+              initial={{ opacity: 0, x: 20 }}
+              animate={{ opacity: 1, x: 0 }}
+              transition={{ duration: 0.5, delay: 0.4 }}
+            >
+              <Card className={`${isDark ? 'bg-gray-800 border-gray-700' : 'bg-white border-gray-200'}`}>
+                <CardHeader className="pb-3">
+                  <CardTitle className={`flex items-center space-x-2 text-lg ${isDark ? 'text-white' : 'text-gray-900'}`}>
+                    <Shield className="h-5 w-5 text-red-500" />
+                    <span>Global Threat Level</span>
+                  </CardTitle>
+                </CardHeader>
+                <CardContent>
+                  <div className="text-center">
+                    <div className="w-24 h-24 mx-auto mb-4 rounded-full bg-gradient-to-br from-red-500 to-red-600 flex items-center justify-center shadow-lg">
+                      <span className="text-white font-bold text-xl">HIGH</span>
+                    </div>
+                    <p className={`text-sm mb-4 ${isDark ? 'text-gray-300' : 'text-gray-600'}`}>
+                      Current threat level based on recent attacks and vulnerabilities
                     </p>
+                    <div className={`${isDark ? 'bg-red-900/30 border-red-700' : 'bg-red-50 border-red-200'} border rounded-lg p-3`}>
+                      <p className={`text-xs font-medium ${isDark ? 'text-red-300' : 'text-red-700'}`}>
+                        ⚠️ Multiple critical vulnerabilities actively exploited
+                      </p>
+                    </div>
                   </div>
-                </div>
-              </CardContent>
-            </Card>
+                </CardContent>
+              </Card>
+            </motion.div>
 
             {/* Quick Actions */}
-            <Card>
-              <CardHeader className="pb-3">
-                <CardTitle className="flex items-center space-x-2 text-lg">
-                  <Zap className="h-5 w-5 text-blue-500" />
-                  <span>Quick Actions</span>
-                </CardTitle>
-              </CardHeader>
-              <CardContent className="space-y-2">
-                <Button variant="outline" className="w-full justify-start">
-                  <AlertTriangle className="h-4 w-4 mr-2" />
-                  Report Incident
-                </Button>
-                <Button variant="outline" className="w-full justify-start">
-                  <Users className="h-4 w-4 mr-2" />
-                  Join Discussion
-                </Button>
-                <Button variant="outline" className="w-full justify-start">
-                  <Share2 className="h-4 w-4 mr-2" />
-                  Share Alert
-                </Button>
-              </CardContent>
-            </Card>
+            <motion.div
+              initial={{ opacity: 0, x: 20 }}
+              animate={{ opacity: 1, x: 0 }}
+              transition={{ duration: 0.5, delay: 0.5 }}
+            >
+              <Card className={`${isDark ? 'bg-gray-800 border-gray-700' : 'bg-white border-gray-200'}`}>
+                <CardHeader className="pb-3">
+                  <CardTitle className={`flex items-center space-x-2 text-lg ${isDark ? 'text-white' : 'text-gray-900'}`}>
+                    <Zap className="h-5 w-5 text-blue-500" />
+                    <span>Quick Actions</span>
+                  </CardTitle>
+                </CardHeader>
+                <CardContent className="space-y-3">
+                  <Button variant="outline" className={`w-full justify-start ${
+                    isDark ? 'border-gray-600 text-gray-300 hover:bg-gray-700 hover:text-white' : 'border-gray-300 text-gray-700 hover:bg-gray-50'
+                  }`}>
+                    <AlertTriangle className="h-4 w-4 mr-2" />
+                    Report Incident
+                  </Button>
+                  <Button variant="outline" className={`w-full justify-start ${
+                    isDark ? 'border-gray-600 text-gray-300 hover:bg-gray-700 hover:text-white' : 'border-gray-300 text-gray-700 hover:bg-gray-50'
+                  }`}>
+                    <Users className="h-4 w-4 mr-2" />
+                    Join Discussion
+                  </Button>
+                  <Button variant="outline" className={`w-full justify-start ${
+                    isDark ? 'border-gray-600 text-gray-300 hover:bg-gray-700 hover:text-white' : 'border-gray-300 text-gray-700 hover:bg-gray-50'
+                  }`}>
+                    <Share2 className="h-4 w-4 mr-2" />
+                    Share Alert
+                  </Button>
+                </CardContent>
+              </Card>
+            </motion.div>
 
             {/* Newsletter Signup */}
             <Card className="bg-gradient-to-br from-blue-500 to-purple-600 text-white">
