@@ -369,36 +369,7 @@ const EnhancedBlogPostPage = () => {
                   </div>
                 </div>
 
-                {/* Social Actions */}
-                <div className="flex items-center justify-between py-4 border-t border-b border-gray-200 dark:border-gray-700 mb-8">
-                  <div className="flex items-center space-x-6">
-                    <button className={`flex items-center space-x-2 ${
-                      isDark ? 'text-gray-400 hover:text-red-400' : 'text-gray-600 hover:text-red-600'
-                    } transition-colors`}>
-                      <MessageSquare className="h-5 w-5" />
-                      <span>{blogPost.likes}</span>
-                    </button>
-                    <button className={`flex items-center space-x-2 ${
-                      isDark ? 'text-gray-400 hover:text-blue-400' : 'text-gray-600 hover:text-blue-600'
-                    } transition-colors`}>
-                      <Share2 className="h-5 w-5" />
-                      <span>{blogPost.shares}</span>
-                    </button>
-                    <button className={`flex items-center space-x-2 ${
-                      isDark ? 'text-gray-400 hover:text-yellow-400' : 'text-gray-600 hover:text-yellow-600'
-                    } transition-colors`}>
-                      <Bookmark className="h-5 w-5" />
-                      <span>Save</span>
-                    </button>
-                  </div>
 
-                  <div className="flex items-center space-x-2">
-                    <Coffee className="h-4 w-4 text-gray-500" />
-                    <span className="text-sm text-gray-500">
-                      Estimated reading time: {estimatedReadTime} minutes
-                    </span>
-                  </div>
-                </div>
               </motion.div>
 
               {/* Featured Image */}
@@ -506,15 +477,7 @@ const EnhancedBlogPostPage = () => {
                 </motion.div>
               )}
 
-              {/* FAQ Section */}
-              <motion.div
-                initial={{ opacity: 0, y: 20 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.6, delay: 1.0 }}
-                className="mt-12"
-              >
-                <BlogFAQ className="mb-8" />
-              </motion.div>
+
 
               {/* Comments Section */}
               <motion.div
