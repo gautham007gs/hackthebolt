@@ -1,8 +1,8 @@
 import React, { useState, useRef } from 'react';
 import { 
   Bold, Italic, Underline, Link, Image, List, ListOrdered, 
-  Code, Quote, Highlight, Palette, Type, AlignLeft, AlignCenter, 
-  AlignRight, Undo, Redo, Eye, Save, Upload
+  Code, Quote, Palette, Type, AlignLeft, AlignCenter, 
+  AlignRight, Undo, Redo, Eye, Save, Upload, Highlighter
 } from 'lucide-react';
 import { useTheme } from '../contexts/ThemeContext';
 
@@ -128,7 +128,7 @@ const RichTextEditor: React.FC<RichTextEditorProps> = ({
     { icon: ListOrdered, action: () => insertAtCursor('1. '), tooltip: 'Numbered List' },
     { icon: Link, action: () => setShowLinkDialog(true), tooltip: 'Insert Link' },
     { icon: Image, action: () => setShowImageUpload(true), tooltip: 'Insert Image' },
-    { icon: Highlight, action: () => wrapSelection('=='), tooltip: 'Highlight' }
+    { icon: Highlighter, action: () => wrapSelection('=='), tooltip: 'Highlight' }
   ];
 
   return (

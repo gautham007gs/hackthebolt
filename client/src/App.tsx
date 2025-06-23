@@ -58,7 +58,7 @@ function AppContent() {
           <Route path="/blog/:slug" component={EnhancedBlogPostPage} />
           <Route path="/news" component={NewsPage} />
           <Route path="/admin" component={ImprovedAdminPage} />
-          <Route path="/creator" component={ImprovedCreatorPageWithEditor} />
+          <Route path="/creator" component={CreatorPage} />
           <Route path="/login" component={LoginPage} />
           <Route path="/github-tools" component={GitHubToolsPage} />
           <Route path="/tools" component={GitHubToolsPage} />
