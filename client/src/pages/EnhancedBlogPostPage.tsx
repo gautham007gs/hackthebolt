@@ -4,7 +4,8 @@ import { motion } from 'framer-motion';
 import { ArrowLeft, Calendar, User, Clock, Eye, MessageSquare, Share2, BookOpen, ChevronRight, Bookmark, Tag, Coffee } from 'lucide-react';
 import { useTheme } from '../contexts/ThemeContext';
 import TableOfContents from '../components/TableOfContents';
-import EnhancedCommentSystemV2 from '../components/EnhancedCommentSystemV2';
+import { CommentSystem } from '../components/CommentSystem';
+import { BlogFAQ } from '../components/FAQ';
 import SEOStructuredData from '../components/SEOStructuredData';
 import AdvancedSEO from '../components/AdvancedSEO';
 import BlogContentRenderer from '../components/BlogContentRenderer';
@@ -505,6 +506,16 @@ const EnhancedBlogPostPage = () => {
                 </motion.div>
               )}
 
+              {/* FAQ Section */}
+              <motion.div
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.6, delay: 1.0 }}
+                className="mt-12"
+              >
+                <BlogFAQ className="mb-8" />
+              </motion.div>
+
               {/* Comments Section */}
               <motion.div
                 initial={{ opacity: 0, y: 20 }}
@@ -512,7 +523,7 @@ const EnhancedBlogPostPage = () => {
                 transition={{ duration: 0.6, delay: 1.2 }}
                 className="mt-16"
               >
-                <EnhancedCommentSystemV2
+                <CommentSystem
                   postId={parseInt(blogPost.id)}
                   postType="blog"
                 />
@@ -578,6 +589,13 @@ const EnhancedBlogPostPage = () => {
                     <MessageSquare className="h-3.5 w-3.5" />
                     <span>Discuss</span>
                   </button>
+                </div>
+
+                {/* FAQ Section - Sidebar */}
+                <div className={`${isDark ? 'bg-gray-800' : 'bg-white'} rounded-xl p-6 border ${
+                  isDark ? 'border-gray-700' : 'border-gray-200'
+                }`}>
+                  <BlogFAQ />
                 </div>
 
                 {/* Reading Stats */}

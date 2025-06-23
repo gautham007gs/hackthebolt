@@ -1,167 +1,127 @@
-import React, { useState } from 'react';
+import { useState } from 'react';
 import { ChevronDown, ChevronUp, HelpCircle } from 'lucide-react';
-import { useTheme } from '../contexts/ThemeContext';
-import { motion, AnimatePresence } from 'framer-motion';
+import { Card, CardContent } from '@/components/ui/card';
+import { cn } from '@/lib/utils';
 
-interface FAQItem {
+export interface FAQItem {
+  id: string;
   question: string;
   answer: string;
   category?: string;
 }
 
 interface FAQProps {
+  items: FAQItem[];
   title?: string;
-  subtitle?: string;
-  faqs: FAQItem[];
+  compact?: boolean;
   className?: string;
 }
 
-const FAQ: React.FC<FAQProps> = ({ 
-  title = "Frequently Asked Questions", 
-  subtitle = "Everything you need to know about HackTheShell",
-  faqs,
-  className = ""
-}) => {
-  const { isDark } = useTheme();
-  const [openItems, setOpenItems] = useState<number[]>([]);
+export function FAQ({ items, title = "Frequently Asked Questions", compact = false, className }: FAQProps) {
+  const [openItems, setOpenItems] = useState<Set<string>>(new Set());
 
-  const toggleItem = (index: number) => {
-    setOpenItems(prev => 
-      prev.includes(index) 
-        ? prev.filter(i => i !== index)
-        : [...prev, index]
-    );
+  const toggleItem = (id: string) => {
+    const newOpenItems = new Set(openItems);
+    if (newOpenItems.has(id)) {
+      newOpenItems.delete(id);
+    } else {
+      newOpenItems.add(id);
+    }
+    setOpenItems(newOpenItems);
   };
 
-  return (
-    <section className={`py-16 ${className}`}>
-      <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
-        {/* Header */}
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          className="text-center mb-12"
-        >
-          <div className="flex items-center justify-center mb-4">
-            <HelpCircle className={`h-8 w-8 mr-3 ${
-              isDark ? 'text-emerald-400' : 'text-emerald-600'
-            }`} />
-            <h2 className={`text-3xl font-bold ${
-              isDark ? 'text-white' : 'text-gray-900'
-            }`}>
-              {title}
-            </h2>
-          </div>
-          <p className={`text-lg ${
-            isDark ? 'text-gray-400' : 'text-gray-600'
-          }`}>
-            {subtitle}
-          </p>
-        </motion.div>
+  if (items.length === 0) return null;
 
-        {/* FAQ Items */}
-        <div className="space-y-4">
-          {faqs.map((faq, index) => (
-            <motion.div
-              key={index}
-              initial={{ opacity: 0, y: 20 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              transition={{ delay: index * 0.1 }}
-              className={`rounded-2xl border transition-all duration-300 ${
-                isDark 
-                  ? 'bg-gray-800/50 border-gray-700/50 hover:border-gray-600' 
-                  : 'bg-white/80 border-gray-200/80 hover:border-gray-300'
-              } backdrop-blur-sm hover:shadow-lg`}
-            >
+  return (
+    <div className={cn(
+      "space-y-4",
+      compact ? "max-w-md" : "max-w-2xl",
+      className
+    )}>
+      <div className="flex items-center gap-2 mb-4">
+        <HelpCircle className="h-5 w-5 text-emerald-600 dark:text-emerald-400" />
+        <h3 className={cn(
+          "font-semibold text-gray-900 dark:text-gray-100",
+          compact ? "text-lg" : "text-xl"
+        )}>
+          {title}
+        </h3>
+      </div>
+      
+      <div className="space-y-2">
+        {items.map((item) => (
+          <Card key={item.id} className="border border-gray-200 dark:border-gray-700 shadow-sm">
+            <CardContent className="p-0">
               <button
-                onClick={() => toggleItem(index)}
-                className={`w-full px-6 py-5 text-left flex items-center justify-between focus:outline-none focus:ring-2 focus:ring-emerald-500 focus:ring-offset-2 rounded-2xl transition-all duration-200 ${
-                  isDark ? 'focus:ring-offset-gray-800' : 'focus:ring-offset-white'
-                }`}
+                onClick={() => toggleItem(item.id)}
+                className="w-full text-left p-4 hover:bg-gray-50 dark:hover:bg-gray-800 transition-colors rounded-lg focus:outline-none focus:ring-2 focus:ring-emerald-500 focus:ring-offset-2 dark:focus:ring-offset-gray-900"
               >
-                <span className={`text-lg font-semibold pr-4 ${
-                  isDark ? 'text-white' : 'text-gray-900'
-                }`}>
-                  {faq.question}
-                </span>
-                <div className={`flex-shrink-0 p-1 rounded-full transition-all duration-300 ${
-                  openItems.includes(index)
-                    ? isDark 
-                      ? 'bg-emerald-400/20 text-emerald-400' 
-                      : 'bg-emerald-600/20 text-emerald-600'
-                    : isDark 
-                      ? 'text-gray-400 hover:text-gray-300' 
-                      : 'text-gray-600 hover:text-gray-700'
-                }`}>
-                  {openItems.includes(index) ? (
-                    <ChevronUp className="h-5 w-5 transform transition-transform duration-300" />
+                <div className="flex items-center justify-between">
+                  <span className={cn(
+                    "font-medium text-gray-900 dark:text-gray-100",
+                    compact ? "text-sm" : "text-base"
+                  )}>
+                    {item.question}
+                  </span>
+                  {openItems.has(item.id) ? (
+                    <ChevronUp className="h-4 w-4 text-gray-500 dark:text-gray-400 flex-shrink-0" />
                   ) : (
-                    <ChevronDown className="h-5 w-5 transform transition-transform duration-300" />
+                    <ChevronDown className="h-4 w-4 text-gray-500 dark:text-gray-400 flex-shrink-0" />
                   )}
                 </div>
               </button>
               
-              <AnimatePresence>
-                {openItems.includes(index) && (
-                  <motion.div
-                    initial={{ height: 0, opacity: 0 }}
-                    animate={{ height: 'auto', opacity: 1 }}
-                    exit={{ height: 0, opacity: 0 }}
-                    transition={{ duration: 0.3, ease: 'easeInOut' }}
-                    className="overflow-hidden"
-                  >
-                    <div className={`px-6 pb-5 ${
-                      isDark ? 'text-gray-300' : 'text-gray-700'
-                    } leading-relaxed`}>
-                      <div className={`pt-2 border-t ${
-                        isDark ? 'border-gray-700/50' : 'border-gray-200/50'
-                      }`}>
-                        {faq.answer}
-                      </div>
-                    </div>
-                  </motion.div>
-                )}
-              </AnimatePresence>
-            </motion.div>
-          ))}
-        </div>
-
-        {/* CTA Section */}
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          transition={{ delay: 0.4 }}
-          className={`mt-12 p-8 rounded-2xl text-center ${
-            isDark 
-              ? 'bg-gradient-to-br from-emerald-500/10 to-cyan-500/10 border border-emerald-500/20' 
-              : 'bg-gradient-to-br from-emerald-50 to-cyan-50 border border-emerald-200'
-          }`}
-        >
-          <h3 className={`text-xl font-semibold mb-3 ${
-            isDark ? 'text-white' : 'text-gray-900'
-          }`}>
-            Still have questions?
-          </h3>
-          <p className={`mb-6 ${
-            isDark ? 'text-gray-400' : 'text-gray-600'
-          }`}>
-            Can't find the answer you're looking for? Please chat with our friendly team.
-          </p>
-          <div className="flex flex-col sm:flex-row gap-4 justify-center">
-            <button className="btn-primary">
-              Contact Support
-            </button>
-            <button className="btn-secondary">
-              Join Community
-            </button>
-          </div>
-        </motion.div>
+              {openItems.has(item.id) && (
+                <div className="px-4 pb-4">
+                  <div className="pt-2 border-t border-gray-100 dark:border-gray-700">
+                    <p className={cn(
+                      "text-gray-600 dark:text-gray-300 leading-relaxed",
+                      compact ? "text-sm" : "text-base"
+                    )}>
+                      {item.answer}
+                    </p>
+                  </div>
+                </div>
+              )}
+            </CardContent>
+          </Card>
+        ))}
       </div>
-    </section>
+    </div>
   );
-};
+}
 
-export default FAQ;
+// Blog-specific FAQ component with cybersecurity focus
+export function BlogFAQ({ className }: { className?: string }) {
+  const blogFAQs: FAQItem[] = [
+    {
+      id: 'security-basics',
+      question: 'What are the essential cybersecurity practices for beginners?',
+      answer: 'Start with strong, unique passwords, enable two-factor authentication, keep software updated, use reputable antivirus software, and be cautious with email attachments and links.',
+    },
+    {
+      id: 'learn-ethical-hacking',
+      question: 'How can I start learning ethical hacking safely?',
+      answer: 'Begin with dedicated learning platforms like HackTheBox, TryHackMe, or our labs. Always practice on authorized systems, obtain proper certifications, and follow responsible disclosure principles.',
+    },
+    {
+      id: 'career-cybersecurity',
+      question: 'What career paths are available in cybersecurity?',
+      answer: 'Popular paths include penetration testing, security analysis, incident response, security architecture, compliance, and cybersecurity consulting. Each requires different skills and certifications.',
+    },
+    {
+      id: 'stay-updated',
+      question: 'How do I stay updated with the latest security threats?',
+      answer: 'Follow reputable security blogs, subscribe to threat intelligence feeds, join cybersecurity communities, attend conferences, and practice regularly on platforms like our labs.',
+    }
+  ];
+
+  return (
+    <FAQ 
+      items={blogFAQs} 
+      title="Security Learning FAQ" 
+      compact={true}
+      className={className}
+    />
+  );
+}

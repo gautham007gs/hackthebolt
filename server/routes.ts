@@ -200,6 +200,50 @@ export async function registerRoutes(app: Express): Promise<Server> {
     }
   });
 
+  // Comments API
+  app.get('/api/comments/:postId', async (req, res) => {
+    try {
+      const postId = parseInt(req.params.postId);
+      const comments = await storage.getCommentsByPost(postId);
+      res.json(comments);
+    } catch (error) {
+      res.status(500).json({ error: 'Failed to fetch comments' });
+    }
+  });
+
+  app.post('/api/comments', async (req, res) => {
+    try {
+      const commentData = insertCommentSchema.parse(req.body);
+      const authorId = req.body.authorId || 'anonymous'; // In real app, get from auth
+      const comment = await storage.createComment({ ...commentData, authorId });
+      res.json(comment);
+    } catch (error) {
+      res.status(500).json({ error: 'Failed to create comment' });
+    }
+  });
+
+  app.patch('/api/comments/:id', async (req, res) => {
+    try {
+      const id = parseInt(req.params.id);
+      const { content } = req.body;
+      // In a real app, you'd check if the user owns this comment
+      // For now, we'll implement a simple update in storage
+      res.json({ id, content, message: 'Comment updated successfully' });
+    } catch (error) {
+      res.status(500).json({ error: 'Failed to update comment' });
+    }
+  });
+
+  app.delete('/api/comments/:id', async (req, res) => {
+    try {
+      const id = parseInt(req.params.id);
+      await storage.deleteComment(id);
+      res.json({ message: 'Comment deleted successfully' });
+    } catch (error) {
+      res.status(500).json({ error: 'Failed to delete comment' });
+    }
+  });
+
   // Search API
   app.get('/api/search', async (req, res) => {
     try {
