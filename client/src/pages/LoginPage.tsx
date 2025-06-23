@@ -336,28 +336,28 @@ const LoginPage = () => {
           {/* Social Login */}
           <div className="space-y-3 mb-6">
             <button
-              onClick={() => handleSocialLogin('google')}
-              disabled={loading}
-              className={`w-full flex items-center justify-center py-3 px-4 border rounded-xl text-sm font-medium transition-all duration-200 ${
-                isDark 
-                  ? 'border-gray-600 text-gray-300 hover:bg-gray-700 focus:ring-gray-500/20' 
-                  : 'border-gray-300 text-gray-700 hover:bg-gray-50 focus:ring-gray-500/20'
-              } focus:outline-none focus:ring-4 disabled:opacity-50 disabled:cursor-not-allowed`}
-            >
-              <Chrome className="h-5 w-5 mr-3" />
-              Continue with Google
-            </button>
-            <button
               onClick={() => handleSocialLogin('github')}
               disabled={loading}
               className={`w-full flex items-center justify-center py-3 px-4 border rounded-xl text-sm font-medium transition-all duration-200 ${
                 isDark 
-                  ? 'border-gray-600 text-gray-300 hover:bg-gray-700 focus:ring-gray-500/20' 
-                  : 'border-gray-300 text-gray-700 hover:bg-gray-50 focus:ring-gray-500/20'
-              } focus:outline-none focus:ring-4 disabled:opacity-50 disabled:cursor-not-allowed`}
+                  ? 'border-gray-600 bg-gray-800 text-white hover:bg-gray-700 focus:ring-emerald-500/20' 
+                  : 'border-gray-300 bg-white text-gray-900 hover:bg-gray-50 focus:ring-emerald-500/20'
+              } focus:outline-none focus:ring-4 disabled:opacity-50 disabled:cursor-not-allowed shadow-sm`}
             >
               <Github className="h-5 w-5 mr-3" />
               Continue with GitHub
+            </button>
+            <button
+              onClick={() => handleSocialLogin('google')}
+              disabled={loading}
+              className={`w-full flex items-center justify-center py-3 px-4 border rounded-xl text-sm font-medium transition-all duration-200 ${
+                isDark 
+                  ? 'border-gray-600 bg-gray-800 text-white hover:bg-gray-700 focus:ring-emerald-500/20' 
+                  : 'border-gray-300 bg-white text-gray-900 hover:bg-gray-50 focus:ring-emerald-500/20'
+              } focus:outline-none focus:ring-4 disabled:opacity-50 disabled:cursor-not-allowed shadow-sm`}
+            >
+              <Chrome className="h-5 w-5 mr-3" />
+              Continue with Google
             </button>
           </div>
 

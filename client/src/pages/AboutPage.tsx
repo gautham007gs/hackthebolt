@@ -190,37 +190,37 @@ const AboutPage = () => {
             </p>
           </motion.div>
 
-          <div className="grid md:grid-cols-3 gap-8">
+          <div className="grid md:grid-cols-3 gap-6 max-w-5xl mx-auto">
             {team.map((member, index) => (
               <motion.div
                 key={member.name}
                 initial={{ opacity: 0, y: 30 }}
                 whileInView={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.6, delay: index * 0.1 }}
-                className={`${isDark ? 'bg-gray-800' : 'bg-white'} rounded-2xl overflow-hidden border ${
+                className={`${isDark ? 'bg-gray-800' : 'bg-white'} rounded-xl overflow-hidden border ${
                   isDark ? 'border-gray-700' : 'border-gray-200'
-                } shadow-lg hover:shadow-xl transition-all duration-300 group`}
+                } shadow-lg hover:shadow-xl transition-all duration-300 group max-w-sm mx-auto`}
               >
-                <div className="aspect-square overflow-hidden">
+                <div className="aspect-[4/3] overflow-hidden">
                   <img
                     src={member.image}
                     alt={member.name}
                     className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
                   />
                 </div>
-                <div className="p-6">
-                  <h3 className={`text-xl font-bold mb-2 ${isDark ? 'text-white' : 'text-gray-900'}`}>
+                <div className="p-5">
+                  <h3 className={`text-lg font-bold mb-1 ${isDark ? 'text-white' : 'text-gray-900'}`}>
                     {member.name}
                   </h3>
-                  <p className="text-emerald-500 font-semibold mb-4">{member.role}</p>
-                  <p className={`${isDark ? 'text-gray-300' : 'text-gray-600'} mb-4 leading-relaxed`}>
+                  <p className="text-emerald-500 font-semibold mb-3 text-sm">{member.role}</p>
+                  <p className={`${isDark ? 'text-gray-300' : 'text-gray-600'} mb-3 leading-relaxed text-sm line-clamp-3`}>
                     {member.bio}
                   </p>
-                  <div className="flex flex-wrap gap-2">
+                  <div className="flex flex-wrap gap-1.5">
                     {member.expertise.map((skill, skillIndex) => (
                       <span
                         key={skillIndex}
-                        className={`px-3 py-1 rounded-full text-xs font-medium ${
+                        className={`px-2 py-1 rounded-full text-xs font-medium ${
                           isDark ? 'bg-gray-700 text-gray-300' : 'bg-gray-100 text-gray-600'
                         }`}
                       >
