@@ -30,9 +30,19 @@
 @layer base {
   * {
     font-feature-settings: "cv02", "cv03", "cv04", "cv11";
-    transition-property: color, background-color, border-color, text-decoration-color, fill, stroke, opacity, box-shadow, transform, filter, backdrop-filter;
+  }
+  
+  /* Optimized transitions for better performance */
+  .transition-optimized {
+    transition-property: opacity, transform;
     transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
-    transition-duration: 200ms;
+    transition-duration: 150ms;
+  }
+  
+  .transition-colors {
+    transition-property: color, background-color, border-color;
+    transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
+    transition-duration: 150ms;
   }
   
   body {

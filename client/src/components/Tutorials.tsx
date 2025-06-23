@@ -253,64 +253,55 @@ if __name__ == "__main__":
         </div>
 
         {/* Filters */}
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.6, delay: 0.2 }}
-          className={`${isDark ? 'bg-gray-800' : 'bg-white'} rounded-2xl p-6 mb-12 border ${isDark ? 'border-gray-700' : 'border-gray-200'}`}
-        >
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+        <div className={`${isDark ? 'bg-gray-800/60' : 'bg-white/90'} rounded-lg p-4 mb-8 border ${isDark ? 'border-gray-700/50' : 'border-gray-200/50'} backdrop-blur-sm`}>
+          <div className="flex flex-col space-y-3 sm:flex-row sm:space-y-0 sm:space-x-3">
             {/* Search */}
-            <div className="relative">
-              <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 h-4 w-4 text-gray-400" />
+            <div className="flex-1 relative">
+              <Search className={`absolute left-2.5 top-1/2 transform -translate-y-1/2 h-3.5 w-3.5 ${isDark ? 'text-gray-200' : 'text-gray-700'}`} />
               <input
                 type="text"
                 placeholder="Search tutorials..."
                 value={searchQuery}
                 onChange={(e) => setSearchQuery(e.target.value)}
-                className={`w-full pl-10 pr-4 py-3 rounded-xl border ${
+                className={`w-full pl-8 pr-3 py-2 text-sm rounded-md border transition-colors ${
                   isDark 
-                    ? 'bg-gray-700 border-gray-600 text-white placeholder-gray-400 focus:border-emerald-500' 
-                    : 'bg-gray-50 border-gray-300 text-gray-900 placeholder-gray-500 focus:border-emerald-500'
-                } focus:ring-2 focus:ring-emerald-500/20 focus:outline-none transition-all duration-200`}
+                    ? 'bg-gray-700/80 border-gray-600/60 text-white placeholder-gray-300 focus:bg-gray-700 focus:border-emerald-400' 
+                    : 'bg-white border-gray-300/60 text-gray-900 placeholder-gray-500 focus:bg-white focus:border-emerald-500'
+                } focus:outline-none focus:ring-1 focus:ring-emerald-500/30`}
               />
             </div>
 
             {/* Category Filter */}
-            <div>
-              <select
-                value={selectedCategory}
-                onChange={(e) => setSelectedCategory(e.target.value)}
-                className={`w-full px-4 py-3 rounded-xl border ${
-                  isDark 
-                    ? 'bg-gray-700 border-gray-600 text-white focus:border-emerald-500' 
-                    : 'bg-gray-50 border-gray-300 text-gray-900 focus:border-emerald-500'
-                } focus:ring-2 focus:ring-emerald-500/20 focus:outline-none transition-all duration-200`}
-              >
-                {categories.map(category => (
-                  <option key={category} value={category}>{category}</option>
-                ))}
-              </select>
-            </div>
+            <select
+              value={selectedCategory}
+              onChange={(e) => setSelectedCategory(e.target.value)}
+              className={`px-3 py-2 text-xs rounded-md border transition-colors ${
+                isDark 
+                  ? 'bg-gray-700/80 border-gray-600/60 text-white focus:bg-gray-700 focus:border-emerald-400' 
+                  : 'bg-white border-gray-300/60 text-gray-900 focus:bg-white focus:border-emerald-500'
+              } focus:outline-none focus:ring-1 focus:ring-emerald-500/30`}
+            >
+              {categories.map(category => (
+                <option key={category} value={category}>{category}</option>
+              ))}
+            </select>
 
             {/* Difficulty Filter */}
-            <div>
-              <select
-                value={selectedDifficulty}
-                onChange={(e) => setSelectedDifficulty(e.target.value)}
-                className={`w-full px-4 py-3 rounded-xl border ${
-                  isDark 
-                    ? 'bg-gray-700 border-gray-600 text-white focus:border-emerald-500' 
-                    : 'bg-gray-50 border-gray-300 text-gray-900 focus:border-emerald-500'
-                } focus:ring-2 focus:ring-emerald-500/20 focus:outline-none transition-all duration-200`}
-              >
-                {difficulties.map(difficulty => (
-                  <option key={difficulty} value={difficulty}>{difficulty}</option>
-                ))}
-              </select>
-            </div>
+            <select
+              value={selectedDifficulty}
+              onChange={(e) => setSelectedDifficulty(e.target.value)}
+              className={`px-3 py-2 text-xs rounded-md border transition-colors ${
+                isDark 
+                  ? 'bg-gray-700/80 border-gray-600/60 text-white focus:bg-gray-700 focus:border-emerald-400' 
+                  : 'bg-white border-gray-300/60 text-gray-900 focus:bg-white focus:border-emerald-500'
+              } focus:outline-none focus:ring-1 focus:ring-emerald-500/30`}
+            >
+              {difficulties.map(difficulty => (
+                <option key={difficulty} value={difficulty}>{difficulty}</option>
+              ))}
+            </select>
           </div>
-        </motion.div>
+        </div>
 
         {/* Tutorials Grid */}
         <div className="grid md:grid-cols-2 gap-8">

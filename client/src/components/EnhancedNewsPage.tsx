@@ -391,46 +391,79 @@ export function EnhancedNewsPage() {
         )}
 
         {/* Search and Filters */}
-        <div className="mb-6">
-          <div className="flex flex-col sm:flex-row gap-4">
-            <div className="flex-1">
-              <div className="relative">
-                <Search className={`absolute left-3 top-1/2 transform -translate-y-1/2 h-4 w-4 ${isDark ? 'text-gray-400' : 'text-gray-500'}`} />
-                <Input
-                  placeholder="Search cybersecurity news..."
-                  value={searchTerm}
-                  onChange={(e) => setSearchTerm(e.target.value)}
-                  className={`pl-10 ${isDark ? 'bg-gray-800 border-gray-700' : 'bg-white border-gray-300'}`}
-                />
+        <div className="mb-4">
+          <div className={`p-3 rounded-lg ${isDark ? 'bg-gray-800/60 border border-gray-700/50' : 'bg-white/90 border border-gray-200/50'} backdrop-blur-sm shadow-sm`}>
+            <div className="flex flex-col space-y-2 sm:flex-row sm:space-y-0 sm:space-x-2">
+              <div className="flex-1">
+                <div className="relative">
+                  <Search className={`absolute left-2.5 top-1/2 transform -translate-y-1/2 h-3.5 w-3.5 ${isDark ? 'text-gray-200' : 'text-gray-700'}`} />
+                  <input
+                    type="text"
+                    placeholder="Search news..."
+                    value={searchTerm}
+                    onChange={(e) => setSearchTerm(e.target.value)}
+                    className={`w-full pl-8 pr-3 py-2 text-sm rounded-md border transition-all duration-200 ${
+                      isDark 
+                        ? 'bg-gray-700/80 border-gray-600/60 text-white placeholder-gray-300 focus:bg-gray-700 focus:border-blue-400 focus:ring-1 focus:ring-blue-400/30' 
+                        : 'bg-white border-gray-300/60 text-gray-900 placeholder-gray-500 focus:bg-white focus:border-blue-500 focus:ring-1 focus:ring-blue-500/30'
+                    } focus:outline-none`}
+                  />
+                </div>
+              </div>
+              <div className="flex space-x-2">
+                <select
+                  value={selectedCategory}
+                  onChange={(e) => setSelectedCategory(e.target.value)}
+                  className={`px-3 py-2 text-xs rounded-md border transition-all duration-200 ${
+                    isDark 
+                      ? 'bg-gray-700/80 border-gray-600/60 text-white focus:bg-gray-700 focus:border-blue-400' 
+                      : 'bg-white border-gray-300/60 text-gray-900 focus:bg-white focus:border-blue-500'
+                  } focus:outline-none focus:ring-1 focus:ring-blue-500/30`}
+                >
+                  <option value="all">All</option>
+                  <option value="breach">Breaches</option>
+                  <option value="vulnerability">Vulnerabilities</option>
+                  <option value="threat">Threats</option>
+                  <option value="policy">Policy</option>
+                  <option value="research">Research</option>
+                  <option value="tools">Tools</option>
+                </select>
+                
+                <select
+                  value={selectedSeverity}
+                  onChange={(e) => setSelectedSeverity(e.target.value)}
+                  className={`px-2 py-2 text-xs rounded-md border transition-all duration-200 ${
+                    isDark 
+                      ? 'bg-gray-700/80 border-gray-600/60 text-white focus:bg-gray-700 focus:border-blue-400' 
+                      : 'bg-white border-gray-300/60 text-gray-900 focus:bg-white focus:border-blue-500'
+                  } focus:outline-none focus:ring-1 focus:ring-blue-500/30`}
+                >
+                  <option value="all">All</option>
+                  <option value="critical">Critical</option>
+                  <option value="high">High</option>
+                  <option value="medium">Medium</option>
+                  <option value="low">Low</option>
+                </select>
               </div>
             </div>
-            <div className="flex gap-2">
-              <Select value={selectedCategory} onValueChange={setSelectedCategory}>
-                <SelectTrigger className={`w-36 ${isDark ? 'bg-gray-800 border-gray-700' : 'bg-white border-gray-300'}`}>
-                  <SelectValue placeholder="Category" />
-                </SelectTrigger>
-                <SelectContent>
-                  <SelectItem value="all">All Categories</SelectItem>
-                  <SelectItem value="breach">Breaches</SelectItem>
-                  <SelectItem value="vulnerability">Vulnerabilities</SelectItem>
-                  <SelectItem value="threat">Threats</SelectItem>
-                  <SelectItem value="policy">Policy</SelectItem>
-                  <SelectItem value="research">Research</SelectItem>
-                  <SelectItem value="tools">Tools</SelectItem>
-                </SelectContent>
-              </Select>
-              <Select value={selectedSeverity} onValueChange={setSelectedSeverity}>
-                <SelectTrigger className={`w-28 ${isDark ? 'bg-gray-800 border-gray-700' : 'bg-white border-gray-300'}`}>
-                  <SelectValue placeholder="Severity" />
-                </SelectTrigger>
-                <SelectContent>
-                  <SelectItem value="all">All</SelectItem>
-                  <SelectItem value="critical">Critical</SelectItem>
-                  <SelectItem value="high">High</SelectItem>
-                  <SelectItem value="medium">Medium</SelectItem>
-                  <SelectItem value="low">Low</SelectItem>
-                </SelectContent>
-              </Select>
+            
+            {/* Results count */}
+            <div className="mt-2 flex items-center justify-between text-xs">
+              <span className={`${isDark ? 'text-gray-300' : 'text-gray-600'}`}>
+                {filteredArticles.length} results
+              </span>
+              {(searchTerm || selectedCategory !== 'all' || selectedSeverity !== 'all') && (
+                <button
+                  onClick={() => {
+                    setSearchTerm('');
+                    setSelectedCategory('all');
+                    setSelectedSeverity('all');
+                  }}
+                  className={`text-xs px-2 py-1 rounded hover:bg-gray-100 dark:hover:bg-gray-700 ${isDark ? 'text-blue-300 hover:text-blue-200' : 'text-blue-600 hover:text-blue-700'} transition-all duration-200`}
+                >
+                  Clear
+                </button>
+              )}
             </div>
           </div>
         </div>

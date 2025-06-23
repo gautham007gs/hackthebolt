@@ -176,17 +176,17 @@ const TutorialsPage = () => {
             </div>
 
             {/* Filters */}
-            <div className="flex flex-col sm:flex-row gap-4 sm:items-center sm:justify-center lg:justify-start">
-              <div className="flex items-center space-x-2">
-                <Filter className={`h-5 w-5 ${isDark ? 'text-gray-400' : 'text-gray-500'}`} />
-                <span className={`text-sm font-medium ${isDark ? 'text-gray-300' : 'text-gray-700'}`}>Filter by:</span>
-              </div>
-              
-              <div className="flex flex-col sm:flex-row gap-3 w-full sm:w-auto">
+            <div className={`p-3 rounded-lg ${isDark ? 'bg-gray-800/60 border border-gray-700/50' : 'bg-white/90 border border-gray-200/50'} backdrop-blur-sm`}>
+              <div className="flex flex-col space-y-2 sm:flex-row sm:space-y-0 sm:space-x-2 sm:items-center">
+                <div className="flex items-center space-x-2">
+                  <Filter className={`h-4 w-4 ${isDark ? 'text-gray-300' : 'text-gray-600'}`} />
+                  <span className={`text-xs font-medium ${isDark ? 'text-gray-300' : 'text-gray-700'}`}>Filter:</span>
+                </div>
+                
                 <select
                   value={selectedCategory}
                   onChange={(e) => setSelectedCategory(e.target.value)}
-                  className={`flex-1 sm:w-48 px-4 py-3 rounded-xl border ${isDark ? 'bg-gray-800 border-gray-700 text-white focus:border-emerald-500' : 'bg-white border-gray-300 text-gray-900 focus:border-emerald-500'} focus:outline-none focus:ring-2 focus:ring-emerald-500/20 transition-all duration-200`}
+                  className={`px-3 py-2 text-xs rounded-md border transition-colors ${isDark ? 'bg-gray-700/80 border-gray-600/60 text-white focus:bg-gray-700 focus:border-emerald-400' : 'bg-white border-gray-300/60 text-gray-900 focus:bg-white focus:border-emerald-500'} focus:outline-none focus:ring-1 focus:ring-emerald-500/30`}
                 >
                   {categories.map(category => (
                     <option key={category} value={category}>{category}</option>

@@ -105,18 +105,19 @@ const ProfessionalTrendingSection = () => {
 
   // Auto-rotate trending posts with cleanup
   useEffect(() => {
-    resetAutoPlay();
+    if (autoPlayRef.current) {
+      clearInterval(autoPlayRef.current);
+    }
+    autoPlayRef.current = setInterval(() => {
+      setActiveIndex((prev) => (prev + 1) % trendingPosts.length);
+    }, 4000);
+
     return () => {
       if (autoPlayRef.current) {
         clearInterval(autoPlayRef.current);
       }
     };
   }, [trendingPosts.length]);
-
-  // Reset autoplay when user interacts
-  useEffect(() => {
-    resetAutoPlay();
-  }, [activeIndex]);
 
   const containerVariants = {
     hidden: { opacity: 0 },
@@ -204,14 +205,14 @@ const ProfessionalTrendingSection = () => {
                   initial={{ opacity: 0, x: 50 }}
                   animate={{ opacity: 1, x: 0 }}
                   exit={{ opacity: 0, x: -50 }}
-                  transition={{ duration: 0.5, ease: [0.25, 0.46, 0.45, 0.94] }}
+                  transition={{ duration: 0.3, ease: "easeOut" }}
                   drag="x"
                   dragConstraints={{ left: 0, right: 0 }}
-                  dragElastic={0.3}
+                  dragElastic={0.2}
                   onDragEnd={(_, info) => handleSwipe(info)}
                   className={`relative overflow-hidden rounded-xl ${
                     isDark ? 'bg-gray-800 border-gray-700' : 'bg-white border-blue-100 shadow-blue-100/50'
-                  } border shadow-lg group hover:shadow-xl transition-all duration-500 cursor-grab active:cursor-grabbing`}
+                  } border shadow-lg group hover:shadow-xl transition-optimized cursor-grab active:cursor-grabbing`}
                 >
                   <div className="relative overflow-hidden">
                     <img
