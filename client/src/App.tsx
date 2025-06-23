@@ -27,7 +27,7 @@ import ProfessionalAdminPage from './pages/ProfessionalAdminPage';
 import ProfessionalCreatorPage from './pages/ProfessionalCreatorPage';
 import ImprovedAdminPage from './pages/ImprovedAdminPage';
 import ImprovedCreatorPageWithEditor from './pages/ImprovedCreatorPageWithEditor';
-import LoginPage from './pages/LoginPage';
+import CompactLoginPage from './pages/CompactLoginPage';
 import GitHubToolsPage from './pages/GitHubToolsPage';
 import AboutPage from './pages/AboutPage';
 import ContactPage from './pages/ContactPage';
@@ -60,7 +60,7 @@ function AppContent() {
           <Route path="/news" component={NewsPage} />
           <Route path="/admin" component={ImprovedAdminPage} />
           <Route path="/creator" component={CreatorPage} />
-          <Route path="/login" component={LoginPage} />
+          <Route path="/login" component={CompactLoginPage} />
           <Route path="/github-tools" component={GitHubToolsPage} />
           <Route path="/tools" component={GitHubToolsPage} />
           <Route path="/about" component={AboutPage} />

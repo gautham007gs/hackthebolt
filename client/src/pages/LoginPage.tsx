@@ -520,26 +520,26 @@ const LoginPage = () => {
             <button
               type="submit"
               disabled={loading}
-              className="w-full flex justify-center py-3 px-4 border border-transparent rounded-xl text-sm font-medium text-white bg-emerald-600 hover:bg-emerald-700 focus:outline-none focus:ring-4 focus:ring-emerald-500/20 transition-all duration-200 disabled:opacity-50 disabled:cursor-not-allowed"
+              className="w-full flex justify-center py-2.5 px-4 border border-transparent rounded-lg text-sm font-medium text-white bg-emerald-600 hover:bg-emerald-700 focus:outline-none focus:ring-2 focus:ring-emerald-500/20 transition-all duration-200 disabled:opacity-50 disabled:cursor-not-allowed"
             >
               {loading ? (
-                <div className="animate-spin rounded-full h-5 w-5 border-b-2 border-white"></div>
+                <div className="animate-spin rounded-full h-4 w-4 border-b-2 border-white"></div>
               ) : (
                 <div className="flex items-center">
                   <span>{isLogin ? 'Sign in' : 'Create account'}</span>
-                  <ArrowRight className="ml-2 h-4 w-4" />
+                  <ArrowRight className="ml-2 h-3 w-3" />
                 </div>
               )}
             </button>
           </form>
 
-          <div className="mt-6 text-center">
-            <span className={`text-sm ${isDark ? 'text-gray-400' : 'text-gray-600'}`}>
+          <div className="mt-4 text-center">
+            <span className={`text-xs ${isDark ? 'text-gray-400' : 'text-gray-600'}`}>
               {isLogin ? "Don't have an account? " : "Already have an account? "}
             </span>
             <button
               onClick={switchMode}
-              className="text-sm text-emerald-600 hover:text-emerald-500 font-medium transition-colors"
+              className="text-xs text-emerald-600 hover:text-emerald-500 font-medium transition-colors"
             >
               {isLogin ? 'Sign up' : 'Sign in'}
             </button>
@@ -551,13 +551,14 @@ const LoginPage = () => {
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           transition={{ duration: 0.6, delay: 0.2 }}
-          className="text-center"
+          className="text-center mt-4"
         >
           <Link
             href="/"
-            className={`text-sm ${isDark ? 'text-gray-400 hover:text-gray-300' : 'text-gray-600 hover:text-gray-700'} transition-colors`}
+            className={`text-xs ${isDark ? 'text-gray-400 hover:text-gray-300' : 'text-gray-600 hover:text-gray-700'} transition-colors flex items-center justify-center space-x-1`}
           >
-            ← Back to homepage
+            <ArrowLeft className="h-3 w-3" />
+            <span>Back to homepage</span>
           </Link>
         </motion.div>
       </div>

@@ -48,17 +48,17 @@ const Footer = () => {
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
         {/* Newsletter Section - Full Width Professional Design */}
         <div className="mb-16">
-          <div className={`relative overflow-hidden rounded-3xl ${
-            isDark ? 'bg-gradient-to-r from-emerald-900/50 via-gray-800/50 to-cyan-900/50 border-emerald-500/20' : 'bg-gradient-to-r from-emerald-50 via-gray-50 to-cyan-50 border-emerald-300'
-          } border-2 shadow-2xl`}>
+          <div className={`relative overflow-hidden rounded-2xl ${
+            isDark ? 'bg-gradient-to-br from-emerald-900/40 via-gray-800/40 to-cyan-900/40 border-emerald-500/30' : 'bg-gradient-to-br from-emerald-50 via-white to-cyan-50 border-emerald-200'
+          } border shadow-xl`}>
             {/* Background Effects */}
-            <div className="absolute inset-0 opacity-30">
-              <div className="absolute top-0 right-0 w-96 h-96 bg-gradient-to-br from-emerald-400/20 to-cyan-400/20 rounded-full -translate-y-48 translate-x-48"></div>
-              <div className="absolute bottom-0 left-0 w-80 h-80 bg-gradient-to-tr from-emerald-400/15 to-cyan-400/15 rounded-full translate-y-40 -translate-x-40"></div>
+            <div className="absolute inset-0 opacity-20">
+              <div className="absolute top-0 right-0 w-64 h-64 bg-gradient-to-br from-emerald-400/30 to-cyan-400/30 rounded-full -translate-y-32 translate-x-32"></div>
+              <div className="absolute bottom-0 left-0 w-48 h-48 bg-gradient-to-tr from-emerald-400/20 to-cyan-400/20 rounded-full translate-y-24 -translate-x-24"></div>
             </div>
             
-            <div className="relative z-10 px-4 py-6 sm:px-8 sm:py-8 lg:px-12 lg:py-12">
-              <div className="grid lg:grid-cols-2 gap-6 lg:gap-12 items-center max-w-6xl mx-auto">
+            <div className="relative z-10 px-4 py-6 sm:px-6 sm:py-8 lg:px-10 lg:py-10">
+              <div className="grid lg:grid-cols-2 gap-6 lg:gap-10 items-center max-w-5xl mx-auto">
                 {/* Content Section */}
                 <div className="text-center lg:text-left">
                   <div className="flex items-center justify-center lg:justify-start space-x-3 mb-4">
@@ -77,7 +77,7 @@ const Footer = () => {
                     </div>
                   </div>
                   <p className={`text-sm sm:text-base lg:text-lg ${isDark ? 'text-gray-300' : 'text-gray-700'} leading-relaxed mb-6`}>
-                    Get weekly security insights, threat alerts, and expert tutorials delivered to your inbox.
+                    Get weekly insights, threat alerts, and expert tutorials delivered to your inbox.
                   </p>
                 </div>
 
@@ -115,11 +115,11 @@ const Footer = () => {
                       </form>
                       <div className="flex flex-wrap items-center justify-center gap-2 sm:gap-4 text-xs text-gray-500 dark:text-gray-400 mt-3">
                         <span className="flex items-center space-x-1">
-                          <div className="w-1.5 h-1.5 bg-green-500 rounded-full"></div>
-                          <span>No spam</span>
+                          <div className="w-1.5 h-1.5 bg-emerald-500 rounded-full"></div>
+                          <span>No spam, ever</span>
                         </span>
                         <span className="flex items-center space-x-1">
-                          <div className="w-1.5 h-1.5 bg-blue-500 rounded-full"></div>
+                          <div className="w-1.5 h-1.5 bg-cyan-500 rounded-full"></div>
                           <span>Unsubscribe anytime</span>
                         </span>
                         <span className="flex items-center space-x-2">
