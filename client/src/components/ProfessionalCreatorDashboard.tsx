@@ -208,13 +208,34 @@ const ProfessionalCreatorDashboard = () => {
 
   // Render dashboard overview
   const renderDashboard = () => (
-    <div className="space-y-6">
+    <div className="space-y-4 lg:space-y-6">
+      {/* Welcome Section */}
+      <div className={`p-4 lg:p-6 rounded-xl ${
+        isDark ? 'bg-gradient-to-r from-gray-800 to-gray-700 border-gray-600' : 'bg-gradient-to-r from-blue-50 to-indigo-50 border-blue-200'
+      } border shadow-sm`}>
+        <h2 className={`text-xl lg:text-2xl font-bold mb-2 ${isDark ? 'text-white' : 'text-gray-900'}`}>
+          Welcome back, Creator!
+        </h2>
+        <p className={`text-sm lg:text-base ${isDark ? 'text-gray-300' : 'text-gray-600'}`}>
+          Ready to create amazing content today?
+        </p>
+        <div className="mt-4">
+          <button
+            onClick={handleCreatePost}
+            className="px-4 py-2 bg-emerald-500 hover:bg-emerald-600 text-white rounded-lg font-medium transition-colors text-sm lg:text-base flex items-center gap-2"
+          >
+            <Plus className="h-4 w-4" />
+            Create New Post
+          </button>
+        </div>
+      </div>
+
       {/* Stats Grid */}
-      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 lg:gap-6">
+      <div className="grid grid-cols-2 lg:grid-cols-4 gap-3 lg:gap-4">
         {[
-          { label: 'Total Posts', value: stats.totalPosts, icon: FileText, color: 'emerald' },
-          { label: 'Total Views', value: stats.totalViews.toLocaleString(), icon: Eye, color: 'blue' },
-          { label: 'Total Likes', value: stats.totalLikes.toLocaleString(), icon: Heart, color: 'red' },
+          { label: 'Posts', value: stats.totalPosts, icon: FileText, color: 'emerald' },
+          { label: 'Views', value: stats.totalViews.toLocaleString(), icon: Eye, color: 'blue' },
+          { label: 'Likes', value: stats.totalLikes.toLocaleString(), icon: Heart, color: 'red' },
           { label: 'Followers', value: stats.followers, icon: Users, color: 'purple' }
         ].map((stat, index) => (
           <motion.div
@@ -222,61 +243,94 @@ const ProfessionalCreatorDashboard = () => {
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: index * 0.1 }}
-            className={`p-4 lg:p-6 rounded-xl ${
-              isDark ? 'bg-gray-800 border-gray-700' : 'bg-white border-gray-200'
-            } border shadow-sm`}
+            className={`p-3 lg:p-4 rounded-lg ${
+              isDark ? 'bg-gray-800/80 border border-gray-700/50' : 'bg-white/80 border border-gray-200/50'
+            } backdrop-blur-sm shadow-sm hover:shadow-md transition-all duration-200`}
           >
             <div className="flex items-center justify-between">
               <div>
-                <p className={`text-xs lg:text-sm font-medium ${isDark ? 'text-gray-400' : 'text-gray-600'}`}>
+                <p className={`text-xs font-medium ${isDark ? 'text-gray-300' : 'text-gray-700'}`}>
                   {stat.label}
                 </p>
-                <p className={`text-lg lg:text-2xl font-bold mt-1 ${isDark ? 'text-white' : 'text-gray-900'}`}>
+                <p className={`text-lg lg:text-xl font-bold mt-1 ${isDark ? 'text-white' : 'text-gray-900'}`}>
                   {stat.value}
                 </p>
               </div>
-              <stat.icon className={`h-6 w-6 lg:h-8 lg:w-8 text-${stat.color}-500`} />
+              <div className={`p-2 rounded-lg ${stat.color === 'emerald' ? 'bg-emerald-500/10' : stat.color === 'blue' ? 'bg-blue-500/10' : stat.color === 'red' ? 'bg-red-500/10' : 'bg-purple-500/10'}`}>
+                <stat.icon className={`h-4 w-4 lg:h-5 lg:w-5 ${stat.color === 'emerald' ? 'text-emerald-500' : stat.color === 'blue' ? 'text-blue-500' : stat.color === 'red' ? 'text-red-500' : 'text-purple-500'}`} />
+              </div>
             </div>
           </motion.div>
         ))}
       </div>
 
+      {/* Quick Actions */}
+      <div className={`p-4 lg:p-6 rounded-xl ${
+        isDark ? 'bg-gray-800/60 border border-gray-700/50' : 'bg-white/80 border border-gray-200/50'
+      } backdrop-blur-sm shadow-sm`}>
+        <h3 className={`text-lg font-semibold mb-4 ${isDark ? 'text-white' : 'text-gray-900'}`}>
+          Quick Actions
+        </h3>
+        <div className="grid grid-cols-2 lg:grid-cols-4 gap-3">
+          {[
+            { label: 'New Post', icon: Plus, action: handleCreatePost, color: 'emerald' },
+            { label: 'Draft Posts', icon: Edit3, action: () => setActiveTab('posts'), color: 'blue' },
+            { label: 'Analytics', icon: BarChart3, action: () => setActiveTab('analytics'), color: 'purple' },
+            { label: 'Settings', icon: Settings, action: () => setActiveTab('settings'), color: 'gray' }
+          ].map((action, index) => (
+            <button
+              key={action.label}
+              onClick={action.action}
+              className={`p-3 rounded-lg text-center transition-all duration-200 ${
+                isDark 
+                  ? 'bg-gray-700/50 hover:bg-gray-700 text-gray-200 hover:text-white' 
+                  : 'bg-gray-50 hover:bg-gray-100 text-gray-700 hover:text-gray-900'
+              } border ${isDark ? 'border-gray-600/50 hover:border-gray-600' : 'border-gray-200 hover:border-gray-300'}`}
+            >
+              <action.icon className="h-5 w-5 mx-auto mb-2" />
+              <span className="text-xs font-medium">{action.label}</span>
+            </button>
+          ))}
+        </div>
+      </div>
+
       {/* Recent Posts */}
       <div className={`p-4 lg:p-6 rounded-xl ${
-        isDark ? 'bg-gray-800 border-gray-700' : 'bg-white border-gray-200'
-      } border shadow-sm`}>
-        <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between mb-4 lg:mb-6">
-          <h3 className={`text-lg lg:text-xl font-semibold ${isDark ? 'text-white' : 'text-gray-900'}`}>
+        isDark ? 'bg-gray-800/60 border border-gray-700/50' : 'bg-white/80 border border-gray-200/50'
+      } backdrop-blur-sm shadow-sm`}>
+        <div className="flex items-center justify-between mb-4">
+          <h3 className={`text-lg font-semibold ${isDark ? 'text-white' : 'text-gray-900'}`}>
             Recent Posts
           </h3>
           <button
-            onClick={handleCreatePost}
-            className="mt-3 sm:mt-0 px-4 py-2 bg-emerald-500 text-white rounded-lg hover:bg-emerald-600 transition-colors text-sm font-medium"
+            onClick={() => setActiveTab('posts')}
+            className={`text-sm font-medium ${isDark ? 'text-blue-400 hover:text-blue-300' : 'text-blue-600 hover:text-blue-700'} transition-colors`}
           >
-            Create New Post
+            View All
           </button>
         </div>
-        <div className="space-y-3 lg:space-y-4">
-          {posts.slice(0, 3).map(post => (
-            <div
-              key={post.id}
-              className={`p-3 lg:p-4 rounded-lg ${
-                isDark ? 'bg-gray-700 border-gray-600' : 'bg-gray-50 border-gray-200'
-              } border`}
-            >
-              <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between">
-                <div className="flex-1">
-                  <h4 className={`font-medium text-sm lg:text-base ${isDark ? 'text-white' : 'text-gray-900'}`}>
-                    {post.title}
-                  </h4>
-                  <div className="flex flex-wrap items-center gap-3 mt-2 text-xs lg:text-sm">
-                    <span className={`px-2 py-1 rounded ${
-                      post.status === 'published' 
-                        ? 'bg-green-100 text-green-800' 
-                        : 'bg-yellow-100 text-yellow-800'
-                    }`}>
-                      {post.status}
-                    </span>
+        <div className="space-y-3">
+          {posts.slice(0, 3).map((post, index) => (
+            <div key={post.id} className={`p-3 rounded-lg ${
+              isDark ? 'bg-gray-700/30 hover:bg-gray-700/50' : 'bg-gray-50/50 hover:bg-gray-50'
+            } transition-colors cursor-pointer`}>
+              <div className="flex items-center justify-between">
+                <div className="flex items-center space-x-3 flex-1 min-w-0">
+                  <div className={`w-2 h-2 rounded-full flex-shrink-0 ${
+                    post.status === 'published' ? 'bg-green-500' : 'bg-yellow-500'
+                  }`} />
+                  <div className="min-w-0 flex-1">
+                    <p className={`text-sm font-medium truncate ${isDark ? 'text-white' : 'text-gray-900'}`}>
+                      {post.title}
+                    </p>
+                    <div className="flex items-center space-x-2 text-xs">
+                      <span className={`px-2 py-0.5 rounded-full ${
+                        post.status === 'published' 
+                          ? 'bg-green-100 text-green-700 dark:bg-green-900/30 dark:text-green-300' 
+                          : 'bg-yellow-100 text-yellow-700 dark:bg-yellow-900/30 dark:text-yellow-300'
+                      }`}>
+                        {post.status}
+                      </span>
                     <span className={`flex items-center ${isDark ? 'text-gray-400' : 'text-gray-600'}`}>
                       <Eye className="h-3 w-3 mr-1" />
                       {post.views}
@@ -314,13 +368,30 @@ const ProfessionalCreatorDashboard = () => {
         <h2 className={`text-xl lg:text-2xl font-bold ${isDark ? 'text-white' : 'text-gray-900'}`}>
           My Posts
         </h2>
-        <button
-          onClick={handleCreatePost}
-          className="px-4 py-2 bg-emerald-500 text-white rounded-lg hover:bg-emerald-600 transition-colors text-sm font-medium"
-        >
-          <Plus className="h-4 w-4 inline mr-2" />
-          Create New Post
-        </button>
+        <div className="flex flex-col sm:flex-row gap-2">
+          <div className="relative flex-1 sm:w-64">
+            <Search className={`absolute left-2.5 top-1/2 transform -translate-y-1/2 h-3.5 w-3.5 ${isDark ? 'text-gray-300' : 'text-gray-600'}`} />
+            <input
+              type="text"
+              placeholder="Search posts..."
+              value={searchTerm}
+              onChange={(e) => setSearchTerm(e.target.value)}
+              className={`w-full pl-8 pr-3 py-2 text-sm rounded-md border transition-colors ${
+                isDark 
+                  ? 'bg-gray-700/80 border-gray-600/60 text-white placeholder-gray-300 focus:bg-gray-700 focus:border-emerald-400' 
+                  : 'bg-white border-gray-300/60 text-gray-900 placeholder-gray-500 focus:bg-white focus:border-emerald-500'
+              } focus:outline-none focus:ring-1 focus:ring-emerald-500/30`}
+            />
+          </div>
+          <button
+            onClick={handleCreatePost}
+            className="px-4 py-2 bg-emerald-500 text-white rounded-lg hover:bg-emerald-600 transition-colors text-sm font-medium flex items-center gap-2"
+          >
+            <Plus className="h-4 w-4" />
+            <span className="hidden sm:inline">Create New Post</span>
+            <span className="sm:hidden">New</span>
+          </button>
+        </div>
       </div>
 
       <div className="grid gap-4 lg:gap-6">
