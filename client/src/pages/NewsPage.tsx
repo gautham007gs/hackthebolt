@@ -1,5 +1,5 @@
-import { ProfessionalCyberNews } from '../components/ProfessionalCyberNews';
+import { EnhancedNewsPage } from '../components/EnhancedNewsPage';
 
 export function NewsPage() {
-  return <ProfessionalCyberNews />;
+  return <EnhancedNewsPage />;
 }

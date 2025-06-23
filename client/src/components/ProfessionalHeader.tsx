@@ -162,7 +162,7 @@ const ProfessionalHeader = () => {
           </div>
 
           {/* Right side actions */}
-          <div className="flex items-center space-x-2">
+          <div className="flex items-center space-x-1">
             {/* Theme Toggle */}
             <button
               onClick={toggleTheme}
@@ -171,40 +171,40 @@ const ProfessionalHeader = () => {
               }`}
             >
               {isDark ? (
-                <Sun className="h-5 w-5 text-yellow-500" />
+                <Sun className="h-4 w-4 text-yellow-500" />
               ) : (
-                <Moon className="h-5 w-5 text-gray-700" />
+                <Moon className="h-4 w-4 text-gray-700" />
               )}
             </button>
 
             {/* User Menu - Desktop */}
             {isAuthenticated ? (
-              <div className="hidden sm:flex items-center space-x-1">
+              <div className="hidden sm:flex items-center space-x-0.5">
                 {user?.role === 'admin' && (
                   <Link href="/admin" className="p-2 rounded-lg text-red-500 hover:bg-red-50 dark:hover:bg-red-500/10 transition-all duration-200">
-                    <Shield className="h-5 w-5" />
+                    <Shield className="h-4 w-4" />
                   </Link>
                 )}
                 {(user?.role === 'creator' || user?.role === 'admin') && (
                   <Link href="/creator" className="p-2 rounded-lg text-blue-500 hover:bg-blue-50 dark:hover:bg-blue-500/10 transition-all duration-200">
-                    <Zap className="h-5 w-5" />
+                    <Zap className="h-4 w-4" />
                   </Link>
                 )}
                 <Link href="/dashboard" className="p-2 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-800 transition-all duration-200">
-                  <User className="h-5 w-5" />
+                  <User className="h-4 w-4" />
                 </Link>
                 <button
                   onClick={logout}
                   className="p-2 rounded-lg text-red-500 hover:bg-red-50 dark:hover:bg-red-500/10 transition-all duration-200"
                 >
-                  <LogOut className="h-5 w-5" />
+                  <LogOut className="h-4 w-4" />
                 </button>
               </div>
             ) : (
-              <div className="hidden sm:flex items-center space-x-2">
+              <div className="hidden sm:flex items-center space-x-1">
                 <Link 
                   href="/login" 
-                  className={`px-4 py-2 text-sm font-medium rounded-lg transition-all duration-200 ${
+                  className={`px-3 py-1.5 text-sm font-medium rounded-lg transition-all duration-200 ${
                     isDark ? 'text-gray-300 hover:text-white hover:bg-gray-800' : 'text-gray-700 hover:text-gray-900 hover:bg-gray-100'
                   }`}
                 >
@@ -212,7 +212,7 @@ const ProfessionalHeader = () => {
                 </Link>
                 <Link 
                   href="/login" 
-                  className="px-4 py-2 bg-emerald-600 text-white text-sm font-medium rounded-lg hover:bg-emerald-700 transition-all duration-200 shadow-lg hover:shadow-xl"
+                  className="px-3 py-1.5 bg-emerald-600 text-white text-sm font-medium rounded-lg hover:bg-emerald-700 transition-all duration-200"
                 >
                   Sign Up
                 </Link>
@@ -223,20 +223,15 @@ const ProfessionalHeader = () => {
             <button
               onClick={() => setIsMenuOpen(!isMenuOpen)}
               className={`lg:hidden p-2 rounded-lg transition-all duration-200 ${
-                isDark ? 'hover:bg-gray-800/60 bg-gray-800/30' : 'hover:bg-gray-100/60 bg-gray-100/30'
+                isDark ? 'hover:bg-gray-800/60' : 'hover:bg-gray-100/60'
               }`}
               aria-label="Toggle mobile menu"
             >
-              <motion.div
-                animate={{ rotate: isMenuOpen ? 90 : 0 }}
-                transition={{ duration: 0.2 }}
-              >
-                {isMenuOpen ? (
-                  <X className={`h-6 w-6 ${isDark ? 'text-white' : 'text-gray-900'}`} />
-                ) : (
-                  <Menu className={`h-6 w-6 ${isDark ? 'text-white' : 'text-gray-900'}`} />
-                )}
-              </motion.div>
+              {isMenuOpen ? (
+                <X className={`h-5 w-5 ${isDark ? 'text-white' : 'text-gray-900'}`} />
+              ) : (
+                <Menu className={`h-5 w-5 ${isDark ? 'text-white' : 'text-gray-900'}`} />
+              )}
             </button>
           </div>
         </div>
