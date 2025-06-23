@@ -167,29 +167,48 @@ const EnhancedCreatorDashboard = () => {
   const renderDashboard = () => (
     <div className="space-y-6">
       {/* Welcome Header */}
-      <div className={`${isDark ? 'bg-gradient-to-r from-emerald-900/50 to-blue-900/50' : 'bg-gradient-to-r from-emerald-50 to-blue-50'} p-6 rounded-xl border ${isDark ? 'border-gray-700' : 'border-gray-200'}`}>
-        <div className="flex items-center justify-between">
-          <div>
-            <h2 className={`text-2xl font-bold ${isDark ? 'text-white' : 'text-gray-900'}`}>
+      <div className={`${isDark ? 'bg-gradient-to-br from-emerald-800/20 to-blue-800/20 border-emerald-700/30' : 'bg-gradient-to-br from-emerald-50 to-blue-50 border-emerald-200'} p-4 md:p-6 rounded-xl border backdrop-blur-sm`}>
+        <div className="flex flex-col lg:flex-row lg:items-center lg:justify-between gap-4">
+          <div className="flex-1">
+            <h2 className={`text-xl md:text-2xl font-bold ${isDark ? 'text-white' : 'text-gray-900'} mb-2`}>
               Welcome back, {user?.name || 'Creator'}! 
             </h2>
-            <p className={`mt-2 ${isDark ? 'text-gray-300' : 'text-gray-600'}`}>
-              Level: {stats.level} • Rank #{stats.rank} • {stats.totalPoints} points
-            </p>
-            <div className="mt-3 flex items-center space-x-4">
-              <div className={`flex items-center space-x-2 ${isDark ? 'text-emerald-400' : 'text-emerald-600'}`}>
+            <div className="flex flex-wrap items-center gap-4 text-sm">
+              <div className={`flex items-center space-x-2 ${isDark ? 'text-emerald-300' : 'text-emerald-700'}`}>
+                <Award className="h-4 w-4" />
+                <span className="font-medium">{stats.level}</span>
+              </div>
+              <div className={`flex items-center space-x-2 ${isDark ? 'text-blue-300' : 'text-blue-700'}`}>
+                <Trophy className="h-4 w-4" />
+                <span className="font-medium">Rank #{stats.rank}</span>
+              </div>
+              <div className={`flex items-center space-x-2 ${isDark ? 'text-amber-300' : 'text-amber-700'}`}>
                 <Star className="h-4 w-4" />
-                <span className="text-sm font-medium">{stats.nextLevelPoints} points to next level</span>
+                <span className="font-medium">{stats.totalPoints} points</span>
+              </div>
+            </div>
+            <div className="mt-3">
+              <div className={`text-xs ${isDark ? 'text-gray-300' : 'text-gray-600'} mb-1`}>
+                Progress to next level
+              </div>
+              <div className={`w-full bg-gray-200 dark:bg-gray-700 rounded-full h-2`}>
+                <div 
+                  className="bg-gradient-to-r from-emerald-500 to-blue-500 h-2 rounded-full transition-all duration-300" 
+                  style={{ width: `${Math.min((stats.totalPoints % 1000) / 10, 100)}%` }}
+                />
+              </div>
+              <div className={`text-xs ${isDark ? 'text-emerald-300' : 'text-emerald-600'} mt-1`}>
+                {stats.nextLevelPoints} points to next level
               </div>
             </div>
           </div>
-          <div className="text-right">
+          <div className="flex-shrink-0">
             <button
               onClick={() => {
                 setIsCreating(true);
                 setActiveTab('create');
               }}
-              className="bg-emerald-500 hover:bg-emerald-600 text-white px-6 py-3 rounded-lg font-medium transition-colors flex items-center space-x-2"
+              className="w-full lg:w-auto bg-gradient-to-r from-emerald-500 to-emerald-600 hover:from-emerald-600 hover:to-emerald-700 text-white px-6 py-3 rounded-lg font-medium transition-all duration-200 flex items-center justify-center space-x-2 shadow-lg hover:shadow-xl"
             >
               <Plus className="h-5 w-5" />
               <span>Create Post</span>
@@ -199,7 +218,7 @@ const EnhancedCreatorDashboard = () => {
       </div>
 
       {/* Stats Grid */}
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 md:gap-6">
         {[
           { label: 'Total Posts', value: stats.totalPosts, icon: Edit3, color: 'emerald', change: '+2 this week' },
           { label: 'Total Views', value: stats.totalViews.toLocaleString(), icon: Eye, color: 'blue', change: '+12% this month' },
@@ -211,16 +230,34 @@ const EnhancedCreatorDashboard = () => {
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: index * 0.1 }}
-            className={`${isDark ? 'bg-gray-800' : 'bg-white'} p-6 rounded-xl border ${isDark ? 'border-gray-700' : 'border-gray-200'}`}
+            className={`${isDark ? 'bg-gray-800 border-gray-700' : 'bg-white border-gray-200'} p-4 md:p-6 rounded-xl border hover:shadow-lg transition-shadow`}
           >
             <div className="flex items-center justify-between">
-              <div>
-                <p className={`text-sm ${isDark ? 'text-gray-400' : 'text-gray-600'}`}>{stat.label}</p>
-                <p className={`text-2xl font-bold mt-1 ${isDark ? 'text-white' : 'text-gray-900'}`}>{stat.value}</p>
-                <p className={`text-xs mt-1 text-${stat.color}-500`}>{stat.change}</p>
+              <div className="flex-1">
+                <p className={`text-sm font-medium ${isDark ? 'text-gray-300' : 'text-gray-600'}`}>{stat.label}</p>
+                <p className={`text-xl md:text-2xl font-bold mt-1 ${isDark ? 'text-white' : 'text-gray-900'}`}>{stat.value}</p>
+                <p className={`text-xs mt-2 font-medium ${
+                  stat.color === 'emerald' ? (isDark ? 'text-emerald-400' : 'text-emerald-600') :
+                  stat.color === 'blue' ? (isDark ? 'text-blue-400' : 'text-blue-600') :
+                  stat.color === 'rose' ? (isDark ? 'text-rose-400' : 'text-rose-600') :
+                  stat.color === 'amber' ? (isDark ? 'text-amber-400' : 'text-amber-600') : 
+                  (isDark ? 'text-gray-400' : 'text-gray-600')
+                }`}>{stat.change}</p>
               </div>
-              <div className={`p-3 rounded-lg bg-${stat.color}-100 dark:bg-${stat.color}-900/30`}>
-                <stat.icon className={`h-6 w-6 text-${stat.color}-600 dark:text-${stat.color}-400`} />
+              <div className={`p-3 rounded-lg ${
+                stat.color === 'emerald' ? (isDark ? 'bg-emerald-500/20' : 'bg-emerald-100') :
+                stat.color === 'blue' ? (isDark ? 'bg-blue-500/20' : 'bg-blue-100') :
+                stat.color === 'rose' ? (isDark ? 'bg-rose-500/20' : 'bg-rose-100') :
+                stat.color === 'amber' ? (isDark ? 'bg-amber-500/20' : 'bg-amber-100') : 
+                (isDark ? 'bg-gray-500/20' : 'bg-gray-100')
+              }`}>
+                <stat.icon className={`h-5 w-5 md:h-6 md:w-6 ${
+                  stat.color === 'emerald' ? (isDark ? 'text-emerald-400' : 'text-emerald-600') :
+                  stat.color === 'blue' ? (isDark ? 'text-blue-400' : 'text-blue-600') :
+                  stat.color === 'rose' ? (isDark ? 'text-rose-400' : 'text-rose-600') :
+                  stat.color === 'amber' ? (isDark ? 'text-amber-400' : 'text-amber-600') : 
+                  (isDark ? 'text-gray-400' : 'text-gray-600')
+                }`} />
               </div>
             </div>
           </motion.div>
@@ -228,61 +265,71 @@ const EnhancedCreatorDashboard = () => {
       </div>
 
       {/* Achievements */}
-      <div className={`${isDark ? 'bg-gray-800' : 'bg-white'} p-6 rounded-xl border ${isDark ? 'border-gray-700' : 'border-gray-200'}`}>
+      <div className={`${isDark ? 'bg-gray-800 border-gray-700' : 'bg-white border-gray-200'} p-4 md:p-6 rounded-xl border`}>
         <div className="flex items-center justify-between mb-4">
           <h3 className={`text-lg font-semibold ${isDark ? 'text-white' : 'text-gray-900'}`}>Achievements</h3>
-          <Trophy className={`h-5 w-5 ${isDark ? 'text-yellow-400' : 'text-yellow-500'}`} />
+          <Trophy className={`h-5 w-5 ${isDark ? 'text-amber-400' : 'text-amber-500'}`} />
         </div>
-        <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
+        <div className="grid grid-cols-2 md:grid-cols-4 gap-3 md:gap-4">
           {stats.achievements.map((achievement) => (
             <div
               key={achievement.id}
-              className={`p-3 rounded-lg text-center transition-all ${
+              className={`p-3 rounded-lg text-center transition-all hover:scale-105 ${
                 achievement.earned
-                  ? isDark ? 'bg-emerald-900/30 border border-emerald-700' : 'bg-emerald-50 border border-emerald-200'
-                  : isDark ? 'bg-gray-700 border border-gray-600 opacity-50' : 'bg-gray-50 border border-gray-200 opacity-50'
+                  ? isDark ? 'bg-emerald-500/20 border border-emerald-600/30' : 'bg-emerald-50 border border-emerald-200'
+                  : isDark ? 'bg-gray-700/50 border border-gray-600/50 opacity-60' : 'bg-gray-50 border border-gray-200 opacity-60'
               }`}
             >
-              <div className="text-2xl mb-1">{achievement.icon}</div>
-              <p className={`text-sm font-medium ${isDark ? 'text-white' : 'text-gray-900'}`}>{achievement.name}</p>
+              <div className="text-xl md:text-2xl mb-1">{achievement.icon}</div>
+              <p className={`text-xs md:text-sm font-medium ${
+                achievement.earned 
+                  ? isDark ? 'text-emerald-300' : 'text-emerald-800'
+                  : isDark ? 'text-gray-400' : 'text-gray-600'
+              }`}>{achievement.name}</p>
             </div>
           ))}
         </div>
       </div>
 
       {/* Recent Posts */}
-      <div className={`${isDark ? 'bg-gray-800' : 'bg-white'} p-6 rounded-xl border ${isDark ? 'border-gray-700' : 'border-gray-200'}`}>
+      <div className={`${isDark ? 'bg-gray-800 border-gray-700' : 'bg-white border-gray-200'} p-4 md:p-6 rounded-xl border`}>
         <div className="flex items-center justify-between mb-4">
           <h3 className={`text-lg font-semibold ${isDark ? 'text-white' : 'text-gray-900'}`}>Recent Posts</h3>
           <button
             onClick={() => setActiveTab('posts')}
-            className={`text-sm ${isDark ? 'text-emerald-400 hover:text-emerald-300' : 'text-emerald-600 hover:text-emerald-700'}`}
+            className={`text-sm font-medium ${isDark ? 'text-emerald-400 hover:text-emerald-300' : 'text-emerald-600 hover:text-emerald-700'} transition-colors`}
           >
             View all
           </button>
         </div>
         <div className="space-y-3">
           {posts.slice(0, 3).map((post) => (
-            <div key={post.id} className={`p-4 rounded-lg border ${isDark ? 'border-gray-700 bg-gray-700/30' : 'border-gray-200 bg-gray-50'}`}>
+            <div key={post.id} className={`p-4 rounded-lg border transition-all hover:shadow-sm ${isDark ? 'border-gray-600/50 bg-gray-700/20' : 'border-gray-200 bg-gray-50/50'}`}>
               <div className="flex items-center justify-between">
                 <div className="flex-1">
-                  <div className="flex items-center space-x-2 mb-1">
+                  <div className="flex items-center space-x-2 mb-2">
                     <h4 className={`font-medium ${isDark ? 'text-white' : 'text-gray-900'}`}>{post.title}</h4>
-                    {post.featured && <Star className="h-4 w-4 text-yellow-500" />}
-                    {post.trending && <TrendingUp className="h-4 w-4 text-red-500" />}
+                    {post.featured && <Star className="h-4 w-4 text-amber-500" />}
+                    {post.trending && <TrendingUp className="h-4 w-4 text-rose-500" />}
                   </div>
-                  <div className="flex items-center space-x-4 text-sm">
-                    <span className={`${isDark ? 'text-gray-400' : 'text-gray-600'}`}>{post.status}</span>
-                    <span className={`${isDark ? 'text-gray-400' : 'text-gray-600'}`}>{post.views} views</span>
-                    <span className={`${isDark ? 'text-gray-400' : 'text-gray-600'}`}>{post.likes} likes</span>
-                    <span className={`text-emerald-500 font-medium`}>+{post.points} points</span>
+                  <div className="flex flex-wrap items-center gap-3 text-sm">
+                    <span className={`px-2 py-1 rounded text-xs font-medium ${
+                      post.status === 'published' 
+                        ? isDark ? 'bg-emerald-500/20 text-emerald-300' : 'bg-emerald-100 text-emerald-700'
+                        : post.status === 'draft'
+                        ? isDark ? 'bg-amber-500/20 text-amber-300' : 'bg-amber-100 text-amber-700'
+                        : isDark ? 'bg-gray-500/20 text-gray-300' : 'bg-gray-100 text-gray-700'
+                    }`}>{post.status}</span>
+                    <span className={`${isDark ? 'text-gray-300' : 'text-gray-600'}`}>{post.views} views</span>
+                    <span className={`${isDark ? 'text-gray-300' : 'text-gray-600'}`}>{post.likes} likes</span>
+                    <span className={`font-medium ${isDark ? 'text-emerald-400' : 'text-emerald-600'}`}>+{post.points} pts</span>
                   </div>
                 </div>
-                <div className="flex items-center space-x-2">
-                  <button className={`p-2 rounded-lg ${isDark ? 'hover:bg-gray-600' : 'hover:bg-gray-200'}`}>
+                <div className="flex items-center space-x-2 ml-4">
+                  <button className={`p-2 rounded-lg transition-colors ${isDark ? 'hover:bg-gray-600 text-gray-300' : 'hover:bg-gray-200 text-gray-600'}`}>
                     <Edit3 className="h-4 w-4" />
                   </button>
-                  <button className={`p-2 rounded-lg ${isDark ? 'hover:bg-gray-600' : 'hover:bg-gray-200'}`}>
+                  <button className={`p-2 rounded-lg transition-colors ${isDark ? 'hover:bg-gray-600 text-gray-300' : 'hover:bg-gray-200 text-gray-600'}`}>
                     <Eye className="h-4 w-4" />
                   </button>
                 </div>
@@ -507,59 +554,59 @@ const EnhancedCreatorDashboard = () => {
             key={post.id}
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
-            className={`${isDark ? 'bg-gray-800' : 'bg-white'} p-6 rounded-xl border ${isDark ? 'border-gray-700' : 'border-gray-200'} hover:shadow-lg transition-all`}
+            className={`${isDark ? 'bg-gray-800 border-gray-700' : 'bg-white border-gray-200'} p-4 md:p-6 rounded-xl border hover:shadow-lg transition-all`}
           >
-            <div className="flex items-start justify-between mb-4">
+            <div className="flex flex-col lg:flex-row lg:items-start lg:justify-between gap-4">
               <div className="flex-1">
                 <div className="flex items-center space-x-2 mb-2">
                   <h3 className={`font-semibold ${isDark ? 'text-white' : 'text-gray-900'}`}>{post.title}</h3>
-                  {post.featured && <Star className="h-4 w-4 text-yellow-500" />}
-                  {post.trending && <TrendingUp className="h-4 w-4 text-red-500" />}
+                  {post.featured && <Star className="h-4 w-4 text-amber-500" />}
+                  {post.trending && <TrendingUp className="h-4 w-4 text-rose-500" />}
                 </div>
-                <p className={`text-sm ${isDark ? 'text-gray-400' : 'text-gray-600'} mb-3`}>{post.excerpt}</p>
+                <p className={`text-sm ${isDark ? 'text-gray-300' : 'text-gray-600'} mb-3 leading-relaxed`}>{post.excerpt}</p>
                 
                 <div className="flex flex-wrap items-center gap-2 mb-3">
                   <span className={`px-2 py-1 rounded text-xs font-medium ${
                     post.status === 'published' 
-                      ? 'bg-green-100 text-green-800 dark:bg-green-900/30 dark:text-green-400'
+                      ? isDark ? 'bg-emerald-500/20 text-emerald-300' : 'bg-emerald-100 text-emerald-700'
                       : post.status === 'draft'
-                      ? 'bg-yellow-100 text-yellow-800 dark:bg-yellow-900/30 dark:text-yellow-400'
-                      : 'bg-gray-100 text-gray-800 dark:bg-gray-700 dark:text-gray-300'
+                      ? isDark ? 'bg-amber-500/20 text-amber-300' : 'bg-amber-100 text-amber-700'
+                      : isDark ? 'bg-gray-500/20 text-gray-300' : 'bg-gray-100 text-gray-700'
                   }`}>
                     {post.status}
                   </span>
-                  <span className={`px-2 py-1 rounded text-xs ${isDark ? 'bg-gray-700 text-gray-300' : 'bg-gray-100 text-gray-600'}`}>
+                  <span className={`px-2 py-1 rounded text-xs font-medium ${isDark ? 'bg-blue-500/20 text-blue-300' : 'bg-blue-100 text-blue-700'}`}>
                     {post.category}
                   </span>
-                  <span className="text-emerald-500 text-xs font-medium">+{post.points} pts</span>
+                  <span className={`text-xs font-medium ${isDark ? 'text-emerald-400' : 'text-emerald-600'}`}>+{post.points} pts</span>
                 </div>
 
                 <div className="flex items-center space-x-4 text-sm">
-                  <div className="flex items-center space-x-1">
+                  <div className={`flex items-center space-x-1 ${isDark ? 'text-gray-300' : 'text-gray-600'}`}>
                     <Eye className="h-4 w-4" />
                     <span>{post.views}</span>
                   </div>
-                  <div className="flex items-center space-x-1">
+                  <div className={`flex items-center space-x-1 ${isDark ? 'text-gray-300' : 'text-gray-600'}`}>
                     <Heart className="h-4 w-4" />
                     <span>{post.likes}</span>
                   </div>
-                  <div className="flex items-center space-x-1">
+                  <div className={`flex items-center space-x-1 ${isDark ? 'text-gray-300' : 'text-gray-600'}`}>
                     <MessageCircle className="h-4 w-4" />
                     <span>{post.comments}</span>
                   </div>
                 </div>
               </div>
               
-              <div className="flex items-center space-x-2">
+              <div className="flex items-center space-x-2 lg:flex-col lg:space-x-0 lg:space-y-2">
                 <button
                   onClick={() => setEditingPost(post)}
-                  className={`p-2 rounded-lg ${isDark ? 'hover:bg-gray-700' : 'hover:bg-gray-100'}`}
+                  className={`p-2 rounded-lg transition-colors ${isDark ? 'hover:bg-gray-700 text-gray-300' : 'hover:bg-gray-100 text-gray-600'}`}
                   title="Edit"
                 >
                   <Edit3 className="h-4 w-4" />
                 </button>
                 <button
-                  className={`p-2 rounded-lg ${isDark ? 'hover:bg-gray-700' : 'hover:bg-gray-100'}`}
+                  className={`p-2 rounded-lg transition-colors ${isDark ? 'hover:bg-gray-700 text-gray-300' : 'hover:bg-gray-100 text-gray-600'}`}
                   title="View"
                 >
                   <Eye className="h-4 w-4" />
@@ -567,7 +614,7 @@ const EnhancedCreatorDashboard = () => {
                 {post.status === 'draft' && (
                   <button
                     onClick={() => handlePublishPost(post.id)}
-                    className="px-3 py-1 bg-emerald-500 text-white text-xs rounded hover:bg-emerald-600"
+                    className="px-3 py-1.5 bg-emerald-500 text-white text-xs rounded-lg hover:bg-emerald-600 transition-colors font-medium"
                   >
                     Publish
                   </button>
@@ -598,10 +645,16 @@ const EnhancedCreatorDashboard = () => {
           { label: 'Followers Growth', value: '+' + (stats.followers * 0.1).toFixed(0), change: '+12%', color: 'purple' },
           { label: 'Revenue', value: `$${stats.revenue}`, change: '+8%', color: 'green' }
         ].map((metric, index) => (
-          <div key={index} className={`${isDark ? 'bg-gray-800' : 'bg-white'} p-6 rounded-xl border ${isDark ? 'border-gray-700' : 'border-gray-200'}`}>
-            <h3 className={`text-sm ${isDark ? 'text-gray-400' : 'text-gray-600'}`}>{metric.label}</h3>
-            <p className={`text-2xl font-bold mt-1 ${isDark ? 'text-white' : 'text-gray-900'}`}>{metric.value}</p>
-            <p className={`text-sm mt-1 text-${metric.color}-500`}>{metric.change} from last month</p>
+          <div key={index} className={`${isDark ? 'bg-gray-800 border-gray-700' : 'bg-white border-gray-200'} p-4 md:p-6 rounded-xl border hover:shadow-lg transition-shadow`}>
+            <h3 className={`text-sm font-medium ${isDark ? 'text-gray-300' : 'text-gray-600'}`}>{metric.label}</h3>
+            <p className={`text-xl md:text-2xl font-bold mt-1 ${isDark ? 'text-white' : 'text-gray-900'}`}>{metric.value}</p>
+            <p className={`text-sm mt-2 font-medium ${
+              metric.color === 'blue' ? (isDark ? 'text-blue-400' : 'text-blue-600') :
+              metric.color === 'emerald' ? (isDark ? 'text-emerald-400' : 'text-emerald-600') :
+              metric.color === 'purple' ? (isDark ? 'text-purple-400' : 'text-purple-600') :
+              metric.color === 'green' ? (isDark ? 'text-green-400' : 'text-green-600') :
+              (isDark ? 'text-gray-400' : 'text-gray-600')
+            }`}>{metric.change} from last month</p>
           </div>
         ))}
       </div>
@@ -614,19 +667,19 @@ const EnhancedCreatorDashboard = () => {
             .sort((a, b) => b.views - a.views)
             .slice(0, 5)
             .map((post, index) => (
-              <div key={post.id} className="flex items-center justify-between p-4 rounded-lg bg-gray-50 dark:bg-gray-700/50">
+              <div key={post.id} className={`flex items-center justify-between p-4 rounded-lg transition-colors ${isDark ? 'bg-gray-700/30 hover:bg-gray-700/50' : 'bg-gray-50 hover:bg-gray-100'}`}>
                 <div className="flex items-center space-x-3">
-                  <span className={`text-sm font-medium w-6 text-center ${isDark ? 'text-gray-400' : 'text-gray-600'}`}>
+                  <span className={`text-sm font-bold w-6 text-center ${isDark ? 'text-gray-300' : 'text-gray-700'}`}>
                     #{index + 1}
                   </span>
                   <div>
-                    <h4 className={`font-medium ${isDark ? 'text-white' : 'text-gray-900'}`}>{post.title}</h4>
-                    <p className={`text-sm ${isDark ? 'text-gray-400' : 'text-gray-600'}`}>{post.category}</p>
+                    <h4 className={`font-semibold ${isDark ? 'text-white' : 'text-gray-900'}`}>{post.title}</h4>
+                    <p className={`text-sm ${isDark ? 'text-gray-300' : 'text-gray-600'}`}>{post.category}</p>
                   </div>
                 </div>
                 <div className="text-right">
-                  <p className={`font-medium ${isDark ? 'text-white' : 'text-gray-900'}`}>{post.views.toLocaleString()} views</p>
-                  <p className="text-sm text-emerald-500">+{post.points} points</p>
+                  <p className={`font-bold ${isDark ? 'text-white' : 'text-gray-900'}`}>{post.views.toLocaleString()} views</p>
+                  <p className={`text-sm font-medium ${isDark ? 'text-emerald-400' : 'text-emerald-600'}`}>+{post.points} points</p>
                 </div>
               </div>
             ))}
