@@ -38,13 +38,14 @@ function AppContent() {
   useScrollToTop();
   const [location] = useLocation();
   
-  // Hide footer on admin and creator dashboard pages
+  // Hide footer on admin, creator dashboard, and auth pages
   const isDashboardPage = location === '/admin' || location === '/creator';
+  const isAuthPage = location === '/login';
   
   return (
     <div className="min-h-screen transition-colors duration-300 dark:bg-gray-900 bg-white">
-      {!isDashboardPage && <ProfessionalHeader />}
-      <main className={!isDashboardPage ? 'pt-16' : ''}>
+      {!isDashboardPage && !isAuthPage && <ProfessionalHeader />}
+      <main className={!isDashboardPage && !isAuthPage ? 'pt-16' : ''}>
         <AnimatePresence mode="wait">
           <Switch>
           <Route path="/" component={HomePage} />
@@ -69,7 +70,7 @@ function AppContent() {
           </Switch>
         </AnimatePresence>
       </main>
-      {!isDashboardPage && <Footer />}
+      {!isDashboardPage && !isAuthPage && <Footer />}
       <ScrollToTop />
     </div>
   );
