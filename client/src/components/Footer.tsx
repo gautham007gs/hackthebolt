@@ -57,27 +57,27 @@ const Footer = () => {
               <div className="absolute bottom-0 left-0 w-80 h-80 bg-gradient-to-tr from-emerald-400/15 to-cyan-400/15 rounded-full translate-y-40 -translate-x-40"></div>
             </div>
             
-            <div className="relative z-10 px-8 py-12 sm:px-12 sm:py-16 lg:px-16 lg:py-20">
-              <div className="grid lg:grid-cols-2 gap-8 lg:gap-16 items-center">
+            <div className="relative z-10 px-4 py-6 sm:px-8 sm:py-8 lg:px-12 lg:py-12">
+              <div className="grid lg:grid-cols-2 gap-6 lg:gap-12 items-center max-w-6xl mx-auto">
                 {/* Content Section */}
                 <div className="text-center lg:text-left">
-                  <div className="flex items-center justify-center lg:justify-start space-x-4 mb-6">
-                    <div className={`w-16 h-16 lg:w-20 lg:h-20 rounded-2xl ${
+                  <div className="flex items-center justify-center lg:justify-start space-x-3 mb-4">
+                    <div className={`w-12 h-12 lg:w-16 lg:h-16 rounded-xl ${
                       isDark ? 'bg-emerald-500/20' : 'bg-emerald-100'
                     } flex items-center justify-center`}>
                       <Shield className={`h-8 w-8 lg:h-10 lg:w-10 ${isDark ? 'text-emerald-400' : 'text-emerald-700'}`} />
                     </div>
                     <div className="text-left">
-                      <h3 className={`text-2xl sm:text-3xl lg:text-4xl xl:text-5xl font-bold ${isDark ? 'text-white' : 'text-gray-900'} leading-tight`}>
-                        Join 10,000+
+                      <h3 className={`text-lg sm:text-xl lg:text-3xl font-bold ${isDark ? 'text-white' : 'text-gray-900'} leading-tight`}>
+                        Join 3,000+
                       </h3>
-                      <p className={`text-xl sm:text-2xl lg:text-3xl font-bold ${isDark ? 'text-emerald-400' : 'text-emerald-700'} leading-tight`}>
-                        Security Professionals
+                      <p className={`text-base sm:text-lg lg:text-2xl font-bold ${isDark ? 'text-emerald-400' : 'text-emerald-700'} leading-tight`}>
+                        Security Experts
                       </p>
                     </div>
                   </div>
-                  <p className={`text-lg sm:text-xl lg:text-2xl ${isDark ? 'text-gray-300' : 'text-gray-700'} leading-relaxed mb-8`}>
-                    Get exclusive threat intelligence, cutting-edge tutorials, and real-time security alerts delivered directly to your inbox.
+                  <p className={`text-sm sm:text-base lg:text-lg ${isDark ? 'text-gray-300' : 'text-gray-700'} leading-relaxed mb-6`}>
+                    Get weekly security insights, threat alerts, and expert tutorials delivered to your inbox.
                   </p>
                 </div>
 
@@ -91,13 +91,13 @@ const Footer = () => {
                   ) : (
                     <div className="space-y-4 lg:space-y-6">
                       <form onSubmit={handleSubscribe} className="space-y-4">
-                        <div className="flex flex-col gap-3 lg:flex-row lg:gap-4">
+                        <div className="flex flex-col sm:flex-row gap-2 sm:gap-3">
                           <input
                             type="email"
                             value={email}
                             onChange={(e) => setEmail(e.target.value)}
-                            placeholder="Enter your professional email"
-                            className={`w-full px-4 py-3 lg:px-6 lg:py-4 rounded-xl lg:rounded-2xl border-2 text-base lg:text-lg ${
+                            placeholder="Enter your email"
+                            className={`flex-1 px-3 py-2.5 sm:px-4 sm:py-3 lg:px-6 lg:py-4 rounded-lg lg:rounded-xl border-2 text-sm sm:text-base lg:text-lg ${
                               isDark 
                                 ? 'bg-gray-800/80 border-gray-600 text-white placeholder-gray-400 focus:border-emerald-400' 
                                 : 'bg-white/90 border-gray-300 text-gray-900 placeholder-gray-500 focus:border-emerald-600'
@@ -106,20 +106,20 @@ const Footer = () => {
                           />
                           <button
                             type="submit"
-                            className="w-full lg:w-auto px-6 py-3 lg:px-8 lg:py-4 bg-gradient-to-r from-emerald-600 to-cyan-600 hover:from-emerald-700 hover:to-cyan-700 text-white rounded-xl lg:rounded-2xl font-bold text-base lg:text-lg transition-all duration-300 transform hover:scale-105 hover:shadow-2xl flex items-center justify-center space-x-3 shadow-lg lg:min-w-[220px]"
+                            className="px-4 py-2.5 sm:px-6 sm:py-3 lg:px-8 lg:py-4 bg-gradient-to-r from-emerald-600 to-cyan-600 hover:from-emerald-700 hover:to-cyan-700 text-white rounded-lg lg:rounded-xl font-bold text-sm sm:text-base lg:text-lg transition-all duration-300 transform hover:scale-105 hover:shadow-2xl flex items-center justify-center space-x-2 shadow-lg whitespace-nowrap"
                           >
-                            <Send className="h-5 w-5 lg:h-6 lg:w-6" />
-                            <span>Subscribe Free</span>
+                            <Send className="h-4 w-4 sm:h-5 sm:w-5" />
+                            <span>Subscribe</span>
                           </button>
                         </div>
                       </form>
-                      <div className="flex flex-col sm:flex-row items-center justify-center gap-3 sm:gap-6 text-xs lg:text-sm text-gray-500 dark:text-gray-400">
-                        <span className="flex items-center space-x-2">
-                          <div className="w-2 h-2 bg-green-500 rounded-full"></div>
+                      <div className="flex flex-wrap items-center justify-center gap-2 sm:gap-4 text-xs text-gray-500 dark:text-gray-400 mt-3">
+                        <span className="flex items-center space-x-1">
+                          <div className="w-1.5 h-1.5 bg-green-500 rounded-full"></div>
                           <span>No spam</span>
                         </span>
-                        <span className="flex items-center space-x-2">
-                          <div className="w-2 h-2 bg-blue-500 rounded-full"></div>
+                        <span className="flex items-center space-x-1">
+                          <div className="w-1.5 h-1.5 bg-blue-500 rounded-full"></div>
                           <span>Unsubscribe anytime</span>
                         </span>
                         <span className="flex items-center space-x-2">

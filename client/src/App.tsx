@@ -44,8 +44,9 @@ function AppContent() {
   return (
     <div className="min-h-screen transition-colors duration-300 dark:bg-gray-900 bg-white">
       {!isDashboardPage && <ProfessionalHeader />}
-      <AnimatePresence mode="wait">
-        <Switch>
+      <main className={!isDashboardPage ? 'pt-16' : ''}>
+        <AnimatePresence mode="wait">
+          <Switch>
           <Route path="/" component={HomePage} />
           <Route path="/tutorials" component={TutorialsPage} />
           <Route path="/tutorials/:id" component={TutorialDetailPage} />
@@ -65,8 +66,9 @@ function AppContent() {
           <Route path="/about" component={AboutPage} />
           <Route path="/contact" component={ContactPage} />
           <Route path="/apply-creator" component={CreatorApplicationPage} />
-        </Switch>
-      </AnimatePresence>
+          </Switch>
+        </AnimatePresence>
+      </main>
       {!isDashboardPage && <Footer />}
       <ScrollToTop />
     </div>
