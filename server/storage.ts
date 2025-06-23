@@ -704,20 +704,25 @@ export class DatabaseStorage implements IStorage {
   }
 
   async updateUserRole(id: string, role: string): Promise<void> {
-    await db.update(users).set({ role, updatedAt: new Date() }).where(eq(users.id, id));
+    await db
+      .update(users)
+      .set({ role, updatedAt: new Date() })
+      .where(eq(users.id, id));
   }
 
   async updateUserPoints(id: string, points: number): Promise<void> {
-    await db.update(users).set({ points, updatedAt: new Date() }).where(eq(users.id, id));
+    await db
+      .update(users)
+      .set({ points, updatedAt: new Date() })
+      .where(eq(users.id, id));
   }
 
   // Blog operations
   async getAllBlogPosts(status?: string): Promise<BlogPost[]> {
-    const query = db.select().from(blogPosts);
     if (status) {
-      return await query.where(eq(blogPosts.status, status)).orderBy(desc(blogPosts.createdAt));
+      return await db.select().from(blogPosts).where(eq(blogPosts.status, status));
     }
-    return await query.orderBy(desc(blogPosts.createdAt));
+    return await db.select().from(blogPosts);
   }
 
   async getBlogPost(id: number): Promise<BlogPost | undefined> {
@@ -731,7 +736,10 @@ export class DatabaseStorage implements IStorage {
   }
 
   async createBlogPost(post: InsertBlogPost & { authorId: string }): Promise<BlogPost> {
-    const [newPost] = await db.insert(blogPosts).values(post).returning();
+    const [newPost] = await db
+      .insert(blogPosts)
+      .values(post)
+      .returning();
     return newPost;
   }
 
@@ -749,22 +757,25 @@ export class DatabaseStorage implements IStorage {
   }
 
   async updateBlogPostStatus(id: number, status: string): Promise<void> {
-    await db.update(blogPosts).set({ 
-      status, 
-      updatedAt: new Date(),
-      publishedAt: status === 'published' ? new Date() : null
-    }).where(eq(blogPosts.id, id));
+    await db
+      .update(blogPosts)
+      .set({ status, updatedAt: new Date() })
+      .where(eq(blogPosts.id, id));
   }
 
   async incrementBlogViews(id: number): Promise<void> {
-    await db.update(blogPosts).set({ 
-      views: sql`${blogPosts.views} + 1` 
-    }).where(eq(blogPosts.id, id));
+    await db
+      .update(blogPosts)
+      .set({ 
+        views: sql`${blogPosts.views} + 1`,
+        updatedAt: new Date()
+      })
+      .where(eq(blogPosts.id, id));
   }
 
   // GitHub Tools operations
   async getAllGithubTools(): Promise<GithubTool[]> {
-    return await db.select().from(githubTools).orderBy(desc(githubTools.createdAt));
+    return await db.select().from(githubTools);
   }
 
   async getGithubTool(id: number): Promise<GithubTool | undefined> {
@@ -778,7 +789,10 @@ export class DatabaseStorage implements IStorage {
   }
 
   async createGithubTool(tool: InsertGithubTool & { authorId: string }): Promise<GithubTool> {
-    const [newTool] = await db.insert(githubTools).values(tool).returning();
+    const [newTool] = await db
+      .insert(githubTools)
+      .values(tool)
+      .returning();
     return newTool;
   }
 
@@ -796,9 +810,13 @@ export class DatabaseStorage implements IStorage {
   }
 
   async incrementToolViews(id: number): Promise<void> {
-    await db.update(githubTools).set({ 
-      views: sql`${githubTools.views} + 1` 
-    }).where(eq(githubTools.id, id));
+    await db
+      .update(githubTools)
+      .set({ 
+        views: sql`${githubTools.views} + 1`,
+        updatedAt: new Date()
+      })
+      .where(eq(githubTools.id, id));
   }
 
   // Site configuration
@@ -813,21 +831,29 @@ export class DatabaseStorage implements IStorage {
       .values({ key, value, updatedBy, description })
       .onConflictDoUpdate({
         target: siteConfig.key,
-        set: { value, updatedBy, updatedAt: new Date(), description },
+        set: {
+          value,
+          updatedBy,
+          description,
+          updatedAt: new Date(),
+        },
       });
   }
 
   async getAllSiteConfig(): Promise<SiteConfig[]> {
-    return await db.select().from(siteConfig).orderBy(siteConfig.key);
+    return await db.select().from(siteConfig);
   }
 
   // Comments
   async getCommentsByPost(postId: number): Promise<Comment[]> {
-    return await db.select().from(comments).where(eq(comments.postId, postId)).orderBy(desc(comments.createdAt));
+    return await db.select().from(comments).where(eq(comments.postId, postId));
   }
 
   async createComment(comment: InsertComment & { authorId: string }): Promise<Comment> {
-    const [newComment] = await db.insert(comments).values(comment).returning();
+    const [newComment] = await db
+      .insert(comments)
+      .values(comment)
+      .returning();
     return newComment;
   }
 
@@ -841,7 +867,7 @@ export class DatabaseStorage implements IStorage {
   }
 
   async getUserAchievements(userId: string): Promise<Achievement[]> {
-    return await db.select().from(achievements).where(eq(achievements.userId, userId)).orderBy(desc(achievements.unlockedAt));
+    return await db.select().from(achievements).where(eq(achievements.userId, userId));
   }
 
   async addUserAchievement(achievement: Omit<Achievement, 'id' | 'unlockedAt'>): Promise<void> {
@@ -855,7 +881,10 @@ export class DatabaseStorage implements IStorage {
       .values({ url, ...data })
       .onConflictDoUpdate({
         target: seoMetrics.url,
-        set: { ...data, createdAt: new Date() },
+        set: {
+          ...data,
+          lastCrawled: new Date(),
+        },
       });
   }
 
@@ -863,8 +892,217 @@ export class DatabaseStorage implements IStorage {
     const [metrics] = await db.select().from(seoMetrics).where(eq(seoMetrics.url, url));
     return metrics || undefined;
   }
+
+  // Labs operations
+  async getAllLabs(category?: string, difficulty?: string): Promise<Lab[]> {
+    let query = db.select().from(labs);
+    
+    if (category) {
+      query = query.where(eq(labs.category, category));
+    }
+    if (difficulty) {
+      query = query.where(eq(labs.difficulty, difficulty));
+    }
+    
+    return await query;
+  }
+
+  async getLab(id: number): Promise<Lab | undefined> {
+    const [lab] = await db.select().from(labs).where(eq(labs.id, id));
+    return lab || undefined;
+  }
+
+  async getLabBySlug(slug: string): Promise<Lab | undefined> {
+    const [lab] = await db.select().from(labs).where(eq(labs.slug, slug));
+    return lab || undefined;
+  }
+
+  async createLab(lab: InsertLab & { authorId: string }): Promise<Lab> {
+    const [newLab] = await db
+      .insert(labs)
+      .values(lab)
+      .returning();
+    return newLab;
+  }
+
+  async updateLab(id: number, lab: Partial<Lab>): Promise<Lab> {
+    const [updatedLab] = await db
+      .update(labs)
+      .set({ ...lab, updatedAt: new Date() })
+      .where(eq(labs.id, id))
+      .returning();
+    return updatedLab;
+  }
+
+  async deleteLab(id: number): Promise<void> {
+    await db.delete(labs).where(eq(labs.id, id));
+  }
+
+  // Lab progress tracking
+  async getLabProgress(userId: string, labId: number): Promise<LabProgress | undefined> {
+    const [progress] = await db
+      .select()
+      .from(labProgress)
+      .where(and(eq(labProgress.userId, userId), eq(labProgress.labId, labId)));
+    return progress || undefined;
+  }
+
+  async getUserLabProgress(userId: string): Promise<LabProgress[]> {
+    return await db.select().from(labProgress).where(eq(labProgress.userId, userId));
+  }
+
+  async updateLabProgress(userId: string, labId: number, progress: Partial<LabProgress>): Promise<LabProgress> {
+    const [updatedProgress] = await db
+      .update(labProgress)
+      .set({ ...progress, updatedAt: new Date() })
+      .where(and(eq(labProgress.userId, userId), eq(labProgress.labId, labId)))
+      .returning();
+    return updatedProgress;
+  }
+
+  async completeLabProgress(userId: string, labId: number, score: number, timeSpent: number): Promise<void> {
+    await db
+      .insert(labProgress)
+      .values({
+        userId,
+        labId,
+        score,
+        timeSpent,
+        completedAt: new Date(),
+        status: 'completed',
+      })
+      .onConflictDoUpdate({
+        target: [labProgress.userId, labProgress.labId],
+        set: {
+          score,
+          timeSpent,
+          completedAt: new Date(),
+          status: 'completed',
+          updatedAt: new Date(),
+        },
+      });
+  }
+
+  // CTF operations
+  async getAllCtfChallenges(category?: string, difficulty?: string): Promise<CtfChallenge[]> {
+    let query = db.select().from(ctfChallenges);
+    
+    if (category) {
+      query = query.where(eq(ctfChallenges.category, category));
+    }
+    if (difficulty) {
+      query = query.where(eq(ctfChallenges.difficulty, difficulty));
+    }
+    
+    return await query;
+  }
+
+  async getCtfChallenge(id: number): Promise<CtfChallenge | undefined> {
+    const [challenge] = await db.select().from(ctfChallenges).where(eq(ctfChallenges.id, id));
+    return challenge || undefined;
+  }
+
+  async getCtfChallengeBySlug(slug: string): Promise<CtfChallenge | undefined> {
+    const [challenge] = await db.select().from(ctfChallenges).where(eq(ctfChallenges.slug, slug));
+    return challenge || undefined;
+  }
+
+  async createCtfChallenge(challenge: InsertCtfChallenge & { authorId: string }): Promise<CtfChallenge> {
+    const [newChallenge] = await db
+      .insert(ctfChallenges)
+      .values(challenge)
+      .returning();
+    return newChallenge;
+  }
+
+  async updateCtfChallenge(id: number, challenge: Partial<CtfChallenge>): Promise<CtfChallenge> {
+    const [updatedChallenge] = await db
+      .update(ctfChallenges)
+      .set({ ...challenge, updatedAt: new Date() })
+      .where(eq(ctfChallenges.id, id))
+      .returning();
+    return updatedChallenge;
+  }
+
+  async deleteCtfChallenge(id: number): Promise<void> {
+    await db.delete(ctfChallenges).where(eq(ctfChallenges.id, id));
+  }
+
+  // CTF submissions
+  async submitCtfFlag(userId: string, challengeId: number, flag: string): Promise<{ correct: boolean; points: number; message: string }> {
+    const challenge = await this.getCtfChallenge(challengeId);
+    if (!challenge) {
+      return { correct: false, points: 0, message: 'Challenge not found' };
+    }
+
+    const correct = flag === challenge.flag;
+    
+    await db.insert(ctfSubmissions).values({
+      userId,
+      challengeId,
+      flag,
+      correct,
+      points: correct ? challenge.points : 0,
+    });
+
+    if (correct) {
+      // Update user points
+      await this.updateUserPoints(userId, (await this.getUser(userId))?.points || 0 + challenge.points);
+    }
+
+    return {
+      correct,
+      points: correct ? challenge.points : 0,
+      message: correct ? 'Congratulations! Flag is correct!' : 'Incorrect flag. Try again!'
+    };
+  }
+
+  async getCtfSubmissions(userId: string, challengeId?: number): Promise<CtfSubmission[]> {
+    let query = db.select().from(ctfSubmissions).where(eq(ctfSubmissions.userId, userId));
+    
+    if (challengeId) {
+      query = query.where(eq(ctfSubmissions.challengeId, challengeId));
+    }
+    
+    return await query;
+  }
+
+  async getCtfLeaderboard(challengeId?: number): Promise<Leaderboard[]> {
+    return await db.select().from(leaderboards);
+  }
+
+  // Certificates
+  async getUserCertificates(userId: string): Promise<Certificate[]> {
+    return await db.select().from(certificates).where(eq(certificates.userId, userId));
+  }
+
+  async createCertificate(certificate: InsertCertificate & { userId: string }): Promise<Certificate> {
+    const [newCertificate] = await db
+      .insert(certificates)
+      .values(certificate)
+      .returning();
+    return newCertificate;
+  }
+
+  async verifyCertificate(certificateCode: string): Promise<Certificate | undefined> {
+    const [certificate] = await db.select().from(certificates).where(eq(certificates.certificateCode, certificateCode));
+    return certificate || undefined;
+  }
+
+  // Reviews and ratings
+  async createLabReview(userId: string, labId: number, rating: number, review?: string): Promise<LabReview> {
+    const [newReview] = await db
+      .insert(labReviews)
+      .values({ userId, labId, rating, review })
+      .returning();
+    return newReview;
+  }
+
+  async getLabReviews(labId: number): Promise<LabReview[]> {
+    return await db.select().from(labReviews).where(eq(labReviews.labId, labId));
+  }
 }
 
-// Use memory storage during migration, database storage can be enabled later
-console.log('Using in-memory storage for migration compatibility');
-export const storage: IStorage = new MemoryStorage();
+// Use database storage now that we have a database
+console.log('Using database storage with PostgreSQL');
+export const storage: IStorage = new DatabaseStorage();
