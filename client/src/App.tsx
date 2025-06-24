@@ -34,8 +34,8 @@ import GitHubToolsPage from './pages/GitHubToolsPage';
 import AboutPage from './pages/AboutPage';
 import ContactPage from './pages/ContactPage';
 import CreatorApplicationPage from './pages/CreatorApplicationPage';
+import CyberAcePage from './pages/CyberAcePage';
 import { motion, AnimatePresence } from 'framer-motion';
-import CyberAce from './components/CyberAce';
 
 function AppContent() {
   useScrollToTop();
@@ -72,12 +72,12 @@ function AppContent() {
           <Route path="/about" component={AboutPage} />
           <Route path="/contact" component={ContactPage} />
           <Route path="/apply-creator" component={CreatorApplicationPage} />
+          <Route path="/cyberace" component={CyberAcePage} />
           </Switch>
         </AnimatePresence>
       </main>
       {!isDashboardPage && !isAuthPage && <Footer />}
       <ScrollToTop />
-      <CyberAce />
     </div>
   );
 }

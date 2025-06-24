@@ -4,13 +4,11 @@ import { Link, useLocation } from 'wouter';
 import { useTheme } from '../contexts/ThemeContext';
 import { useAuth } from '../contexts/AuthContext';
 import { motion, AnimatePresence } from 'framer-motion';
-import CyberAce from './CyberAce';
 
 const ProfessionalHeader = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [isScrolled, setIsScrolled] = useState(false);
   const [expandedSection, setExpandedSection] = useState<string | null>(null);
-  const [isCyberAceOpen, setIsCyberAceOpen] = useState(false);
   const [location] = useLocation();
   const { isDark, toggleTheme } = useTheme();
   const { user, isAuthenticated, logout } = useAuth();
@@ -178,6 +176,21 @@ const ProfessionalHeader = () => {
                 <Moon className="h-4 w-4 text-gray-700" />
               )}
             </button>
+
+            {/* CyberAce AI - Desktop */}
+            <Link 
+              href="/cyberace"
+              className={`hidden sm:flex items-center space-x-2 px-3 py-2 rounded-lg transition-all duration-200 ${
+                isDark 
+                  ? 'text-cyan-400 hover:bg-cyan-500/10' 
+                  : 'text-cyan-600 hover:bg-cyan-50'
+              }`}
+            >
+              <div className="w-5 h-5 bg-gradient-to-br from-cyan-500 to-blue-600 rounded-full flex items-center justify-center">
+                <Sparkles className="w-3 h-3 text-white" />
+              </div>
+              <span className="text-sm font-medium">CyberAce AI</span>
+            </Link>
 
             {/* User Menu - Desktop */}
             {isAuthenticated ? (
@@ -347,8 +360,9 @@ const ProfessionalHeader = () => {
 
                 {/* CyberAce AI Assistant - Mobile */}
                 <div className="pt-4 border-t border-gray-200 dark:border-gray-700">
-                  <button
-                    onClick={() => setIsCyberAceOpen(true)}
+                  <Link
+                    href="/cyberace"
+                    onClick={closeMenu}
                     className={`w-full flex items-center space-x-3 px-4 py-3 rounded-lg transition-all duration-200 ${
                       isDark 
                         ? 'text-cyan-400 hover:bg-cyan-500/10' 
@@ -359,7 +373,7 @@ const ProfessionalHeader = () => {
                       <Sparkles className="w-3 h-3 text-white" />
                     </div>
                     <span className="font-medium">CyberAce AI</span>
-                  </button>
+                  </Link>
                 </div>
 
                 {/* Mobile User Actions */}
@@ -455,9 +469,6 @@ const ProfessionalHeader = () => {
           )}
         </AnimatePresence>
       </nav>
-      
-      {/* CyberAce AI Assistant */}
-      <CyberAce isOpen={isCyberAceOpen} onToggle={() => setIsCyberAceOpen(!isCyberAceOpen)} />
     </header>
   );
 };
