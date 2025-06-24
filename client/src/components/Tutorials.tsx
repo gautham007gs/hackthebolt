@@ -32,18 +32,6 @@ const Tutorials = () => {
       image: "https://images.pexels.com/photos/1181467/pexels-photo-1181467.jpeg?auto=compress&cs=tinysrgb&w=800&h=400&fit=crop",
       tags: ["SQL", "Web Apps", "OWASP"],
       prerequisites: ["Basic SQL knowledge", "HTTP understanding"],
-      codeExample: `# Basic SQL injection test
-import requests
-
-# Test for SQL injection vulnerability
-url = "http://target.com/login"
-payload = {"username": "admin' OR '1'='1", "password": "test"}
-
-response = requests.post(url, data=payload)
-if "Welcome" in response.text:
-    print("SQL injection vulnerability detected!")
-else:
-    print("No vulnerability found")`,
       learningObjectives: [
         "Understand SQL injection attack vectors",
         "Learn manual and automated testing techniques",
@@ -65,27 +53,6 @@ else:
       image: "https://images.pexels.com/photos/1089438/pexels-photo-1089438.jpeg?auto=compress&cs=tinysrgb&w=800&h=400&fit=crop",
       tags: ["Reconnaissance", "Nmap", "OSINT"],
       prerequisites: ["Basic networking knowledge"],
-      codeExample: `#!/bin/bash
-# Network reconnaissance script
-
-target="192.168.1.0/24"
-
-echo "Starting network reconnaissance..."
-echo "Target: $target"
-
-# Network discovery
-echo "1. Network Discovery:"
-nmap -sn $target
-
-# Port scanning
-echo "2. Port Scanning:"
-nmap -sS -O $target
-
-# Service enumeration
-echo "3. Service Enumeration:"
-nmap -sV -sC $target
-
-echo "Reconnaissance completed!"`,
       learningObjectives: [
         "Master network discovery techniques",
         "Learn port scanning methodologies",
@@ -107,28 +74,6 @@ echo "Reconnaissance completed!"`,
       image: "https://images.pexels.com/photos/270404/pexels-photo-270404.jpeg?auto=compress&cs=tinysrgb&w=800&h=400&fit=crop",
       tags: ["Buffer Overflow", "Assembly", "Exploitation"],
       prerequisites: ["C programming", "Assembly basics", "Linux knowledge"],
-      codeExample: `#include <stdio.h>
-#include <string.h>
-
-// Vulnerable function
-void vulnerable_function(char *input) {
-    char buffer[64];
-    strcpy(buffer, input);  // Vulnerable to buffer overflow
-    printf("Input: %s\\n", buffer);
-}
-
-int main(int argc, char *argv[]) {
-    if (argc != 2) {
-        printf("Usage: %s <input>\\n", argv[0]);
-        return 1;
-    }
-    
-    vulnerable_function(argv[1]);
-    return 0;
-}
-
-// Exploit payload generation
-// python -c "print('A' * 72 + 'BBBB')" | ./vulnerable`,
       learningObjectives: [
         "Understand memory layout and stack structure",
         "Learn to identify buffer overflow vulnerabilities",
@@ -150,47 +95,6 @@ int main(int argc, char *argv[]) {
       image: "https://images.pexels.com/photos/60504/security-protection-anti-virus-software-60504.jpeg?auto=compress&cs=tinysrgb&w=800&h=400&fit=crop",
       tags: ["Malware", "Reverse Engineering", "Analysis"],
       prerequisites: ["Virtual machines", "Basic programming"],
-      codeExample: `#!/usr/bin/env python3
-# Basic malware analysis script
-
-import hashlib
-import pefile
-import sys
-
-def analyze_pe(file_path):
-    """Analyze PE file structure"""
-    try:
-        pe = pefile.PE(file_path)
-        
-        # Basic file info
-        print(f"File: {file_path}")
-        print(f"MD5: {get_md5(file_path)}")
-        print(f"Architecture: {pe.FILE_HEADER.Machine}")
-        
-        # Sections analysis
-        print("\\nSections:")
-        for section in pe.sections:
-            print(f"  {section.Name.decode().strip()}: {hex(section.VirtualAddress)}")
-        
-        # Imports analysis
-        print("\\nImports:")
-        for entry in pe.DIRECTORY_ENTRY_IMPORT:
-            print(f"  {entry.dll.decode()}")
-            
-    except Exception as e:
-        print(f"Error: {e}")
-
-def get_md5(file_path):
-    """Calculate MD5 hash"""
-    with open(file_path, 'rb') as f:
-        return hashlib.md5(f.read()).hexdigest()
-
-if __name__ == "__main__":
-    if len(sys.argv) != 2:
-        print("Usage: python analyze.py <file>")
-        sys.exit(1)
-    
-    analyze_pe(sys.argv[1])`,
       learningObjectives: [
         "Set up safe analysis environment",
         "Perform static malware analysis",
@@ -374,19 +278,7 @@ if __name__ == "__main__":
                   </ul>
                 </div>
 
-                {/* Code Preview */}
-                <div className="mb-6">
-                  <h4 className={`text-sm font-semibold mb-3 ${isDark ? 'text-gray-300' : 'text-gray-700'}`}>
-                    Code Preview:
-                  </h4>
-                  <CodeSnippet
-                    code={tutorial.codeExample}
-                    language="python"
-                    showLineNumbers={false}
-                    allowDownload={false}
-                    className="text-xs"
-                  />
-                </div>
+
 
                 {/* Stats */}
                 <div className="flex items-center justify-between text-sm text-gray-500 mb-6">

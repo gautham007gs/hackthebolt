@@ -298,8 +298,8 @@ const CyberAcePageV2: React.FC = () => {
       
       <div className="pt-16 flex h-screen max-h-screen overflow-hidden relative">
         {/* Sidebar */}
-        <div className={`${sidebarOpen ? 'translate-x-0' : '-translate-x-full'} lg:translate-x-0 fixed lg:relative z-30 w-80 h-full ${isDark ? 'bg-gray-900 border-gray-700' : 'bg-gray-50 border-gray-200'} border-r transition-all duration-300`}>
-          <div className="p-6 h-full flex flex-col">
+        <div className={`${sidebarOpen ? 'translate-x-0' : '-translate-x-full'} lg:translate-x-0 fixed lg:relative z-30 w-72 lg:w-80 h-full ${isDark ? 'bg-gray-900 border-gray-700' : 'bg-gray-50 border-gray-200'} border-r transition-all duration-300`}>
+          <div className="p-4 lg:p-6 h-full flex flex-col">
             {/* Header */}
             <div className="mb-6">
               <div className="flex items-center space-x-3 mb-6">
@@ -392,24 +392,24 @@ const CyberAcePageV2: React.FC = () => {
         {/* Main Chat Area */}
         <div className="flex-1 flex flex-col h-full">
           {/* Mobile header */}
-          <div className={`lg:hidden flex items-center justify-between p-4 ${isDark ? 'bg-gray-800/95 border-gray-700' : 'bg-white/95 border-gray-200'} border-b backdrop-blur-sm`}>
+          <div className={`lg:hidden flex items-center justify-between p-3 ${isDark ? 'bg-gray-800/95 border-gray-700' : 'bg-white/95 border-gray-200'} border-b backdrop-blur-sm sticky top-0 z-30`}>
             <button
               onClick={() => setSidebarOpen(true)}
-              className={`p-3 rounded-xl ${isDark ? 'hover:bg-gray-700 text-white' : 'hover:bg-gray-100 text-gray-900'} transition-colors`}
+              className={`p-2 rounded-lg ${isDark ? 'hover:bg-gray-700 text-white' : 'hover:bg-gray-100 text-gray-900'} transition-colors`}
             >
               <Menu className={`w-5 h-5 ${isDark ? 'text-white' : 'text-gray-900'}`} />
             </button>
-            <div className="flex items-center space-x-3">
-              <div className="w-8 h-8 bg-gradient-to-br from-cyan-500 to-blue-600 rounded-xl flex items-center justify-center">
+            <div className="flex items-center space-x-2">
+              <div className="w-7 h-7 bg-gradient-to-br from-cyan-500 to-blue-600 rounded-lg flex items-center justify-center">
                 <Sparkles className="w-4 h-4 text-white" />
               </div>
-              <span className={`font-semibold text-lg ${isDark ? 'text-white' : 'text-gray-900'}`}>CyberAce</span>
+              <span className={`font-semibold text-base ${isDark ? 'text-white' : 'text-gray-900'}`}>CyberAce</span>
             </div>
-            <div className="w-11" /> {/* Spacer */}
+            <div className="w-9" /> {/* Spacer */}
           </div>
 
           {/* Messages */}
-          <div className="flex-1 overflow-y-auto p-6 space-y-6">
+          <div className="flex-1 overflow-y-auto p-3 lg:p-6 space-y-4 lg:space-y-6">
             <div className="max-w-5xl mx-auto">
               {currentSession.messages.map((message) => (
                 <motion.div
@@ -418,21 +418,21 @@ const CyberAcePageV2: React.FC = () => {
                   animate={{ opacity: 1, y: 0 }}
                   className={`flex ${message.type === 'user' ? 'justify-end' : 'justify-start'}`}
                 >
-                  <div className={`flex space-x-4 max-w-4xl ${message.type === 'user' ? 'flex-row-reverse space-x-reverse' : ''}`}>
-                    <div className={`w-10 h-10 rounded-xl flex items-center justify-center flex-shrink-0 ${
+                  <div className={`flex space-x-3 lg:space-x-4 max-w-4xl ${message.type === 'user' ? 'flex-row-reverse space-x-reverse' : ''}`}>
+                    <div className={`w-8 h-8 lg:w-10 lg:h-10 rounded-lg lg:rounded-xl flex items-center justify-center flex-shrink-0 ${
                       message.type === 'user' 
                         ? 'bg-gradient-to-br from-green-500 to-emerald-600' 
                         : 'bg-gradient-to-br from-cyan-500 to-blue-600'
                     } shadow-lg`}>
                       {message.type === 'user' ? (
-                        <User className="w-5 h-5 text-white" />
+                        <User className="w-4 h-4 lg:w-5 lg:h-5 text-white" />
                       ) : (
-                        <Sparkles className="w-5 h-5 text-white" />
+                        <Sparkles className="w-4 h-4 lg:w-5 lg:h-5 text-white" />
                       )}
                     </div>
-                    <div className={`rounded-2xl px-4 py-3 ${
+                    <div className={`rounded-xl lg:rounded-2xl px-3 lg:px-4 py-2 lg:py-3 ${
                       message.type === 'user'
-                        ? `${isDark ? 'bg-green-600' : 'bg-green-500'} text-white shadow-lg max-w-sm`
+                        ? `${isDark ? 'bg-green-600' : 'bg-green-500'} text-white shadow-lg max-w-xs lg:max-w-sm`
                         : `${isDark ? 'bg-gray-800 text-gray-100 border border-gray-700' : 'bg-white text-gray-900 border border-gray-200'} shadow-sm flex-1`
                     }`}>
                       <div className={`text-sm leading-relaxed whitespace-pre-wrap ${message.type === 'user' ? 'font-medium' : 'font-normal'}`}>
@@ -503,9 +503,9 @@ const CyberAcePageV2: React.FC = () => {
           </div>
 
           {/* Input Area */}
-          <div className={`p-6 border-t ${isDark ? 'border-gray-700 bg-gray-900/50' : 'border-gray-200 bg-gray-50/50'} backdrop-blur-sm`}>
+          <div className={`p-3 lg:p-6 border-t ${isDark ? 'border-gray-700 bg-gray-900/50' : 'border-gray-200 bg-gray-50/50'} backdrop-blur-sm`}>
             <div className="max-w-5xl mx-auto">
-              <div className="flex space-x-4">
+              <div className="flex space-x-3 lg:space-x-4">
                 <textarea
                   ref={textareaRef}
                   value={inputMessage}
@@ -515,7 +515,7 @@ const CyberAcePageV2: React.FC = () => {
                   }}
                   onKeyPress={handleKeyPress}
                   placeholder="Ask about security, paste error messages, or request code help..."
-                  className={`flex-1 px-5 py-4 rounded-xl border resize-none ${
+                  className={`flex-1 px-3 lg:px-5 py-3 lg:py-4 rounded-lg lg:rounded-xl border resize-none text-sm lg:text-base ${
                     isDark 
                       ? 'border-gray-600 bg-gray-800 text-white placeholder-gray-400 focus:border-cyan-500' 
                       : 'border-gray-300 bg-white text-gray-900 placeholder-gray-500 focus:border-cyan-500'
@@ -526,9 +526,9 @@ const CyberAcePageV2: React.FC = () => {
                 <button
                   onClick={handleSendMessage}
                   disabled={!inputMessage.trim() || isTyping}
-                  className="px-5 py-4 bg-gradient-to-br from-cyan-500 to-blue-600 hover:from-cyan-600 hover:to-blue-700 disabled:opacity-50 disabled:cursor-not-allowed rounded-xl flex items-center justify-center text-white transition-all shadow-lg hover:shadow-xl transform hover:scale-105"
+                  className="px-3 lg:px-5 py-3 lg:py-4 bg-gradient-to-br from-cyan-500 to-blue-600 hover:from-cyan-600 hover:to-blue-700 disabled:opacity-50 disabled:cursor-not-allowed rounded-lg lg:rounded-xl flex items-center justify-center text-white transition-all shadow-lg hover:shadow-xl transform hover:scale-105"
                 >
-                  <Send className="w-5 h-5" />
+                  <Send className="w-4 h-4 lg:w-5 lg:h-5" />
                 </button>
               </div>
             </div>

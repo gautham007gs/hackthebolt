@@ -32,9 +32,9 @@ const HomePage = () => {
         <Hero />
         
         {/* AI Assistant CTA Section */}
-        <section className={`py-24 ${isDark ? 'bg-gradient-to-br from-gray-900 to-gray-800' : 'bg-gradient-to-br from-gray-50 to-blue-50'}`}>
-          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div className={`rounded-3xl ${isDark ? 'bg-gradient-to-br from-gray-800 to-gray-900 border border-gray-700' : 'bg-gradient-to-br from-blue-50 to-cyan-50 border border-blue-200'} p-8 lg:p-16 text-center shadow-2xl relative overflow-hidden`}>
+        <section className={`py-16 ${isDark ? 'bg-gradient-to-br from-gray-900 to-gray-800' : 'bg-gradient-to-br from-gray-50 to-blue-50'}`}>
+          <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div className={`rounded-2xl ${isDark ? 'bg-gradient-to-br from-gray-800 to-gray-900 border border-gray-700' : 'bg-gradient-to-br from-blue-50 to-cyan-50 border border-blue-200'} p-6 lg:p-10 text-center shadow-xl relative overflow-hidden`}>
               {/* Background effects */}
               <div className="absolute inset-0 bg-gradient-to-r from-cyan-500/5 via-blue-500/5 to-purple-500/5"></div>
               <div className="absolute top-0 right-0 w-64 h-64 bg-gradient-to-bl from-cyan-400/10 to-transparent rounded-full -translate-y-32 translate-x-32"></div>
@@ -47,17 +47,17 @@ const HomePage = () => {
                   viewport={{ once: true }}
                   className="mb-8"
                 >
-                  <div className="w-20 h-20 bg-gradient-to-br from-cyan-500 to-blue-600 rounded-3xl flex items-center justify-center mx-auto mb-8 shadow-2xl">
-                    <Sparkles className="w-10 h-10 text-white" />
+                  <div className="w-16 h-16 bg-gradient-to-br from-cyan-500 to-blue-600 rounded-2xl flex items-center justify-center mx-auto mb-6 shadow-xl">
+                    <Sparkles className="w-8 h-8 text-white" />
                   </div>
-                  <h2 className={`text-4xl lg:text-6xl font-bold mb-6 ${isDark ? 'text-white' : 'text-gray-900'}`}>
+                  <h2 className={`text-3xl lg:text-4xl font-bold mb-4 ${isDark ? 'text-white' : 'text-gray-900'}`}>
                     Meet <span className="bg-gradient-to-r from-cyan-500 to-blue-600 bg-clip-text text-transparent">CyberAce</span>
                   </h2>
-                  <p className={`text-xl lg:text-2xl ${isDark ? 'text-gray-300' : 'text-gray-700'} mb-6`}>
+                  <p className={`text-lg lg:text-xl ${isDark ? 'text-gray-300' : 'text-gray-700'} mb-4`}>
                     Your AI-powered cybersecurity assistant
                   </p>
-                  <p className={`text-lg ${isDark ? 'text-gray-400' : 'text-gray-600'} max-w-3xl mx-auto mb-12 leading-relaxed`}>
-                    Get instant help with security issues, code analysis, vulnerability assessments, and expert guidance. Available 24/7 to boost your cybersecurity skills and solve complex problems.
+                  <p className={`text-base ${isDark ? 'text-gray-400' : 'text-gray-600'} max-w-2xl mx-auto mb-8 leading-relaxed`}>
+                    Get instant help with security issues, code analysis, vulnerability assessments, and expert guidance. Available 24/7 to boost your cybersecurity skills.
                   </p>
                 </motion.div>
                 
@@ -71,7 +71,7 @@ const HomePage = () => {
                     <motion.button
                       whileHover={{ scale: 1.05 }}
                       whileTap={{ scale: 0.95 }}
-                      className="bg-gradient-to-r from-cyan-500 to-blue-600 hover:from-cyan-600 hover:to-blue-700 text-white px-12 py-5 rounded-2xl text-xl font-bold transition-all duration-300 shadow-2xl hover:shadow-cyan-500/25 inline-flex items-center space-x-4"
+                      className="bg-gradient-to-r from-cyan-500 to-blue-600 hover:from-cyan-600 hover:to-blue-700 text-white px-8 py-3 rounded-xl text-lg font-semibold transition-all duration-300 shadow-xl hover:shadow-cyan-500/25 inline-flex items-center space-x-3"
                     >
                       <Sparkles className="w-6 h-6" />
                       <span>Chat with CyberAce</span>
