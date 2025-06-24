@@ -35,6 +35,7 @@ import AboutPage from './pages/AboutPage';
 import ContactPage from './pages/ContactPage';
 import CreatorApplicationPage from './pages/CreatorApplicationPage';
 import { motion, AnimatePresence } from 'framer-motion';
+import CyberMentor from './components/CyberMentor';
 
 function AppContent() {
   useScrollToTop();

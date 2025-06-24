@@ -347,7 +347,9 @@ const ProfessionalHeader = () => {
                       <Link
                         href="/dashboard"
                         onClick={closeMenu}
-                        className="flex items-center space-x-3 px-4 py-3 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-700 transition-all duration-200"
+                        className={`flex items-center space-x-3 px-4 py-3 rounded-lg transition-all duration-200 ${
+                          isDark ? 'text-white hover:bg-gray-700' : 'text-gray-700 hover:bg-gray-100'
+                        }`}
                       >
                         <User className="h-5 w-5" />
                         <span className="font-medium">Dashboard</span>

@@ -105,6 +105,8 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
     setUser(null);
     setIsAuthenticated(false);
     localStorage.removeItem('hacktheshell_user');
+    // Redirect to home page after logout
+    window.location.href = '/';
   };
 
   const updateUser = (updates: Partial<User>) => {
