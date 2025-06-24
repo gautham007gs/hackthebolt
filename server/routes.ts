@@ -471,6 +471,9 @@ export async function registerRoutes(app: Express): Promise<Server> {
     }
   });
 
+  // Chat API route
+  app.post('/api/chat', handleChatRequest);
+
   const httpServer = createServer(app);
   return httpServer;
 }

@@ -296,51 +296,87 @@ const CyberAcePageV2: React.FC = () => {
     <div className={`min-h-screen ${isDark ? 'bg-gray-900' : 'bg-gray-50'}`}>
       <ProfessionalHeader />
       
-      <div className="pt-16 flex h-screen max-h-screen overflow-hidden">
+      <div className="pt-16 flex h-screen max-h-screen overflow-hidden relative">
         {/* Sidebar */}
-        <div className={`${sidebarOpen ? 'translate-x-0' : '-translate-x-full'} lg:translate-x-0 fixed lg:relative z-30 w-72 h-full ${isDark ? 'bg-gray-800/95 border-gray-700' : 'bg-white border-gray-200'} border-r transition-transform duration-300 backdrop-blur-sm`}>
+        <div className={`${sidebarOpen ? 'translate-x-0' : '-translate-x-full'} lg:translate-x-0 fixed lg:relative z-30 w-80 h-full ${isDark ? 'bg-gray-900 border-gray-700' : 'bg-gray-50 border-gray-200'} border-r transition-all duration-300`}>
           <div className="p-6 h-full flex flex-col">
-            <button
-              onClick={createNewChat}
-              className={`w-full flex items-center space-x-3 p-4 rounded-xl ${isDark ? 'bg-gray-700 hover:bg-gray-600 text-white' : 'bg-gray-100 hover:bg-gray-200 text-gray-900'} transition-all duration-200 mb-6 font-medium shadow-sm`}
-            >
-              <Plus className="w-5 h-5" />
-              <span>New Chat</span>
-            </button>
-
-            <div className="flex-1 overflow-y-auto space-y-3">
-              {sessions.map((session) => (
-                <div
-                  key={session.id}
-                  className={`group flex items-center justify-between p-4 rounded-xl cursor-pointer transition-all duration-200 ${
-                    currentSessionId === session.id
-                      ? `${isDark ? 'bg-gray-700 border border-gray-600' : 'bg-gray-200 border border-gray-300'}`
-                      : `${isDark ? 'hover:bg-gray-700 border border-transparent' : 'hover:bg-gray-100 border border-transparent'}`
-                  }`}
-                  onClick={() => {
-                    setCurrentSessionId(session.id);
-                    setSidebarOpen(false);
-                  }}
-                >
-                  <div className="flex items-center space-x-3 min-w-0 flex-1">
-                    <MessageSquare className={`w-4 h-4 flex-shrink-0 ${currentSessionId === session.id ? 'text-cyan-500' : ''}`} />
-                    <span className={`text-sm truncate font-medium ${isDark ? 'text-gray-300' : 'text-gray-700'}`}>
-                      {session.messages.length > 1 ? generateTitle(session.messages) : session.title}
-                    </span>
-                  </div>
-                  {sessions.length > 1 && (
-                    <button
-                      onClick={(e) => {
-                        e.stopPropagation();
-                        deleteSession(session.id);
-                      }}
-                      className={`opacity-0 group-hover:opacity-100 p-2 rounded-lg ${isDark ? 'hover:bg-gray-600 text-gray-400' : 'hover:bg-gray-300 text-gray-600'} transition-all`}
-                    >
-                      <Trash2 className="w-4 h-4" />
-                    </button>
-                  )}
+            {/* Header */}
+            <div className="mb-6">
+              <div className="flex items-center space-x-3 mb-6">
+                <div className="w-10 h-10 bg-gradient-to-br from-cyan-500 to-blue-600 rounded-2xl flex items-center justify-center shadow-lg">
+                  <Sparkles className="w-5 h-5 text-white" />
                 </div>
-              ))}
+                <div>
+                  <h2 className={`text-xl font-bold ${isDark ? 'text-white' : 'text-gray-900'}`}>CyberAce</h2>
+                  <p className={`text-xs ${isDark ? 'text-gray-400' : 'text-gray-500'}`}>AI Security Assistant</p>
+                </div>
+              </div>
+
+              <button
+                onClick={createNewChat}
+                className={`w-full flex items-center space-x-3 p-4 rounded-2xl ${isDark ? 'bg-gray-800 hover:bg-gray-700 text-white border border-gray-700' : 'bg-white hover:bg-gray-100 text-gray-900 border border-gray-300'} transition-all duration-200 font-medium shadow-lg hover:shadow-xl`}
+              >
+                <Plus className="w-5 h-5" />
+                <span>New Chat</span>
+              </button>
+            </div>
+
+            {/* Chat History */}
+            <div className="flex-1 overflow-y-auto">
+              <h3 className={`text-sm font-semibold ${isDark ? 'text-gray-400' : 'text-gray-600'} mb-3 px-2`}>
+                Recent Chats
+              </h3>
+              <div className="space-y-2">
+                {sessions.map((session) => (
+                  <div
+                    key={session.id}
+                    className={`group flex items-center justify-between p-3 rounded-xl cursor-pointer transition-all duration-200 ${
+                      currentSessionId === session.id
+                        ? `${isDark ? 'bg-gray-800 border border-cyan-500/50 shadow-lg' : 'bg-white border border-cyan-300 shadow-md'}`
+                        : `${isDark ? 'hover:bg-gray-800 border border-transparent' : 'hover:bg-white border border-transparent hover:shadow-sm'}`
+                    }`}
+                    onClick={() => {
+                      setCurrentSessionId(session.id);
+                      setSidebarOpen(false);
+                    }}
+                  >
+                    <div className="flex items-center space-x-3 min-w-0 flex-1">
+                      <MessageSquare className={`w-4 h-4 flex-shrink-0 ${
+                        currentSessionId === session.id 
+                          ? 'text-cyan-500' 
+                          : `${isDark ? 'text-gray-500' : 'text-gray-400'}`
+                      }`} />
+                      <span className={`text-sm truncate ${
+                        currentSessionId === session.id
+                          ? `${isDark ? 'text-white' : 'text-gray-900'} font-medium`
+                          : `${isDark ? 'text-gray-300' : 'text-gray-700'}`
+                      }`}>
+                        {session.messages.length > 1 ? generateTitle(session.messages) : session.title}
+                      </span>
+                    </div>
+                    {sessions.length > 1 && (
+                      <button
+                        onClick={(e) => {
+                          e.stopPropagation();
+                          deleteSession(session.id);
+                        }}
+                        className={`opacity-0 group-hover:opacity-100 p-2 rounded-lg ${
+                          isDark ? 'hover:bg-gray-700 text-gray-400' : 'hover:bg-gray-200 text-gray-600'
+                        } transition-all`}
+                      >
+                        <Trash2 className="w-3 h-3" />
+                      </button>
+                    )}
+                  </div>
+                ))}
+              </div>
+            </div>
+
+            {/* Footer */}
+            <div className={`pt-4 border-t ${isDark ? 'border-gray-700' : 'border-gray-200'}`}>
+              <p className={`text-xs ${isDark ? 'text-gray-500' : 'text-gray-400'} text-center`}>
+                AI responses may contain errors. Verify important information.
+              </p>
             </div>
           </div>
         </div>
@@ -359,9 +395,9 @@ const CyberAcePageV2: React.FC = () => {
           <div className={`lg:hidden flex items-center justify-between p-4 ${isDark ? 'bg-gray-800/95 border-gray-700' : 'bg-white/95 border-gray-200'} border-b backdrop-blur-sm`}>
             <button
               onClick={() => setSidebarOpen(true)}
-              className={`p-3 rounded-xl ${isDark ? 'hover:bg-gray-700' : 'hover:bg-gray-100'} transition-colors`}
+              className={`p-3 rounded-xl ${isDark ? 'hover:bg-gray-700 text-white' : 'hover:bg-gray-100 text-gray-900'} transition-colors`}
             >
-              <Menu className="w-5 h-5" />
+              <Menu className={`w-5 h-5 ${isDark ? 'text-white' : 'text-gray-900'}`} />
             </button>
             <div className="flex items-center space-x-3">
               <div className="w-8 h-8 bg-gradient-to-br from-cyan-500 to-blue-600 rounded-xl flex items-center justify-center">

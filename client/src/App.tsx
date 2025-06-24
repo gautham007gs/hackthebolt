@@ -76,7 +76,7 @@ function AppContent() {
           </Switch>
         </AnimatePresence>
       </main>
-      {!isDashboardPage && !isAuthPage && <Footer />}
+      {!isDashboardPage && !isAuthPage && !location.includes('/cyberace') && <Footer />}
       <ScrollToTop />
     </div>
   );

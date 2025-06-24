@@ -47,7 +47,6 @@ const Footer = () => {
   return (
     <footer className={`${isDark ? 'bg-gray-900 border-gray-800' : 'bg-white border-gray-200'} border-t`}>
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
-        {/* Newsletter Section - Full Width Professional Design */}
         <div className="mb-16">
           <div className={`relative overflow-hidden rounded-3xl ${
             isDark ? 'bg-gradient-to-br from-emerald-900/50 via-gray-800/30 to-cyan-900/50' : 'bg-gradient-to-br from-emerald-50 via-white to-cyan-50'
