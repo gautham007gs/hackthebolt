@@ -74,7 +74,7 @@ const CyberAcePageV2: React.FC = () => {
         {
           id: '1',
           type: 'assistant',
-          content: 'Hey! I\'m CyberAce, your cybersecurity buddy. Think of me as that tech-savvy friend who actually knows what they\'re talking about.\n\nI can help with security bugs, write code, analyze vulnerabilities, or just chat about the latest cyber threats. What\'s cooking?',
+          content: 'Hey! I\'m CyberAce, your cybersecurity buddy.\n\nI can help with security bugs, write code, analyze vulnerabilities, or chat about cyber threats. What\'s up?',
           timestamp: new Date()
         }
       ],
@@ -101,7 +101,9 @@ const CyberAcePageV2: React.FC = () => {
   const adjustTextareaHeight = () => {
     if (textareaRef.current) {
       textareaRef.current.style.height = 'auto';
-      textareaRef.current.style.height = `${Math.min(textareaRef.current.scrollHeight, 120)}px`;
+      const scrollHeight = textareaRef.current.scrollHeight;
+      const maxHeight = window.innerWidth >= 1024 ? 120 : 100;
+      textareaRef.current.style.height = `${Math.min(scrollHeight, maxHeight)}px`;
     }
   };
 
@@ -409,33 +411,35 @@ const CyberAcePageV2: React.FC = () => {
           </div>
 
           {/* Messages */}
-          <div className="flex-1 overflow-y-auto p-3 lg:p-6 space-y-4 lg:space-y-6">
-            <div className="max-w-5xl mx-auto">
-              {currentSession.messages.map((message) => (
+          <div className="flex-1 overflow-y-auto p-3 lg:p-4 space-y-3 lg:space-y-4">
+            <div className="max-w-4xl mx-auto">
+              {currentSession.messages.map((message, index) => (
                 <motion.div
                   key={message.id}
                   initial={{ opacity: 0, y: 20 }}
                   animate={{ opacity: 1, y: 0 }}
-                  className={`flex ${message.type === 'user' ? 'justify-end' : 'justify-start'}`}
+                  className={`flex ${message.type === 'user' ? 'justify-end' : 'justify-start'} ${
+                    index > 0 ? 'mt-4' : ''
+                  }`}
                 >
-                  <div className={`flex space-x-3 lg:space-x-4 max-w-4xl ${message.type === 'user' ? 'flex-row-reverse space-x-reverse' : ''}`}>
-                    <div className={`w-8 h-8 lg:w-10 lg:h-10 rounded-lg lg:rounded-xl flex items-center justify-center flex-shrink-0 ${
+                  <div className={`flex space-x-2 lg:space-x-3 max-w-[85%] lg:max-w-[75%] ${message.type === 'user' ? 'flex-row-reverse space-x-reverse' : ''}`}>
+                    <div className={`w-7 h-7 lg:w-8 lg:h-8 rounded-full flex items-center justify-center flex-shrink-0 ${
                       message.type === 'user' 
                         ? 'bg-gradient-to-br from-green-500 to-emerald-600' 
                         : 'bg-gradient-to-br from-cyan-500 to-blue-600'
-                    } shadow-lg`}>
+                    } shadow-sm mt-0.5`}>
                       {message.type === 'user' ? (
-                        <User className="w-4 h-4 lg:w-5 lg:h-5 text-white" />
+                        <User className="w-3.5 h-3.5 lg:w-4 lg:h-4 text-white" />
                       ) : (
-                        <Sparkles className="w-4 h-4 lg:w-5 lg:h-5 text-white" />
+                        <Sparkles className="w-3.5 h-3.5 lg:w-4 lg:h-4 text-white" />
                       )}
                     </div>
-                    <div className={`rounded-xl lg:rounded-2xl px-3 lg:px-4 py-2 lg:py-3 ${
+                    <div className={`rounded-lg lg:rounded-xl px-3 lg:px-4 py-2 lg:py-2.5 ${
                       message.type === 'user'
-                        ? `${isDark ? 'bg-green-600' : 'bg-green-500'} text-white shadow-lg max-w-xs lg:max-w-sm`
+                        ? `${isDark ? 'bg-green-600' : 'bg-green-500'} text-white shadow-sm max-w-xs lg:max-w-md`
                         : `${isDark ? 'bg-gray-800 text-gray-100 border border-gray-700' : 'bg-white text-gray-900 border border-gray-200'} shadow-sm flex-1`
                     }`}>
-                      <div className={`text-sm leading-relaxed whitespace-pre-wrap ${message.type === 'user' ? 'font-medium' : 'font-normal'}`}>
+                      <div className={`text-sm lg:text-sm leading-relaxed whitespace-pre-wrap ${message.type === 'user' ? 'font-normal' : 'font-normal'}`}>
                         {formatMessageContent(message.content).map((part, index) => (
                           <div key={index}>
                             {part.type === 'text' ? (
@@ -446,7 +450,7 @@ const CyberAcePageV2: React.FC = () => {
                           </div>
                         ))}
                       </div>
-                      <div className={`text-xs mt-2 ${
+                      <div className={`text-xs mt-1.5 ${
                         message.type === 'user' 
                           ? 'text-green-100' 
                           : `${isDark ? 'text-gray-400' : 'text-gray-500'}`
@@ -462,13 +466,13 @@ const CyberAcePageV2: React.FC = () => {
                 <motion.div
                   initial={{ opacity: 0, y: 20 }}
                   animate={{ opacity: 1, y: 0 }}
-                  className="flex justify-start"
+                  className="flex justify-start mt-4"
                 >
-                  <div className="flex space-x-4 max-w-4xl">
-                    <div className="w-10 h-10 rounded-xl bg-gradient-to-br from-cyan-500 to-blue-600 flex items-center justify-center flex-shrink-0 shadow-lg">
-                      <Sparkles className="w-5 h-5 text-white" />
+                  <div className="flex space-x-3 max-w-[75%]">
+                    <div className="w-8 h-8 rounded-full bg-gradient-to-br from-cyan-500 to-blue-600 flex items-center justify-center flex-shrink-0 shadow-sm mt-0.5">
+                      <Sparkles className="w-4 h-4 text-white" />
                     </div>
-                    <div className={`rounded-2xl px-5 py-4 ${isDark ? 'bg-gray-800 border border-gray-700' : 'bg-white border border-gray-200'} shadow-sm`}>
+                    <div className={`rounded-xl px-4 py-3 ${isDark ? 'bg-gray-800 border border-gray-700' : 'bg-white border border-gray-200'} shadow-sm`}>
                       <div className="flex space-x-1">
                         <div className={`w-2 h-2 rounded-full ${isDark ? 'bg-cyan-400' : 'bg-cyan-600'} animate-bounce`}></div>
                         <div className={`w-2 h-2 rounded-full ${isDark ? 'bg-cyan-400' : 'bg-cyan-600'} animate-bounce`} style={{ animationDelay: '0.1s' }}></div>
@@ -483,16 +487,16 @@ const CyberAcePageV2: React.FC = () => {
                 <motion.div
                   initial={{ opacity: 0, y: 20 }}
                   animate={{ opacity: 1, y: 0 }}
-                  className={`max-w-md mx-auto p-6 rounded-2xl ${isDark ? 'bg-gradient-to-br from-blue-900 to-purple-900 border border-blue-700' : 'bg-gradient-to-br from-blue-50 to-purple-50 border border-blue-200'} text-center shadow-xl`}
+                  className={`max-w-sm mx-auto p-4 rounded-xl ${isDark ? 'bg-gradient-to-br from-blue-900 to-purple-900 border border-blue-700' : 'bg-gradient-to-br from-blue-50 to-purple-50 border border-blue-200'} text-center shadow-lg mt-4`}
                 >
-                  <Sparkles className={`w-8 h-8 mx-auto mb-3 ${isDark ? 'text-blue-400' : 'text-blue-600'}`} />
-                  <h3 className={`text-lg font-bold mb-2 ${isDark ? 'text-white' : 'text-gray-900'}`}>
+                  <Sparkles className={`w-6 h-6 mx-auto mb-2 ${isDark ? 'text-blue-400' : 'text-blue-600'}`} />
+                  <h3 className={`text-base font-bold mb-1 ${isDark ? 'text-white' : 'text-gray-900'}`}>
                     Enjoying CyberAce?
                   </h3>
-                  <p className={`text-sm mb-4 ${isDark ? 'text-blue-200' : 'text-blue-700'}`}>
-                    Sign up to save your chat history and unlock unlimited conversations!
+                  <p className={`text-xs mb-3 ${isDark ? 'text-blue-200' : 'text-blue-700'}`}>
+                    Sign up to save your chat history!
                   </p>
-                  <button className="px-6 py-2 bg-gradient-to-r from-blue-500 to-purple-600 text-white rounded-lg font-medium hover:from-blue-600 hover:to-purple-700 transition-all">
+                  <button className="px-4 py-1.5 bg-gradient-to-r from-blue-500 to-purple-600 text-white rounded-lg font-medium hover:from-blue-600 hover:to-purple-700 transition-all text-sm">
                     Sign Up Free
                   </button>
                 </motion.div>
@@ -503,9 +507,11 @@ const CyberAcePageV2: React.FC = () => {
           </div>
 
           {/* Input Area */}
-          <div className={`p-3 lg:p-6 border-t ${isDark ? 'border-gray-700 bg-gray-900/50' : 'border-gray-200 bg-gray-50/50'} backdrop-blur-sm`}>
-            <div className="max-w-5xl mx-auto">
-              <div className="flex space-x-3 lg:space-x-4">
+          <div className={`p-4 lg:p-5 border-t ${isDark ? 'border-gray-700 bg-gray-900/80' : 'border-gray-200 bg-white/80'} backdrop-blur-sm`}>
+            <div className="max-w-4xl mx-auto">
+              <div className={`flex items-end space-x-3 p-2 lg:p-3 rounded-xl lg:rounded-2xl ${
+                isDark ? 'bg-gray-800 border border-gray-700' : 'bg-gray-50 border border-gray-200'
+              } shadow-sm`}>
                 <textarea
                   ref={textareaRef}
                   value={inputMessage}
@@ -514,19 +520,24 @@ const CyberAcePageV2: React.FC = () => {
                     adjustTextareaHeight();
                   }}
                   onKeyPress={handleKeyPress}
-                  placeholder="Ask about security, paste error messages, or request code help..."
-                  className={`flex-1 px-3 lg:px-5 py-3 lg:py-4 rounded-lg lg:rounded-xl border resize-none text-sm lg:text-base ${
+                  placeholder="Type your message..."
+                  className={`flex-1 px-3 py-2.5 lg:py-3 bg-transparent border-0 resize-none text-sm lg:text-base leading-tight ${
                     isDark 
-                      ? 'border-gray-600 bg-gray-800 text-white placeholder-gray-400 focus:border-cyan-500' 
-                      : 'border-gray-300 bg-white text-gray-900 placeholder-gray-500 focus:border-cyan-500'
-                  } focus:outline-none focus:ring-2 focus:ring-cyan-500/20 font-medium shadow-sm`}
+                      ? 'text-white placeholder-gray-400' 
+                      : 'text-gray-900 placeholder-gray-500'
+                  } focus:outline-none focus:ring-0 font-normal`}
                   rows={1}
                   disabled={isTyping}
+                  style={{ minHeight: '20px', maxHeight: '120px' }}
                 />
                 <button
                   onClick={handleSendMessage}
                   disabled={!inputMessage.trim() || isTyping}
-                  className="px-3 lg:px-5 py-3 lg:py-4 bg-gradient-to-br from-cyan-500 to-blue-600 hover:from-cyan-600 hover:to-blue-700 disabled:opacity-50 disabled:cursor-not-allowed rounded-lg lg:rounded-xl flex items-center justify-center text-white transition-all shadow-lg hover:shadow-xl transform hover:scale-105"
+                  className={`p-2.5 lg:p-3 rounded-full flex items-center justify-center transition-all ${
+                    !inputMessage.trim() || isTyping
+                      ? `${isDark ? 'bg-gray-700 text-gray-500' : 'bg-gray-200 text-gray-400'} cursor-not-allowed`
+                      : 'bg-gradient-to-br from-cyan-500 to-blue-600 hover:from-cyan-600 hover:to-blue-700 text-white shadow-md hover:shadow-lg transform hover:scale-105'
+                  }`}
                 >
                   <Send className="w-4 h-4 lg:w-5 lg:h-5" />
                 </button>
