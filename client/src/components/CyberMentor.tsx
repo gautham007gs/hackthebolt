@@ -143,7 +143,7 @@ const CyberMentor: React.FC = () => {
       {/* Floating Bot Icon - Mobile Optimized */}
       <motion.button
         onClick={toggleChat}
-        className={`fixed bottom-4 right-4 sm:bottom-6 sm:right-6 w-12 h-12 sm:w-14 sm:h-14 bg-gradient-to-r from-green-500 to-green-600 hover:from-green-600 hover:to-green-700 rounded-full shadow-lg flex items-center justify-center text-white transition-all duration-300 z-50 ${
+        className={`fixed bottom-20 right-4 sm:bottom-6 sm:right-6 w-12 h-12 sm:w-14 sm:h-14 bg-gradient-to-r from-green-500 to-green-600 hover:from-green-600 hover:to-green-700 rounded-full shadow-lg flex items-center justify-center text-white transition-all duration-300 z-50 ${
           isMinimized ? 'scale-100' : 'scale-90'
         }`}
         whileHover={{ scale: 1.05 }}
@@ -159,7 +159,7 @@ const CyberMentor: React.FC = () => {
             initial={{ opacity: 0, scale: 0.8, y: 20 }}
             animate={{ opacity: 1, scale: 1, y: 0 }}
             exit={{ opacity: 0, scale: 0.8, y: 20 }}
-            className="fixed bottom-16 right-2 left-2 sm:bottom-24 sm:right-6 sm:left-auto w-auto sm:w-96 h-[70vh] sm:h-[500px] bg-white dark:bg-gray-800 rounded-lg shadow-2xl border border-gray-200 dark:border-gray-700 flex flex-col z-40"
+            className="fixed bottom-36 right-2 left-2 sm:bottom-24 sm:right-6 sm:left-auto w-auto sm:w-96 h-[60vh] sm:h-[500px] bg-white dark:bg-gray-800 rounded-lg shadow-2xl border border-gray-200 dark:border-gray-700 flex flex-col z-40"
           >
             {/* Header */}
             <div className="flex items-center justify-between p-3 sm:p-4 border-b border-gray-200 dark:border-gray-700 bg-gradient-to-r from-green-500 to-green-600 rounded-t-lg">

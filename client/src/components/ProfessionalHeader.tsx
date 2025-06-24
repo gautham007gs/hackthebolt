@@ -98,18 +98,8 @@ const ProfessionalHeader = () => {
               <span className={`text-lg sm:text-xl font-bold ${
                 isDark ? 'text-white' : 'text-gray-900'
               } group-hover:text-emerald-500 transition-all duration-300 tracking-tight font-sans`}>
-                <span className="hidden sm:inline">HackTheShell</span>
-                <span className="sm:hidden">HTS</span>
+                HackTheShell
               </span>
-              <div className="flex items-center space-x-1">
-                <div className="w-2 h-2 bg-green-500 rounded-full animate-pulse"></div>
-                <span className="text-xs text-green-600 dark:text-green-400 font-medium hidden sm:inline">
-                  Ethical Hacking Academy
-                </span>
-                <span className="text-xs text-green-600 dark:text-green-400 font-medium sm:hidden">
-                  Academy
-                </span>
-              </div>
               <div className={`h-0.5 w-0 group-hover:w-full ${
                 isDark ? 'bg-emerald-400' : 'bg-emerald-600'
               } transition-all duration-500 ease-out`} />
