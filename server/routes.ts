@@ -1,6 +1,7 @@
 import type { Express } from "express";
 import { createServer, type Server } from "http";
 import { storage } from "./storage";
+import { handleChatRequest } from "./routes/chat";
 import { insertBlogPostSchema, insertGithubToolSchema, insertCommentSchema, insertLabSchema, insertCtfChallengeSchema, insertCtfSubmissionSchema, insertCertificateSchema } from "@shared/schema";
 import { z } from "zod";
 

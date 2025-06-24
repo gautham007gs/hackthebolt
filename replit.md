@@ -168,6 +168,11 @@ Changelog:
   - Implemented broader desktop chat interface with improved readability
   - Fixed scroll-to-top button positioning to avoid conflicts with chat interface
   - Added advanced security knowledge base for penetration testing and vulnerability assessment
+  - Created ChatGPT-style interface with sidebar for chat history and session management
+  - Integrated real-time OpenAI API for dynamic, conversational AI responses
+  - Implemented shorter, more human-like responses with personality and humor
+  - Fixed text visibility issues and improved responsive design for all devices
+  - Added new chat creation, session management, and chat deletion features
 ```
 
 ## User Preferences
@@ -176,4 +181,5 @@ Changelog:
 Preferred communication style: Simple, everyday language.
 Branding preference: Keep "HackTheShell" name as-is without abbreviations or academy badges.
 Mobile UI preference: Clean, non-overlapping button placement for optimal user experience.
+AI Response Style: Short, conversational, human-like responses with personality and humor. Only provide detailed explanations when specifically requested.
 ```
