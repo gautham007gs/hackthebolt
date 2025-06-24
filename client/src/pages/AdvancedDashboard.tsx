@@ -21,7 +21,8 @@ import {
   Star,
   ChevronRight,
   Play,
-  Download
+  Download,
+  Book
 } from 'lucide-react';
 import { useTheme } from '../contexts/ThemeContext';
 import { useAuth } from '../contexts/AuthContext';

@@ -1,8 +1,8 @@
 import React from 'react';
-import FixedAdminDashboard from '../components/FixedAdminDashboard';
+import EnhancedAdminPanel from '../components/EnhancedAdminPanel';
 
 const ProfessionalAdminPage = () => {
-  return <FixedAdminDashboard />;
+  return <EnhancedAdminPanel />;
 };
 
 export default ProfessionalAdminPage;
