@@ -49,7 +49,7 @@ const Features = () => {
   ];
 
   return (
-    <section className={`py-20 ${isDark ? 'bg-gray-800' : 'bg-gradient-to-br from-white via-slate-50 to-blue-50'} relative overflow-hidden`}>
+    <section className={`py-28 ${isDark ? 'bg-gray-800' : 'bg-gradient-to-br from-white via-slate-50 to-blue-50'} relative overflow-hidden`}>
       {/* Subtle Background Effects */}
       <div className="absolute inset-0">
         <div className={`absolute top-0 left-1/3 w-64 h-64 ${isDark ? 'bg-emerald-500/3' : 'bg-emerald-500/5'} rounded-full blur-3xl`}></div>

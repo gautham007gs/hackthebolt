@@ -430,12 +430,12 @@ const CyberAcePageV2: React.FC = () => {
                         <Sparkles className="w-5 h-5 text-white" />
                       )}
                     </div>
-                    <div className={`rounded-2xl px-5 py-4 ${
+                    <div className={`rounded-2xl px-4 py-3 ${
                       message.type === 'user'
-                        ? `${isDark ? 'bg-green-600' : 'bg-green-500'} text-white shadow-lg`
-                        : `${isDark ? 'bg-gray-800 text-gray-100 border border-gray-700' : 'bg-white text-gray-900 border border-gray-200'} shadow-sm`
+                        ? `${isDark ? 'bg-green-600' : 'bg-green-500'} text-white shadow-lg max-w-sm`
+                        : `${isDark ? 'bg-gray-800 text-gray-100 border border-gray-700' : 'bg-white text-gray-900 border border-gray-200'} shadow-sm flex-1`
                     }`}>
-                      <div className="text-sm leading-relaxed whitespace-pre-wrap font-medium">
+                      <div className={`text-sm leading-relaxed whitespace-pre-wrap ${message.type === 'user' ? 'font-medium' : 'font-normal'}`}>
                         {formatMessageContent(message.content).map((part, index) => (
                           <div key={index}>
                             {part.type === 'text' ? (

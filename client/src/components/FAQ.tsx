@@ -17,7 +17,7 @@ interface FAQProps {
   className?: string;
 }
 
-export function FAQ({ items, title = "Frequently Asked Questions", compact = false, className }: FAQProps) {
+export function FAQ({ items = [], title = "Frequently Asked Questions", compact = false, className }: FAQProps) {
   const [openItems, setOpenItems] = useState<Set<string>>(new Set());
 
   const toggleItem = (id: string) => {
@@ -30,7 +30,7 @@ export function FAQ({ items, title = "Frequently Asked Questions", compact = fal
     setOpenItems(newOpenItems);
   };
 
-  if (items.length === 0) return null;
+  if (!items || items.length === 0) return null;
 
   return (
     <div className={cn(
@@ -90,6 +90,46 @@ export function FAQ({ items, title = "Frequently Asked Questions", compact = fal
     </div>
   );
 }
+
+// Create a standalone FAQ component with default data
+const DefaultFAQ = () => {
+  const defaultFAQs: FAQItem[] = [
+    {
+      id: '1',
+      question: 'How often is the content updated?',
+      answer: 'We update our cybersecurity content weekly to reflect the latest threats, vulnerabilities, and security practices in the industry.',
+      category: 'General'
+    },
+    {
+      id: '2', 
+      question: 'Are the tutorials suitable for beginners?',
+      answer: 'Yes! We offer content for all skill levels, from complete beginners to advanced security professionals. Each tutorial is clearly marked with its difficulty level.',
+      category: 'Learning'
+    },
+    {
+      id: '3',
+      question: 'Do you provide certificates?',
+      answer: 'Yes, we offer certificates of completion for our comprehensive courses and learning paths. These are recognized by industry professionals.',
+      category: 'Certification'
+    },
+    {
+      id: '4',
+      question: 'Can I practice what I learn?',
+      answer: 'Absolutely! We provide hands-on labs, virtual environments, and CTF challenges where you can safely practice your skills.',
+      category: 'Practice'
+    },
+    {
+      id: '5',
+      question: 'Is there community support?',
+      answer: 'Yes, we have an active community forum where you can ask questions, share knowledge, and collaborate with other learners and experts.',
+      category: 'Community'
+    }
+  ];
+
+  return <FAQ items={defaultFAQs} title="Frequently Asked Questions" />;
+};
+
+export default DefaultFAQ;
 
 // Blog-specific FAQ component with cybersecurity focus
 export function BlogFAQ({ className }: { className?: string }) {
