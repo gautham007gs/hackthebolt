@@ -240,26 +240,26 @@ const ProfilePage: React.FC = () => {
       <div className={`min-h-screen ${isDark ? 'bg-gray-900' : 'bg-gray-50'} pt-16`}>
         {/* Profile Header */}
         <div className={`${isDark ? 'bg-gray-800' : 'bg-white'} border-b ${isDark ? 'border-gray-700' : 'border-gray-200'}`}>
-          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+          <div className="max-w-7xl mx-auto px-2 sm:px-4 lg:px-8 py-4 sm:py-8">
             <div className="flex flex-col lg:flex-row lg:items-center lg:justify-between">
-              <div className="flex items-center space-x-6">
+              <div className="flex flex-col sm:flex-row items-center sm:items-start space-y-4 sm:space-y-0 sm:space-x-6">
                 {/* Profile Picture */}
                 <div className="relative">
-                  <div className={`w-24 h-24 rounded-full ${isDark ? 'bg-gray-700' : 'bg-gray-200'} flex items-center justify-center overflow-hidden`}>
+                  <div className={`w-20 h-20 sm:w-24 sm:h-24 rounded-full ${isDark ? 'bg-gray-700' : 'bg-gray-200'} flex items-center justify-center overflow-hidden`}>
                     {user?.profileImageUrl ? (
                       <img src={user.profileImageUrl} alt="Profile" className="w-full h-full object-cover" />
                     ) : (
-                      <User className={`w-12 h-12 ${isDark ? 'text-gray-400' : 'text-gray-500'}`} />
+                      <User className={`w-8 h-8 sm:w-12 sm:h-12 ${isDark ? 'text-gray-400' : 'text-gray-500'}`} />
                     )}
                   </div>
                   {isEditing && (
                     <button
                       onClick={() => fileInputRef.current?.click()}
-                      className={`absolute -bottom-2 -right-2 w-8 h-8 rounded-full ${
+                      className={`absolute -bottom-1 -right-1 w-6 h-6 sm:w-8 sm:h-8 rounded-full ${
                         isDark ? 'bg-emerald-600 hover:bg-emerald-700' : 'bg-emerald-500 hover:bg-emerald-600'
-                      } text-white flex items-center justify-center transition-colors`}
+                      } text-white flex items-center justify-center transition-colors shadow-lg`}
                     >
-                      <Camera className="w-4 h-4" />
+                      <Camera className="w-3 h-3 sm:w-4 sm:h-4" />
                     </button>
                   )}
                   <input
@@ -272,20 +272,20 @@ const ProfilePage: React.FC = () => {
                 </div>
 
                 {/* Profile Info */}
-                <div className="space-y-2">
-                  <div className="flex items-center space-x-3">
-                    <h1 className={`text-2xl font-bold ${isDark ? 'text-white' : 'text-gray-900'}`}>
+                <div className="space-y-2 text-center sm:text-left">
+                  <div className="flex flex-col sm:flex-row sm:items-center space-y-2 sm:space-y-0 sm:space-x-3">
+                    <h1 className={`text-xl sm:text-2xl font-bold ${isDark ? 'text-white' : 'text-gray-900'}`}>
                       {profileData.firstName} {profileData.lastName}
                     </h1>
-                    <div className="flex items-center space-x-1">
-                      <BadgeCheck className="w-5 h-5 text-blue-500" />
-                      <span className={`text-sm ${isDark ? 'text-gray-400' : 'text-gray-600'}`}>Verified</span>
+                    <div className="flex items-center justify-center sm:justify-start space-x-1">
+                      <BadgeCheck className="w-4 h-4 sm:w-5 sm:h-5 text-blue-500" />
+                      <span className={`text-xs sm:text-sm ${isDark ? 'text-gray-400' : 'text-gray-600'}`}>Verified</span>
                     </div>
                   </div>
-                  <p className={`${isDark ? 'text-gray-400' : 'text-gray-600'}`}>@{profileData.username}</p>
-                  <div className={`flex items-center space-x-4 text-sm ${isDark ? 'text-gray-400' : 'text-gray-600'}`}>
+                  <p className={`text-sm sm:text-base ${isDark ? 'text-gray-400' : 'text-gray-600'}`}>@{profileData.username}</p>
+                  <div className={`flex flex-col sm:flex-row items-center space-y-2 sm:space-y-0 sm:space-x-4 text-xs sm:text-sm ${isDark ? 'text-gray-400' : 'text-gray-600'}`}>
                     <div className="flex items-center space-x-1">
-                      <MapPin className="w-4 h-4" />
+                      <MapPin className="w-3 h-3 sm:w-4 sm:h-4" />
                       <span>{profileData.location}</span>
                     </div>
                     <div className="flex items-center space-x-1">

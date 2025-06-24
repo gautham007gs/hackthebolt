@@ -153,26 +153,27 @@ const AdvancedDashboard: React.FC = () => {
       <div className={`min-h-screen ${isDark ? 'bg-gray-900' : 'bg-gray-50'} pt-16`}>
         {/* Header */}
         <div className={`${isDark ? 'bg-gray-800' : 'bg-white'} border-b ${isDark ? 'border-gray-700' : 'border-gray-200'}`}>
-          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6">
-            <div className="flex items-center justify-between">
+          <div className="max-w-7xl mx-auto px-2 sm:px-4 lg:px-8 py-4 sm:py-6">
+            <div className="flex flex-col sm:flex-row sm:items-center justify-between space-y-4 sm:space-y-0">
               <div>
-                <h1 className={`text-2xl font-bold ${isDark ? 'text-white' : 'text-gray-900'}`}>
+                <h1 className={`text-xl sm:text-2xl font-bold ${isDark ? 'text-white' : 'text-gray-900'}`}>
                   Welcome back, {user?.firstName || 'Cyber Warrior'}!
                 </h1>
-                <p className={`${isDark ? 'text-gray-400' : 'text-gray-600'} mt-1`}>
+                <p className={`${isDark ? 'text-gray-400' : 'text-gray-600'} mt-1 text-sm sm:text-base`}>
                   Continue your cybersecurity mastery journey
                 </p>
               </div>
-              <div className="flex items-center space-x-4">
-                <div className={`flex items-center space-x-2 px-4 py-2 rounded-lg ${isDark ? 'bg-emerald-600' : 'bg-emerald-100'}`}>
-                  <Flame className={`w-4 h-4 ${isDark ? 'text-white' : 'text-emerald-600'}`} />
-                  <span className={`font-semibold ${isDark ? 'text-white' : 'text-emerald-600'}`}>
-                    15 Day Streak!
+              <div className="flex items-center space-x-2 sm:space-x-4">
+                <div className={`flex items-center space-x-1 sm:space-x-2 px-2 sm:px-4 py-1 sm:py-2 rounded-lg ${isDark ? 'bg-emerald-600' : 'bg-emerald-100'}`}>
+                  <Flame className={`w-3 h-3 sm:w-4 sm:h-4 ${isDark ? 'text-white' : 'text-emerald-600'}`} />
+                  <span className={`font-semibold text-xs sm:text-sm ${isDark ? 'text-white' : 'text-emerald-600'}`}>
+                    <span className="hidden sm:inline">15 Day Streak!</span>
+                    <span className="sm:hidden">15 Days</span>
                   </span>
                 </div>
-                <div className={`flex items-center space-x-2 px-4 py-2 rounded-lg ${isDark ? 'bg-gray-700' : 'bg-gray-100'}`}>
-                  <Star className={`w-4 h-4 ${isDark ? 'text-yellow-400' : 'text-yellow-500'}`} />
-                  <span className={`font-semibold ${isDark ? 'text-white' : 'text-gray-900'}`}>
+                <div className={`flex items-center space-x-1 sm:space-x-2 px-2 sm:px-4 py-1 sm:py-2 rounded-lg ${isDark ? 'bg-gray-700' : 'bg-gray-100'}`}>
+                  <Star className={`w-3 h-3 sm:w-4 sm:h-4 ${isDark ? 'text-yellow-400' : 'text-yellow-500'}`} />
+                  <span className={`font-semibold text-xs sm:text-sm ${isDark ? 'text-white' : 'text-gray-900'}`}>
                     Level {user?.level || 12}
                   </span>
                 </div>
@@ -180,24 +181,25 @@ const AdvancedDashboard: React.FC = () => {
             </div>
 
             {/* Navigation Tabs */}
-            <nav className="mt-6 flex space-x-8">
+            <nav className="mt-4 sm:mt-6 flex space-x-4 sm:space-x-8 overflow-x-auto">
               {[
                 { id: 'overview', label: 'Overview', icon: BarChart3 },
-                { id: 'learning', label: 'Learning Paths', icon: BookOpen },
-                { id: 'tools', label: 'Security Tools', icon: Shield },
+                { id: 'learning', label: 'Learning', icon: BookOpen },
+                { id: 'tools', label: 'Tools', icon: Shield },
                 { id: 'community', label: 'Community', icon: Users }
               ].map((tab) => (
                 <button
                   key={tab.id}
                   onClick={() => setActiveTab(tab.id as any)}
-                  className={`flex items-center space-x-2 py-3 px-1 border-b-2 font-medium text-sm transition-colors ${
+                  className={`flex items-center space-x-1 sm:space-x-2 py-2 sm:py-3 px-1 border-b-2 font-medium text-xs sm:text-sm transition-colors whitespace-nowrap ${
                     activeTab === tab.id
                       ? `border-emerald-500 ${isDark ? 'text-emerald-400' : 'text-emerald-600'}`
                       : `border-transparent ${isDark ? 'text-gray-400 hover:text-gray-300' : 'text-gray-500 hover:text-gray-700'}`
                   }`}
                 >
-                  <tab.icon className="w-4 h-4" />
-                  <span>{tab.label}</span>
+                  <tab.icon className="w-3 h-3 sm:w-4 sm:h-4" />
+                  <span className="hidden sm:inline">{tab.label}</span>
+                  <span className="sm:hidden">{tab.label.split(' ')[0]}</span>
                 </button>
               ))}
             </nav>
@@ -205,13 +207,13 @@ const AdvancedDashboard: React.FC = () => {
         </div>
 
         {/* Content */}
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+        <div className="max-w-7xl mx-auto px-2 sm:px-4 lg:px-8 py-4 sm:py-8">
           {activeTab === 'overview' && (
-            <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
+            <div className="grid grid-cols-1 lg:grid-cols-3 gap-4 sm:gap-8">
               {/* Main Stats */}
-              <div className="lg:col-span-2 space-y-6">
+              <div className="lg:col-span-2 space-y-4 sm:space-y-6">
                 {/* Quick Stats */}
-                <div className="grid grid-cols-1 md:grid-cols-4 gap-4">
+                <div className="grid grid-cols-2 sm:grid-cols-4 gap-2 sm:gap-4">
                   {[
                     { icon: Target, label: 'Challenges Completed', value: '47', color: 'text-emerald-500' },
                     { icon: Award, label: 'Achievements', value: '12', color: 'text-yellow-500' },
@@ -223,15 +225,15 @@ const AdvancedDashboard: React.FC = () => {
                       initial={{ opacity: 0, y: 20 }}
                       animate={{ opacity: 1, y: 0 }}
                       transition={{ delay: index * 0.1 }}
-                      className={`p-6 rounded-xl ${isDark ? 'bg-gray-800' : 'bg-white'} border ${isDark ? 'border-gray-700' : 'border-gray-200'}`}
+                      className={`p-3 sm:p-6 rounded-xl ${isDark ? 'bg-gray-800' : 'bg-white'} border ${isDark ? 'border-gray-700' : 'border-gray-200'}`}
                     >
-                      <div className="flex items-center space-x-3">
-                        <stat.icon className={`w-6 h-6 ${stat.color}`} />
-                        <div>
-                          <p className={`text-2xl font-bold ${isDark ? 'text-white' : 'text-gray-900'}`}>
+                      <div className="flex flex-col sm:flex-row items-center sm:items-start space-y-2 sm:space-y-0 sm:space-x-3">
+                        <stat.icon className={`w-5 h-5 sm:w-6 sm:h-6 ${stat.color}`} />
+                        <div className="text-center sm:text-left">
+                          <p className={`text-lg sm:text-2xl font-bold ${isDark ? 'text-white' : 'text-gray-900'}`}>
                             {stat.value}
                           </p>
-                          <p className={`text-sm ${isDark ? 'text-gray-400' : 'text-gray-600'}`}>
+                          <p className={`text-xs sm:text-sm ${isDark ? 'text-gray-400' : 'text-gray-600'}`}>
                             {stat.label}
                           </p>
                         </div>

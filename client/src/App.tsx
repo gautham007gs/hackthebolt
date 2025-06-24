@@ -77,6 +77,7 @@ function AppContent() {
       </main>
       {!isDashboardPage && !isAuthPage && <Footer />}
       <ScrollToTop />
+      <CyberMentor />
     </div>
   );
 }

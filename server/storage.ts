@@ -128,14 +128,14 @@ export interface IStorage {
 // Minimal storage implementation for migration compatibility
 export class MemoryStorage implements IStorage {
   private nextId = 1;
-  private users: User[] = [];
-  private blogPosts: BlogPost[] = [];
-  private githubTools: GithubTool[] = [];
+  private users = new Map<string, User>();
+  private blogPosts = new Map<number, BlogPost>();
+  private githubTools = new Map<number, GithubTool>();
   private comments: Comment[] = [];
-  private siteConfigs: SiteConfig[] = [];
-  private achievements: Achievement[] = [];
+  private siteConfigs = new Map<string, SiteConfig>();
+  private achievements = new Map<string, Achievement>();
   private userActivities: UserActivity[] = [];
-  private seoMetrics: SeoMetric[] = [];
+  private seoMetrics = new Map<string, SeoMetric>();
   private labs: Lab[] = [];
   private labProgresses: LabProgress[] = [];
   private ctfChallenges: CtfChallenge[] = [];
@@ -403,19 +403,17 @@ export class MemoryStorage implements IStorage {
   }
 
   async getUserAchievements(userId: string): Promise<Achievement[]> {
-    return this.achievements.get(userId) || [];
+    return Array.from(this.achievements.values()).filter(achievement => achievement.userId === userId);
   }
 
   async addUserAchievement(achievement: Omit<Achievement, 'id' | 'unlockedAt'>): Promise<void> {
+    const id = this.nextId++;
     const newAchievement: Achievement = {
-      id: this.nextId++,
+      id,
       ...achievement,
       unlockedAt: new Date(),
     };
-    
-    const userAchievements = this.achievements.get(achievement.userId) || [];
-    userAchievements.push(newAchievement);
-    this.achievements.set(achievement.userId, userAchievements);
+    this.achievements.set(`${achievement.userId}-${id}`, newAchievement);
   }
 
   // SEO metrics
@@ -426,23 +424,22 @@ export class MemoryStorage implements IStorage {
     const seoMetric: SeoMetric = {
       id: existing?.id || this.nextId++,
       url,
-      title: data.title || existing?.title || '',
-      description: data.description || existing?.description || '',
-      keywords: data.keywords || existing?.keywords || '',
-      ogImage: data.ogImage || existing?.ogImage || null,
+      title: data.title || existing?.title || null,
+      description: data.description || existing?.description || null,
+      keywords: data.keywords || existing?.keywords || null,
       views: data.views || existing?.views || 0,
       clicks: data.clicks || existing?.clicks || 0,
       impressions: data.impressions || existing?.impressions || 0,
-      avgPosition: data.avgPosition || existing?.avgPosition || 0,
+      position: data.position || existing?.position || null,
       createdAt: existing?.createdAt || now,
-      updatedAt: now,
+      lastCrawled: now,
     };
     
     this.seoMetrics.set(url, seoMetric);
   }
 
   async getSeoMetrics(url: string): Promise<SeoMetric | undefined> {
-    return this.seoMetrics.find(metric => metric.url === url);
+    return this.seoMetrics.get(url);
   }
 
   // Labs operations

@@ -98,8 +98,18 @@ const ProfessionalHeader = () => {
               <span className={`text-lg sm:text-xl font-bold ${
                 isDark ? 'text-white' : 'text-gray-900'
               } group-hover:text-emerald-500 transition-all duration-300 tracking-tight font-sans`}>
-                HackTheShell
+                <span className="hidden sm:inline">HackTheShell</span>
+                <span className="sm:hidden">HTS</span>
               </span>
+              <div className="flex items-center space-x-1">
+                <div className="w-2 h-2 bg-green-500 rounded-full animate-pulse"></div>
+                <span className="text-xs text-green-600 dark:text-green-400 font-medium hidden sm:inline">
+                  Ethical Hacking Academy
+                </span>
+                <span className="text-xs text-green-600 dark:text-green-400 font-medium sm:hidden">
+                  Academy
+                </span>
+              </div>
               <div className={`h-0.5 w-0 group-hover:w-full ${
                 isDark ? 'bg-emerald-400' : 'bg-emerald-600'
               } transition-all duration-500 ease-out`} />
@@ -249,6 +259,29 @@ const ProfessionalHeader = () => {
               } border-t backdrop-blur-xl mt-2 rounded-b-xl shadow-2xl`}
             >
               <div className="p-4 space-y-2 max-h-[calc(100vh-5rem)] overflow-y-auto">
+                {/* User Profile Section in Mobile */}
+                {isAuthenticated && (
+                  <div className="px-4 py-4 border-b border-gray-200 dark:border-gray-700 mb-4">
+                    <div className="flex items-center space-x-3">
+                      {user?.profileImageUrl ? (
+                        <img
+                          src={user.profileImageUrl}
+                          alt="Profile"
+                          className="w-10 h-10 rounded-full object-cover border-2 border-white/20"
+                        />
+                      ) : (
+                        <div className="w-10 h-10 rounded-full bg-gradient-to-r from-purple-500 to-pink-500 flex items-center justify-center text-white font-semibold text-sm border-2 border-white/20">
+                          {user?.firstName ? user.firstName[0].toUpperCase() : user?.email ? user.email[0].toUpperCase() : 'U'}
+                        </div>
+                      )}
+                      <div>
+                        <p className="font-semibold text-gray-900 dark:text-white">{user?.firstName || user?.email?.split('@')[0] || 'User'}</p>
+                        <p className="text-sm text-gray-500 dark:text-gray-400 truncate max-w-[200px]">{user?.email}</p>
+                      </div>
+                    </div>
+                  </div>
+                )}
+
                 {navigation.map((item) => (
                   <div key={item.name}>
                     {item.subItems ? (
@@ -353,6 +386,26 @@ const ProfessionalHeader = () => {
                       >
                         <User className="h-5 w-5" />
                         <span className="font-medium">Dashboard</span>
+                      </Link>
+                      <Link
+                        href="/profile"
+                        onClick={closeMenu}
+                        className={`flex items-center space-x-3 px-4 py-3 rounded-lg transition-all duration-200 ${
+                          isDark ? 'text-white hover:bg-gray-700' : 'text-gray-700 hover:bg-gray-100'
+                        }`}
+                      >
+                        <Settings className="h-5 w-5" />
+                        <span className="font-medium">Edit Profile</span>
+                      </Link>
+                      <Link
+                        href="/advanced-dashboard"
+                        onClick={closeMenu}
+                        className={`flex items-center space-x-3 px-4 py-3 rounded-lg transition-all duration-200 ${
+                          isDark ? 'text-emerald-400 hover:bg-emerald-500/10' : 'text-emerald-600 hover:bg-emerald-50'
+                        }`}
+                      >
+                        <Zap className="h-5 w-5" />
+                        <span className="font-medium">Advanced Features</span>
                       </Link>
                       <button
                         onClick={() => {
