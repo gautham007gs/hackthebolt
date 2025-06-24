@@ -1,9 +1,13 @@
 import { Request, Response } from 'express';
 import OpenAI from 'openai';
 
-const openai = new OpenAI({
-  apiKey: process.env.OPENAI_API_KEY,
-});
+// Initialize OpenAI only if API key is available
+let openai: OpenAI | null = null;
+if (process.env.OPENAI_API_KEY) {
+  openai = new OpenAI({
+    apiKey: process.env.OPENAI_API_KEY,
+  });
+}
 
 export async function handleChatRequest(req: Request, res: Response) {
   try {
@@ -13,8 +17,10 @@ export async function handleChatRequest(req: Request, res: Response) {
       return res.status(400).json({ error: 'Message is required' });
     }
 
-    if (!process.env.OPENAI_API_KEY) {
-      return res.status(500).json({ error: 'OpenAI API key not configured' });
+    if (!process.env.OPENAI_API_KEY || !openai) {
+      return res.status(200).json({ 
+        response: 'Hello! I\'m CyberAce, your cybersecurity AI assistant. However, I need an OpenAI API key to provide intelligent responses. Please configure the OPENAI_API_KEY environment variable and I\'ll be ready to help with all your cybersecurity questions!' 
+      });
     }
 
     const systemPrompt = `You are CyberAce, a cybersecurity AI assistant with personality. You're knowledgeable, helpful, and a bit witty. Keep responses concise but informative. Add some humor when appropriate.

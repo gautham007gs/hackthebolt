@@ -1,12 +1,14 @@
-import { Pool, neonConfig } from '@neondatabase/serverless';
-import { drizzle } from 'drizzle-orm/neon-serverless';
-import ws from "ws";
+import { drizzle } from 'drizzle-orm/postgres-js';
+import postgres from 'postgres';
 import * as schema from "@shared/schema";
 
-neonConfig.webSocketConstructor = ws;
+// Use Replit's built-in database environment variables if available
+const DATABASE_URL = process.env.DATABASE_URL || "postgresql://postgres:password@localhost:5432/hacktheshell";
 
-// Set default DATABASE_URL for local development
-const DATABASE_URL = process.env.DATABASE_URL || "postgresql://runner@127.0.0.1:5432/hacktheshell";
+const client = postgres(DATABASE_URL, {
+  max: 1,
+  idle_timeout: 20,
+  connect_timeout: 10,
+});
 
-export const pool = new Pool({ connectionString: DATABASE_URL });
-export const db = drizzle({ client: pool, schema });
+export const db = drizzle(client, { schema });

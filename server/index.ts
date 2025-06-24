@@ -5,7 +5,7 @@ import { initializeSampleData } from "./sampleData";
 
 // Set DATABASE_URL if not already set
 if (!process.env.DATABASE_URL) {
-  process.env.DATABASE_URL = "postgresql://runner@127.0.0.1:5432/hacktheshell";
+  process.env.DATABASE_URL = "postgresql://postgres:password@localhost:5432/hacktheshell";
 }
 
 const app = express();
