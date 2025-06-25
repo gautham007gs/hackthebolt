@@ -63,11 +63,13 @@ export function FAQ({ items = [], title = "Frequently Asked Questions", compact 
                   )}>
                     {item.question}
                   </span>
-                  {openItems.has(item.id) ? (
-                    <ChevronUp className="h-4 w-4 text-gray-500 dark:text-gray-400 flex-shrink-0" />
-                  ) : (
-                    <ChevronDown className="h-4 w-4 text-gray-500 dark:text-gray-400 flex-shrink-0" />
-                  )}
+                  <span className="ml-6 flex-shrink-0 hidden sm:block">
+                    {openItems.has(item.id) ? (
+                      <ChevronUp className="h-4 w-4 text-gray-500 dark:text-gray-400" />
+                    ) : (
+                      <ChevronDown className="h-4 w-4 text-gray-500 dark:text-gray-400" />
+                    )}
+                  </span>
                 </div>
               </button>
               

@@ -420,16 +420,7 @@ const ProfessionalHeader = () => {
                         <Settings className="h-5 w-5" />
                         <span className="font-medium">Edit Profile</span>
                       </Link>
-                      <Link
-                        href="/advanced-dashboard"
-                        onClick={closeMenu}
-                        className={`flex items-center space-x-3 px-4 py-3 rounded-lg transition-all duration-200 ${
-                          isDark ? 'text-emerald-400 hover:bg-emerald-500/10' : 'text-emerald-600 hover:bg-emerald-50'
-                        }`}
-                      >
-                        <Zap className="h-5 w-5" />
-                        <span className="font-medium">Advanced Features</span>
-                      </Link>
+
                       <button
                         onClick={() => {
                           logout();

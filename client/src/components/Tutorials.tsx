@@ -4,6 +4,7 @@ import { useTheme } from '../contexts/ThemeContext';
 import { Link } from 'wouter';
 import { motion } from 'framer-motion';
 import CodeSnippet from './CodeSnippet';
+import FilterDropdown from './FilterDropdown';
 
 const Tutorials = () => {
   const { isDark } = useTheme();
@@ -158,7 +159,7 @@ const Tutorials = () => {
 
         {/* Filters */}
         <div className={`${isDark ? 'bg-gray-800/60' : 'bg-white/90'} rounded-lg p-4 mb-8 border ${isDark ? 'border-gray-700/50' : 'border-gray-200/50'} backdrop-blur-sm`}>
-          <div className="flex flex-col space-y-3 sm:flex-row sm:space-y-0 sm:space-x-3">
+          <div className="flex flex-col space-y-3 sm:flex-row sm:space-y-0 sm:space-x-3 sm:items-center">
             {/* Search */}
             <div className="flex-1 relative">
               <Search className={`absolute left-2.5 top-1/2 transform -translate-y-1/2 h-3.5 w-3.5 ${isDark ? 'text-gray-200' : 'text-gray-700'}`} />
@@ -175,35 +176,15 @@ const Tutorials = () => {
               />
             </div>
 
-            {/* Category Filter */}
-            <select
-              value={selectedCategory}
-              onChange={(e) => setSelectedCategory(e.target.value)}
-              className={`px-3 py-2 text-xs rounded-md border transition-colors ${
-                isDark 
-                  ? 'bg-gray-700/80 border-gray-600/60 text-white focus:bg-gray-700 focus:border-emerald-400' 
-                  : 'bg-white border-gray-300/60 text-gray-900 focus:bg-white focus:border-emerald-500'
-              } focus:outline-none focus:ring-1 focus:ring-emerald-500/30`}
-            >
-              {categories.map(category => (
-                <option key={category} value={category}>{category}</option>
-              ))}
-            </select>
-
-            {/* Difficulty Filter */}
-            <select
-              value={selectedDifficulty}
-              onChange={(e) => setSelectedDifficulty(e.target.value)}
-              className={`px-3 py-2 text-xs rounded-md border transition-colors ${
-                isDark 
-                  ? 'bg-gray-700/80 border-gray-600/60 text-white focus:bg-gray-700 focus:border-emerald-400' 
-                  : 'bg-white border-gray-300/60 text-gray-900 focus:bg-white focus:border-emerald-500'
-              } focus:outline-none focus:ring-1 focus:ring-emerald-500/30`}
-            >
-              {difficulties.map(difficulty => (
-                <option key={difficulty} value={difficulty}>{difficulty}</option>
-              ))}
-            </select>
+            {/* Professional Filter Dropdown */}
+            <FilterDropdown
+              categories={categories.map(cat => ({ value: cat, label: cat }))}
+              difficulties={difficulties.map(diff => ({ value: diff, label: diff }))}
+              selectedCategory={selectedCategory}
+              selectedDifficulty={selectedDifficulty}
+              onCategoryChange={setSelectedCategory}
+              onDifficultyChange={setSelectedDifficulty}
+            />
           </div>
         </div>
 

@@ -80,7 +80,7 @@ const ProfilePage: React.FC = () => {
     firstName: user?.firstName || '',
     lastName: user?.lastName || '',
     username: user?.username || '',
-    bio: user?.bio || '',
+    bio: user?.bio || 'Passionate about cybersecurity and ethical hacking. Always learning new techniques and staying updated with the latest threats.',
     location: 'San Francisco, CA',
     website: '',
     github: '',
