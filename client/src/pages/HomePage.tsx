@@ -17,6 +17,8 @@ const HomePage = () => {
 
   return (
     <>
+      {/* Very subtle line below navigation */}
+      <div className={`w-full h-px ${isDark ? 'bg-gray-800/30' : 'bg-gray-200/40'}`}></div>
       <SEOHead 
         title="HackTheShell - Master Cybersecurity Skills | Learn Ethical Hacking"
         description="Master cybersecurity through hands-on tutorials, labs, and expert courses. Learn penetration testing, network security, ethical hacking, and advance your cybersecurity career."

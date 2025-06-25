@@ -21,9 +21,13 @@ const Footer = () => {
 
   const handleSubscribe = (e: React.FormEvent) => {
     e.preventDefault();
-    setSubscribed(true);
-    setEmail('');
-    setTimeout(() => setSubscribed(false), 3000);
+    if (email.trim()) {
+      setSubscribed(true);
+      setHasSubscribed(true);
+      setEmail('');
+      localStorage.setItem('newsletter_subscribed', 'true');
+      console.log('Newsletter subscription:', email);
+    }
   };
 
   const footerLinks = {
@@ -57,10 +61,11 @@ const Footer = () => {
   return (
     <footer className={`${isDark ? 'bg-gray-900 border-gray-800' : 'bg-white border-gray-200'} border-t`}>
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
-        <div className="mb-16">
-          <div className={`relative overflow-hidden rounded-3xl ${
-            isDark ? 'bg-gradient-to-br from-emerald-900/50 via-gray-800/30 to-cyan-900/50' : 'bg-gradient-to-br from-emerald-50 via-white to-cyan-50'
-          } shadow-2xl border-0`}>
+        {!hasSubscribed && (
+          <div className="mb-16">
+            <div className={`relative overflow-hidden rounded-3xl ${
+              isDark ? 'bg-gradient-to-br from-emerald-900/50 via-gray-800/30 to-cyan-900/50' : 'bg-gradient-to-br from-emerald-50 via-white to-cyan-50'
+            } shadow-2xl border-0`}>
             {/* Background Effects */}
             <div className="absolute inset-0">
               <div className="absolute top-0 right-0 w-80 h-80 bg-gradient-to-br from-emerald-400/10 to-cyan-400/10 rounded-full -translate-y-40 translate-x-40 filter blur-3xl"></div>
@@ -150,6 +155,7 @@ const Footer = () => {
             </div>
           </div>
         </div>
+        )}
 
         {/* Footer Links Section */}
         <div className="grid lg:grid-cols-4 gap-8">

@@ -661,7 +661,7 @@ const ProfilePage: React.FC = () => {
               <div className={`p-6 rounded-xl ${isDark ? 'bg-gray-800' : 'bg-white'} border ${isDark ? 'border-gray-700' : 'border-gray-200'}`}>
                 <h3 className={`text-lg font-semibold mb-6 ${isDark ? 'text-white' : 'text-gray-900'}`}>Profile Settings</h3>
                 <div className="space-y-4">
-                  <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 sm:gap-4">
                     <div>
                       <label className={`block text-sm font-medium mb-2 ${isDark ? 'text-gray-300' : 'text-gray-700'}`}>
                         First Name
@@ -670,11 +670,11 @@ const ProfilePage: React.FC = () => {
                         type="text"
                         value={profileData.firstName}
                         onChange={(e) => setProfileData({...profileData, firstName: e.target.value})}
-                        className={`w-full p-3 rounded-lg border ${
+                        className={`w-full p-2 sm:p-3 rounded-lg border ${
                           isDark 
                             ? 'bg-gray-700 border-gray-600 text-white' 
                             : 'bg-white border-gray-300 text-gray-900'
-                        } focus:ring-2 focus:ring-emerald-500 focus:border-transparent`}
+                        } focus:ring-2 focus:ring-emerald-500 focus:border-transparent text-sm sm:text-base`}
                       />
                     </div>
                     <div>
@@ -685,11 +685,11 @@ const ProfilePage: React.FC = () => {
                         type="text"
                         value={profileData.lastName}
                         onChange={(e) => setProfileData({...profileData, lastName: e.target.value})}
-                        className={`w-full p-3 rounded-lg border ${
+                        className={`w-full p-2 sm:p-3 rounded-lg border ${
                           isDark 
                             ? 'bg-gray-700 border-gray-600 text-white' 
                             : 'bg-white border-gray-300 text-gray-900'
-                        } focus:ring-2 focus:ring-emerald-500 focus:border-transparent`}
+                        } focus:ring-2 focus:ring-emerald-500 focus:border-transparent text-sm sm:text-base`}
                       />
                     </div>
                   </div>
@@ -699,32 +699,32 @@ const ProfilePage: React.FC = () => {
                       Social Links
                     </label>
                     <div className="space-y-3">
-                      <div className="flex items-center space-x-3">
-                        <Github className="w-5 h-5 text-gray-500" />
+                      <div className="flex items-center space-x-2 sm:space-x-3">
+                        <Github className="w-4 h-4 sm:w-5 sm:h-5 text-gray-500 flex-shrink-0" />
                         <input
                           type="url"
                           placeholder="GitHub profile URL"
                           value={profileData.github}
                           onChange={(e) => setProfileData({...profileData, github: e.target.value})}
-                          className={`flex-1 p-3 rounded-lg border ${
+                          className={`flex-1 p-2 sm:p-3 rounded-lg border ${
                             isDark 
                               ? 'bg-gray-700 border-gray-600 text-white placeholder-gray-400' 
                               : 'bg-white border-gray-300 text-gray-900 placeholder-gray-500'
-                          } focus:ring-2 focus:ring-emerald-500 focus:border-transparent`}
+                          } focus:ring-2 focus:ring-emerald-500 focus:border-transparent text-sm sm:text-base`}
                         />
                       </div>
-                      <div className="flex items-center space-x-3">
-                        <Linkedin className="w-5 h-5 text-gray-500" />
+                      <div className="flex items-center space-x-2 sm:space-x-3">
+                        <Linkedin className="w-4 h-4 sm:w-5 sm:h-5 text-gray-500 flex-shrink-0" />
                         <input
                           type="url"
                           placeholder="LinkedIn profile URL"
                           value={profileData.linkedin}
                           onChange={(e) => setProfileData({...profileData, linkedin: e.target.value})}
-                          className={`flex-1 p-3 rounded-lg border ${
+                          className={`flex-1 p-2 sm:p-3 rounded-lg border ${
                             isDark 
                               ? 'bg-gray-700 border-gray-600 text-white placeholder-gray-400' 
                               : 'bg-white border-gray-300 text-gray-900 placeholder-gray-500'
-                          } focus:ring-2 focus:ring-emerald-500 focus:border-transparent`}
+                          } focus:ring-2 focus:ring-emerald-500 focus:border-transparent text-sm sm:text-base`}
                         />
                       </div>
                     </div>

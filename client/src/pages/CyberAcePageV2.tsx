@@ -295,7 +295,7 @@ const CyberAcePageV2: React.FC = () => {
   const showSignupPrompt = totalMessages >= 10 && totalMessages % 10 === 0;
 
   return (
-    <div className={`min-h-screen ${isDark ? 'bg-gray-900' : 'bg-gray-50'}`}>
+    <div className={`min-h-screen ${isDark ? 'bg-gray-900' : 'bg-gray-50'} pt-14 sm:pt-16`}>
       <ProfessionalHeader />
       
       <div className="pt-16 flex h-screen max-h-screen overflow-hidden relative">
