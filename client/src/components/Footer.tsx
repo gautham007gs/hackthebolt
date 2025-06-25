@@ -1,13 +1,23 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Link } from 'wouter';
 import { useTheme } from '../contexts/ThemeContext';
+import { useAuth } from '../contexts/AuthContext';
 import { Github, Twitter, Linkedin, Youtube, Send, ChevronRight, Shield } from 'lucide-react';
 import { motion } from 'framer-motion';
 
 const Footer = () => {
   const { isDark } = useTheme();
+  const { user } = useAuth();
   const [email, setEmail] = useState('');
   const [subscribed, setSubscribed] = useState(false);
+  const [hasSubscribed, setHasSubscribed] = useState(false);
+
+  useEffect(() => {
+    // Check if user is logged in or has already subscribed
+    if (user || localStorage.getItem('newsletter_subscribed')) {
+      setHasSubscribed(true);
+    }
+  }, [user]);
 
   const handleSubscribe = (e: React.FormEvent) => {
     e.preventDefault();

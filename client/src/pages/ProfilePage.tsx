@@ -245,22 +245,22 @@ const ProfilePage: React.FC = () => {
               <div className="flex flex-col sm:flex-row items-center sm:items-start space-y-4 sm:space-y-0 sm:space-x-6">
                 {/* Profile Picture */}
                 <div className="relative">
-                  <div className={`w-20 h-20 sm:w-24 sm:h-24 rounded-full ${isDark ? 'bg-gray-700' : 'bg-gray-200'} flex items-center justify-center overflow-hidden`}>
+                  <div className={`w-24 h-24 sm:w-28 sm:h-28 rounded-full ${isDark ? 'bg-gray-700' : 'bg-gray-200'} flex items-center justify-center overflow-hidden border-4 ${isEditing ? 'border-emerald-500' : 'border-transparent'} transition-all duration-200`}>
                     {user?.profileImageUrl ? (
                       <img src={user.profileImageUrl} alt="Profile" className="w-full h-full object-cover" />
                     ) : (
-                      <User className={`w-8 h-8 sm:w-12 sm:h-12 ${isDark ? 'text-gray-400' : 'text-gray-500'}`} />
+                      <User className={`w-10 h-10 sm:w-14 sm:h-14 ${isDark ? 'text-gray-400' : 'text-gray-500'}`} />
                     )}
                   </div>
                   {isEditing && (
-                    <button
-                      onClick={() => fileInputRef.current?.click()}
-                      className={`absolute -bottom-1 -right-1 w-6 h-6 sm:w-8 sm:h-8 rounded-full ${
-                        isDark ? 'bg-emerald-600 hover:bg-emerald-700' : 'bg-emerald-500 hover:bg-emerald-600'
-                      } text-white flex items-center justify-center transition-colors shadow-lg`}
-                    >
-                      <Camera className="w-3 h-3 sm:w-4 sm:h-4" />
-                    </button>
+                    <div className="absolute inset-0 rounded-full bg-black/30 flex items-center justify-center">
+                      <button
+                        onClick={() => fileInputRef.current?.click()}
+                        className="p-3 rounded-full bg-emerald-600 hover:bg-emerald-700 text-white transition-colors shadow-lg"
+                      >
+                        <Camera className="w-5 h-5" />
+                      </button>
+                    </div>
                   )}
                   <input
                     ref={fileInputRef}
@@ -396,7 +396,7 @@ const ProfilePage: React.FC = () => {
         </div>
 
         {/* Tab Content */}
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+        <div className="max-w-7xl mx-auto px-2 sm:px-4 lg:px-8 py-4 sm:py-8 overflow-x-hidden">
           {activeTab === 'overview' && (
             <div className="space-y-8">
               {/* Bio Section */}
@@ -551,46 +551,46 @@ const ProfilePage: React.FC = () => {
           )}
 
           {activeTab === 'achievements' && (
-            <div className="space-y-6">
-              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+            <div className="space-y-4 sm:space-y-6">
+              <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3 sm:gap-6">
                 {achievements.map((achievement, index) => (
                   <motion.div
                     key={achievement.id}
                     initial={{ opacity: 0, scale: 0.9 }}
                     animate={{ opacity: 1, scale: 1 }}
                     transition={{ delay: index * 0.1 }}
-                    className={`p-6 rounded-xl border ${
+                    className={`p-4 sm:p-6 rounded-xl border ${
                       achievement.earned
                         ? `${isDark ? 'bg-gray-800 border-gray-700' : 'bg-white border-gray-200'}`
                         : `${isDark ? 'bg-gray-900 border-gray-800' : 'bg-gray-50 border-gray-300'} opacity-60`
                     }`}
                   >
-                    <div className="flex items-start space-x-4">
-                      <div className={`p-3 rounded-full ${
+                    <div className="flex items-start space-x-3 sm:space-x-4">
+                      <div className={`p-2 sm:p-3 rounded-full ${
                         achievement.earned
                           ? `${isDark ? 'bg-emerald-600' : 'bg-emerald-100'}`
                           : `${isDark ? 'bg-gray-700' : 'bg-gray-200'}`
                       }`}>
-                        <achievement.icon className={`w-6 h-6 ${
+                        <achievement.icon className={`w-5 h-5 sm:w-6 sm:h-6 ${
                           achievement.earned
                             ? `${isDark ? 'text-white' : 'text-emerald-600'}`
                             : `${isDark ? 'text-gray-400' : 'text-gray-500'}`
                         }`} />
                       </div>
-                      <div className="flex-1">
-                        <div className="flex items-center space-x-2 mb-2">
-                          <h4 className={`font-semibold ${isDark ? 'text-white' : 'text-gray-900'}`}>
+                      <div className="flex-1 min-w-0">
+                        <div className="flex flex-col sm:flex-row sm:items-center sm:space-x-2 mb-2">
+                          <h4 className={`font-semibold text-sm sm:text-base ${isDark ? 'text-white' : 'text-gray-900'} truncate`}>
                             {achievement.title}
                           </h4>
-                          <span className={`text-xs px-2 py-1 rounded-full ${getRarityColor(achievement.rarity)} bg-opacity-20`}>
+                          <span className={`text-xs px-2 py-1 rounded-full ${getRarityColor(achievement.rarity)} bg-opacity-20 self-start sm:self-auto mt-1 sm:mt-0`}>
                             {achievement.rarity}
                           </span>
                         </div>
-                        <p className={`text-sm ${isDark ? 'text-gray-400' : 'text-gray-600'} mb-3`}>
+                        <p className={`text-xs sm:text-sm ${isDark ? 'text-gray-400' : 'text-gray-600'} mb-3 leading-relaxed`}>
                           {achievement.description}
                         </p>
                         <div className="flex items-center justify-between">
-                          <span className={`text-sm font-medium ${isDark ? 'text-emerald-400' : 'text-emerald-600'}`}>
+                          <span className={`text-xs sm:text-sm font-medium ${isDark ? 'text-emerald-400' : 'text-emerald-600'}`}>
                             +{achievement.points} pts
                           </span>
                           {achievement.earned && achievement.earnedAt && (
