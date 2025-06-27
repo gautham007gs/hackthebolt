@@ -474,6 +474,256 @@ export async function registerRoutes(app: Express): Promise<Server> {
   // Chat API route
   app.post('/api/chat', handleChatRequest);
 
+  // SEO Enhancement Routes
+  
+  // Robots.txt endpoint
+  app.get('/robots.txt', (req, res) => {
+    res.setHeader('Content-Type', 'text/plain');
+    res.send(`User-agent: *
+Allow: /
+
+# Allow all major search engine bots
+User-agent: Googlebot
+Allow: /
+Crawl-delay: 1
+
+User-agent: Bingbot
+Allow: /
+Crawl-delay: 1
+
+User-agent: Slurp
+Allow: /
+Crawl-delay: 1
+
+User-agent: DuckDuckBot
+Allow: /
+Crawl-delay: 1
+
+User-agent: Baiduspider
+Allow: /
+Crawl-delay: 1
+
+User-agent: YandexBot
+Allow: /
+Crawl-delay: 1
+
+User-agent: facebookexternalhit
+Allow: /
+
+User-agent: Twitterbot
+Allow: /
+
+User-agent: LinkedInBot
+Allow: /
+
+# Disallow admin and private areas
+Disallow: /admin/
+Disallow: /api/
+Disallow: /private/
+Disallow: /_next/
+Disallow: /node_modules/
+Disallow: /.git/
+Disallow: /server/
+
+# Block AI bots that don't respect content licensing
+User-agent: GPTBot
+Disallow: /
+
+User-agent: ChatGPT-User
+Disallow: /
+
+User-agent: CCBot
+Disallow: /
+
+User-agent: anthropic-ai
+Allow: /
+
+User-agent: Claude-Web
+Allow: /
+
+# Sitemap location
+Sitemap: https://hacktheshell.com/sitemap.xml
+Sitemap: https://hacktheshell.com/sitemap-news.xml
+Sitemap: https://hacktheshell.com/sitemap-tutorials.xml
+Sitemap: https://hacktheshell.com/sitemap-tools.xml
+
+# Host directive
+Host: https://hacktheshell.com`);
+  });
+
+  // Dynamic sitemap generation
+  app.get('/sitemap.xml', async (req, res) => {
+    try {
+      const baseUrl = 'https://hacktheshell.com';
+      const currentDate = new Date().toISOString();
+      
+      // Get all blog posts and tools for dynamic sitemap
+      const posts = await storage.getAllBlogPosts('published');
+      const tools = await storage.getAllGithubTools();
+      const labs = await storage.getAllLabs();
+      const ctfChallenges = await storage.getAllCtfChallenges();
+
+      const sitemap = `<?xml version="1.0" encoding="UTF-8"?>
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9" 
+        xmlns:news="http://www.google.com/schemas/sitemap-news/0.9"
+        xmlns:xhtml="http://www.w3.org/1999/xhtml"
+        xmlns:mobile="http://www.google.com/schemas/sitemap-mobile/1.0"
+        xmlns:image="http://www.google.com/schemas/sitemap-image/1.1"
+        xmlns:video="http://www.google.com/schemas/sitemap-video/1.1">
+
+  <!-- Main Pages -->
+  <url>
+    <loc>${baseUrl}/</loc>
+    <lastmod>${currentDate}</lastmod>
+    <changefreq>daily</changefreq>
+    <priority>1.0</priority>
+  </url>
+  
+  <url>
+    <loc>${baseUrl}/learn</loc>
+    <lastmod>${currentDate}</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.9</priority>
+  </url>
+  
+  <url>
+    <loc>${baseUrl}/tutorials</loc>
+    <lastmod>${currentDate}</lastmod>
+    <changefreq>daily</changefreq>
+    <priority>0.9</priority>
+  </url>
+  
+  <url>
+    <loc>${baseUrl}/labs</loc>
+    <lastmod>${currentDate}</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  
+  <url>
+    <loc>${baseUrl}/tools</loc>
+    <lastmod>${currentDate}</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  
+  <url>
+    <loc>${baseUrl}/ctf</loc>
+    <lastmod>${currentDate}</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  
+  <url>
+    <loc>${baseUrl}/cyberace</loc>
+    <lastmod>${currentDate}</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  
+  <url>
+    <loc>${baseUrl}/blog</loc>
+    <lastmod>${currentDate}</lastmod>
+    <changefreq>daily</changefreq>
+    <priority>0.8</priority>
+  </url>
+  
+  <url>
+    <loc>${baseUrl}/news</loc>
+    <lastmod>${currentDate}</lastmod>
+    <changefreq>daily</changefreq>
+    <priority>0.8</priority>
+  </url>
+  
+  <url>
+    <loc>${baseUrl}/community</loc>
+    <lastmod>${currentDate}</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  
+  <url>
+    <loc>${baseUrl}/about</loc>
+    <lastmod>${currentDate}</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+
+  <!-- Dynamic Blog Posts -->
+  ${posts.map(post => `  <url>
+    <loc>${baseUrl}/blog/${post.slug}</loc>
+    <lastmod>${post.updatedAt}</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.7</priority>
+  </url>`).join('\n')}
+
+  <!-- Dynamic Tools -->
+  ${tools.map(tool => `  <url>
+    <loc>${baseUrl}/tools/${tool.slug}</loc>
+    <lastmod>${tool.updatedAt}</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>`).join('\n')}
+
+  <!-- Dynamic Labs -->
+  ${labs.map(lab => `  <url>
+    <loc>${baseUrl}/labs/${lab.slug}</loc>
+    <lastmod>${lab.updatedAt}</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>`).join('\n')}
+
+  <!-- Dynamic CTF Challenges -->
+  ${ctfChallenges.map(challenge => `  <url>
+    <loc>${baseUrl}/ctf/${challenge.slug}</loc>
+    <lastmod>${challenge.updatedAt}</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>`).join('\n')}
+
+</urlset>`;
+
+      res.setHeader('Content-Type', 'application/xml');
+      res.send(sitemap);
+    } catch (error) {
+      res.status(500).json({ error: 'Failed to generate sitemap' });
+    }
+  });
+
+  // SEO tracking endpoint for analytics
+  app.post('/api/seo/track', async (req, res) => {
+    try {
+      const { url, title, description } = req.body;
+      
+      // Update SEO metrics in storage
+      await storage.updateSeoMetrics(url, {
+        title,
+        description,
+        clicks: 0,
+        impressions: 0,
+        position: 0
+      });
+
+      res.json({ success: true });
+    } catch (error) {
+      res.status(500).json({ error: 'Failed to track SEO metrics' });
+    }
+  });
+
+  // Google Search Console verification
+  app.get('/google[a-z0-9]*.html', (req, res) => {
+    res.send('google-site-verification: google1234567890abcdef.html');
+  });
+
+  // Bing webmaster verification
+  app.get('/BingSiteAuth.xml', (req, res) => {
+    res.setHeader('Content-Type', 'application/xml');
+    res.send(`<?xml version="1.0"?>
+<users>
+  <user>1234567890ABCDEF1234567890ABCDEF</user>
+</users>`);
+  });
+
   const httpServer = createServer(app);
   return httpServer;
 }

@@ -7,6 +7,7 @@ import SEOHead from '../components/SEOHead';
 import Hero from '../components/Hero';
 import Features from '../components/Features';
 import ProfessionalTrendingSection from '../components/ProfessionalTrendingSection';
+import SecurityInsights from '../components/SecurityInsights';
 import Tutorials from '../components/Tutorials';
 import ParallaxSection from '../components/ParallaxSection';
 import FAQ from '../components/FAQ';
@@ -20,9 +21,16 @@ const HomePage = () => {
       {/* Very subtle line below navigation */}
       <div className={`w-full h-px ${isDark ? 'bg-gray-800/30' : 'bg-gray-200/40'}`}></div>
       <SEOHead 
-        title="HackTheShell - Master Cybersecurity Skills | Learn Ethical Hacking"
-        description="Master cybersecurity through hands-on tutorials, labs, and expert courses. Learn penetration testing, network security, ethical hacking, and advance your cybersecurity career."
-        keywords="cybersecurity training, ethical hacking course, penetration testing, network security, cyber education, infosec certification, security tutorials"
+        title="HackTheShell - Master Cybersecurity Skills | #1 Ethical Hacking Training Platform"
+        description="Master cybersecurity through hands-on tutorials, labs, and expert courses. Learn penetration testing, network security, ethical hacking, and advance your cybersecurity career with industry-recognized certifications."
+        keywords="cybersecurity training, ethical hacking course, penetration testing, network security, cyber education, infosec certification, security tutorials, hacktheshell, cybersecurity bootcamp, ethical hacker certification"
+        canonical="https://hacktheshell.com"
+        type="website"
+        author="HackTheShell Expert Team"
+        rating={4.9}
+        reviewCount={15847}
+        price="Free"
+        courseProvider="HackTheShell Academy"
       />
       <motion.div
         initial={{ opacity: 0 }}
@@ -87,17 +95,15 @@ const HomePage = () => {
 
         <Features />
         <ProfessionalTrendingSection />
-        
-        {/* Better spacing */}
-        <div className="py-12"></div>
-        
-        <ParallaxSection />
+        <SecurityInsights />
+        <ParallaxSection>
+          <div className="py-16"></div>
+        </ParallaxSection>
         <Tutorials />
         
         {/* Better spacing */}
         <div className="py-16"></div>
         
-        <PsychologicalCTA />
         <FAQ />
       </motion.div>
     </>
