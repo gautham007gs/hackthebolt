@@ -188,8 +188,8 @@ const Tutorials = () => {
           </div>
         </div>
 
-        {/* Tutorials Grid */}
-        <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
+        {/* Tutorials Grid - More compact layout */}
+        <div className="grid sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4 sm:gap-6">
           {filteredTutorials.map((tutorial, index) => (
             <motion.article
               key={tutorial.id}
@@ -203,7 +203,7 @@ const Tutorials = () => {
                 <img
                   src={tutorial.image}
                   alt={tutorial.title}
-                  className="w-full h-40 object-cover group-hover:scale-105 transition-transform duration-500"
+                  className="w-full h-32 sm:h-36 object-cover group-hover:scale-105 transition-transform duration-500"
                 />
                 <div className="absolute top-4 left-4 flex items-center space-x-2">
                   <span className={`px-3 py-1 rounded-full text-sm font-medium flex items-center space-x-1 ${
@@ -221,12 +221,12 @@ const Tutorials = () => {
               </div>
 
               {/* Content */}
-              <div className="p-4">
-                <h3 className="text-lg font-bold mb-2 group-hover:text-emerald-500 transition-colors duration-300 text-gray-900 dark:text-white line-clamp-2">
+              <div className="p-3 sm:p-4">
+                <h3 className="text-base sm:text-lg font-bold mb-2 group-hover:text-emerald-500 transition-colors duration-300 text-gray-900 dark:text-white line-clamp-2 break-words">
                   {tutorial.title}
                 </h3>
                 
-                <p className={`${isDark ? 'text-gray-300' : 'text-gray-600'} mb-3 leading-relaxed text-sm line-clamp-3`}>
+                <p className={`${isDark ? 'text-gray-300' : 'text-gray-600'} mb-3 leading-relaxed text-xs sm:text-sm line-clamp-2 break-words`}>
                   {tutorial.description}
                 </p>
 
@@ -247,15 +247,15 @@ const Tutorials = () => {
 
 
                 {/* Stats */}
-                <div className="flex items-center justify-between text-xs text-gray-500 mb-4">
-                  <div className="flex items-center space-x-3">
+                <div className="flex items-center justify-between text-xs text-gray-500 mb-3">
+                  <div className="flex items-center space-x-2 sm:space-x-3">
                     <div className="flex items-center space-x-1">
                       <Clock className="h-3 w-3" />
-                      <span>{tutorial.duration}</span>
+                      <span className="truncate">{tutorial.duration}</span>
                     </div>
                     <div className="flex items-center space-x-1">
                       <Users className="h-3 w-3" />
-                      <span>{tutorial.students}</span>
+                      <span className="truncate">{tutorial.students}</span>
                     </div>
                   </div>
                   <div className="flex items-center space-x-1">
@@ -267,10 +267,10 @@ const Tutorials = () => {
                 {/* Action Button */}
                 <Link
                   href={`/tutorials/${tutorial.slug}`}
-                  className="btn-primary w-full text-sm py-2 group flex items-center justify-center space-x-2"
+                  className="btn-primary w-full text-xs sm:text-sm py-2 group flex items-center justify-center space-x-2"
                 >
                   <Play className="h-3 w-3" />
-                  <span>Start Tutorial</span>
+                  <span className="truncate">Start Tutorial</span>
                   <ArrowRight className="h-3 w-3 group-hover:translate-x-1 transition-transform duration-200" />
                 </Link>
               </div>

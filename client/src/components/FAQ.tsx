@@ -34,32 +34,34 @@ export function FAQ({ items = [], title = "Frequently Asked Questions", compact 
 
   return (
     <section className={cn(
-      "py-16",
+      "py-16 bg-gray-50/50 dark:bg-gray-900/50",
       className
     )}>
-      <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="text-center mb-12">
-          <div className="flex items-center justify-center gap-3 mb-4">
-            <HelpCircle className="h-6 w-6 text-emerald-600 dark:text-emerald-400" />
-            <h2 className="text-3xl lg:text-4xl font-bold text-gray-900 dark:text-gray-100">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div className="text-center mb-16">
+          <div className="flex items-center justify-center gap-3 mb-6">
+            <div className="p-2 rounded-full bg-emerald-100 dark:bg-emerald-900/30">
+              <HelpCircle className="h-6 w-6 text-emerald-600 dark:text-emerald-400" />
+            </div>
+            <h2 className="text-2xl sm:text-3xl lg:text-4xl font-bold text-gray-900 dark:text-gray-100 tracking-tight">
               {title}
             </h2>
           </div>
-          <p className="text-lg text-gray-600 dark:text-gray-400 max-w-2xl mx-auto">
+          <p className="text-base sm:text-lg text-gray-600 dark:text-gray-400 max-w-3xl mx-auto leading-relaxed">
             Get answers to the most common questions about cybersecurity learning
           </p>
         </div>
         
-        <div className="grid lg:grid-cols-2 gap-6 max-w-5xl mx-auto">
+        <div className="grid gap-4 sm:gap-6 lg:grid-cols-2 max-w-6xl mx-auto">
           {items.map((item) => (
-            <Card key={item.id} className="border border-gray-200 dark:border-gray-700 shadow-sm hover:shadow-md transition-all duration-200">
+            <Card key={item.id} className="border border-gray-200 dark:border-gray-700 shadow-sm hover:shadow-lg transition-all duration-300 overflow-hidden">
               <CardContent className="p-0">
                 <button
                   onClick={() => toggleItem(item.id)}
-                  className="w-full text-left p-6 hover:bg-gray-50 dark:hover:bg-gray-800 transition-colors focus:outline-none focus:ring-2 focus:ring-emerald-500 focus:ring-offset-2 dark:focus:ring-offset-gray-900"
+                  className="w-full text-left p-4 sm:p-6 hover:bg-gray-50 dark:hover:bg-gray-800/50 transition-colors focus:outline-none focus:ring-2 focus:ring-emerald-500 focus:ring-offset-2 dark:focus:ring-offset-gray-900"
                 >
-                  <div className="flex items-start justify-between">
-                    <span className="font-semibold text-gray-900 dark:text-gray-100 text-lg leading-tight pr-4">
+                  <div className="flex items-start justify-between gap-3">
+                    <span className="font-semibold text-gray-900 dark:text-gray-100 text-base sm:text-lg leading-tight break-words min-w-0 flex-1">
                       {item.question}
                     </span>
                     <span className="flex-shrink-0 mt-1">
@@ -73,9 +75,9 @@ export function FAQ({ items = [], title = "Frequently Asked Questions", compact 
                 </button>
                 
                 {openItems.has(item.id) && (
-                  <div className="px-6 pb-6">
+                  <div className="px-4 sm:px-6 pb-4 sm:pb-6">
                     <div className="pt-4 border-t border-gray-100 dark:border-gray-700">
-                      <p className="text-gray-600 dark:text-gray-300 leading-relaxed text-base">
+                      <p className="text-gray-600 dark:text-gray-300 leading-relaxed text-sm sm:text-base break-words">
                         {item.answer}
                       </p>
                     </div>

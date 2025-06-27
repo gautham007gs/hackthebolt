@@ -11,7 +11,6 @@ import SecurityInsights from '../components/SecurityInsights';
 import Tutorials from '../components/Tutorials';
 import ParallaxSection from '../components/ParallaxSection';
 import FAQ from '../components/FAQ';
-import PsychologicalCTA from '../components/PsychologicalCTA';
 
 const HomePage = () => {
   const { isDark } = useTheme();
@@ -94,17 +93,54 @@ const HomePage = () => {
         </section>
 
         <Features />
-        <ProfessionalTrendingSection />
-        <SecurityInsights />
-        <ParallaxSection>
-          <div className="py-16"></div>
-        </ParallaxSection>
+        
+        {/* Important Blog/Tutorial Content - Moved up for better psychological flow */}
         <Tutorials />
         
-        {/* Better spacing */}
-        <div className="py-16"></div>
+        {/* Professional trending section with better spacing */}
+        <ProfessionalTrendingSection />
         
+        {/* Security insights fills empty space professionally */}
+        <SecurityInsights />
+        
+        {/* FAQ section with better spacing and layout */}
         <FAQ />
+        
+        {/* Newsletter CTA Section */}
+        <section className={`py-20 ${isDark ? 'bg-gradient-to-br from-gray-900 to-gray-800' : 'bg-gradient-to-br from-blue-50 to-indigo-100'}`}>
+          <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+            <motion.div
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              className="space-y-6"
+            >
+              <h2 className={`text-3xl sm:text-4xl lg:text-5xl font-bold ${isDark ? 'text-white' : 'text-gray-900'}`}>
+                Stay Ahead of Cyber Threats
+              </h2>
+              <p className={`text-lg sm:text-xl ${isDark ? 'text-gray-300' : 'text-gray-600'} max-w-2xl mx-auto`}>
+                Join 45,000+ cybersecurity professionals getting weekly insights, latest threat intelligence, and exclusive tutorials.
+              </p>
+              <div className="flex flex-col sm:flex-row gap-4 max-w-md mx-auto">
+                <input
+                  type="email"
+                  placeholder="Enter your email"
+                  className="flex-1 px-4 py-3 rounded-lg border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-800 text-gray-900 dark:text-white focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                />
+                <motion.button
+                  whileHover={{ scale: 1.05 }}
+                  whileTap={{ scale: 0.95 }}
+                  className="px-6 py-3 bg-gradient-to-r from-blue-600 to-indigo-600 hover:from-blue-700 hover:to-indigo-700 text-white font-semibold rounded-lg transition-all duration-300 shadow-lg hover:shadow-xl"
+                >
+                  Subscribe
+                </motion.button>
+              </div>
+              <p className={`text-sm ${isDark ? 'text-gray-400' : 'text-gray-500'}`}>
+                No spam. Unsubscribe anytime. Join the best cybersecurity community.
+              </p>
+            </motion.div>
+          </div>
+        </section>
       </motion.div>
     </>
   );

@@ -25,6 +25,38 @@
     -webkit-box-orient: vertical;
     -webkit-line-clamp: 3;
   }
+  
+  /* Enhanced text overflow utilities */
+  .text-overflow-ellipsis {
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+  
+  .break-word {
+    word-break: break-word;
+    overflow-wrap: break-word;
+  }
+  
+  /* Professional responsive text handling */
+  .responsive-text {
+    font-size: clamp(0.875rem, 2vw, 1rem);
+    line-height: 1.5;
+    word-break: break-word;
+  }
+  
+  /* Professional container utilities */
+  .professional-spacing {
+    @apply py-12 sm:py-16 lg:py-20;
+  }
+  
+  .professional-grid {
+    @apply grid gap-4 sm:gap-6 lg:gap-8;
+  }
+  
+  .professional-card {
+    @apply rounded-xl border border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-800 shadow-sm hover:shadow-lg transition-all duration-300;
+  }
 }
 
 @layer base {

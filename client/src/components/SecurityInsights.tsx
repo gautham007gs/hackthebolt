@@ -59,32 +59,34 @@ const SecurityInsights = () => {
   ];
 
   return (
-    <section className={`py-16 ${isDark ? 'bg-gray-900' : 'bg-gray-50'}`}>
+    <section className={`py-20 ${isDark ? 'bg-gradient-to-br from-gray-900 via-gray-800 to-gray-900' : 'bg-gradient-to-br from-gray-50 via-white to-blue-50'}`}>
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         {/* Header */}
-        <div className="text-center mb-12">
+        <div className="text-center mb-16">
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
-            className="mb-6"
+            className="space-y-6"
           >
-            <div className="flex items-center justify-center gap-3 mb-4">
-              <TrendingUp className="h-6 w-6 text-emerald-600 dark:text-emerald-400" />
-              <h2 className="text-3xl lg:text-4xl font-bold text-gray-900 dark:text-gray-100">
-                Security Insights
+            <div className="flex items-center justify-center gap-3 mb-6">
+              <div className="p-3 rounded-full bg-emerald-100 dark:bg-emerald-900/30">
+                <TrendingUp className="h-8 w-8 text-emerald-600 dark:text-emerald-400" />
+              </div>
+              <h2 className="text-3xl sm:text-4xl lg:text-5xl font-bold text-gray-900 dark:text-gray-100 tracking-tight">
+                Security Intelligence Hub
               </h2>
             </div>
-            <p className="text-lg text-gray-600 dark:text-gray-400 max-w-2xl mx-auto">
-              Real-time cybersecurity metrics and community updates
+            <p className="text-lg sm:text-xl text-gray-600 dark:text-gray-400 max-w-3xl mx-auto leading-relaxed">
+              Real-time cybersecurity metrics, threat intelligence, and community insights to keep you ahead of emerging threats
             </p>
           </motion.div>
         </div>
 
-        <div className="grid lg:grid-cols-3 gap-8">
+        <div className="grid lg:grid-cols-3 gap-6 lg:gap-8">
           {/* Stats Grid */}
           <div className="lg:col-span-2">
-            <div className="grid md:grid-cols-2 gap-6">
+            <div className="grid sm:grid-cols-2 gap-4 sm:gap-6">
               {insights.map((insight, index) => (
                 <motion.div
                   key={index}
@@ -92,7 +94,7 @@ const SecurityInsights = () => {
                   whileInView={{ opacity: 1, y: 0 }}
                   viewport={{ once: true }}
                   transition={{ delay: index * 0.1 }}
-                  className={`p-6 rounded-xl border ${
+                  className={`p-4 sm:p-6 rounded-xl border ${
                     isDark 
                       ? 'bg-gray-800 border-gray-700 hover:border-gray-600' 
                       : 'bg-white border-gray-200 hover:border-gray-300'
@@ -105,10 +107,10 @@ const SecurityInsights = () => {
                       }`}>
                         <insight.icon className="h-6 w-6 text-emerald-600 dark:text-emerald-400" />
                       </div>
-                      <div>
-                        <h3 className={`font-semibold ${
+                      <div className="min-w-0 flex-1">
+                        <h3 className={`font-semibold text-sm sm:text-base ${
                           isDark ? 'text-gray-200' : 'text-gray-800'
-                        }`}>
+                        } break-words leading-tight`}>
                           {insight.title}
                         </h3>
                       </div>
@@ -121,12 +123,12 @@ const SecurityInsights = () => {
                       {insight.change}
                     </span>
                   </div>
-                  <div className="text-3xl font-bold text-emerald-600 dark:text-emerald-400 mb-2">
+                  <div className="text-2xl sm:text-3xl font-bold text-emerald-600 dark:text-emerald-400 mb-2">
                     {insight.value}
                   </div>
-                  <p className={`text-sm ${
+                  <p className={`text-xs sm:text-sm ${
                     isDark ? 'text-gray-400' : 'text-gray-600'
-                  }`}>
+                  } break-words leading-relaxed`}>
                     {insight.description}
                   </p>
                 </motion.div>
@@ -140,7 +142,7 @@ const SecurityInsights = () => {
               initial={{ opacity: 0, y: 20 }}
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
-              className={`p-6 rounded-xl border ${
+              className={`p-4 sm:p-6 rounded-xl border ${
                 isDark 
                   ? 'bg-gray-800 border-gray-700' 
                   : 'bg-white border-gray-200'
@@ -178,14 +180,14 @@ const SecurityInsights = () => {
                           <span>{update.time}</span>
                         </div>
                       </div>
-                      <h4 className={`font-medium mb-1 group-hover:text-emerald-600 dark:group-hover:text-emerald-400 transition-colors ${
+                      <h4 className={`font-medium mb-1 group-hover:text-emerald-600 dark:group-hover:text-emerald-400 transition-colors text-sm sm:text-base ${
                         isDark ? 'text-gray-200' : 'text-gray-800'
-                      }`}>
+                      } break-words leading-tight`}>
                         {update.title}
                       </h4>
-                      <p className={`text-sm ${
+                      <p className={`text-xs sm:text-sm ${
                         isDark ? 'text-gray-400' : 'text-gray-600'
-                      }`}>
+                      } break-words leading-relaxed`}>
                         {update.description}
                       </p>
                     </div>
