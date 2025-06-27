@@ -33,63 +33,60 @@ export function FAQ({ items = [], title = "Frequently Asked Questions", compact 
   if (!items || items.length === 0) return null;
 
   return (
-    <div className={cn(
-      "space-y-4",
-      compact ? "max-w-md" : "max-w-2xl",
+    <section className={cn(
+      "py-16",
       className
     )}>
-      <div className="flex items-center gap-2 mb-4">
-        <HelpCircle className="h-5 w-5 text-emerald-600 dark:text-emerald-400" />
-        <h3 className={cn(
-          "font-semibold text-gray-900 dark:text-gray-100",
-          compact ? "text-lg" : "text-xl"
-        )}>
-          {title}
-        </h3>
-      </div>
-      
-      <div className="space-y-2">
-        {items.map((item) => (
-          <Card key={item.id} className="border border-gray-200 dark:border-gray-700 shadow-sm">
-            <CardContent className="p-0">
-              <button
-                onClick={() => toggleItem(item.id)}
-                className="w-full text-left p-4 hover:bg-gray-50 dark:hover:bg-gray-800 transition-colors rounded-lg focus:outline-none focus:ring-2 focus:ring-emerald-500 focus:ring-offset-2 dark:focus:ring-offset-gray-900"
-              >
-                <div className="flex items-center justify-between">
-                  <span className={cn(
-                    "font-medium text-gray-900 dark:text-gray-100",
-                    compact ? "text-sm" : "text-base"
-                  )}>
-                    {item.question}
-                  </span>
-                  <span className="ml-6 flex-shrink-0 hidden sm:block">
-                    {openItems.has(item.id) ? (
-                      <ChevronUp className="h-4 w-4 text-gray-500 dark:text-gray-400" />
-                    ) : (
-                      <ChevronDown className="h-4 w-4 text-gray-500 dark:text-gray-400" />
-                    )}
-                  </span>
-                </div>
-              </button>
-              
-              {openItems.has(item.id) && (
-                <div className="px-4 pb-4">
-                  <div className="pt-2 border-t border-gray-100 dark:border-gray-700">
-                    <p className={cn(
-                      "text-gray-600 dark:text-gray-300 leading-relaxed",
-                      compact ? "text-sm" : "text-base"
-                    )}>
-                      {item.answer}
-                    </p>
+      <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div className="text-center mb-12">
+          <div className="flex items-center justify-center gap-3 mb-4">
+            <HelpCircle className="h-6 w-6 text-emerald-600 dark:text-emerald-400" />
+            <h2 className="text-3xl lg:text-4xl font-bold text-gray-900 dark:text-gray-100">
+              {title}
+            </h2>
+          </div>
+          <p className="text-lg text-gray-600 dark:text-gray-400 max-w-2xl mx-auto">
+            Get answers to the most common questions about cybersecurity learning
+          </p>
+        </div>
+        
+        <div className="grid lg:grid-cols-2 gap-6 max-w-5xl mx-auto">
+          {items.map((item) => (
+            <Card key={item.id} className="border border-gray-200 dark:border-gray-700 shadow-sm hover:shadow-md transition-all duration-200">
+              <CardContent className="p-0">
+                <button
+                  onClick={() => toggleItem(item.id)}
+                  className="w-full text-left p-6 hover:bg-gray-50 dark:hover:bg-gray-800 transition-colors focus:outline-none focus:ring-2 focus:ring-emerald-500 focus:ring-offset-2 dark:focus:ring-offset-gray-900"
+                >
+                  <div className="flex items-start justify-between">
+                    <span className="font-semibold text-gray-900 dark:text-gray-100 text-lg leading-tight pr-4">
+                      {item.question}
+                    </span>
+                    <span className="flex-shrink-0 mt-1">
+                      {openItems.has(item.id) ? (
+                        <ChevronUp className="h-5 w-5 text-gray-500 dark:text-gray-400" />
+                      ) : (
+                        <ChevronDown className="h-5 w-5 text-gray-500 dark:text-gray-400" />
+                      )}
+                    </span>
                   </div>
-                </div>
-              )}
-            </CardContent>
-          </Card>
-        ))}
+                </button>
+                
+                {openItems.has(item.id) && (
+                  <div className="px-6 pb-6">
+                    <div className="pt-4 border-t border-gray-100 dark:border-gray-700">
+                      <p className="text-gray-600 dark:text-gray-300 leading-relaxed text-base">
+                        {item.answer}
+                      </p>
+                    </div>
+                  </div>
+                )}
+              </CardContent>
+            </Card>
+          ))}
+        </div>
       </div>
-    </div>
+    </section>
   );
 }
 

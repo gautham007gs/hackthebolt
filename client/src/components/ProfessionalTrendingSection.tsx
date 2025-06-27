@@ -143,7 +143,7 @@ const ProfessionalTrendingSection = () => {
   };
 
   return (
-    <section className={`py-28 ${isDark ? 'bg-gray-900' : 'bg-gradient-to-br from-gray-50 to-blue-50'} transition-all duration-500`}>
+    <section className={`py-16 ${isDark ? 'bg-gray-900' : 'bg-gradient-to-br from-gray-50 to-blue-50'} transition-all duration-500`}>
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         {/* Header */}
         <motion.div
@@ -151,7 +151,7 @@ const ProfessionalTrendingSection = () => {
           whileInView="visible"
           viewport={{ once: true, amount: 0.3 }}
           variants={containerVariants}
-          className="text-center mb-16"
+          className="text-center mb-12"
         >
           <motion.div variants={itemVariants} className="inline-flex items-center space-x-2 mb-4">
             <div className="relative">
@@ -194,10 +194,10 @@ const ProfessionalTrendingSection = () => {
           whileInView="visible"
           viewport={{ once: true, amount: 0.2 }}
           variants={containerVariants}
-          className="grid lg:grid-cols-3 gap-8"
+          className="grid lg:grid-cols-5 gap-6"
         >
           {/* Mobile Swipeable Cards */}
-          <motion.div variants={itemVariants} className="lg:col-span-2 lg:hidden">
+          <motion.div variants={itemVariants} className="lg:col-span-3 lg:hidden">
             <div className="relative">
               <AnimatePresence mode="wait">
                 <motion.div
@@ -293,7 +293,7 @@ const ProfessionalTrendingSection = () => {
           </motion.div>
 
           {/* Desktop Featured Post */}
-          <motion.div variants={itemVariants} className="lg:col-span-2 hidden lg:block">
+          <motion.div variants={itemVariants} className="lg:col-span-3 hidden lg:block">
             <AnimatePresence mode="wait">
               <motion.div
                 key={activeIndex}
@@ -405,7 +405,7 @@ const ProfessionalTrendingSection = () => {
           </motion.div>
 
           {/* Trending List & Security Alerts - Enhanced for Desktop */}
-          <motion.div variants={itemVariants} className="space-y-6">
+          <motion.div variants={itemVariants} className="lg:col-span-2 space-y-6">
             {/* Trending Now Box - Professional Desktop Design */}
             <div className={`${isDark ? 'bg-gradient-to-br from-gray-800 via-gray-800 to-gray-900 border-gray-700' : 'bg-gradient-to-br from-white via-blue-50/30 to-indigo-50/40 border-blue-100 shadow-blue-50/50'} border shadow-xl rounded-2xl overflow-hidden transition-all duration-300 hover:shadow-2xl hover:scale-[1.02]`}>
               {/* Header with enhanced styling */}
