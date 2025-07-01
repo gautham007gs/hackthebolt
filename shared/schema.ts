@@ -65,7 +65,7 @@ export const blogPosts = pgTable("blog_posts", {
   updatedAt: timestamp("updated_at").defaultNow(),
 });
 
-// GitHub tools content
+// GitHub tools content with enhanced media support
 export const githubTools = pgTable("github_tools", {
   id: serial("id").primaryKey(),
   name: text("name").notNull(),
@@ -81,9 +81,38 @@ export const githubTools = pgTable("github_tools", {
   officialUrl: text("official_url"),
   githubUrl: text("github_url"),
   documentation: text("documentation"),
+  
+  // Enhanced media fields
+  featuredImage: text("featured_image"),
+  screenshots: jsonb("screenshots"), // Array of screenshot objects {url, caption, alt}
+  videos: jsonb("videos"), // Array of video objects {url, caption, type}
+  gifs: jsonb("gifs"), // Array of gif objects {url, caption, alt}
+  mediaOrder: jsonb("media_order"), // Array defining order of media display
+  
+  // SEO optimization
+  seoTitle: text("seo_title"),
+  seoDescription: text("seo_description"),
+  seoKeywords: text("seo_keywords"),
+  tags: text("tags").array(),
+  
+  // GitHub integration
+  githubStars: integer("github_stars").default(0),
+  githubForks: integer("github_forks").default(0),
+  githubLanguage: text("github_language"),
+  lastGithubSync: timestamp("last_github_sync"),
+  
+  // Tool metadata
+  installCommand: text("install_command"),
+  usageExample: text("usage_example"),
+  requirements: text("requirements").array(),
+  platforms: text("platforms").array(), // Windows, Linux, macOS, Web
+  
   views: integer("views").default(0),
+  likes: integer("likes").default(0),
   featured: boolean("featured").default(false),
+  status: text("status").notNull().default("draft"), // draft, pending, published, rejected
   authorId: varchar("author_id").notNull(),
+  publishedAt: timestamp("published_at"),
   createdAt: timestamp("created_at").defaultNow(),
   updatedAt: timestamp("updated_at").defaultNow(),
 });
@@ -310,6 +339,20 @@ export const insertGithubToolSchema = createInsertSchema(githubTools).pick({
   officialUrl: true,
   githubUrl: true,
   documentation: true,
+  featuredImage: true,
+  screenshots: true,
+  videos: true,
+  gifs: true,
+  mediaOrder: true,
+  seoTitle: true,
+  seoDescription: true,
+  seoKeywords: true,
+  tags: true,
+  installCommand: true,
+  usageExample: true,
+  requirements: true,
+  platforms: true,
+  status: true,
 });
 
 export const insertCommentSchema = createInsertSchema(comments).pick({

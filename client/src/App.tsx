@@ -35,6 +35,8 @@ import AboutPage from './pages/AboutPage';
 import ContactPage from './pages/ContactPage';
 import CreatorApplicationPage from './pages/CreatorApplicationPage';
 import CyberAcePageV2 from './pages/CyberAcePageV2';
+import CreatorGithubTools from './pages/CreatorGithubTools';
+import CreateGithubTool from './pages/CreateGithubTool';
 import { motion, AnimatePresence } from 'framer-motion';
 
 function AppContent() {
@@ -73,6 +75,8 @@ function AppContent() {
           <Route path="/contact" component={ContactPage} />
           <Route path="/apply-creator" component={CreatorApplicationPage} />
           <Route path="/cyberace" component={CyberAcePageV2} />
+          <Route path="/creator/github-tools" component={CreatorGithubTools} />
+          <Route path="/creator/github-tools/create" component={CreateGithubTool} />
           </Switch>
         </AnimatePresence>
       </main>

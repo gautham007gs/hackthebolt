@@ -106,6 +106,110 @@ export async function registerRoutes(app: Express): Promise<Server> {
     }
   });
 
+  app.post('/api/github-tools', async (req, res) => {
+    try {
+      const toolData = insertGithubToolSchema.parse(req.body);
+      const authorId = req.body.authorId || 'creator-user'; // In real app, get from auth
+      const tool = await storage.createGithubTool({ ...toolData, authorId });
+      res.status(201).json(tool);
+    } catch (error) {
+      if (error instanceof z.ZodError) {
+        return res.status(400).json({ error: 'Invalid tool data', details: error.errors });
+      }
+      res.status(500).json({ error: 'Failed to create tool' });
+    }
+  });
+
+  app.put('/api/github-tools/:id', async (req, res) => {
+    try {
+      const id = parseInt(req.params.id);
+      const toolData = insertGithubToolSchema.partial().parse(req.body);
+      const tool = await storage.updateGithubTool(id, toolData);
+      res.json(tool);
+    } catch (error) {
+      if (error instanceof z.ZodError) {
+        return res.status(400).json({ error: 'Invalid tool data', details: error.errors });
+      }
+      res.status(500).json({ error: 'Failed to update tool' });
+    }
+  });
+
+  app.delete('/api/github-tools/:id', async (req, res) => {
+    try {
+      const id = parseInt(req.params.id);
+      await storage.deleteGithubTool(id);
+      res.json({ success: true });
+    } catch (error) {
+      res.status(500).json({ error: 'Failed to delete tool' });
+    }
+  });
+
+  // Media upload endpoint
+  app.post('/api/upload-media', async (req, res) => {
+    try {
+      // In a real application, this would handle file uploads using multer
+      // For now, we'll simulate the upload process
+      const { type } = req.body;
+      
+      // Simulate file upload delay
+      await new Promise(resolve => setTimeout(resolve, 1000));
+      
+      // Return mock URL - in production, this would be the actual uploaded file URL
+      const mockUrl = `https://hacktheshell-media.example.com/${type}s/${Date.now()}-${Math.random().toString(36).substr(2, 9)}.${
+        type === 'screenshot' ? 'png' : type === 'gif' ? 'gif' : 'mp4'
+      }`;
+      
+      res.json({ 
+        success: true, 
+        url: mockUrl,
+        message: 'File uploaded successfully' 
+      });
+    } catch (error) {
+      res.status(500).json({ error: 'Failed to upload media' });
+    }
+  });
+
+  // GitHub repository sync endpoint
+  app.get('/api/github-sync', async (req, res) => {
+    try {
+      const { url } = req.query;
+      
+      if (!url || typeof url !== 'string') {
+        return res.status(400).json({ error: 'GitHub URL is required' });
+      }
+
+      // Extract owner and repo from GitHub URL
+      const match = url.match(/github\.com\/([^\/]+)\/([^\/]+)/);
+      if (!match) {
+        return res.status(400).json({ error: 'Invalid GitHub URL format' });
+      }
+
+      const [, owner, repo] = match;
+      
+      // In a real application, this would make an API call to GitHub
+      // For now, we'll return mock data
+      const mockGitHubData = {
+        name: repo.replace(/[-_]/g, ' ').replace(/\b\w/g, l => l.toUpperCase()),
+        description: `A powerful cybersecurity tool for ${repo.includes('scan') ? 'scanning and analysis' : 'security testing'}`,
+        language: repo.includes('python') ? 'Python' : repo.includes('go') ? 'Go' : repo.includes('rust') ? 'Rust' : 'JavaScript',
+        stars: Math.floor(Math.random() * 10000) + 100,
+        forks: Math.floor(Math.random() * 1000) + 10,
+        lastUpdated: new Date().toISOString(),
+        topics: ['cybersecurity', 'security-tools', 'pentesting'],
+        homepage: `https://${repo}.example.com`,
+        hasWiki: true,
+        hasIssues: true,
+        hasPages: false,
+        archived: false,
+        disabled: false
+      };
+
+      res.json(mockGitHubData);
+    } catch (error) {
+      res.status(500).json({ error: 'Failed to sync GitHub data' });
+    }
+  });
+
   // Comments API
   app.get('/api/posts/:postId/comments', async (req, res) => {
     try {
