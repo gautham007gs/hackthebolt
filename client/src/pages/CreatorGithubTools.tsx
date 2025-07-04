@@ -69,8 +69,8 @@ export default function CreatorGithubTools() {
       <div className="mb-8">
         <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-4">
           <div>
-            <h1 className="text-3xl font-bold mb-2">GitHub Tools</h1>
-            <p className="text-muted-foreground">
+            <h1 className={`text-3xl font-bold mb-2 ${isDark ? 'text-white' : 'text-gray-900'}`}>GitHub Tools</h1>
+            <p className={`${isDark ? 'text-gray-300' : 'text-gray-600'}`}>
               Manage your cybersecurity tools and share them with the community
             </p>
           </div>
@@ -86,62 +86,62 @@ export default function CreatorGithubTools() {
 
       {/* Stats Cards */}
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-4 mb-8">
-        <Card>
+        <Card className={`${isDark ? 'bg-gray-800 border-gray-700' : 'bg-white border-gray-200'}`}>
           <CardContent className="p-4">
             <div className="flex items-center justify-between">
               <div>
-                <p className="text-sm text-muted-foreground">Total Tools</p>
-                <p className="text-2xl font-bold">{stats.totalTools}</p>
+                <p className={`text-sm ${isDark ? 'text-gray-400' : 'text-gray-600'}`}>Total Tools</p>
+                <p className={`text-2xl font-bold ${isDark ? 'text-white' : 'text-gray-900'}`}>{stats.totalTools}</p>
               </div>
-              <Github className="h-8 w-8 text-muted-foreground" />
+              <Github className={`h-8 w-8 ${isDark ? 'text-gray-400' : 'text-gray-500'}`} />
             </div>
           </CardContent>
         </Card>
 
-        <Card>
+        <Card className={`${isDark ? 'bg-gray-800 border-gray-700' : 'bg-white border-gray-200'}`}>
           <CardContent className="p-4">
             <div className="flex items-center justify-between">
               <div>
-                <p className="text-sm text-muted-foreground">Published</p>
-                <p className="text-2xl font-bold text-green-600">{stats.publishedTools}</p>
+                <p className={`text-sm ${isDark ? 'text-gray-400' : 'text-gray-600'}`}>Published</p>
+                <p className={`text-2xl font-bold ${isDark ? 'text-green-400' : 'text-green-600'}`}>{stats.publishedTools}</p>
               </div>
-              <Eye className="h-8 w-8 text-muted-foreground" />
+              <Eye className={`h-8 w-8 ${isDark ? 'text-gray-400' : 'text-gray-500'}`} />
             </div>
           </CardContent>
         </Card>
 
-        <Card>
+        <Card className={`${isDark ? 'bg-gray-800 border-gray-700' : 'bg-white border-gray-200'}`}>
           <CardContent className="p-4">
             <div className="flex items-center justify-between">
               <div>
-                <p className="text-sm text-muted-foreground">Drafts</p>
-                <p className="text-2xl font-bold text-orange-600">{stats.draftTools}</p>
+                <p className={`text-sm ${isDark ? 'text-gray-400' : 'text-gray-600'}`}>Drafts</p>
+                <p className={`text-2xl font-bold ${isDark ? 'text-orange-400' : 'text-orange-600'}`}>{stats.draftTools}</p>
               </div>
-              <Edit className="h-8 w-8 text-muted-foreground" />
+              <Edit className={`h-8 w-8 ${isDark ? 'text-gray-400' : 'text-gray-500'}`} />
             </div>
           </CardContent>
         </Card>
 
-        <Card>
+        <Card className={`${isDark ? 'bg-gray-800 border-gray-700' : 'bg-white border-gray-200'}`}>
           <CardContent className="p-4">
             <div className="flex items-center justify-between">
               <div>
-                <p className="text-sm text-muted-foreground">Total Views</p>
-                <p className="text-2xl font-bold">{stats.totalViews}</p>
+                <p className={`text-sm ${isDark ? 'text-gray-400' : 'text-gray-600'}`}>Total Views</p>
+                <p className={`text-2xl font-bold ${isDark ? 'text-white' : 'text-gray-900'}`}>{stats.totalViews}</p>
               </div>
-              <BarChart className="h-8 w-8 text-muted-foreground" />
+              <BarChart className={`h-8 w-8 ${isDark ? 'text-gray-400' : 'text-gray-500'}`} />
             </div>
           </CardContent>
         </Card>
 
-        <Card>
+        <Card className={`${isDark ? 'bg-gray-800 border-gray-700' : 'bg-white border-gray-200'}`}>
           <CardContent className="p-4">
             <div className="flex items-center justify-between">
               <div>
-                <p className="text-sm text-muted-foreground">Total Stars</p>
-                <p className="text-2xl font-bold">{stats.totalStars}</p>
+                <p className={`text-sm ${isDark ? 'text-gray-400' : 'text-gray-600'}`}>Total Stars</p>
+                <p className={`text-2xl font-bold ${isDark ? 'text-white' : 'text-gray-900'}`}>{stats.totalStars}</p>
               </div>
-              <Star className="h-8 w-8 text-muted-foreground" />
+              <Star className={`h-8 w-8 ${isDark ? 'text-gray-400' : 'text-gray-500'}`} />
             </div>
           </CardContent>
         </Card>
@@ -195,12 +195,12 @@ export default function CreatorGithubTools() {
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.3 }}
             >
-              <Card className="h-full hover:shadow-lg transition-shadow">
+              <Card className={`h-full hover:shadow-lg transition-shadow ${isDark ? 'bg-gray-800 border-gray-700' : 'bg-white border-gray-200'}`}>
                 <CardHeader className="pb-3">
                   <div className="flex items-start justify-between">
                     <div className="flex-1">
-                      <CardTitle className="text-lg line-clamp-1">{tool.name}</CardTitle>
-                      <CardDescription className="mt-1 line-clamp-2">
+                      <CardTitle className={`text-lg line-clamp-1 ${isDark ? 'text-white' : 'text-gray-900'}`}>{tool.name}</CardTitle>
+                      <CardDescription className={`mt-1 line-clamp-2 ${isDark ? 'text-gray-300' : 'text-gray-600'}`}>
                         {tool.description}
                       </CardDescription>
                     </div>
@@ -226,7 +226,7 @@ export default function CreatorGithubTools() {
                     </div>
 
                     {/* Stats */}
-                    <div className="flex items-center justify-between text-sm text-muted-foreground">
+                    <div className={`flex items-center justify-between text-sm ${isDark ? 'text-gray-400' : 'text-gray-500'}`}>
                       <div className="flex items-center gap-4">
                         <span className="flex items-center gap-1">
                           <Eye className="h-3 w-3" />
@@ -274,11 +274,11 @@ export default function CreatorGithubTools() {
           ))}
         </div>
       ) : (
-        <Card>
+        <Card className={`${isDark ? 'bg-gray-800 border-gray-700' : 'bg-white border-gray-200'}`}>
           <CardContent className="p-12 text-center">
-            <Github className="h-12 w-12 mx-auto mb-4 text-muted-foreground" />
-            <h3 className="text-lg font-semibold mb-2">No tools found</h3>
-            <p className="text-muted-foreground mb-4">
+            <Github className={`h-12 w-12 mx-auto mb-4 ${isDark ? 'text-gray-400' : 'text-gray-500'}`} />
+            <h3 className={`text-lg font-semibold mb-2 ${isDark ? 'text-white' : 'text-gray-900'}`}>No tools found</h3>
+            <p className={`mb-4 ${isDark ? 'text-gray-300' : 'text-gray-600'}`}>
               {searchTerm || filterStatus !== 'all' 
                 ? 'No tools match your current filters.' 
                 : 'Start by creating your first GitHub tool.'}

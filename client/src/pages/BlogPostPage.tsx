@@ -1,13 +1,14 @@
 import React, { useState, useEffect } from 'react';
 import { useParams, Link } from 'wouter';
-import { motion } from 'framer-motion';
-import { ArrowLeft, Calendar, User, Clock, Eye, MessageSquare, Share2, BookOpen, ChevronRight } from 'lucide-react';
+import { motion, AnimatePresence } from 'framer-motion';
+import { ArrowLeft, Calendar, User, Clock, Eye, MessageSquare, Share2, BookOpen, ChevronRight, ChevronDown } from 'lucide-react';
 import { useTheme } from '../contexts/ThemeContext';
 
 const BlogPostPage = () => {
   const { slug } = useParams();
   const { isDark } = useTheme();
   const [activeSection, setActiveSection] = useState('');
+  const [tocExpanded, setTocExpanded] = useState(false);
 
   // Mock blog post data - in real app, fetch based on slug
   const blogPost = {
@@ -339,30 +340,57 @@ Remember: cybersecurity is not a destination but a journey. The threat landscape
 
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
         <div className="flex flex-col lg:grid lg:grid-cols-4 gap-8">
-          {/* Table of Contents - Mobile */}
-          <div className="lg:hidden order-1">
-            <div className={`${isDark ? 'bg-gray-800 border-gray-700' : 'bg-gray-50 border-gray-200'} border rounded-xl p-4 mb-6`}>
-              <h3 className={`text-lg font-semibold ${isDark ? 'text-white' : 'text-gray-900'} mb-3 flex items-center space-x-2`}>
-                <BookOpen className="h-5 w-5" />
-                <span>Table of Contents</span>
-              </h3>
-              <nav className="grid grid-cols-1 sm:grid-cols-2 gap-2 max-h-48 overflow-y-auto">
-                {blogPost.tableOfContents.map((item, index) => (
-                  <button
-                    key={index}
-                    onClick={() => scrollToSection(item.id)}
-                    className={`text-left text-sm transition-colors duration-200 p-2 rounded-lg ${
-                      item.level === 1 ? 'font-medium' : 'pl-4'
-                    } ${
-                      activeSection === item.id
-                        ? isDark ? 'text-emerald-400 bg-emerald-500/10' : 'text-emerald-600 bg-emerald-50'
-                        : isDark ? 'text-gray-400 hover:text-gray-300 hover:bg-gray-700/50' : 'text-gray-600 hover:text-gray-700 hover:bg-gray-100'
-                    }`}
+          {/* Mobile Table of Contents - Sticky at top */}
+          <div className="lg:hidden order-1 sticky top-16 z-30 mb-6">
+            <div className={`${isDark ? 'bg-gray-800 border-gray-700' : 'bg-white border-gray-200'} border rounded-xl shadow-lg backdrop-blur-sm`}>
+              <button
+                onClick={() => setTocExpanded(!tocExpanded)}
+                className={`w-full flex items-center justify-between p-4 ${isDark ? 'text-white hover:bg-gray-700' : 'text-gray-900 hover:bg-gray-50'} transition-colors rounded-xl`}
+              >
+                <div className="flex items-center space-x-2">
+                  <BookOpen className="h-5 w-5 text-emerald-500" />
+                  <span className="font-semibold">Table of Contents</span>
+                </div>
+                <ChevronDown className={`h-5 w-5 transition-transform ${tocExpanded ? 'rotate-180' : ''}`} />
+              </button>
+              
+              <AnimatePresence>
+                {tocExpanded && (
+                  <motion.div
+                    initial={{ height: 0, opacity: 0 }}
+                    animate={{ height: 'auto', opacity: 1 }}
+                    exit={{ height: 0, opacity: 0 }}
+                    transition={{ duration: 0.2 }}
+                    className="overflow-hidden"
                   >
-                    {item.title}
-                  </button>
-                ))}
-              </nav>
+                    <nav className="px-4 pb-4 max-h-64 overflow-y-auto">
+                      <div className="grid grid-cols-1 sm:grid-cols-2 gap-1">
+                        {blogPost.tableOfContents.map((item, index) => (
+                          <motion.button
+                            key={index}
+                            initial={{ x: -10, opacity: 0 }}
+                            animate={{ x: 0, opacity: 1 }}
+                            transition={{ delay: index * 0.03 }}
+                            onClick={() => {
+                              scrollToSection(item.id);
+                              setTocExpanded(false);
+                            }}
+                            className={`text-left text-sm transition-colors duration-200 p-2 rounded-lg relative ${
+                              item.level === 1 ? 'font-medium' : 'pl-3 text-xs'
+                            } ${
+                              activeSection === item.id
+                                ? isDark ? 'text-emerald-400 bg-emerald-500/10 border-l-2 border-emerald-400' : 'text-emerald-600 bg-emerald-50 border-l-2 border-emerald-600'
+                                : isDark ? 'text-gray-400 hover:text-gray-300 hover:bg-gray-700/50' : 'text-gray-600 hover:text-gray-700 hover:bg-gray-100'
+                            }`}
+                          >
+                            <span className="block truncate">{item.title}</span>
+                          </motion.button>
+                        ))}
+                      </div>
+                    </nav>
+                  </motion.div>
+                )}
+              </AnimatePresence>
             </div>
           </div>
 
