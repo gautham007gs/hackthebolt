@@ -4,7 +4,7 @@ import {
   Home, Users, FileText, BarChart3, Settings, Shield, Activity, 
   Plus, Search, Bell, Menu, X, ChevronDown, User, LogOut,
   Eye, Heart, MessageCircle, TrendingUp, DollarSign, Award,
-  UserPlus, Flag, Database, AlertTriangle, UserCheck
+  UserPlus, Flag, Database, AlertTriangle, UserCheck, Github
 } from 'lucide-react';
 import { useTheme } from '../contexts/ThemeContext';
 import { useAuth } from '../contexts/AuthContext';
@@ -88,6 +88,15 @@ const ProfessionalDashboardLayout: React.FC<ProfessionalDashboardLayoutProps> = 
             { id: 'posts-all', name: 'All Posts', icon: FileText },
             { id: 'posts-published', name: 'Published', icon: Eye },
             { id: 'posts-drafts', name: 'Drafts', icon: Plus }
+          ]
+        },
+        { 
+          id: 'github-tools', 
+          name: 'GitHub Tools', 
+          icon: Github,
+          subItems: [
+            { id: 'github-tools-all', name: 'All Tools', icon: Github },
+            { id: 'github-tools-create', name: 'Create Tool', icon: Plus }
           ]
         },
         { id: 'create', name: 'Create Post', icon: Plus },

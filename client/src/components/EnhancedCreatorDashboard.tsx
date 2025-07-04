@@ -627,7 +627,7 @@ const EnhancedCreatorDashboard = () => {
 
       {filteredPosts.length === 0 && (
         <div className={`text-center py-12 ${isDark ? 'text-gray-400' : 'text-gray-500'}`}>
-          <FileText className="h-12 w-12 mx-auto mb-4 opacity-50" />
+          <Plus className="h-12 w-12 mx-auto mb-4 opacity-50" />
           <p>No posts found matching your criteria</p>
         </div>
       )}
@@ -688,6 +688,35 @@ const EnhancedCreatorDashboard = () => {
     </div>
   );
 
+  const renderGithubTools = () => (
+    <div className="space-y-6">
+      <div className="flex items-center justify-between">
+        <h2 className={`text-2xl font-bold ${isDark ? 'text-white' : 'text-gray-900'}`}>GitHub Tools</h2>
+        <button
+          onClick={() => window.location.href = '/creator/github-tools/create'}
+          className="px-4 py-2 bg-emerald-500 text-white rounded-lg hover:bg-emerald-600 flex items-center space-x-2"
+        >
+          <Plus className="h-4 w-4" />
+          <span>Create Tool</span>
+        </button>
+      </div>
+      
+      <div className={`${isDark ? 'bg-gray-800' : 'bg-white'} p-6 rounded-xl border ${isDark ? 'border-gray-700' : 'border-gray-200'}`}>
+        <p className={`${isDark ? 'text-gray-300' : 'text-gray-600'} text-center py-8`}>
+          GitHub tools management system is ready. Click "Create Tool" to start sharing cybersecurity tools with the community.
+        </p>
+        <div className="text-center">
+          <button
+            onClick={() => window.location.href = '/creator/github-tools'}
+            className="text-emerald-500 hover:text-emerald-600 font-medium"
+          >
+            View All Tools →
+          </button>
+        </div>
+      </div>
+    </div>
+  );
+
   const renderContent = () => {
     switch (activeTab) {
       case 'create':
@@ -697,6 +726,10 @@ const EnhancedCreatorDashboard = () => {
       case 'posts-published':
       case 'posts-drafts':
         return renderPosts();
+      case 'github-tools':
+      case 'github-tools-all':
+      case 'github-tools-create':
+        return renderGithubTools();
       case 'analytics':
         return renderAnalytics();
       default:
